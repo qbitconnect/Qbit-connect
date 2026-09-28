@@ -1,0 +1,14 @@
+backend/venv/
+.venv/
+venv/
+env/
+.git/
+.pytest_cache/
+qbit-data/
+backend/qbit-data/
+stitch_ui/
+backend/tests/
+tests/
+*.db
+*.sqlite3
+*.log

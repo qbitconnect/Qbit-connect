@@ -12,9 +12,9 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 QBIT_ENVS = Literal["development", "staging", "production", "test"]
@@ -62,6 +62,14 @@ class Settings(BaseSettings):
         case_sensitive=True,
         extra="ignore",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _strip_empty_env_strings(cls, values: Any) -> Any:
+        if isinstance(values, dict):
+            # Treat empty strings in environment/env_file as unset so field defaults apply
+            return {k: v for k, v in values.items() if v != ""}
+        return values
 
     # --- Core (Brief §3) -------------------------------------------------
     QBIT_ENV: QBIT_ENVS = "development"

@@ -5,6 +5,7 @@ __pycache__/
 .venv/
 venv/
 env/
+backend/venv/
 
 # Environment & secrets — NEVER commit
 .env
@@ -48,3 +49,4 @@ cookies.txt
 
 # Node (not part of the stack; guard anyway)
 node_modules/
+.vercel

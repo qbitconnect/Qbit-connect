@@ -8,11 +8,17 @@ backend_dir = root_dir / "backend"
 if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
+# Strip empty string environment variables injected by Vercel/PaaS
+for k in list(os.environ.keys()):
+    if os.environ[k] == "":
+        del os.environ[k]
+
 # Configure Vercel serverless environment defaults
 if os.environ.get("VERCEL") or not os.environ.get("DATABASE_URL"):
-    os.environ.setdefault("QBIT_ENV", "staging")
     os.environ.setdefault("QBIT_DATA_DIR", "/tmp/qbit-data")
     os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:////tmp/qbit-dev.db")
+    if os.environ.get("DATABASE_URL", "").startswith("sqlite"):
+        os.environ["QBIT_ENV"] = "staging"
     os.environ.setdefault("QBIT_EMBEDDED_WORKER_ENABLED", "false")
     os.environ.setdefault("QBIT_COOKIE_SECURE", "true")
     os.environ.setdefault("QBIT_SECRET_KEY", "vercel-production-secret-key-at-least-32-chars-long")
