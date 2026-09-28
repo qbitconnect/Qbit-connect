@@ -151,6 +151,24 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
             await app.state.scraper_registry.health_check()
         except Exception:  # noqa: BLE001 — registry problems must not block boot
             logger.exception("Scraper registry health check failed")
+
+        # Automatically ensure database schema, RBAC matrix, and initial administrator exist
+        try:
+            from app.db.base import Base
+            from app.services.rbac import seed_admin, seed_rbac
+
+            async with app.state.db.engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+            async with app.state.db.session() as session:
+                await seed_rbac(session)
+                await seed_admin(
+                    session,
+                    email="admin@qbit.internal",
+                    password="admin123",
+                    full_name="System Administrator",
+                )
+        except Exception:  # noqa: BLE001 — schema auto-init must not crash startup
+            logger.warning("Database schema/RBAC auto-init note (handled gracefully)")
         
         # Embedded scrape worker for single-process / PaaS environments (e.g. Render Web Service)
         worker_task = None
