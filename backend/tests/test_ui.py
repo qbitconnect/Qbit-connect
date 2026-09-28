@@ -257,7 +257,7 @@ async def test_admin_audit_page_renders_stitch_screen_36(ui_client):
     assert "Append-Only Immutability" in resp.text
 
 
-async def test_job_detail_handles_running_job_naive_datetime(ui_client, db_session):
+async def test_job_detail_handles_running_job_naive_datetime(ui_client, app):
     import uuid
     from datetime import datetime
     from app.models.scrape import ScrapeJob, JobStatus
@@ -274,8 +274,9 @@ async def test_job_detail_handles_running_job_naive_datetime(ui_client, db_sessi
         started_at=datetime.now(),  # naive datetime
         completed_at=None,
     )
-    db_session.add(job)
-    await db_session.commit()
+    async with app.state.db.session() as session:
+        session.add(job)
+        await session.commit()
 
     resp = await ui_client.get(f"/scraping/jobs/{job_id}")
     assert resp.status_code == 200

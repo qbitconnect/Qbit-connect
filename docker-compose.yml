@@ -62,8 +62,7 @@ services:
       QBIT_SCRAPER_DISABLED_ACTORS: ${QBIT_SCRAPER_DISABLED_ACTORS:-}
       QBIT_MAPS_PROVIDER: ${QBIT_MAPS_PROVIDER:-none}
       QBIT_MAPS_PROVIDER_URL: ${QBIT_MAPS_PROVIDER_URL:-}
-      # QBIT_MAPS_PROVIDER_API_KEY is intentionally NOT plumbed from compose
-      # env: set it with `docker compose run -e` or a secrets manager.
+      QBIT_MAPS_PROVIDER_API_KEY: ${QBIT_MAPS_PROVIDER_API_KEY:-}
       # --- Phase 12 hardening knobs ---------------------------------------
       QBIT_COOKIE_SECURE: ${QBIT_COOKIE_SECURE:-true}
       EMAIL_WEBHOOK_SECRET: ${EMAIL_WEBHOOK_SECRET:?set EMAIL_WEBHOOK_SECRET in .env}
@@ -125,6 +124,7 @@ services:
       QBIT_SCRAPER_ALLOW_PRIVATE_TARGETS: "false"  # SSRF guard always on in compose
       QBIT_MAPS_PROVIDER: ${QBIT_MAPS_PROVIDER:-none}
       QBIT_MAPS_PROVIDER_URL: ${QBIT_MAPS_PROVIDER_URL:-}
+      QBIT_MAPS_PROVIDER_API_KEY: ${QBIT_MAPS_PROVIDER_API_KEY:-}
       # --- Phase 12 hardening knobs ---------------------------------------
       QBIT_COOKIE_SECURE: ${QBIT_COOKIE_SECURE:-true}
       EMAIL_WEBHOOK_SECRET: ${EMAIL_WEBHOOK_SECRET:?set EMAIL_WEBHOOK_SECRET in .env}

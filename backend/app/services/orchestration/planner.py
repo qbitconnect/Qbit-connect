@@ -16,6 +16,25 @@ from app.services.orchestration.interpreter import InterpretedTask
 from app.services.orchestration.tool_registry import ToolCapabilityDefinition, ToolRegistry
 
 
+def _is_url_or_domain(text: str) -> bool:
+    """Returns True if text looks like a valid URL or domain without whitespace."""
+    s = text.strip()
+    if not s or any(ch.isspace() for ch in s):
+        return False
+    if s.startswith(("http://", "https://")):
+        host_part = s.split("://", 1)[1].split("/")[0].split("?")[0]
+        return "." in host_part or host_part.lower() in ("localhost", "127.0.0.1")
+    host_part = s.split("/")[0].split("?")[0]
+    return "." in host_part and len(host_part.split(".")[-1]) >= 2
+
+
+def _clean_url(text: str, default_scheme: str = "https://") -> str:
+    s = text.strip()
+    if s.startswith(("http://", "https://")):
+        return s
+    return f"{default_scheme}{s}"
+
+
 @dataclass
 class PlanStep:
     step_id: int
@@ -307,8 +326,13 @@ class ExecutionPlanner:
             )
 
         elif primary_tool == "sitemap-intelligence":
+            if not _is_url_or_domain(task.keywords):
+                raise ValidationError(
+                    f"Sitemap Intelligence requires a valid website URL or domain (e.g. 'https://example.com'), got {task.keywords!r}."
+                )
+            url = _clean_url(task.keywords)
             input_payload = {
-                "url": task.keywords if task.keywords.startswith("http") else f"https://{task.keywords}",
+                "url": url,
                 "max_records": target_count,
             }
             steps.append(
@@ -323,7 +347,13 @@ class ExecutionPlanner:
             )
 
         elif primary_tool == "business-directory":
-            url = task.keywords if task.keywords.startswith("http") else f"https://{task.keywords}"
+            if not _is_url_or_domain(task.keywords):
+                raise ValidationError(
+                    "Business Directory scraper requires a direct listing website URL (e.g. 'https://directory.com/listings') "
+                    f"with CSS selectors, rather than a text search query ({task.keywords!r}). "
+                    "To search by business name or location, please use Google Maps or JustDial."
+                )
+            url = _clean_url(task.keywords)
             input_payload = {
                 "config": {
                     "list_url": url,
@@ -344,7 +374,11 @@ class ExecutionPlanner:
             )
 
         elif primary_tool == "public-data":
-            url = task.keywords if task.keywords.startswith("http") else f"https://{task.keywords}"
+            if not _is_url_or_domain(task.keywords):
+                raise ValidationError(
+                    f"Public Data ingestion requires a valid dataset URL (e.g. 'https://data.gov/feed.csv'), got {task.keywords!r}."
+                )
+            url = _clean_url(task.keywords)
             fmt = "csv" if url.endswith((".csv", ".tsv")) else "json"
             input_payload = {
                 "url": url,
@@ -363,7 +397,11 @@ class ExecutionPlanner:
             )
 
         elif primary_tool == "website":
-            url = task.keywords if task.keywords.startswith("http") else f"https://{task.keywords}"
+            if not _is_url_or_domain(task.keywords):
+                raise ValidationError(
+                    f"Website scraper requires a valid website URL or domain (e.g. 'https://example.com'), got {task.keywords!r}."
+                )
+            url = _clean_url(task.keywords)
             input_payload = {
                 "start_url": url,
                 "max_depth": 2,

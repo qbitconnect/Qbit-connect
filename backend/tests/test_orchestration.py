@@ -299,3 +299,37 @@ async def test_orchestration_api_endpoints(client, admin_headers):
     assert d_lock["source_locked"] is True
     assert d_lock["primary_tool"] == "indiamart"
     assert d_lock["fallback_tool"] is None
+
+
+def test_business_directory_rejects_free_text_query(mock_registry):
+    planner = ExecutionPlanner(ToolRegistry(mock_registry))
+    interpreter = TaskInterpreter()
+
+    task = interpreter.interpret(
+        "restaurants in modinagar",
+        forced_source="business-directory",
+        forced_source_lock=True,
+    )
+    from app.services.orchestration.planner import ValidationError
+
+    with pytest.raises(ValidationError) as exc_info:
+        planner.create_plan(task)
+
+    assert "Business Directory scraper requires a direct listing website URL" in str(exc_info.value)
+    assert "restaurants" in str(exc_info.value)
+
+
+def test_business_directory_accepts_valid_url(mock_registry):
+    planner = ExecutionPlanner(ToolRegistry(mock_registry))
+    interpreter = TaskInterpreter()
+
+    task = interpreter.interpret(
+        "https://yellowpages.com/restaurants",
+        forced_source="business-directory",
+        forced_source_lock=True,
+    )
+    plan = planner.create_plan(task)
+    assert plan.primary_tool == "business-directory"
+    assert len(plan.steps) == 1
+    assert plan.steps[0].parameters["config"]["list_url"] == "https://yellowpages.com/restaurants"
+
