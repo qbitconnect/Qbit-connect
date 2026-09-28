@@ -318,12 +318,16 @@ async def settings_redirect():
 
 
 # --------------------------------------------------------------------- home
-@router.get("/", response_class=HTMLResponse)
+@router.get("/")
 async def home(
     request: Request,
     session: Annotated[AsyncSession, Depends(get_db)],
-    user: Annotated[User, Depends(ui_user_for())],
 ):
+    user = await _resolve_user(request, session)
+    if user is None:
+        return RedirectResponse(url="/login?next=/", status_code=303)
+    from app.services import rbac as rbac_service
+    request.state.ui_permissions = await rbac_service.load_user_permissions(session, user.id)
     """Command center (redesign brief: premium internal home).
 
     Read-only: every number is a real count from the same sources the

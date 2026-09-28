@@ -171,6 +171,9 @@ def register_error_handlers(app) -> None:  # noqa: ANN001 - FastAPI app
 
     @app.exception_handler(Exception)
     async def unhandled_exception_handler(_, exc: Exception):
+        if hasattr(exc, "url") and type(exc).__name__ == "UiRedirect":
+            from fastapi.responses import RedirectResponse
+            return RedirectResponse(url=getattr(exc, "url", "/login"), status_code=303)
         # Log full traceback internally; never expose it to the client.
         log_with(logger, logging.CRITICAL, "Unhandled exception", error=repr(exc))
         logger.critical("Unhandled exception traceback", exc_info=True)
