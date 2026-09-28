@@ -292,4 +292,29 @@ async def test_job_detail_handles_invalid_or_truncated_uuid(ui_client):
     assert resp.headers["location"] == "/scraping/jobs"
 
 
+async def test_ui_agent_run_business_directory_free_text_returns_clear_error(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.post(
+        "/scraping/agent/run",
+        json={"prompt": "restaurants in modinagar", "source": "business-directory", "target_count": 50},
+    )
+    assert resp.status_code == 400
+    data = resp.json()
+    assert "Business Directory scraper requires a direct listing website URL" in data["error"]
+
+
+async def test_ui_agent_run_auto_selection_routes_to_valid_scraper(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.post(
+        "/scraping/agent/run",
+        json={"prompt": "restaurants in modinagar", "source": "auto", "target_count": 10},
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert "job_id" in data
+    assert "redirect_url" in data
+
+
+
+
 

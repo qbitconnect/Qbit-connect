@@ -199,9 +199,9 @@
                           name="prompt"
                           rows="2"
                           required
-                          placeholder="e.g. Find shoe wholesalers in Modinagar with verified phone numbers"
+                          placeholder="{% if actor.id == 'business-directory' %}e.g. https://www.yellowpages.com/search?search_terms=restaurants (or select 'Auto Selection' for text queries){% elif actor.id in ['website', 'sitemap-intelligence', 'public-data'] %}e.g. https://example.com/target (direct URL or domain required){% else %}e.g. Find shoe wholesalers in Modinagar with verified phone numbers{% endif %}"
                           class="w-full bg-surface-container border border-cyber-border focus:border-brand-500 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none font-sans leading-relaxed"></textarea>
-                <p class="text-[11px] text-on-surface-variant mt-1">Generated automatically from query/location or custom written with specific criteria.</p>
+                <p class="text-[11px] text-on-surface-variant mt-1">{% if actor.id in ['business-directory', 'website', 'sitemap-intelligence'] %}Provide a direct target URL/domain for this adapter, or choose Auto Selection for AI keyword search.{% else %}Generated automatically from query/location or custom written with specific criteria.{% endif %}</p>
               </div>
             </div>
 
@@ -765,8 +765,12 @@ async function handleAgentSubmit(e) {
     launchBtn.disabled = false;
     launchBtn.textContent = 'Run Scraper Job';
     statusMsg.classList.remove('hidden');
-    statusMsg.className = 'mt-3 p-3 rounded-lg text-xs bg-red-500/10 border border-red-500/30 text-red-300';
-    statusMsg.textContent = 'Execution Error: ' + err.message;
+    statusMsg.className = 'mt-3 p-3 rounded-lg text-xs bg-red-500/10 border border-red-500/30 text-red-300 leading-relaxed';
+    if (err.message.includes('requires a direct listing website URL') || err.message.includes('requires a valid website URL')) {
+      statusMsg.innerHTML = '<strong class="text-red-200 block mb-1">URL Required:</strong>' + err.message + '<div class="mt-2 text-brand-300">Tip: Change "Source Adapter Lock Mode" to <strong>Auto Selection</strong> to search by keywords or location.</div>';
+    } else {
+      statusMsg.textContent = 'Execution Error: ' + err.message;
+    }
   }
 }
 

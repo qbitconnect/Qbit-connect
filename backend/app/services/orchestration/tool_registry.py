@@ -144,7 +144,6 @@ SOURCE_ALIASES: dict[str, str] = {
     "emails": "email-finder",
     "business directory": "business-directory",
     "business-directory": "business-directory",
-    "directory": "business-directory",
     "public data": "public-data",
     "public-data": "public-data",
     "open data": "public-data",

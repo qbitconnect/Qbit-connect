@@ -565,10 +565,10 @@ async def ui_agent_run(
 
     from app.services.orchestration.orchestrator import ScrapingOrchestrator
     orchestrator = ScrapingOrchestrator(request.app.state.scraper_registry, queue=request.app.state.queue)
-    interpreted = orchestrator.interpret(prompt, explicit_source=source, target_count=target_count)
-    plan = orchestrator.create_plan(interpreted)
 
     try:
+        interpreted = orchestrator.interpret(prompt, explicit_source=source, target_count=target_count)
+        plan = orchestrator.create_plan(interpreted)
         job = await orchestrator.execute_plan(
             plan,
             session,
