@@ -1,9 +1,82 @@
 {% extends "analytics/base_analytics.html" %}
+
+{% block head_actions %}
+<div style="display:flex; gap:8px;">
+  <a href="/api/v1/analytics/export?report_type=executive&format=csv{{ querystring }}" class="btn btn-ghost btn-sm" title="Export executive metrics as CSV">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Export CSV
+  </a>
+  <a href="/api/v1/analytics/export?report_type=executive&format=xlsx{{ querystring }}" class="btn btn-primary btn-sm" title="Export executive metrics as Excel">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Export Excel (.xlsx)
+  </a>
+</div>
+{% endblock %}
+
 {% block analytics_content %}
 
 {{ filter_bar() }}
 
-<h2>KEY METRICS</h2>
+{% if exec_data %}
+<div class="exec-section" style="margin-bottom:28px;">
+  <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
+    <h2>EXECUTIVE / CEO OVERVIEW</h2>
+    <span class="muted small">Real database-backed KPIs with comparison & pipeline valuation</span>
+  </div>
+
+  <div class="kpi-grid">
+    {{ kpi_card('TOTAL LEADS', exec_data.kpis.total_leads, value=exec_data.lead_generation.total_leads) }}
+    {{ kpi_card('QUALIFIED LEADS', exec_data.kpis.qualified_leads, value=exec_data.lead_generation.qualified_leads) }}
+    {{ kpi_card('CONVERTED LEADS', exec_data.kpis.converted_leads, value=exec_data.lead_generation.converted_leads) }}
+    {{ kpi_card('OPEN OPPORTUNITIES', exec_data.kpis.open_opportunities, value=exec_data.sales_pipeline.open_opportunities) }}
+    {{ kpi_card('PIPELINE VALUE', None, raw='₹' ~ exec_data.sales_pipeline.pipeline_value_inr|round(2) if exec_data.sales_pipeline.pipeline_value_inr is not none else 'Not recorded') }}
+    {{ kpi_card('CLOSED-WON VALUE', None, raw='₹' ~ exec_data.sales_pipeline.closed_won_value_inr|round(2) if exec_data.sales_pipeline.closed_won_value_inr is not none else 'Not recorded') }}
+    {{ kpi_card('OVERDUE FOLLOW-UPS', exec_data.kpis.overdue_followups, value=exec_data.sales_pipeline.overdue_followups) }}
+    {{ kpi_card('TEAM ACTIVITIES', exec_data.kpis.activities_completed, value=exec_data.team_activity.activities_completed) }}
+  </div>
+
+  <div class="rate-strip" style="margin-top:14px;">
+    <div class="rate-pill">OPP TO WIN RATE<b>{{ (exec_data.sales_pipeline.opportunity_to_win_rate * 100)|round(1) ~ '%' if exec_data.sales_pipeline.opportunity_to_win_rate is not none else '—' }}</b></div>
+    <div class="rate-pill">LEAD TO WIN RATE<b>{{ (exec_data.sales_pipeline.lead_to_win_rate * 100)|round(1) ~ '%' if exec_data.sales_pipeline.lead_to_win_rate is not none else '—' }}</b></div>
+    <div class="rate-pill">EMAIL OPEN RATE<b>{{ (exec_data.campaign_performance.email.open_rate * 100)|round(1) ~ '%' if exec_data.campaign_performance.email.open_rate is not none else '—' }}</b></div>
+    <div class="rate-pill">WHATSAPP REPLY RATE<b>{{ (exec_data.campaign_performance.whatsapp.reply_rate * 100)|round(1) ~ '%' if exec_data.campaign_performance.whatsapp.reply_rate is not none else '—' }}</b></div>
+    <div class="rate-pill">SOCIAL POSTS PUBLISHED<b>{{ exec_data.campaign_performance.social.posts_published }}</b></div>
+  </div>
+
+  {% if exec_data.team_activity.top_performers %}
+  <div class="chart-card" style="margin-top:16px;">
+    <h2>TOP PERFORMING OPERATORS</h2>
+    <p class="chart-note">Ranked by qualified and converted leads within the period.</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Operator</th>
+            <th>Assigned Leads</th>
+            <th>Qualified</th>
+            <th>Converted</th>
+            <th>Conversion Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in exec_data.team_activity.top_performers %}
+          <tr>
+            <td><b>{{ p.name }}</b> <span class="muted small">{{ p.email }}</span></td>
+            <td>{{ p.assigned_leads }}</td>
+            <td>{{ p.qualified_leads }}</td>
+            <td>{{ p.converted_leads }}</td>
+            <td><b>{{ (p.conversion_rate * 100)|round(1) ~ '%' if p.conversion_rate is not none else '—' }}</b></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<h2>OPERATIONAL METRICS</h2>
 <div class="kpi-grid">
   {{ kpi_card('TOTAL LEADS', data.kpis.total_leads, value=data.kpis.total_leads.current) }}
   {{ kpi_card('NEW LEADS', data.kpis.new_leads, value=data.kpis.new_leads.current) }}
@@ -48,6 +121,7 @@
   {% if 'analytics.view_marketing' in perms %} · <a href="/analytics/marketing{{ querystring }}">Marketing →</a>{% endif %}
   {% if 'analytics.view_inbox' in perms %} · <a href="/analytics/inbox{{ querystring }}">Inbox →</a>{% endif %}
   {% if 'analytics.view_automation' in perms %} · <a href="/analytics/automation{{ querystring }}">Automation →</a>{% endif %}
+  {% if 'analytics.view_team' in perms %} · <a href="/analytics/team{{ querystring }}">Team & Employee Performance →</a>{% endif %}
 </p>
 {% endif %}
 

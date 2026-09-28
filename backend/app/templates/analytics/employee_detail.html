@@ -1,0 +1,174 @@
+{% extends "analytics/base_analytics.html" %}
+
+{% block head_actions %}
+<a href="/analytics/team{{ querystring }}" class="btn btn-ghost btn-sm">
+  ← Back to Team Directory
+</a>
+{% endblock %}
+
+{% block analytics_content %}
+
+{{ filter_bar(False) }}
+
+<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+  <div>
+    <h2 style="margin:0 0 6px 0;">{{ detail.user.full_name or detail.user.email }}</h2>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <span class="badge" style="background:var(--bg-card); border:1px solid var(--accent); color:var(--accent);">
+        {{ detail.user.role }}
+      </span>
+      <span class="muted small">{{ detail.user.email }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Individual Employee KPI Summary -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">ASSIGNED LEADS</div>
+    <div class="kpi-value">{{ detail.summary.assigned_leads }}</div>
+    <div class="kpi-delta">{{ detail.summary.pending_leads }} pending in pipeline</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">CONTACTED LEADS</div>
+    <div class="kpi-value">{{ detail.summary.contacted_leads }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">QUALIFIED LEADS</div>
+    <div class="kpi-value">{{ detail.summary.qualified_leads }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">CONVERTED LEADS</div>
+    <div class="kpi-value">{{ detail.summary.converted_leads }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">CONVERSION RATE</div>
+    <div class="kpi-value">
+      {{ (detail.summary.conversion_rate * 100)|round(1) ~ '%' if detail.summary.conversion_rate is not none else '—' }}
+    </div>
+    <div class="kpi-delta">Denominator: converted / assigned</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">FOLLOW-UPS DONE</div>
+    <div class="kpi-value">{{ detail.summary.followups_completed }}</div>
+    <div class="kpi-delta" style="color:var(--danger);">{{ detail.summary.followups_overdue }} overdue</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">DEALS WON</div>
+    <div class="kpi-value">{{ detail.summary.deals_won }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">CLOSED-WON VALUE</div>
+    <div class="kpi-value">
+      {% if detail.summary.closed_won_value_inr is not none %}
+        ₹{{ detail.summary.closed_won_value_inr|round(2) }}
+      {% else %}
+        <span class="muted" style="font-size:16px;">Not recorded</span>
+      {% endif %}
+    </div>
+    <div class="kpi-delta">Commercial deal revenue</div>
+  </div>
+</div>
+
+<!-- Target vs Actual Section -->
+<div style="margin-top:28px;">
+  <h2>PERFORMANCE GOALS & TARGET TRACKING</h2>
+  <p class="chart-note">Active goals assigned to this operator with real-time actuals, completion percentage, and gap analysis.</p>
+
+  {% if detail.targets %}
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
+    {% for tgt in detail.targets %}
+    <div class="chart-card" style="margin:0;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+        <h3 style="margin:0; font-size:15px;">{{ tgt.metric.replace('_', ' ')|title }}</h3>
+        <span class="badge" style="background:var(--bg-card); border:1px solid var(--edge-2); font-size:11px;">
+          {{ tgt.period_type|title }}
+        </span>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-size:22px; font-weight:700;">
+          {{ tgt.actual_value|round(0)|int }} <span class="muted small" style="font-size:13px; font-weight:normal;">/ {{ tgt.target_value|round(0)|int }}</span>
+        </span>
+        <b style="color:{% if tgt.progress_pct >= 100 %}var(--success, #22c55e){% elif tgt.progress_pct >= 60 %}var(--accent){% else %}var(--warning, #f59e0b){% endif %};">
+          {{ tgt.progress_pct }}%
+        </b>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="width:100%; height:8px; background:var(--edge-2); border-radius:4px; overflow:hidden; margin-bottom:8px;">
+        <div style="height:100%; width:{{ [tgt.progress_pct, 100]|min }}%; background:{% if tgt.progress_pct >= 100 %}#22c55e{% elif tgt.progress_pct >= 60 %}var(--accent){% else %}#f59e0b{% endif %}; border-radius:4px;"></div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; font-size:12px;" class="muted">
+        <span>Gap to target: <b>{{ tgt.gap|round(0)|int }}</b></span>
+        <span>Window: {{ tgt.start_date }} → {{ tgt.end_date }}</span>
+      </div>
+      {% if tgt.notes %}
+      <p class="muted small" style="margin:8px 0 0 0; font-style:italic;">"{{ tgt.notes }}"</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="chart-card">
+    <p class="muted small" style="margin:0;">No specific performance targets assigned to this employee for the selected period.</p>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Activity Breakdown -->
+<div style="margin-top:28px;">
+  <h2>OPERATOR ACTIVITY BREAKDOWN</h2>
+  <p class="chart-note">All verified operational actions executed by this employee.</p>
+
+  <div class="two-col">
+    <div class="chart-card">
+      <h3 style="margin-top:0;">Activities by Type</h3>
+      {% if detail.activities_by_type %}
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Activity Type</th><th>Count</th></tr>
+          </thead>
+          <tbody>
+            {% for act, cnt in detail.activities_by_type.items() %}
+            <tr>
+              <td><b>{{ act.replace('_', ' ')|title }}</b></td>
+              <td>{{ cnt }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="muted small">No activities logged during this period.</p>
+      {% endif %}
+    </div>
+
+    <div class="chart-card">
+      <h3 style="margin-top:0;">Daily Activity Volume</h3>
+      {% if detail.activity_trends %}
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Logged Actions</th></tr>
+          </thead>
+          <tbody>
+            {% for row in detail.activity_trends %}
+            <tr>
+              <td>{{ row.date }}</td>
+              <td><b>{{ row.activities }}</b></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="muted small">No daily activity trend data available for this range.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

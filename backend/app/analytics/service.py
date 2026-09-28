@@ -20,14 +20,16 @@ from app.analytics.core.filters import AnalyticsFilters, filters_from_params
 from app.analytics.core.time import Period, previous_period, resolve_period
 from app.analytics.domains import (
     automation,
+    email as email_domain,
+    employee_performance as employee_domain,
+    executive as executive_domain,
     inbox,
     leads as leads_domain,
     marketing as marketing_domain,
     overview as overview_domain,
     scraping as scraping_domain,
-    whatsapp as whatsapp_domain,
-    email as email_domain,
     team as team_domain,
+    whatsapp as whatsapp_domain,
 )
 
 
@@ -322,6 +324,88 @@ class AnalyticsService:
 
         scope = f"team:{request.scope}" if request.scope != "global" else "team"
         key = self._key("team", period, filters, scope)
+        data = await self._cached(key, compute, TTL_DASHBOARD)
+        return {"period": period.to_dict(), **data}
+
+    # ------------------------------------------------ Phase 10: Executive & Employees
+    async def executive(self, session: AsyncSession, request: AnalyticsRequest) -> dict:
+        """Phase 10: CEO / Executive Dashboard with complete KPI breakdown and comparison."""
+        period, filters, prev_filters = request.resolve()
+        dialect = self._dialect(session)
+        tz_name = period.tz if period else "UTC"
+
+        async def compute():
+            return await executive_domain.executive_kpis(
+                session, filters, prev_filters if request.compare else None,
+                tz_name=tz_name, dialect=dialect,
+            )
+
+        key = self._key("executive", period, filters, request.scope, {"compare": request.compare})
+        data = await self._cached(key, compute, TTL_DASHBOARD)
+        return {"period": period.to_dict(), **data}
+
+    async def employees_performance(
+        self,
+        session: AsyncSession,
+        request: AnalyticsRequest,
+        allowed_user_ids: list | None = None,
+        team_id=None,
+    ) -> dict:
+        """Phase 10: Employee performance directory with evidence-based indicators."""
+        period, filters, _prev = request.resolve()
+
+        async def compute():
+            return {
+                "employees": await employee_domain.list_employees_performance(
+                    session, filters, allowed_user_ids=allowed_user_ids, team_id=team_id,
+                )
+            }
+
+        scope = f"emp_perf:{request.scope}:{team_id or 'all'}"
+        key = self._key("employees_perf", period, filters, scope)
+        data = await self._cached(key, compute, TTL_DASHBOARD)
+        return {"period": period.to_dict(), **data}
+
+    async def employee_detail(
+        self,
+        session: AsyncSession,
+        user_id,
+        request: AnalyticsRequest,
+    ) -> dict | None:
+        """Phase 10: Individual employee performance drilldown including active targets."""
+        period, filters, _prev = request.resolve()
+        dialect = self._dialect(session)
+        tz_name = period.tz if period else "UTC"
+
+        async def compute():
+            return await employee_domain.get_employee_detail_performance(
+                session, user_id, filters, tz_name=tz_name, dialect=dialect,
+            )
+
+        scope = f"emp_detail:{user_id}"
+        key = self._key("employee_detail", period, filters, scope)
+        data = await self._cached(key, compute, TTL_DASHBOARD)
+        if data is None:
+            return None
+        return {"period": period.to_dict(), **data}
+
+    async def teams_performance(
+        self,
+        session: AsyncSession,
+        request: AnalyticsRequest,
+        team_id=None,
+        allowed_user_ids: list | None = None,
+    ) -> dict:
+        """Phase 10: Team performance reports and workload distribution."""
+        period, filters, _prev = request.resolve()
+
+        async def compute():
+            return await employee_domain.team_workload_and_reporting(
+                session, filters, team_id=team_id, allowed_user_ids=allowed_user_ids,
+            )
+
+        scope = f"teams_perf:{team_id or 'all'}"
+        key = self._key("teams_perf", period, filters, scope)
         data = await self._cached(key, compute, TTL_DASHBOARD)
         return {"period": period.to_dict(), **data}
 

@@ -1,62 +1,197 @@
 {% extends "base.html" %}
-{% block title %}Templates — QBIT Connect{% endblock %}
+{% block title %}Marketing Templates — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>MARKETING TEMPLATES</h1>
-    <p class="muted">Safe {{ '{{variable}}' }} substitution only — no executable expressions, ever.</p>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Header & Back Navigation -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <a href="/campaigns" class="text-outline hover:text-on-surface transition-colors flex items-center gap-1 font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Campaigns
+        </a>
+        <span class="text-outline/40">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          Library
+        </span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+        Marketing Message Templates
+      </h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Standardized message templates for WhatsApp, Email, and SMS with secure dynamic variable substitution.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a class="btn btn-ghost" href="/campaigns">Back to Campaigns</a>
+    </div>
   </div>
-  <div class="head-actions"><a class="btn btn-ghost" href="/campaigns">Back</a></div>
+
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
+
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
+
+  <!-- Create Template Card -->
+  {% if can_create %}
+  <div class="card p-space-xl space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm flex items-center justify-between">
+      <div class="space-y-0.5">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Create New Template</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Draft an outbound message structure with customizable merge tags.</p>
+      </div>
+      <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high text-outline">Safe Merge Only</span>
+    </div>
+
+    <form method="post" action="/campaigns/templates" class="space-y-space-md">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+        <div class="qbit-form-group sm:col-span-2">
+          <label class="qbit-form-label" for="tmplName">Template Name <span class="text-error">*</span></label>
+          <input type="text" id="tmplName" name="name" required maxlength="150" placeholder="e.g. Surat Textile POS Followup" class="qbit-input">
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="tmplChannel">Channel <span class="text-error">*</span></label>
+          <select id="tmplChannel" name="channel" required class="qbit-input">
+            {% for value, label in channels %}
+            <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="qbit-form-group">
+        <label class="qbit-form-label" for="tmplSubject">Subject Line (Email Only)</label>
+        <input type="text" id="tmplSubject" name="subject" maxlength="300" placeholder="e.g. Exclusive POS Upgrade Offer for {{business_name}}" class="qbit-input">
+        <span class="qbit-form-hint">Ignored for WhatsApp and SMS channels.</span>
+      </div>
+
+      <div class="qbit-form-group">
+        <div class="flex items-center justify-between mb-1">
+          <label class="qbit-form-label" for="tmplBody">Message Body <span class="text-error">*</span></label>
+          <span class="text-xs text-outline font-code-xs">Click tag to insert</span>
+        </div>
+
+        <!-- Variable Helper Chips -->
+        <div class="flex flex-wrap gap-1.5 mb-2">
+          {% for var_name in ['business_name', 'first_name', 'city', 'state', 'category', 'phone'] %}
+          <button type="button" onclick="insertVariable('{{ var_name }}')" class="font-code-xs text-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/40 text-primary hover:bg-primary-container/20 transition-colors">
+            + {&#123;{{ var_name }}&#125;}
+          </button>
+          {% endfor %}
+        </div>
+
+        <textarea id="tmplBody" name="body" required rows="5" class="qbit-input font-sans text-sm" placeholder="Hi {{first_name}}, we noticed {{business_name}} is leading retail in {{city}}..."></textarea>
+        <span class="qbit-form-hint">Variables populate from lead records at send time. Unmatched variables render cleanly empty.</span>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <span class="text-xs text-outline">Templates take effect immediately for new campaigns.</span>
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          Save Template
+        </button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  <!-- Existing Templates Table Card -->
+  <div class="table-card">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <h3 class="font-label-md text-label-md font-bold text-on-surface">Existing Message Templates ({{ templates | length }})</h3>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Template Name</th>
+            <th>Channel</th>
+            <th>Status</th>
+            <th>Variables Detected</th>
+            <th>Preview Snippet</th>
+            <th>Updated</th>
+            {% if can_delete %}<th class="text-right">Actions</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in templates %}
+          <tr>
+            <td><strong class="text-on-surface font-semibold">{{ t.name }}</strong></td>
+            <td>
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface">
+                {{ t.channel }}
+              </span>
+            </td>
+            <td><span class="badge badge-{{ t.status | lower }}">{{ t.status }}</span></td>
+            <td>
+              <div class="flex flex-wrap gap-1 max-w-xs">
+                {% for v in t.variables %}
+                <span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container text-primary border border-outline-variant/20">
+                  {&#123;{{ v }}&#125;}
+                </span>
+                {% else %}
+                <span class="text-xs text-outline">—</span>
+                {% endfor %}
+              </div>
+            </td>
+            <td class="text-outline text-xs max-w-xs truncate">{{ (t.body or '')[:80] }}...</td>
+            <td class="text-outline text-xs whitespace-nowrap">{{ str(t.updated_at)[:16].replace('T',' ') }}</td>
+            {% if can_delete %}
+            <td class="text-right">
+              <form method="post" action="/campaigns/templates/{{ t.id }}/delete" class="inline-form" onsubmit="return confirm('Delete template {{ t.name }}?')">
+                <button class="btn btn-sm btn-ghost text-error hover:bg-error-container/20" type="submit">
+                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                  Delete
+                </button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[32px] text-outline block mb-2">description</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Templates Configured</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Create message templates above to use in outbound campaigns.
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-
-{% if can_create %}
-<form method="post" action="/campaigns/templates" class="card" style="padding:16px;max-width:860px;display:flex;flex-direction:column;gap:10px">
-  <h3 style="margin:0">CREATE TEMPLATE</h3>
-  <div class="toolbar" style="flex-wrap:wrap">
-    <input type="text" name="name" required maxlength="150" placeholder="Template name" style="flex:2;min-width:220px">
-    <select name="channel" required>
-      {% for value, label in channels %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
-    </select>
-    <input type="text" name="subject" maxlength="300" placeholder="Subject (email only)" style="flex:2;min-width:200px">
-  </div>
-  <textarea name="body" required rows="5" placeholder="Message body. Available variables: {{first_name}} {{last_name}} {{business_name}} {{company_name}} {{city}} {{state}} {{country}} {{category}} {{industry}}"></textarea>
-  <div class="form-actions">
-    <button class="btn btn-primary" type="submit">Create template</button>
-    <span class="muted small">Variables render from each lead at send time; unknown variables render empty and are reported at validation.</span>
-  </div>
-</form>
-{% endif %}
-
-<div class="card table-card" style="margin-top:14px">
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Name</th><th>Channel</th><th>Status</th><th>Variables</th><th>Preview</th><th>Updated</th>{% if can_delete %}<th></th>{% endif %}</tr></thead>
-      <tbody>
-        {% for t in templates %}
-        <tr>
-          <td><strong>{{ t.name }}</strong></td>
-          <td>{{ t.channel }}</td>
-          <td><span class="badge badge-{{ t.status | lower }}">{{ t.status }}</span></td>
-          <td class="mono small">{% for v in t.variables %}{{ '{{' }}{{ v }}{{ '}}' }} {% endfor %}</td>
-          <td class="muted small">{{ (t.body or '')[:80] }}</td>
-          <td class="muted small">{{ str(t.updated_at)[:16].replace('T',' ') }}</td>
-          {% if can_delete %}
-          <td>
-            <form method="post" action="/campaigns/templates/{{ t.id }}/delete" class="inline-form">
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </form>
-          </td>
-          {% endif %}
-        </tr>
-        {% else %}
-        <tr><td colspan="7" class="center muted" style="padding:28px">Create your first marketing template.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+<script>
+  function insertVariable(varName) {
+    var textarea = document.getElementById('tmplBody');
+    if (!textarea) return;
+    var tag = '{{' + varName + '}}';
+    var start = textarea.selectionStart;
+    var end = textarea.selectionEnd;
+    var text = textarea.value;
+    textarea.value = text.substring(0, start) + tag + text.substring(end);
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = start + tag.length;
+  }
+</script>
 {% endblock %}

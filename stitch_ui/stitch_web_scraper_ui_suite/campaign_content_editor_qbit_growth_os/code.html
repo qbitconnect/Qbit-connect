@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Step Context Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-md mb-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 font-code-xs text-code-xs text-outline">
+<span class="hover:text-primary transition-colors cursor-pointer">Campaigns</span>
+<span class="text-outline-variant">/</span>
+<span class="hover:text-primary transition-colors cursor-pointer">Hotel Leads - Bareilly</span>
+<span class="text-outline-variant">/</span>
+<span class="text-secondary-fixed-dim font-medium">Content Editor</span>
+</div>
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight flex items-center gap-2">
+<span>Campaign Content Editor</span>
+<span class="px-2 py-0.5 rounded-full bg-primary-container/20 text-secondary-fixed text-label-sm font-label-sm border-0 font-medium">
+            Step 2 of 4: Content Design
+          </span>
+</h1>
+</div>
+</div>
+<!-- Live Autosave & Quick Meta -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.6)] animate-pulse"></span>
+<span>Autosaved <span class="text-on-surface font-medium" id="autosave-timer">5s ago</span></span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors" title="Version History">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>v3.2 Draft</span>
+</button>
+<button class="p-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Editor Settings">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+</button>
+</div>
+</div>
+<!-- Channel Selector Tabs -->
+<div class="flex items-center justify-between p-1.5 mb-space-lg rounded-xl bg-surface-container-lowest">
+<div class="flex items-center gap-1 overflow-x-auto">
+<!-- Active Channel: Email -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_0_14px_rgba(0,102,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span>Email</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-ping"></span>
+</button>
+<!-- Inactive Channel: WhatsApp -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px] text-tertiary">chat</span>
+<span>WhatsApp</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container font-code-xs text-[10px] text-outline">Linked</span>
+</button>
+<!-- Inactive Channel: SMS -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">sms</span>
+<span>SMS</span>
+</button>
+<!-- Inactive Channel: Instagram -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Instagram</span>
+</button>
+<!-- Inactive Channel: LinkedIn -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>LinkedIn</span>
+</button>
+<!-- Inactive Channel: Telegram -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Telegram</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Channel</span>
+</button>
+</div>
+<div class="hidden lg:flex items-center gap-2 pr-2">
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-1 rounded-lg">
+<button class="px-2 py-1 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm" id="view-mode-editor">Editor</button>
+<button class="px-2 py-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors" id="view-mode-preview">Split Preview</button>
+</div>
+</div>
+</div>
+<!-- Main 12-Column Split Workspace -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Left 8 Columns: Composer & Canvas Area -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Subject & Preheader Envelope Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm shadow-md">
+<!-- Subject Line Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 text-on-surface font-label-md text-label-md min-w-[90px]">
+<span class="material-symbols-outlined text-[18px] text-primary">mail</span>
+<span>Subject Line</span>
+<span class="text-error">*</span>
+</div>
+<!-- Subject Input with Dynamic Insert Trigger -->
+<div class="flex-1 flex items-center gap-2 bg-surface-container-highest/60 rounded-lg px-space-sm py-1.5 focus-within:ring-2 focus-within:ring-primary-container transition-all">
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md focus:outline-none placeholder:text-outline" id="subject-input" placeholder="e.g. Scaling revenue for {{business_name}}..." type="text" value="Special Offer for {{business_name}} - Grow Your Business"/>
+<!-- Insert Variable Dropdown button -->
+<div class="relative">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-secondary-fixed font-code-xs text-code-xs hover:bg-surface-bright transition-colors shrink-0 shadow-sm" onclick="toggleSubjectVars()">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+<span>Insert Var</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+<!-- Variable dropdown flyout -->
+<div class="hidden absolute right-0 mt-1 w-56 bg-surface-container-high rounded-lg p-1.5 shadow-xl z-30 flex flex-col gap-1" id="subject-vars-menu">
+<button class="text-left px-2 py-1.5 rounded hover:bg-surface-container font-code-xs text-code-xs text-on-surface flex items-center justify-between" onclick="insertAtSubject('{{business_name}}')">
+<span>{{business_name}}</span>
+<span class="text-[10px] text-outline">Bareilly Hotel</span>
+</button>
+<button class="text-left px-2 py-1.5 rounded hover:bg-surface-container font-code-xs text-code-xs text-on-surface flex items-center justify-between" onclick="insertAtSubject('{{owner_name}}')">
+<span>{{owner_name}}</span>
+<span class="text-[10px] text-outline">Rajesh Singhal</span>
+</button>
+<button class="text-left px-2 py-1.5 rounded hover:bg-surface-container font-code-xs text-code-xs text-on-surface flex items-center justify-between" onclick="insertAtSubject('{{city}}')">
+<span>{{city}}</span>
+<span class="text-[10px] text-outline">Bareilly</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sender / Preheader Quick Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs text-outline font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="font-code-xs text-code-xs text-outline-variant uppercase">From:</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-code-xs text-code-xs text-on-surface">marketing@qbitpro.in</span>
+<span class="font-code-xs text-code-xs text-outline">via QBIT Spark Engine</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-xs text-code-xs text-outline-variant uppercase">Preheader:</span>
+<span class="text-on-surface-variant truncate max-w-xs font-body-sm">Tailored growth system for Bareilly hospitality leaders...</span>
+<button class="text-secondary-fixed-dim hover:text-secondary font-label-sm text-[11px] underline">Edit</button>
+</div>
+</div>
+</div>
+<!-- Rich Text Editor Container -->
+<div class="bg-surface-container-low rounded-xl flex flex-col shadow-xl overflow-hidden min-h-[540px]">
+<!-- Formatting Toolbar -->
+<div class="p-2 bg-surface-container flex flex-wrap items-center justify-between gap-1.5">
+<!-- Text Styling Group -->
+<div class="flex items-center gap-0.5 bg-surface-container-low p-1 rounded-lg">
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface font-bold text-[13px] transition-colors" title="Bold">B</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface italic font-serif text-[14px] transition-colors" title="Italic">I</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface underline text-[13px] transition-colors" title="Underline">U</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface line-through text-[13px] transition-colors" title="Strikethrough">S</button>
+</div>
+<!-- Dividers & Hierarchy Group -->
+<div class="flex items-center gap-0.5 bg-surface-container-low p-1 rounded-lg">
+<button class="px-2 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">
+<span>Body text</span>
+<span class="material-symbols-outlined text-[14px] ml-1">expand_more</span>
+</button>
+<div class="w-px h-4 bg-outline-variant/40 mx-0.5"></div>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Bullet List">
+<span class="material-symbols-outlined text-[16px]">format_list_bulleted</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Numbered List">
+<span class="material-symbols-outlined text-[16px]">format_list_numbered</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Align Left">
+<span class="material-symbols-outlined text-[16px]">format_align_left</span>
+</button>
+</div>
+<!-- Attachments, Links & Media -->
+<div class="flex items-center gap-0.5 bg-surface-container-low p-1 rounded-lg">
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Insert Link">
+<span class="material-symbols-outlined text-[16px]">link</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Insert Media">
+<span class="material-symbols-outlined text-[16px]">image</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Insert Emoji">
+<span class="material-symbols-outlined text-[16px]">sentiment_satisfied</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Raw Code View">
+<span class="material-symbols-outlined text-[16px]">code</span>
+</button>
+</div>
+<!-- AI Magic Polish Tool -->
+<div class="flex items-center">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-sm text-label-sm transition-all shadow-[0_0_8px_rgba(78,222,163,0.15)]">
+<span class="material-symbols-outlined text-[16px]">auto_fix_high</span>
+<span>✨ AI Rewrite</span>
+</button>
+</div>
+</div>
+<!-- Editor Canvas Surface -->
+<div class="relative flex-1 p-space-xl bg-surface-container-lowest flex flex-col justify-between overflow-y-auto">
+<!-- Live Interactive Message Text Body -->
+<div class="space-y-4 max-w-2xl font-body-lg text-body-lg text-on-surface leading-relaxed">
+<p>
+              Hi 
+              <span class="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-primary/10 text-primary-fixed font-code-xs text-code-xs font-semibold select-none cursor-pointer hover:bg-primary/20 transition-colors">
+                {{owner_name}}
+              </span>,
+            </p>
+<p>
+              I came across 
+              <span class="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-secondary-container/15 text-secondary font-code-xs text-code-xs font-semibold select-none cursor-pointer hover:bg-secondary-container/25 transition-colors">
+                {{business_name}}
+              </span> 
+              in 
+              <span class="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-primary/10 text-primary-fixed font-code-xs text-code-xs font-semibold select-none cursor-pointer hover:bg-primary/20 transition-colors">
+                {{city}}
+              </span> 
+              and I wanted to share a tailored growth solution that can help you get more corporate bookings, boost weekday room occupancy, and automate local customer inquiries.
+            </p>
+<div class="py-2">
+<p class="font-medium text-on-surface mb-2">We help hospitality properties in Bareilly with:</p>
+<ul class="space-y-1.5 pl-4 list-disc text-on-surface-variant">
+<li><span class="text-on-surface">More online visibility</span> across high-intent corporate travelers</li>
+<li><span class="text-on-surface">Targeted direct outreach</span> bypassing OTA commission fees</li>
+<li><span class="text-on-surface">Done-for-you multi-channel automation</span> (Email, WhatsApp &amp; SMS)</li>
+</ul>
+</div>
+<p>
+              Would you be interested in a quick 10-minute briefing this Thursday or Friday to inspect our ready-to-deploy pipeline?
+            </p>
+<div class="pt-4 space-y-1">
+<p class="text-on-surface">Best regards,</p>
+<p class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">
+                  {{sender_name}}
+                </span>
+<span class="text-outline">|</span>
+<span class="text-outline font-normal text-body-sm">Growth Operations • QBIT Growth OS</span>
+</p>
+</div>
+<!-- Email Compliance Footer Note in Canvas -->
+<div class="pt-8 mt-6 opacity-60 text-[11px] font-body-sm text-outline space-y-1">
+<p>You received this email because you are registered as the principal owner for {{business_name}}.</p>
+<p>
+<a class="underline text-secondary-fixed-dim hover:text-secondary" href="#">Unsubscribe instantly</a> • 
+                <a class="underline text-secondary-fixed-dim hover:text-secondary" href="#">Manage communications</a> • 
+                Bareilly, UP, India
+              </p>
+</div>
+</div>
+<!-- Bottom Action Deck inside Editor -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xl mt-space-lg">
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">
+<span class="material-symbols-outlined text-[16px]">bookmark</span>
+<span>Save as Template</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors" onclick="triggerPreviewModal()">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Preview</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors" onclick="triggerSendTestModal()">
+<span class="material-symbols-outlined text-[16px]">send</span>
+<span>Send Test</span>
+</button>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary-container text-on-primary-container hover:bg-inverse-primary font-headline-sm text-headline-sm shadow-[0_0_16px_rgba(0,102,255,0.4)] transition-all">
+<span>Next: Settings</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 4 Columns: Variable Injector & AI Optimizer -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- Available Personalization Variables Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary-container/20 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[16px]">data_object</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Available Variables</h2>
+</div>
+<span class="font-code-xs text-code-xs text-outline">8 Detected</span>
+</div>
+<!-- Search Variable Filter -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[16px]">search</span>
+<input class="w-full bg-surface-container-highest/60 rounded-lg pl-8 pr-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container transition-all" id="var-search" onkeyup="filterVariables()" placeholder="Search variables..." type="text"/>
+</div>
+<!-- Variable Chips List -->
+<div class="flex flex-col gap-2 max-h-[310px] overflow-y-auto pr-1" id="variable-list">
+<!-- Variable 1 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{business_name}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{business_name}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Business name (e.g. The Royal Palace Hotel)</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Text</span>
+</div>
+<!-- Variable 2 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{owner_name}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{owner_name}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Owner / Manager (e.g. Rajesh Singhal)</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Text</span>
+</div>
+<!-- Variable 3 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{city}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{city}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Extracted city location (e.g. Bareilly)</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Geo</span>
+</div>
+<!-- Variable 4 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{category}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{category}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Business category (e.g. Hotel &amp; Resort)</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Tag</span>
+</div>
+<!-- Variable 5 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{phone}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{phone}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Verified contact phone number</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-secondary font-medium">Numeric</span>
+</div>
+<!-- Variable 6 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{website}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{website}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Scraped domain &amp; homepage URL</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-outline font-medium">Link</span>
+</div>
+<!-- Variable 7 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{rating}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{rating}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Google reviews score (e.g. 4.6★)</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Metric</span>
+</div>
+<!-- Variable 8 -->
+<div class="var-item p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-highest cursor-pointer transition-all group flex items-start justify-between" onclick="copyVarTag('{{review_count}}')">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed font-semibold">{{review_count}}</span>
+<span class="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">content_copy</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline">Total volume of public reviews</span>
+</div>
+<span class="text-[10px] font-code-xs px-1.5 py-0.5 rounded bg-surface-container text-tertiary font-medium">Metric</span>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between text-outline font-label-sm text-[11px]">
+<span>Click any pill to copy tag</span>
+<span class="text-secondary-fixed-dim">Lead Source: Google Maps</span>
+</div>
+</div>
+<!-- AI Content Optimizer Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md relative overflow-hidden">
+<!-- Ambient subtle glow behind card -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-tertiary-container/30 text-tertiary flex items-center justify-center shadow-[0_0_10px_rgba(78,222,163,0.3)]">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">AI Content Optimizer</h3>
+<p class="font-code-xs text-code-xs text-outline">Real-time spam &amp; deliverability engine</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary/10 text-tertiary font-label-sm text-label-sm font-semibold">98.4% Health</span>
+</div>
+<!-- Score Gauges -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-2.5 rounded-lg bg-surface-container flex flex-col gap-1">
+<span class="font-body-sm text-body-sm text-outline">Spam Score</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-tertiary font-bold">0.2</span>
+<span class="font-code-xs text-code-xs text-outline">/ 10</span>
+</div>
+<span class="font-code-xs text-[10px] text-tertiary-fixed flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              Extremely Low Risk
+            </span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container flex flex-col gap-1">
+<span class="font-body-sm text-body-sm text-outline">Deliverability</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-primary font-bold">98.4%</span>
+</div>
+<span class="font-code-xs text-[10px] text-primary-fixed-dim flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+              High Inbox Rate
+            </span>
+</div>
+</div>
+<!-- AI Recommendations / Improvements -->
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider text-[10px]">Smart Suggestions</span>
+<div class="p-2 rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high transition-colors flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">tips_and_updates</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Subject Length</span>
+<span class="font-body-sm text-[11px] text-outline">Trim 3 words for optimal mobile preview line (&lt; 48 chars).</span>
+</div>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high transition-colors flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[16px] mt-0.5">verified</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Local Social Proof</span>
+<span class="font-body-sm text-[11px] text-outline">Include mention of {{review_count}} positive reviews to build immediate authority.</span>
+</div>
+</div>
+</div>
+<!-- Optimize Button CTA -->
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-md text-label-md flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-[0_0_12px_rgba(78,222,163,0.25)]">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+<span>Enhance Copy with AI</span>
+</button>
+</div>
+<!-- Quick Lead Sample Preview Strip -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary-container/30 text-primary-fixed flex items-center justify-center font-bold text-xs">
+            H
+          </div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">The Royal Palace Hotel</span>
+<span class="font-code-xs text-code-xs text-outline">Bareilly • 4.6★ (2,431 Leads)</span>
+</div>
+</div>
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-container-high text-secondary font-code-xs text-code-xs transition-colors">
+          Next Lead ❯
+        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation & Workflow Bar -->
+<div class="mt-space-xl p-space-md rounded-xl bg-surface-container-lowest flex flex-col md:flex-row items-center justify-between gap-space-md shadow-lg">
+<!-- Back to Step 1 -->
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back: Select Audience</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-xs text-code-xs">
+        2,431 Selected Contacts
+      </span>
+</a>
+<!-- Mid Metadata Pill -->
+<div class="hidden sm:flex items-center gap-3 text-outline font-code-xs text-code-xs">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+        Template: Hotel Cold Outreach V3
+      </span>
+<span>•</span>
+<span>Estimated Audience: 2,431 Recipients</span>
+<span>•</span>
+<span class="text-tertiary">Warmup Mode: Active</span>
+</div>
+<!-- Forward Next Step -->
+<div class="flex items-center gap-3 w-full md:w-auto justify-end">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors">
+        Save Draft
+      </button>
+<button class="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-inverse-primary font-headline-sm text-headline-sm shadow-[0_0_12px_rgba(0,102,255,0.4)] transition-all">
+<span>Next: Settings &amp; Schedule</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high text-on-surface shadow-2xl font-label-md text-label-md" id="toast">
+<span class="material-symbols-outlined text-tertiary text-[18px]">check_circle</span>
+<span id="toast-msg">Variable copied to clipboard</span>
+</div>
+</div>
+<script>
+  function toggleSubjectVars() {
+    const menu = document.getElementById('subject-vars-menu');
+    menu.classList.toggle('hidden');
+  }
+
+  function insertAtSubject(variableTag) {
+    const input = document.getElementById('subject-input');
+    input.value += ' ' + variableTag;
+    document.getElementById('subject-vars-menu').classList.add('hidden');
+    showToast('Inserted ' + variableTag + ' into Subject');
+  }
+
+  function copyVarTag(tag) {
+    navigator.clipboard.writeText(tag).then(() => {
+      showToast('Copied ' + tag + ' to clipboard!');
+    }).catch(() => {
+      showToast('Copied ' + tag);
+    });
+  }
+
+  function filterVariables() {
+    const query = document.getElementById('var-search').value.toLowerCase();
+    const items = document.querySelectorAll('.var-item');
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? 'flex' : 'none';
+    });
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    const msg = document.getElementById('toast-msg');
+    msg.textContent = message;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    setTimeout(() => {
+      toast.classList.add('translate-y-20', 'opacity-0');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 2400);
+  }
+
+  function triggerPreviewModal() {
+    showToast('Opening live render preview...');
+  }
+
+  function triggerSendTestModal() {
+    showToast('Sending test email to sagar@qbit.os...');
+  }
+
+  // Close dropdown when clicked outside
+  window.addEventListener('click', function(e) {
+    const menu = document.getElementById('subject-vars-menu');
+    if (!e.target.closest('#subject-vars-menu') && !e.target.closest('button[onclick="toggleSubjectVars()"]')) {
+      if (menu) menu.classList.add('hidden');
+    }
+  });
+</script></main></div></body></html>

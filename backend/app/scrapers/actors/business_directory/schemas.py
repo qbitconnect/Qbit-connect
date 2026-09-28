@@ -13,19 +13,27 @@ class DirectoryAdapterConfig(BaseModel):
     """
 
     list_url: HttpUrl                      # directory listing page to fetch
-    item_selector: str = Field(min_length=1, max_length=200)
-    fields: dict[str, str]                 # lead field -> CSS selector (relative)
+    item_selector: str = Field(default="", max_length=200)
+    fields: dict[str, str] = Field(default_factory=dict)  # lead field -> CSS selector (relative)
     field_attributes: dict[str, str] = {}  # lead field -> attribute (default: text)
     pagination_next_selector: str | None = Field(default=None, max_length=200)
     max_list_pages: int = Field(default=1, ge=1, le=50)
 
 
 class BusinessDirectoryInput(BaseModel):
+    url: HttpUrl | None = None
     adapter: str = Field(default="generic", max_length=50)
-    config: DirectoryAdapterConfig
+    config: DirectoryAdapterConfig | None = None
     max_results: int = Field(default=200, ge=1, le=10000)
     request_timeout: int = Field(default=20, ge=1, le=120)
     respect_robots: bool = True
+
+    def get_config(self) -> DirectoryAdapterConfig:
+        if self.config is not None:
+            return self.config
+        if self.url is not None:
+            return DirectoryAdapterConfig(list_url=self.url)
+        raise ValueError("Either 'url' or 'config' must be provided")
 
 
 OUTPUT_FIELDS = (

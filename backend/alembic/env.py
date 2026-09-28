@@ -32,6 +32,13 @@ def _database_url() -> str:
     ini_url = config.get_main_option("sqlalchemy.url", "").strip()
     if ini_url:
         return ini_url
+    try:
+        from app.core.config import get_settings
+        settings = get_settings()
+        if settings.DATABASE_URL:
+            return str(settings.DATABASE_URL)
+    except Exception:
+        pass
     raise RuntimeError(
         "DATABASE_URL is not set. Export it (e.g. export DATABASE_URL=postgresql+asyncpg://...) "
         "or run migrations with the .env loaded."

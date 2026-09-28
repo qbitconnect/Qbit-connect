@@ -1,73 +1,170 @@
 {% extends "base.html" %}
-{% block title %}Jobs — QBIT Connect{% endblock %}
+{% block title %}My Runs — QBIT Growth OS{% endblock %}
 {% block nav_jobs %}active{% endblock %}
+
 {% block content %}
-<header class="page-head">
-  <div>
-    <h1>SCRAPE JOBS</h1>
-    <p class="muted">Infrastructure run history — {{ total }} job{{ total != 1 and 's' or '' }} across all actors.</p>
+<div class="flex flex-col w-full relative">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pt-space-lg pb-space-lg border-b border-outline-variant/20 mb-space-lg">
+    <div>
+      <div class="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm tracking-wider uppercase mb-2 border border-outline-variant/30">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+        <span>Execution Console &bull; {{ total }} Total Runs</span>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">SCRAPE JOBS &bull; Runs &amp; Orchestration History</h1>
+      <p class="text-sm text-slate-400 mt-1">Real-time status, worker leases, and lead ingestion counters across all background tasks.</p>
+    </div>
+
+    <!-- Search / Filter -->
+    <form method="get" action="/scraping/jobs" class="flex items-center gap-2">
+      <input type="hidden" name="status" value="{{ status }}">
+      <div class="relative flex items-center bg-surface-container-low rounded-xl px-space-md py-2 border border-outline-variant/20">
+        <span class="material-symbols-outlined text-slate-400 text-lg mr-2">search</span>
+        <input type="search" name="q" value="{{ q }}" placeholder="Search by ID, scraper or error..." class="bg-transparent border-0 outline-none text-sm text-white placeholder-slate-500 w-48 md:w-64 focus:ring-0">
+      </div>
+      <button class="px-4 py-2 bg-surface-container hover:bg-surface-container-high text-slate-300 hover:text-white rounded-xl text-sm font-semibold border border-outline-variant/20 transition-colors">
+        Filter
+      </button>
+      {% if q or status %}
+      <a href="/scraping/jobs" class="px-3 py-2 text-xs text-slate-400 hover:text-white">Clear</a>
+      {% endif %}
+    </form>
   </div>
-  <form method="get" action="/scraping/jobs" class="search">
-    <input type="hidden" name="status" value="{{ status }}">
-    <input type="search" name="q" value="{{ q }}" placeholder="Search id / scraper / error...">
-    <button class="btn btn-ghost">Search</button>
-  </form>
-</header>
 
-<nav class="tabs">
-  <a class="tab {{ 'active' if not status }}" href="/scraping/jobs?q={{ q }}">All</a>
-  {% for s in statuses %}
-  <a class="tab {{ 'active' if status == s }}" href="/scraping/jobs?status={{ s }}&q={{ q }}">{{ s }}</a>
-  {% endfor %}
-</nav>
+  <!-- Status Tabs -->
+  <div class="flex items-center gap-1 overflow-x-auto pb-2 mb-space-lg border-b border-outline-variant/10">
+    <a href="/scraping/jobs{% if q %}?q={{ q }}{% endif %}" class="px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors {% if not status %}bg-blue-600 text-white{% else %}text-slate-400 hover:text-white hover:bg-surface-container{% endif %}">
+      All Runs
+    </a>
+    {% for s in statuses %}
+    <a href="/scraping/jobs?status={{ s }}{% if q %}&q={{ q }}{% endif %}" class="px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors {% if status == s %}bg-blue-600 text-white{% else %}text-slate-400 hover:text-white hover:bg-surface-container{% endif %}">
+      {{ s }}
+    </a>
+    {% endfor %}
+  </div>
 
-<section class="card table-card">
-  <table>
-    <thead>
-      <tr><th>Job ID</th><th>Scraper</th><th>Status</th><th>Progress</th>
-          <th>Records</th><th>Created</th><th>Started</th><th>Duration</th><th></th></tr>
-    </thead>
-    <tbody>
-      {% for row in jobs %}
-      {% set j = row.job %}
-      <tr>
-        <td class="mono"><a href="/scraping/jobs/{{ j.id }}">{{ str(j.id)[:8] }}</a></td>
-        <td>{{ row.actor_name }}</td>
-        <td><span class="badge badge-{{ j.status.lower() }}">{{ j.status }}</span></td>
-        <td class="mono">{% if j.progress %}{{ j.progress }}%{% else %}&mdash;{% endif %}</td>
-        <td class="mono">{{ j.records_found }} / {{ j.records_saved }}</td>
-        <td>{{ j.created_at.strftime('%Y-%m-%d %H:%M') if j.created_at }}</td>
-        <td>{{ j.started_at.strftime('%H:%M:%S') if j.started_at else '&mdash;' }}</td>
-        <td class="mono">
-          {% if j.started_at and j.completed_at %}
-            {{ ((j.completed_at - j.started_at).total_seconds() / 60)|round(1) }}m
-          {% else %}&mdash;{% endif %}
-        </td>
-        <td><a class="btn btn-sm btn-ghost" href="/scraping/jobs/{{ j.id }}">Open</a></td>
-      </tr>
-      {% else %}
-      <tr><td colspan="9">
-        <div class="empty-state">
-          <svg viewBox="0 0 130 130" fill="none" aria-hidden="true">
-            <circle cx="65" cy="65" r="58" stroke="rgba(61,123,255,.3)" stroke-dasharray="2 7"/>
-            <circle cx="65" cy="65" r="36" stroke="rgba(61,123,255,.45)"/>
-            <circle cx="65" cy="65" r="4" fill="#3d7bff"/>
-          </svg>
-          <h3>No jobs found</h3>
-          <p>Run a scraper to see its execution history here.</p>
-          <a class="btn btn-primary" href="/scraping">Browse scrapers</a>
-        </div>
-      </td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</section>
+  <!-- Runs Table -->
+  <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 shadow-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-outline-variant/20 bg-surface-container text-xs font-mono uppercase tracking-wider text-slate-400">
+            <th class="py-3 px-4">Run ID</th>
+            <th class="py-3 px-4">Scraper Actor</th>
+            <th class="py-3 px-4">Status</th>
+            <th class="py-3 px-4">Progress</th>
+            <th class="py-3 px-4">Records (Found / Saved)</th>
+            <th class="py-3 px-4">Created</th>
+            <th class="py-3 px-4">Duration</th>
+            <th class="py-3 px-4 text-right">Console</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/10 text-sm">
+          {% for row in jobs %}
+          {% set j = row.job %}
+          <tr class="hover:bg-surface-container transition-colors">
+            <td class="py-3.5 px-4 font-mono text-xs text-blue-400 font-medium">
+              <a href="/scraping/jobs/{{ j.id }}" class="hover:underline flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">terminal</span>
+                <span>{{ str(j.id)[:8] }}</span>
+              </a>
+            </td>
+            <td class="py-3.5 px-4 font-medium text-white">
+              {{ row.actor_name }}
+              {% if j.actor_version %}<span class="text-xs text-slate-500 font-mono">v{{ j.actor_version }}</span>{% endif %}
+            </td>
+            <td class="py-3.5 px-4">
+              {% if j.status == 'COMPLETED' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Completed
+              </span>
+              {% elif j.status == 'RUNNING' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-950/60 text-blue-400 border border-blue-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> Running
+              </span>
+              {% elif j.status == 'QUEUED' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                Queued
+              </span>
+              {% elif j.status == 'PAUSED' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-950/60 text-amber-400 border border-amber-500/30">
+                Paused
+              </span>
+              {% elif j.status == 'FAILED' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-950/60 text-red-400 border border-red-500/30" title="{{ j.error or 'Failed' }}">
+                Failed
+              </span>
+              {% elif j.status == 'CANCELLED' %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+                Cancelled
+              </span>
+              {% else %}
+              <span class="px-2 py-0.5 rounded text-xs bg-slate-800 text-slate-300">{{ j.status }}</span>
+              {% endif %}
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs">
+              {% if j.progress %}
+              <div class="flex items-center gap-2">
+                <div class="w-16 h-1.5 bg-surface-container rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-500" style="width: {{ j.progress }}%"></div>
+                </div>
+                <span class="text-slate-300">{{ j.progress }}%</span>
+              </div>
+              {% else %}
+              <span class="text-slate-500">—</span>
+              {% endif %}
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs text-slate-300">
+              <span class="text-white font-semibold">{{ j.records_found }}</span> found &bull; <span class="text-emerald-400 font-semibold">{{ j.records_saved }}</span> saved
+              {% if j.records_duplicate %}<span class="text-slate-500">({{ j.records_duplicate }} dup)</span>{% endif %}
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
+              {{ j.created_at.strftime('%Y-%m-%d %H:%M') if j.created_at else '—' }}
+            </td>
+            <td class="py-3.5 px-4 font-mono text-xs text-slate-400">
+              {% if j.started_at and j.completed_at %}
+                {{ ((j.completed_at - j.started_at).total_seconds() / 60)|round(1) }}m
+              {% elif j.started_at %}
+                <span class="text-blue-400">in progress</span>
+              {% else %}
+                —
+              {% endif %}
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <a href="/scraping/jobs/{{ j.id }}" class="inline-flex items-center gap-1 px-3 py-1 bg-surface-container hover:bg-surface-container-high text-blue-400 hover:text-white rounded-lg text-xs font-semibold border border-outline-variant/20 transition-colors">
+                <span>View</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" class="py-16 text-center text-slate-400">
+              <span class="material-symbols-outlined text-4xl text-slate-600 mb-2">history</span>
+              <p class="text-sm font-medium">No scrape jobs found matching current filters.</p>
+              <a href="/scraping" class="inline-block mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition-colors">
+                Launch a Scraper
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-{% if pages > 1 %}
-<nav class="pager">
-  {% for p in range(1, pages + 1) %}
-    <a class="pager-item {{ 'active' if p == page }}" href="/scraping/jobs?status={{ status }}&q={{ q }}&page={{ p }}">{{ p }}</a>
-  {% endfor %}
-</nav>
-{% endif %}
+    <!-- Pagination -->
+    {% if pages > 1 %}
+    <div class="flex items-center justify-between px-4 py-3 border-t border-outline-variant/10 bg-surface-container text-xs">
+      <span class="text-slate-400">Page {{ page }} of {{ pages }}</span>
+      <div class="flex items-center gap-1">
+        {% for p in range(1, pages + 1) %}
+        <a href="/scraping/jobs?page={{ p }}{% if status %}&status={{ status }}{% endif %}{% if q %}&q={{ q }}{% endif %}" class="px-3 py-1 rounded text-xs font-semibold {% if p == page %}bg-blue-600 text-white{% else %}text-slate-400 hover:text-white hover:bg-surface-container-high{% endif %}">
+          {{ p }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

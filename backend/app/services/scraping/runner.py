@@ -112,8 +112,17 @@ class JobRunner:
             session.add(
                 _event_row(
                     job.id,
+                    "WORKER_PICKED_UP",
+                    f"Job claimed by worker {self.owner}",
+                    {"worker_id": self.owner},
+                )
+            )
+            session.add(
+                _event_row(
+                    job.id,
                     "JOB_STARTED",
-                    f"Claimed by {self.owner} (attempt {job.attempt})",
+                    f"Execution started by {self.owner} (attempt {job.attempt})",
+                    {"attempt": job.attempt, "worker_id": self.owner},
                 )
             )
             from app.services.scraping.engine import _emit_webhook
@@ -224,7 +233,9 @@ class JobRunner:
             pipeline.ctx = ctx  # counters + stop checks (§20, §38)
             heartbeat = asyncio.create_task(self._heartbeat(job.id))
             try:
+                await events.emit("SCRAPER_INITIALIZED", f"Actor {job.actor_id} initialized")
                 await actor.initialize(ctx)
+                await events.emit("SCRAPER_STARTED", f"Running scraper engine for {job.actor_id}")
                 async for raw_item in actor.run(ctx):
                     await pipeline.add(raw_item)
                     await ctx.check_stopped()          # cooperative stop (§19)

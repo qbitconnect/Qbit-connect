@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import enum
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import (
     DateTime,
@@ -297,7 +297,7 @@ class Message(Base):
     message_metadata: Mapped[dict] = mapped_column("metadata", PortableJSON, nullable=False, default=dict)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False,
-        default=lambda: datetime.now().astimezone(),
+        default=lambda: datetime.now(timezone.utc),
     )
     # --- Phase 8: display + delivery-timeline fields (§3, §16, §17) ----------
     lead_id: Mapped[uuid.UUID | None] = mapped_column(
@@ -448,7 +448,7 @@ class InboxOutboxItem(Base):
     attempts: Mapped[int] = mapped_column(nullable=False, default=0)
     available_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False,
-        default=lambda: datetime.now().astimezone(),
+        default=lambda: datetime.now(timezone.utc),
     )
     locked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     lease_owner: Mapped[str | None] = mapped_column(String(100), nullable=True)

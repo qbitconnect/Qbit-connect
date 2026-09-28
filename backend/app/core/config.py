@@ -139,6 +139,8 @@ class Settings(BaseSettings):
     QBIT_WORKER_LEASE_SECONDS: int = Field(default=120, ge=30)
     QBIT_WORKER_POLL_SECONDS: float = Field(default=2.0, ge=0.5)
     QBIT_WORKER_MAX_CONCURRENT_JOBS: int = Field(default=2, ge=1)
+    #: If True, API process runs an embedded scrape worker loop (essential for single-service deployments like Render Web Service)
+    QBIT_EMBEDDED_WORKER_ENABLED: bool = True
     # --- Phase 12: graceful shutdown + ops ---------------------------------------
     #: grace period before in-flight jobs are cancelled (checkpoint+PAUSED)
     #: on shutdown; must stay BELOW the container stop timeout to be effective
@@ -177,6 +179,13 @@ class Settings(BaseSettings):
     QBIT_MAPS_PROVIDER_URL: str | None = None
     QBIT_MAPS_PROVIDER_API_KEY: str | None = None  # env only; never committed
 
+    # --- Directory & B2B Commercial Portals (Phase 4) -------------------------
+    #: IndiaMART official CRM / Lead Manager API key.
+    #: (Automated scraping is prohibited by IndiaMART terms; official key required)
+    QBIT_INDIAMART_API_KEY: str | None = None
+    #: Justdial Enterprise Syndication API key.
+    #: (Automated scraping is prohibited by Justdial terms; licensing required)
+    QBIT_JUSTDIAL_API_KEY: str | None = None
 
     # --- WhatsApp Business provider (Phase 6 §2) --------------------------------
     #: provider registry id used when creating WhatsApp connections by default
@@ -291,6 +300,26 @@ class Settings(BaseSettings):
     QBIT_BACKUP_RETENTION_WEEKLY: int = Field(default=8, ge=1, le=104)
     QBIT_BACKUP_RETENTION_MONTHLY: int = Field(default=6, ge=1, le=60)
 
+    # --- Phase 9: AI Agents & Lead Intelligence ----------------------------------
+    #: AI provider: openai | anthropic | google | mock (mock = test envs ONLY)
+    AI_PROVIDER: str = "openai"
+    #: API key for the configured AI provider — never logged, never returned by API
+    AI_API_KEY: str = ""
+    #: OpenAI-compatible base URL (can point to local LLM or proxy)
+    AI_BASE_URL: str = "https://api.openai.com/v1"
+    #: Default model for extraction / classification tasks (lower cost)
+    AI_DEFAULT_MODEL: str = "gpt-4o-mini"
+    #: Reasoning model for enrichment / scoring / sales intelligence (higher capability)
+    AI_REASONING_MODEL: str = "gpt-4o"
+    #: Maximum token output per completion request
+    AI_MAX_TOKENS: int = Field(default=4096, ge=256)
+    #: HTTP request timeout for AI provider calls (seconds)
+    AI_REQUEST_TIMEOUT: int = Field(default=60, ge=5)
+    #: Hard cost cap per agent run in USD (run fails if exceeded)
+    AI_MAX_COST_PER_RUN: float = Field(default=0.50, gt=0)
+    #: Allow mock provider in non-test environments (NEVER enable in production)
+    QBIT_AI_ALLOW_MOCK_PROVIDER: bool = False
+
     # --- Derived helpers ----------------------------------------------------
     @property
     def is_production(self) -> bool:
@@ -391,6 +420,10 @@ class Settings(BaseSettings):
                 "EMAIL_WEBHOOK_SECRET must be set in production: email provider "
                 "webhooks are machine endpoints and are never processed unverified "
                 "(Phase 12 audit H6)."
+            )
+        if self.is_production and self.AI_PROVIDER == "mock" and not self.QBIT_AI_ALLOW_MOCK_PROVIDER:
+            problems.append(
+                "AI_PROVIDER=mock is forbidden in production (fake AI responses)."
             )
         return problems
 

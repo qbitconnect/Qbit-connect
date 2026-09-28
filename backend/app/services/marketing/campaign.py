@@ -231,6 +231,34 @@ class CampaignService:
         await session.refresh(campaign)
         return campaign
 
+    async def duplicate(
+        self, session: AsyncSession, campaign_id: uuid.UUID, *, user_id: uuid.UUID | None = None
+    ) -> Campaign:
+        original = await self.get(session, campaign_id)
+        dup_name = f"{original.name} (Copy)"[:200]
+        duplicated = Campaign(
+            name=dup_name,
+            description=original.description,
+            channel=original.channel,
+            status=CampaignStatus.DRAFT,
+            audience_definition=dict(original.audience_definition or {}),
+            template_id=original.template_id,
+            sending_account_id=original.sending_account_id,
+            schedule_type="IMMEDIATE",
+            scheduled_at=None,
+            timezone=original.timezone,
+            campaign_metadata=dict(original.campaign_metadata or {}),
+            created_by=user_id or original.created_by,
+        )
+        session.add(duplicated)
+        await session.commit()
+        await session.refresh(duplicated)
+        await self.events.record(
+            session, campaign_id=duplicated.id, event_type=EventType.CAMPAIGN_CREATED,
+            metadata={"duplicated_from": str(original.id)},
+        )
+        return duplicated
+
     # -------------------------------------------------------------- validation
     async def validate(
         self, session: AsyncSession, campaign_id: uuid.UUID, *,
@@ -240,7 +268,7 @@ class CampaignService:
     ) -> dict:
         """Pre-launch validation report (§16) — read-only, no state change."""
         campaign = await self.get(session, campaign_id)
-        report: dict = {"ok": True, "checks": {}}
+        report: dict = {"ok": True, "checks": {}, "warnings": []}
 
         def _check(name: str, passed: bool, detail: str | None = None) -> None:
             report["checks"][name] = {"status": VALIDATION_OK if passed else VALIDATION_FAIL}
@@ -262,6 +290,11 @@ class CampaignService:
         except (ValidationError, NotFoundError, PermissionDeniedError) as exc:
             _check("audience", False, str(exc))
         report["audience_count"] = audience_count
+        if audience_count > 1000:
+            report["warnings"].append(
+                f"Large audience warning: {audience_count} recipients targeted. "
+                "Dispatch will be throttled in accordance with provider rate limits."
+            )
 
         template = (
             await session.get(CampaignTemplate, campaign.template_id)

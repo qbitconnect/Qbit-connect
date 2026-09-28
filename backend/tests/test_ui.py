@@ -31,6 +31,20 @@ async def test_anonymous_is_redirected_to_login(ui_client):
     assert resp.status_code == 303
     assert resp.headers["location"].startswith("/login")
 
+    resp_home = await ui_client.get("/")
+    assert resp_home.status_code == 303
+    assert resp_home.headers["location"].startswith("/login")
+
+
+async def test_home_page_authenticated_renders_ceo_command_center(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.get("/")
+    assert resp.status_code == 200
+    assert "Workspace OS // v2.4" in resp.text
+    assert "NODE: ASIA-SOUTH1-B4" in resp.text
+    assert "Leads Collected" in resp.text
+    assert "Recent Scraper Runs" in resp.text
+
 
 async def test_login_success_sets_cookie_and_redirects(ui_client):
     resp = await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
@@ -201,4 +215,80 @@ async def test_ui_agent_plan_and_run(ui_client):
     assert "snapshot" in live_data
     assert live_data["snapshot"]["target"] == 50
     assert "status" in live_data["snapshot"]
+
+
+async def test_connections_page_renders_stitch_screen_32(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.get("/connections")
+    assert resp.status_code == 200
+    assert "Integrations &amp; Connected Accounts" in resp.text or "Integrations & Connected Accounts" in resp.text
+    assert "QBIT SYSTEM // 32" in resp.text
+    assert "Google Maps API" in resp.text
+    assert "API Credentials &amp; Environment Secrets" in resp.text or "API Credentials & Environment Secrets" in resp.text
+
+
+async def test_admin_teams_page_renders_stitch_screen_34(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.get("/admin/teams")
+    assert resp.status_code == 200
+    assert "Team Management &amp; Groups" in resp.text or "Team Management & Groups" in resp.text
+    assert "QBIT SYSTEM // 34" in resp.text
+    assert "Configured Teams" in resp.text
+    assert "IAM Synchronized" in resp.text
+
+
+async def test_admin_roles_page_renders_stitch_screen_35(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.get("/admin/roles")
+    assert resp.status_code == 200
+    assert "Roles &amp; Permissions Matrix" in resp.text or "Roles & Permissions Matrix" in resp.text
+    assert "QBIT SYSTEM // 35" in resp.text
+    assert "Capability Matrix" in resp.text
+    assert "CEO" in resp.text
+    assert "ADMIN" in resp.text
+
+
+async def test_admin_audit_page_renders_stitch_screen_36(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    resp = await ui_client.get("/admin/audit")
+    assert resp.status_code == 200
+    assert "Security Audit Logs &amp; Forensics" in resp.text or "Security Audit Logs & Forensics" in resp.text
+    assert "QBIT SYSTEM // 36" in resp.text
+    assert "Append-Only Immutability" in resp.text
+
+
+async def test_job_detail_handles_running_job_naive_datetime(ui_client, db_session):
+    import uuid
+    from datetime import datetime
+    from app.models.scrape import ScrapeJob, JobStatus
+
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    job_id = uuid.uuid4()
+    # Simulate SQLite naive datetime where tzinfo is None
+    job = ScrapeJob(
+        id=job_id,
+        actor_id="website",
+        actor_version="1.0.0",
+        status=JobStatus.RUNNING.value,
+        input={"url": "https://example.com"},
+        started_at=datetime.now(),  # naive datetime
+        completed_at=None,
+    )
+    db_session.add(job)
+    await db_session.commit()
+
+    resp = await ui_client.get(f"/scraping/jobs/{job_id}")
+    assert resp.status_code == 200
+    assert "SCRAPE JOB" in resp.text
+    assert "RUNNING" in resp.text
+
+
+async def test_job_detail_handles_invalid_or_truncated_uuid(ui_client):
+    await _login(ui_client, ADMIN_EMAIL, ADMIN_PASSWORD)
+    # 31-char truncated UUID as reported in incident
+    resp = await ui_client.get("/scraping/jobs/a017f4c2-8c35-43da-b6f4-1edecdcd5a7", follow_redirects=False)
+    assert resp.status_code == 303
+    assert resp.headers["location"] == "/scraping/jobs"
+
+
 

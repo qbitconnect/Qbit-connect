@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Backdrop / Parent Workflow Context Preview (Screen 14 blurred underneath) -->
+<div class="relative w-full overflow-hidden rounded-xl bg-surface-container-lowest">
+<!-- Ambient glow orbs in canvas backdrop -->
+<div class="pointer-events-none absolute -top-40 left-1/4 h-96 w-96 rounded-full bg-primary-container/10 blur-[120px]"></div>
+<div class="pointer-events-none absolute -bottom-24 right-1/4 h-80 w-80 rounded-full bg-secondary-container/10 blur-[100px]"></div>
+<!-- Background Step Sequence Container (Dimmed Canvas Context) -->
+<div class="w-full opacity-35 select-none pointer-events-none px-space-xl pt-space-xl pb-space-2xl">
+<!-- Workflow Progress Bar -->
+<div class="flex items-center justify-between gap-space-lg mb-space-xl max-w-5xl mx-auto">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">1. Source &amp; Location</span>
+</div>
+<div class="h-0.5 flex-1 bg-primary-container"></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">2. Business Category</span>
+</div>
+<div class="h-0.5 flex-1 bg-primary-container"></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_12px_rgba(0,102,255,0.4)]">
+            3
+          </div>
+<span class="font-label-md text-label-md text-secondary-container font-semibold">3. Data Fields Selection</span>
+</div>
+<div class="h-0.5 flex-1 bg-surface-container-highest"></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-outline flex items-center justify-center font-label-sm text-label-sm">
+            4
+          </div>
+<span class="font-label-md text-label-md text-outline">4. Review &amp; Launch</span>
+</div>
+</div>
+<!-- Ghost background cards (representing Step 14 map & input controls) -->
+<div class="grid grid-cols-12 gap-space-lg max-w-5xl mx-auto">
+<div class="col-span-7 bg-surface-container rounded-lg p-space-lg flex flex-col gap-4">
+<div class="h-6 w-48 bg-surface-container-highest rounded"></div>
+<div class="h-10 w-full bg-surface-container-high rounded-lg"></div>
+<div class="h-10 w-full bg-surface-container-high rounded-lg"></div>
+</div>
+<div class="col-span-5 bg-surface-container rounded-lg p-space-lg flex items-center justify-center">
+<div class="w-full h-44 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[36px] text-outline">map</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Stage Modal Dialog (Screen 15: Data Fields Selection) -->
+<div class="absolute inset-0 z-30 flex items-center justify-center p-space-md sm:p-space-lg bg-surface-container-lowest/80 backdrop-blur-md">
+<div class="w-full max-w-6xl max-h-[92vh] flex flex-col rounded-xl bg-surface-container-low shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
+<!-- Header Banner: Mission Critical Instrument Header -->
+<div class="px-space-xl py-space-lg bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start md:items-center gap-space-md">
+<div class="w-11 h-11 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary-container shadow-[0_0_16px_rgba(0,210,255,0.25)] shrink-0">
+<span class="material-symbols-outlined text-[24px]">checklist_rtl</span>
+</div>
+<div>
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-secondary font-code-xs text-code-xs tracking-wider uppercase font-semibold">STAGE 03 / CONFIGURATION</span>
+<span class="text-outline font-code-xs text-code-xs">ACTOR: GOOGLE-MAPS-PRO-V2</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight mt-0.5">Select the information you want to extract</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Choose the exact schema attributes to crawl, clean, and enrich from Google Maps business nodes.</p>
+</div>
+</div>
+<!-- Quick Selector Presets -->
+<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center bg-surface-container-lowest p-1 rounded-lg">
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm text-on-primary-container bg-primary-container shadow-[0_0_8px_rgba(0,102,255,0.3)] transition-all" id="btn-preset-recommended">
+              Standard Growth (14)
+            </button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" id="btn-select-all">
+              Select All
+            </button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" id="btn-deselect-all">
+              Minimal Core
+            </button>
+</div>
+</div>
+<!-- Filter & Search Toolbar -->
+<div class="px-space-xl py-space-sm bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm">
+<div class="relative flex-1 min-w-[240px] max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">filter_list</span>
+<input class="w-full bg-surface-container-highest rounded-lg pl-9 pr-8 py-2 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all" id="field-search-input" placeholder="Filter schema keys (e.g., email, coordinates, owner, rating)..." type="text"/>
+<button class="hidden absolute right-2.5 top-2.5 text-outline hover:text-on-surface text-[14px]" id="field-search-clear">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Quick Toggles / Telemetry Indicators -->
+<div class="flex items-center gap-space-lg text-outline font-code-xs text-code-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_6px_rgba(78,222,163,0.6)]"></span>
+<span class="text-on-surface font-label-sm text-label-sm" id="active-field-count">14 of 22 active</span>
+</div>
+<div class="h-3 w-px bg-surface-container-highest"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">bolt</span>
+<span>Proxy Load: <strong class="text-secondary font-medium">Nominal</strong></span>
+</div>
+<div class="h-3 w-px bg-surface-container-highest"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[14px]">speed</span>
+<span>Speed: <strong class="text-on-surface font-medium">~420 req/min</strong></span>
+</div>
+</div>
+</div>
+<!-- Scrollable Schema Selection Bento Grid -->
+<div class="overflow-y-auto px-space-xl py-space-lg space-y-space-lg flex-1 custom-field-scroller max-h-[58vh]">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg" id="field-groups-container">
+<!-- Category 1: Basic Information -->
+<div class="schema-category-card bg-surface-container rounded-xl p-space-lg flex flex-col justify-between hover:bg-surface-container/90 transition-all">
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary-container">domain</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Basic Information</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-code-xs text-code-xs text-secondary-fixed">8 keys</span>
+</div>
+<div class="space-y-1.5" data-category="basic">
+<!-- Business Name (Locked) -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg bg-surface-container-low cursor-default select-none group">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 rounded bg-primary-container text-on-primary-container accent-primary-container pointer-events-none" disabled="" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface font-medium">Business Name</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest font-code-xs text-code-xs text-outline">name</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-outline font-label-sm text-label-sm uppercase tracking-wide text-[10px]">Primary Key</span>
+</label>
+<!-- Category -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="category" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Category / Primary Niche</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">categoryName</span>
+</div>
+<span class="text-tertiary font-code-xs text-code-xs flex items-center gap-0.5"><span class="material-symbols-outlined text-[13px]">check</span>Indexed</span>
+</label>
+<!-- Physical Address -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="address" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Full Physical Address</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">fullAddress</span>
+</div>
+<span class="text-outline font-code-xs text-code-xs">Geocoded</span>
+</label>
+<!-- City -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="city" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">City / Locality</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">city</span>
+</div>
+</label>
+<!-- State -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="state" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">State / Province</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">state</span>
+</div>
+</label>
+<!-- Country -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="country" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Country Code &amp; ISO</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">countryCode</span>
+</div>
+</label>
+<!-- Google Maps Place URL -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="maps_url" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Google Maps Place URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">placeUrl</span>
+</div>
+</label>
+<!-- Coordinates (Lat/Long) -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="coords" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Coordinates (Lat, Long, PlusCode)</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">geoPoint</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">Optional</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Category 2: Direct Contact & Owner Intelligence -->
+<div class="schema-category-card bg-surface-container rounded-xl p-space-lg flex flex-col justify-between hover:bg-surface-container/90 transition-all">
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary">contact_phone</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Contact &amp; Executive Enrichment</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-code-xs text-code-xs text-tertiary-fixed">4 keys</span>
+</div>
+<div class="space-y-1.5" data-category="contact">
+<!-- Phone Number -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="phone" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Direct Phone Number (E.164)</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">phone</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-code-xs text-code-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">verified</span>Cleaned
+                    </span>
+</label>
+<!-- Email Address with AI enrich tag -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high cursor-pointer transition-colors shadow-sm">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="email" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface font-medium">Business Email Address</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">email</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-secondary-container font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>AI Cascade
+                    </span>
+</label>
+<!-- Website URL -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="website" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Primary Website URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">domain</span>
+</div>
+<span class="text-outline font-code-xs text-code-xs">Canonical</span>
+</label>
+<!-- Contact Person / Owner Name -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="owner" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Owner / Decision Maker Name</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">contactPerson</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-code-xs text-code-xs">+0.5 cr</span>
+</label>
+</div>
+<!-- Callout insight box -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-lowest flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                    Emails are verified via real-time MX lookup and heuristic deep-crawler. High deliverability guaranteed.
+                  </p>
+</div>
+</div>
+</div>
+<!-- Category 3: Reputation & Storefront Signals -->
+<div class="schema-category-card bg-surface-container rounded-xl p-space-lg flex flex-col justify-between hover:bg-surface-container/90 transition-all">
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary-fixed">star_half</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Reputation &amp; Operations</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-code-xs text-code-xs text-secondary">6 keys</span>
+</div>
+<div class="space-y-1.5" data-category="reputation">
+<!-- Star Rating -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="rating" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Star Rating (0.0 to 5.0)</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">totalScore</span>
+</div>
+<div class="flex items-center text-secondary text-[12px]">
+<span class="material-symbols-outlined text-[14px]">grade</span>
+<span class="font-code-xs text-code-xs">Score</span>
+</div>
+</label>
+<!-- Review Count -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="reviews" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Total Review Count</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">reviewsCount</span>
+</div>
+</label>
+<!-- Photos Count & Media URLs -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="photos" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Photos Count &amp; Cover Image URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">imageUrl</span>
+</div>
+<span class="text-outline font-code-xs text-code-xs">CDN link</span>
+</label>
+<!-- Opening Hours & Schedule -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="hours" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Weekly Opening Hours &amp; Schedule</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">openingHours</span>
+</div>
+</label>
+<!-- Price Range -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="price_tier" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Price Tier ($ to $$$$)</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">priceRange</span>
+</div>
+</label>
+<!-- Description / Summary -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="description" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Editorial Summary &amp; Description</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">description</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Category 4: Social Profiles & Organization Footprint -->
+<div class="schema-category-card bg-surface-container rounded-xl p-space-lg flex flex-col justify-between hover:bg-surface-container/90 transition-all">
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary-container">share_reviews</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Social Channels &amp; Org</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-code-xs text-code-xs text-primary-fixed-dim">6 keys</span>
+</div>
+<div class="space-y-1.5" data-category="social">
+<!-- Instagram URL -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="instagram" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Instagram Profile Handle &amp; URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">instagram</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">camera_alt</span>
+</label>
+<!-- Facebook URL -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="facebook" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Facebook Page URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">facebook</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">thumb_up</span>
+</label>
+<!-- LinkedIn URL -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="linkedin" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">LinkedIn Corporate / Showcase URL</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">linkedin</span>
+</div>
+</label>
+<!-- Twitter / X -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="twitter" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">X / Twitter Handle</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">twitter</span>
+</div>
+</label>
+<!-- Claimed / Verified Status -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="verified" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Claimed / Verified GMB Badge</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">isClaimed</span>
+</div>
+<span class="text-tertiary font-code-xs text-code-xs">Boolean</span>
+</label>
+<!-- Total Branches / Multi-location count -->
+<label class="field-item flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-high cursor-pointer transition-colors opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="schema-chk w-4 h-4 rounded bg-surface-container-highest accent-primary-container cursor-pointer" data-field-id="branches" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Total Franchise / Branch Count</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-lowest font-code-xs text-code-xs text-outline">locationGroupCount</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Telemetry & Impact Strip (Hardware Instrument Design) -->
+<div class="px-space-xl py-space-md bg-surface-container-lowest flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-lg">
+<!-- Active Counter Badge -->
+<div class="flex items-center gap-space-sm bg-surface-container-high px-3 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">tune</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold" id="bottom-field-counter">14 of 22 Fields Active</span>
+<span class="font-code-xs text-code-xs text-outline">8 Core + 6 Deep Enrich</span>
+</div>
+</div>
+<!-- Extraction Speed -->
+<div class="hidden lg:flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">timer</span>
+<span>Extraction Overhead: <strong class="text-on-surface">+0.18s / record</strong></span>
+</div>
+<!-- Cost impact -->
+<div class="hidden sm:flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">toll</span>
+<span>Cost: <strong class="text-tertiary">1.0 Credit / lead</strong></span>
+</div>
+</div>
+<!-- JSON Schema Preview Pill Trigger -->
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-secondary-fixed font-code-xs text-code-xs transition-colors" id="toggle-json-spec">
+<span class="material-symbols-outlined text-[15px]">code</span>
+<span>Inspect Schema JSON</span>
+</button>
+</div>
+</div>
+<!-- Modal Action Footer -->
+<div class="px-space-xl py-space-md bg-surface-container flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1 px-4 py-2 rounded-lg bg-transparent hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-secondary-fixed hover:bg-surface-container-high font-label-md text-label-md transition-colors" id="btn-save-preset">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+<span>Save As Custom Field Preset</span>
+</button>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-code-xs text-code-xs text-outline hidden sm:inline">Press Enter to proceed</span>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-semibold shadow-[0_0_16px_rgba(0,102,255,0.45)] hover:shadow-[0_0_24px_rgba(0,102,255,0.6)] transition-all" id="btn-next-step">
+<span>Next: Review &amp; Run</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-Modal: Interactive JSON Schema Inspector Drawer (Revealed via button) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-space-lg bg-surface-container-lowest/80 backdrop-blur-sm" id="json-spec-drawer">
+<div class="w-full max-w-2xl bg-surface-container-lowest rounded-xl p-space-lg shadow-2xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">data_object</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Active Schema Projection</span>
+</div>
+<button class="text-outline hover:text-on-surface" id="close-json-drawer">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="bg-surface p-space-md rounded-lg overflow-x-auto max-h-80">
+<pre class="font-code-xs text-code-xs text-secondary-fixed-dim" id="json-preview-body">{
+  "extractor": "gmaps-leads-pro",
+  "fields": [
+    "name",
+    "categoryName",
+    "fullAddress",
+    "city",
+    "state",
+    "countryCode",
+    "placeUrl",
+    "phone",
+    "email",
+    "domain",
+    "totalScore",
+    "reviewsCount",
+    "openingHours",
+    "priceRange",
+    "description",
+    "instagram",
+    "facebook",
+    "isClaimed"
+  ],
+  "ai_enrichment": {
+    "resolve_emails": true,
+    "confidence_threshold": 0.85
+  }
+}</pre>
+</div>
+<div class="flex justify-end gap-space-sm pt-space-xs">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm" id="copy-json-btn">
+          Copy JSON Payload
+        </button>
+<button class="px-4 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-sm text-label-sm" id="dismiss-json-btn">
+          Done
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic Checkbox & Telemetry Update Engine
+  (function initFieldSelector() {
+    const checkboxes = document.querySelectorAll('.schema-chk');
+    const activeFieldCount = document.getElementById('active-field-count');
+    const bottomFieldCounter = document.getElementById('bottom-field-counter');
+    const searchInput = document.getElementById('field-search-input');
+    const clearSearch = document.getElementById('field-search-clear');
+    const fieldItems = document.querySelectorAll('.field-item');
+
+    function updateCounters() {
+      let count = 1; // 1 for locked Business Name
+      checkboxes.forEach(chk => {
+        if (chk.checked) count++;
+      });
+      const total = checkboxes.length + 1;
+      const text = `${count} of ${total} active`;
+      if (activeFieldCount) activeFieldCount.textContent = text;
+      if (bottomFieldCounter) bottomFieldCounter.textContent = `${count} of ${total} Fields Active`;
+    }
+
+    checkboxes.forEach(chk => {
+      chk.addEventListener('change', updateCounters);
+    });
+
+    // Preset Buttons
+    const btnSelectAll = document.getElementById('btn-select-all');
+    const btnDeselectAll = document.getElementById('btn-deselect-all');
+    const btnRecommended = document.getElementById('btn-preset-recommended');
+
+    if (btnSelectAll) {
+      btnSelectAll.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = true);
+        updateCounters();
+      });
+    }
+
+    if (btnDeselectAll) {
+      btnDeselectAll.addEventListener('click', () => {
+        checkboxes.forEach(chk => chk.checked = false);
+        updateCounters();
+      });
+    }
+
+    if (btnRecommended) {
+      btnRecommended.addEventListener('click', () => {
+        const standardList = ['category', 'address', 'city', 'state', 'country', 'maps_url', 'phone', 'email', 'website', 'rating', 'reviews', 'hours', 'price_tier', 'description', 'instagram', 'facebook', 'verified'];
+        checkboxes.forEach(chk => {
+          chk.checked = standardList.includes(chk.dataset.fieldId);
+        });
+        updateCounters();
+      });
+    }
+
+    // Real-time Field Filtering
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        if (clearSearch) {
+          clearSearch.classList.toggle('hidden', val.length === 0);
+        }
+
+        fieldItems.forEach(item => {
+          const text = item.innerText.toLowerCase();
+          if (text.includes(val)) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+
+      if (clearSearch) {
+        clearSearch.addEventListener('click', () => {
+          searchInput.value = '';
+          clearSearch.classList.add('hidden');
+          fieldItems.forEach(item => item.style.display = 'flex');
+          searchInput.focus();
+        });
+      }
+    }
+
+    // JSON Spec Drawer
+    const jsonDrawer = document.getElementById('json-spec-drawer');
+    const toggleJsonBtn = document.getElementById('toggle-json-spec');
+    const closeJsonBtn = document.getElementById('close-json-drawer');
+    const dismissJsonBtn = document.getElementById('dismiss-json-btn');
+    const copyJsonBtn = document.getElementById('copy-json-btn');
+
+    if (toggleJsonBtn && jsonDrawer) {
+      toggleJsonBtn.addEventListener('click', () => {
+        jsonDrawer.classList.remove('hidden');
+      });
+    }
+
+    const closeDrawer = () => {
+      if (jsonDrawer) jsonDrawer.classList.add('hidden');
+    };
+
+    if (closeJsonBtn) closeJsonBtn.addEventListener('click', closeDrawer);
+    if (dismissJsonBtn) dismissJsonBtn.addEventListener('click', closeDrawer);
+
+    if (copyJsonBtn) {
+      copyJsonBtn.addEventListener('click', () => {
+        copyJsonBtn.textContent = 'Copied to Clipboard!';
+        setTimeout(() => {
+          copyJsonBtn.textContent = 'Copy JSON Payload';
+        }, 1800);
+      });
+    }
+
+    // Save Preset Feedback
+    const btnSavePreset = document.getElementById('btn-save-preset');
+    if (btnSavePreset) {
+      btnSavePreset.addEventListener('click', () => {
+        const orig = btnSavePreset.innerHTML;
+        btnSavePreset.innerHTML = '<span class="material-symbols-outlined text-[16px] text-tertiary">check</span> Preset Saved to Org';
+        setTimeout(() => {
+          btnSavePreset.innerHTML = orig;
+        }, 2000);
+      });
+    }
+
+    updateCounters();
+  })();
+</script></main></div></body></html>

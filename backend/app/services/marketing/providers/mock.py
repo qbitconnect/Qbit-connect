@@ -67,6 +67,19 @@ class MockProvider(BaseMarketingProvider):
             metadata={"mock": True},
         )
 
+    async def send_session_text(
+        self, *, account_config: dict, recipient_address: str, body: str,
+        idempotency_key: str, credentials: dict | None = None,
+    ) -> SendResult:
+        return await self.send(
+            account_config=account_config,
+            recipient_address=recipient_address,
+            subject=None,
+            body=body,
+            idempotency_key=idempotency_key,
+            credentials=credentials,
+        )
+
     async def handle_event(self, payload: dict) -> dict:
         event_type = str(payload.get("event_type") or "MESSAGE_SENT").upper()
         return {

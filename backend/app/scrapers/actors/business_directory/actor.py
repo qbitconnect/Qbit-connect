@@ -36,12 +36,20 @@ class BusinessDirectoryActor(ScraperActor):
         "robots.txt respect",
     )
     supports_pause = True
+    source_type = "business_directory"
+    implementation_status = "VERIFIED"
+    access_method = "declarative_adapter"
+    terms_verified = True
+    permitted_use = "Public business directory listings where automated indexing is permitted by directory terms"
+    retention_policy = "Periodic refresh recommended; remove unlisted entries"
+    export_restrictions = ("Source attribution required on downstream export",)
     input_schema = BusinessDirectoryInput
     output_fields = OUTPUT_FIELDS
 
     async def run(self, ctx):
         inp = BusinessDirectoryInput.model_validate(ctx.input)
         adapter = get_adapter(inp.adapter)
+        cfg = inp.get_config()
 
         yielded = 0
         list_page_count = 0
@@ -49,12 +57,12 @@ class BusinessDirectoryActor(ScraperActor):
         if ctx.checkpoint and ctx.checkpoint.data.get("next_page"):
             page_url = ctx.checkpoint.data["next_page"]
 
-        pages = list(adapter.pages(inp.config))
+        pages = list(adapter.pages(cfg))
         if page_url:
             pages = [page_url]
 
         for list_url in pages:
-            while list_url and list_page_count < inp.config.max_list_pages:
+            while list_url and list_page_count < cfg.max_list_pages:
                 await ctx.check_stopped()
                 ctx.check_deadline()
                 list_url = await validate_url_async(list_url, ctx.url_policy)
@@ -71,7 +79,7 @@ class BusinessDirectoryActor(ScraperActor):
                     break
 
                 soup = BeautifulSoup(resp.text, "html.parser")
-                for raw in adapter.parse(inp.config, soup, str(resp.url)):
+                for raw in adapter.parse(cfg, soup, str(resp.url)):
                     if yielded >= inp.max_results:
                         raise ScraperLimitReachedError(
                             f"max_results limit reached ({inp.max_results})"
@@ -83,7 +91,7 @@ class BusinessDirectoryActor(ScraperActor):
                     yielded += 1
 
                 await ctx.save_checkpoint({"next_page": list_url, "yielded": yielded})
-                list_url = adapter.next_page(inp.config, soup, str(resp.url))
+                list_url = adapter.next_page(cfg, soup, str(resp.url))
 
         await ctx.save_checkpoint({"next_page": None, "yielded": yielded}, force=True)
 

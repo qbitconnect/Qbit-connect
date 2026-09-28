@@ -1,69 +1,222 @@
 {% extends "base.html" %}
-{% block title %}Sending accounts — QBIT Connect{% endblock %}
+{% block title %}Sending Accounts — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>SENDING ACCOUNTS</h1>
-    <p class="muted">Multiple sender identities per channel. Provider credentials are never stored in this phase — the credential vault arrives later.</p>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Header & Back Navigation -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <a href="/campaigns" class="text-outline hover:text-on-surface transition-colors flex items-center gap-1 font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Campaigns
+        </a>
+        <span class="text-outline/40">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          Infrastructure
+        </span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+        Sending Accounts & Providers
+      </h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Manage sender profiles, rate limits, and dispatch channels for WhatsApp Business, SMTP Email, and SMS gateways.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a class="btn btn-ghost" href="/campaigns">Back to Campaigns</a>
+    </div>
   </div>
-  <div class="head-actions"><a class="btn btn-ghost" href="/campaigns">Back</a></div>
-</div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-
-{% if not accounts %}
-<div class="alert">No sending provider configured. Add a sending account, then configure its provider to enable launches.</div>
-{% endif %}
-
-{% if can_manage %}
-<form method="post" action="/campaigns/accounts" class="card" style="padding:16px;max-width:900px;display:flex;flex-direction:column;gap:10px">
-  <h3 style="margin:0">ADD SENDING ACCOUNT</h3>
-  <div class="toolbar" style="flex-wrap:wrap">
-    <input type="text" name="name" required maxlength="150" placeholder="Account name (e.g. WhatsApp Business 1)" style="flex:2;min-width:220px">
-    <select name="channel" required>
-      {% for value, label in channels %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
-    </select>
-    <select name="provider" required>
-      <option value="whatsapp_cloud">whatsapp_cloud (interface)</option>
-      <option value="email">email (interface)</option>
-      <option value="sms">sms (interface)</option>
-      <option value="mock">mock — MOCK / TEST ONLY</option>
-    </select>
-    <input type="text" name="identifier" required maxlength="300" placeholder="Identifier (phone number / email address)" style="flex:2;min-width:220px">
-    <input type="text" name="display_identifier" maxlength="300" placeholder="Display identifier (optional)">
-    <input type="text" name="from_address" maxlength="300" placeholder="From address (email channel, optional)">
-    <input type="text" name="phone_number_id" maxlength="300" placeholder="Phone number id (WhatsApp, optional)">
-    <input type="text" name="rate_per_minute" maxlength="6" placeholder="Rate limit / min (default 10)" size="10">
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
   </div>
-  <p class="muted small">No API keys or tokens can be entered here — they are rejected by design. Providers stay "not configured" until a later phase wires the credential vault.</p>
-  <div class="form-actions"><button class="btn btn-primary" type="submit">Add account</button></div>
-</form>
-{% endif %}
+  {% endif %}
 
-<div class="card table-card" style="margin-top:14px">
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Name</th><th>Channel</th><th>Provider</th><th>Status</th><th>Health</th><th>Identifier</th><th>Config</th></tr></thead>
-      <tbody>
-        {% for a in accounts %}
-        <tr>
-          <td><strong>{{ a.row.name }}</strong>
-            {% if a.test_only %}<span class="badge badge-failed">MOCK / TEST ONLY</span>{% endif %}
-          </td>
-          <td>{{ a.row.channel }}</td>
-          <td class="mono small">{{ a.row.provider }}{% if not a.available %} <span class="muted">(unregistered)</span>{% endif %}</td>
-          <td><span class="badge badge-{{ a.row.status | lower }}">{{ a.row.status }}</span></td>
-          <td>{{ a.row.health_status }}</td>
-          <td class="mono small">{{ a.row.display_identifier or a.row.identifier }}</td>
-          <td>{% if a.configured %}<span style="color:var(--ok)">configured</span>{% else %}<span class="muted">not configured</span>{% endif %}</td>
-        </tr>
-        {% else %}
-        <tr><td colspan="7" class="center muted" style="padding:28px">No sending accounts yet.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
   </div>
+  {% endif %}
+
+  {% if not accounts %}
+  <div class="rounded-xl p-space-md bg-surface-container-high border border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div class="flex items-center gap-space-sm">
+      <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline">
+        <span class="material-symbols-outlined text-[20px]">warning</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-md text-label-md text-on-surface font-semibold">No Outbound Senders Configured</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Add a sending account below to enable automated campaign execution.</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Add Sending Account Card -->
+  {% if can_manage %}
+  <div class="card p-space-xl space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm flex items-center justify-between">
+      <div class="space-y-0.5">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Add Outbound Sending Account</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Configure provider parameters and dispatch throttling.</p>
+      </div>
+      <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high text-outline">Encrypted Routing</span>
+    </div>
+
+    <form method="post" action="/campaigns/accounts" class="space-y-space-md">
+      <!-- Row 1: Basic Identifiers -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accName">Account Label <span class="text-error">*</span></label>
+          <input type="text" id="accName" name="name" required maxlength="150" placeholder="e.g. Surat Sales WhatsApp 1" class="qbit-input">
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accChannel">Channel <span class="text-error">*</span></label>
+          <select id="accChannel" name="channel" required class="qbit-input">
+            {% for value, label in channels %}
+            <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accProvider">Provider Engine <span class="text-error">*</span></label>
+          <select id="accProvider" name="provider" required class="qbit-input">
+            <option value="whatsapp_cloud">WhatsApp Cloud API (Meta)</option>
+            <option value="email">Email (SMTP / SendGrid)</option>
+            <option value="sms">SMS (DLT Telecom Gateway)</option>
+            <option value="mock">Mock Provider (Local Test Only)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 2: Identifiers -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accIdentifier">Primary Identifier <span class="text-error">*</span></label>
+          <input type="text" id="accIdentifier" name="identifier" required maxlength="300" placeholder="e.g. +919876543210 or sales@qbit.os" class="qbit-input">
+          <span class="qbit-form-hint">Sender phone number (with country code) or authenticated email address.</span>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accDisplay">Display Identity (Optional)</label>
+          <input type="text" id="accDisplay" name="display_identifier" maxlength="300" placeholder="e.g. QBIT POS Sales Support" class="qbit-input">
+          <span class="qbit-form-hint">Public name shown to recipients in client inbox.</span>
+        </div>
+      </div>
+
+      <!-- Row 3: Technical Routing & Rate Limits -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accFrom">From Address (Email Channel)</label>
+          <input type="text" id="accFrom" name="from_address" maxlength="300" placeholder="e.g. outbound@qbit.os" class="qbit-input">
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accPhoneId">Phone Number ID (WhatsApp)</label>
+          <input type="text" id="accPhoneId" name="phone_number_id" maxlength="300" placeholder="e.g. 104829104928" class="qbit-input">
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="accRate">Rate Limit (Messages/Min)</label>
+          <input type="text" id="accRate" name="rate_per_minute" maxlength="6" placeholder="Default: 10" class="qbit-input">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <span class="text-xs text-outline">Rate limiting prevents sender domain blacklisting and WhatsApp account bans.</span>
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[16px]">add_circle</span>
+          Add Sending Account
+        </button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  <!-- Existing Accounts Table -->
+  <div class="table-card">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <h3 class="font-label-md text-label-md font-bold text-on-surface">Registered Sending Accounts ({{ accounts | length }})</h3>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Account Name</th>
+            <th>Channel</th>
+            <th>Provider</th>
+            <th>Status</th>
+            <th>Health</th>
+            <th>Identifier</th>
+            <th>Config Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in accounts %}
+          <tr>
+            <td>
+              <div class="flex items-center gap-2">
+                <strong class="text-on-surface font-semibold">{{ a.row.name }}</strong>
+                {% if a.test_only %}
+                <span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-error-container/20 text-error border border-error/30 font-bold">
+                  TEST ONLY
+                </span>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface">
+                {{ a.row.channel }}
+              </span>
+            </td>
+            <td class="mono text-xs text-primary">{{ a.row.provider }}</td>
+            <td><span class="badge badge-{{ a.row.status | lower }}">{{ a.row.status }}</span></td>
+            <td>
+              <span class="flex items-center gap-1.5 text-xs text-on-surface">
+                <span class="w-1.5 h-1.5 rounded-full {% if a.row.health_status == 'HEALTHY' %}bg-tertiary{% else %}bg-outline{% endif %}"></span>
+                {{ a.row.health_status }}
+              </span>
+            </td>
+            <td class="mono text-xs text-outline">{{ a.row.display_identifier or a.row.identifier }}</td>
+            <td>
+              {% if a.configured %}
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-semibold flex items-center gap-1 w-fit">
+                <span class="material-symbols-outlined text-[12px]">check</span>
+                Configured
+              </span>
+              {% else %}
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-semibold w-fit block">
+                Not Configured
+              </span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[32px] text-outline block mb-2">account_balance_wallet</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Sending Accounts Found</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Add your outbound sender profiles above to unlock campaign dispatches.
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

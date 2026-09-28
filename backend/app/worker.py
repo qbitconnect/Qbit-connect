@@ -39,24 +39,33 @@ logger = get_logger("qbit.worker")
 
 
 class ScrapeWorker:
-    def __init__(self) -> None:
-        self.settings = get_settings()
+    def __init__(
+        self,
+        settings: Settings | None = None,
+        db: DatabaseManager | None = None,
+        redis: RedisManager | None = None,
+        queue: QueueBackend | None = None,
+        registry: ActorRegistry | None = None,
+        owner: str | None = None,
+    ) -> None:
+        self.settings = settings or get_settings()
         setup_logging(self.settings)
-        self.db = DatabaseManager(self.settings)
-        self.redis = RedisManager(self.settings)
-        self.queue = build_queue_backend(
+        self.db = db or DatabaseManager(self.settings)
+        self.redis = redis or RedisManager(self.settings)
+        self.queue = queue or build_queue_backend(
             self.settings, self.redis, session_factory=self.db.session
         )
-        self.registry = ActorRegistry()
+        self.registry = registry or ActorRegistry()
         self.runner = JobRunner(
             settings=self.settings,
             session_factory=self.db.session,
             storage_root=self.settings.data_dir / "scraper-results",
             queue=self.queue,
-            owner=f"worker-{uuid.uuid4().hex[:8]}",
+            owner=owner or f"worker-{uuid.uuid4().hex[:8]}",
         )
         self._tasks: set[asyncio.Task] = set()
         self._shutdown = asyncio.Event()
+        self._is_embedded = False
 
     # ------------------------------------------------------------------ setup
     def load_actors(self) -> None:
@@ -100,6 +109,7 @@ class ScrapeWorker:
         schedules_task = asyncio.create_task(self._schedules_loop())
         run_webhooks_task = asyncio.create_task(self._run_webhooks_loop())
         actor_health_task = asyncio.create_task(self._actor_health_loop())
+        ai_task = asyncio.create_task(self._ai_orchestrator_loop())
         heartbeat_file_task = asyncio.create_task(self._liveness_loop())
         backup_task = asyncio.create_task(self._backup_loop())
         try:
@@ -127,6 +137,7 @@ class ScrapeWorker:
         finally:
             backup_task.cancel()
             heartbeat_file_task.cancel()
+            ai_task.cancel()
             sweep_task.cancel()
             data_task.cancel()
             campaign_task.cancel()
@@ -137,10 +148,15 @@ class ScrapeWorker:
             analytics_task.cancel()
             schedules_task.cancel()
             await self._drain()
-            await self.queue.aclose()
-            await self.db.close()
-            await self.redis.close()
-            log_with(logger, 20, "Scrape worker stopped")
+            if not self._is_embedded:
+                await self.queue.aclose()
+                await self.db.close()
+                await self.redis.close()
+            log_with(logger, 20, "Scrape worker stopped", embedded=self._is_embedded)
+
+    def stop(self) -> None:
+        """Signal worker to stop gracefully."""
+        self._shutdown.set()
 
     async def _data_jobs_loop(self) -> None:
         """Phase 4: large imports/exports are processed next to scrape jobs.
@@ -423,6 +439,27 @@ class ScrapeWorker:
                         self.settings.QBIT_ANALYTICS_AGGREGATION_INTERVAL_SECONDS, 300
                     )
                 await asyncio.sleep(max(self.settings.QBIT_WORKER_POLL_SECONDS, 2.0))
+        except asyncio.CancelledError:
+            return
+
+    async def _ai_orchestrator_loop(self) -> None:
+        """Phase 9: AI orchestration loop — polls and executes queued agent runs.
+        Isolated from other loops: failures do not impact other worker tasks."""
+        from app.services.ai.orchestrator import AIOrchestrationWorker
+
+        worker = AIOrchestrationWorker(self.settings, self.db)
+        try:
+            while not self._shutdown.is_set():
+                try:
+                    processed = await worker.run_once()
+                except Exception:  # noqa: BLE001 — keep the loop alive
+                    logger.exception("AI orchestrator loop iteration failed")
+                    processed = 0
+                await asyncio.sleep(
+                    self.settings.QBIT_WORKER_POLL_SECONDS if processed else max(
+                        self.settings.QBIT_WORKER_POLL_SECONDS * 2, 3.0
+                    )
+                )
         except asyncio.CancelledError:
             return
 

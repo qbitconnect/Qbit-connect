@@ -1,58 +1,160 @@
 {% extends "base.html" %}
-{% block title %}Organization Settings — Admin — QBIT Connect{% endblock %}
+{% block title %}Organization Settings — Admin — QBIT Growth OS{% endblock %}
 {% block nav_admin_settings %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>ORGANIZATION SETTINGS</h1>
-    <p class="muted">{{ org.name }} · slug <span class="mono">{{ org.slug }}</span> · status <span class="badge badge-{{ org.status | lower }}">{{ org.status }}</span></p>
+<div class="space-y-space-lg max-w-5xl mx-auto pb-16">
+  
+  <!-- Header & Metadata -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="font-code-xs text-code-xs text-outline uppercase tracking-widest">QBIT Admin</span>
+        <span class="text-outline-variant font-code-xs text-code-xs">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          Organization Profile
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          {{ org.name }} Settings
+        </h1>
+        <span class="badge badge-{{ org.status | lower }} text-xs">
+          {{ org.status }}
+        </span>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant font-mono text-xs">
+        Organization slug: <span class="text-primary font-semibold">{{ org.slug }}</span>
+      </p>
+    </div>
+
+    <div class="flex items-center gap-space-sm">
+      <a class="btn btn-ghost" href="/admin/users">Users</a>
+      <a class="btn btn-ghost" href="/admin/teams">Teams</a>
+      <a class="btn btn-ghost" href="/admin/security">Security</a>
+    </div>
   </div>
-</div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
 
-{% if can_manage %}
-<div class="card">
-  <h2 style="margin:0 0 12px">Profile</h2>
-  <form method="post" action="/admin/settings" class="toolbar" style="align-items:flex-end">
-    <label style="display:grid;gap:4px"><span class="muted small">NAME</span>
-      <input type="text" name="name" value="{{ org.name }}" maxlength="200" required>
-    </label>
-    <label style="display:grid;gap:4px"><span class="muted small">TIMEZONE</span>
-      <input type="text" name="timezone" value="{{ org.timezone }}" maxlength="64">
-    </label>
-    <label style="display:grid;gap:4px"><span class="muted small">LOCALE</span>
-      <input type="text" name="locale" value="{{ org.locale }}" maxlength="20">
-    </label>
-    <button class="btn btn-primary" type="submit">Save</button>
-  </form>
-</div>
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
 
-<div class="card" style="margin-top:18px">
-  <h2 style="margin:0 0 12px">Default visibility per role</h2>
-  <p class="muted small" style="margin-top:0">
-    Applies to users without an individual override. TEAM shows own + team + unassigned work;
-    ASSIGNED_ONLY shows own/assigned only; OWNED_ONLY strictly own records.
-  </p>
-  <form method="post" action="/admin/settings/visibility" class="toolbar" style="align-items:flex-end">
-    {% for r in role_list %}
-    <label style="display:grid;gap:4px"><span class="muted small">{{ r }}</span>
-      <select name="scope_{{ r }}">
-        {% for s in scope_list %}
-        <option value="{{ s }}" {% if visibility_defaults.get(r, 'ALL') == s %}selected{% endif %}>{{ s }}</option>
+  {% if can_manage %}
+  <!-- Section 1: General Profile Settings -->
+  <div class="card p-space-xl space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm flex items-center justify-between">
+      <div class="space-y-0.5">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Workspace Identity & Regional Defaults</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Default timezone and localization preferences across all reports.</p>
+      </div>
+      <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high text-outline">Tenant Config</span>
+    </div>
+
+    <form method="post" action="/admin/settings" class="space-y-space-md">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+        <div class="qbit-form-group sm:col-span-2">
+          <label class="qbit-form-label" for="orgName">Organization Name <span class="text-error">*</span></label>
+          <input type="text" id="orgName" name="name" value="{{ org.name }}" maxlength="200" required class="qbit-input">
+          <span class="qbit-form-hint">Displayed in topbar workspace pill, invitations, and email headers.</span>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="orgTimezone">Primary Timezone</label>
+          <input type="text" id="orgTimezone" name="timezone" value="{{ org.timezone or 'Asia/Kolkata' }}" maxlength="64" class="qbit-input">
+          <span class="qbit-form-hint">Standard IANA timezone (e.g. Asia/Kolkata or UTC).</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="orgLocale">Locale Code</label>
+          <input type="text" id="orgLocale" name="locale" value="{{ org.locale or 'en_IN' }}" maxlength="20" class="qbit-input">
+          <span class="qbit-form-hint">Controls date/time, numeric, and currency formatting (e.g. en_IN).</span>
+        </div>
+      </div>
+
+      <div class="pt-space-sm flex justify-end">
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          Save Organization Profile
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Section 2: Default Visibility & Scope Per Role -->
+  <div class="card p-space-xl space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm">
+      <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Default Data Visibility Scopes</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">
+        Governs record visibility across leads, campaigns, and runs for users without individual custom overrides.
+      </p>
+    </div>
+
+    <form method="post" action="/admin/settings/visibility" class="space-y-space-md">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-space-md">
+        {% for r in role_list %}
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col justify-between space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-code-xs text-code-xs font-bold text-primary">{{ r }}</span>
+            <span class="text-[11px] text-outline">Role Default</span>
+          </div>
+
+          <div class="qbit-form-group">
+            <label class="qbit-form-label text-[10px]" for="scope_{{ r }}">Data Scope</label>
+            <select id="scope_{{ r }}" name="scope_{{ r }}" class="qbit-input">
+              {% for s in scope_list %}
+              <option value="{{ s }}" {% if visibility_defaults.get(r, 'ALL') == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
         {% endfor %}
-      </select>
-    </label>
-    {% endfor %}
-    <button class="btn btn-primary" type="submit">Apply</button>
-  </form>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <span class="text-xs text-outline">
+          Scopes: ALL (workspace-wide), TEAM (own + department), ASSIGNED_ONLY (strictly assigned), OWNED_ONLY (creator only).
+        </span>
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[16px]">security</span>
+          Update Visibility Policies
+        </button>
+      </div>
+    </form>
+  </div>
+
+  {% else %}
+  <!-- Read Only View for Non-Admin Users -->
+  <div class="card p-space-xl space-y-space-md">
+    <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Organization Profile</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+      <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Name</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-on-surface block mt-1">{{ org.name }}</span>
+      </div>
+      <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Timezone</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-on-surface block mt-1">{{ org.timezone or 'UTC' }}</span>
+      </div>
+      <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Locale</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-on-surface block mt-1">{{ org.locale or 'en_US' }}</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 </div>
-{% else %}
-<div class="kv-grid">
-  <div class="kv"><span class="k">NAME</span><span class="v">{{ org.name }}</span></div>
-  <div class="kv"><span class="k">TIMEZONE</span><span class="v">{{ org.timezone }}</span></div>
-  <div class="kv"><span class="k">LOCALE</span><span class="v">{{ org.locale }}</span></div>
-</div>
-{% endif %}
 {% endblock %}

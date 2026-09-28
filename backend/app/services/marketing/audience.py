@@ -34,7 +34,7 @@ from app.models.scrape import Lead
 from app.services.leads import filters as filter_engine
 from app.services.marketing.channels import get_channel
 
-AUDIENCE_TYPES = ("saved_view", "filters", "tags", "selected")
+AUDIENCE_TYPES = ("saved_view", "filters", "tags", "selected", "contact_list")
 
 
 class AudienceService:
@@ -45,7 +45,9 @@ class AudienceService:
         a_type = (definition.get("type") or "").strip().lower()
         if a_type not in AUDIENCE_TYPES:
             raise ValidationError(f"audience.type must be one of: {', '.join(AUDIENCE_TYPES)}")
-        unknown = set(definition) - {"type", "saved_view_id", "filters", "tags", "match", "lead_ids", "statuses"}
+        unknown = set(definition) - {
+            "type", "saved_view_id", "filters", "tags", "match", "lead_ids", "statuses", "list_id"
+        }
         if unknown:
             raise ValidationError(f"Unknown audience keys: {sorted(unknown)}")
 
@@ -87,6 +89,14 @@ class AudienceService:
                     uuid.UUID(str(raw))
                 except (ValueError, TypeError) as exc:
                     raise ValidationError(f"Invalid lead id: {raw!r}") from exc
+        elif a_type == "contact_list":
+            raw_id = definition.get("list_id")
+            if not raw_id:
+                raise ValidationError("audience.list_id is required for type 'contact_list'")
+            try:
+                uuid.UUID(str(raw_id))
+            except (ValueError, TypeError) as exc:
+                raise ValidationError("audience.list_id must be a UUID") from exc
         return {**definition, "type": a_type}
 
     # ------------------------------------------------------------- condition
@@ -136,6 +146,11 @@ class AudienceService:
         elif a_type == "selected":
             ids = [uuid.UUID(str(raw)) for raw in definition.get("lead_ids", [])]
             condition = condition & Lead.id.in_(ids)
+        elif a_type == "contact_list":
+            from app.models.marketing import ContactListMember
+            list_id = uuid.UUID(str(definition.get("list_id")))
+            assigned = select(ContactListMember.lead_id).where(ContactListMember.list_id == list_id)
+            condition = condition & Lead.id.in_(assigned)
         return condition
 
     # -------------------------------------------------------------- queries

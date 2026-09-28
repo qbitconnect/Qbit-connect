@@ -159,12 +159,39 @@ def validate_url(
     if policy.allow_private_targets:
         return url.strip()
 
-    # IP-literal hosts are checked WITHOUT DNS (defense in depth: the policy
-    # must hold even when callers skip resolution, e.g. validate-only paths).
+    # IP-literal hosts (decimal, integer, hex, octal) are checked WITHOUT DNS (defense in depth).
+    literal_ip = None
     try:
         literal_ip = ipaddress.ip_address(host)
     except ValueError:
-        literal_ip = None
+        if host.isdigit():
+            try:
+                literal_ip = ipaddress.ip_address(int(host))
+            except (ValueError, OverflowError):
+                pass
+        elif host.startswith(("0x", "0X")):
+            try:
+                literal_ip = ipaddress.ip_address(int(host, 16))
+            except (ValueError, OverflowError):
+                pass
+        else:
+            # Check for dotted IP parts with octal (0177) or hex (0x7f)
+            parts_list = host.split(".")
+            if len(parts_list) == 4 and all(p.isalnum() for p in parts_list):
+                try:
+                    dec_parts = []
+                    for p in parts_list:
+                        if p.startswith(("0x", "0X")):
+                            dec_parts.append(int(p, 16))
+                        elif p.startswith("0") and len(p) > 1:
+                            dec_parts.append(int(p, 8))
+                        else:
+                            dec_parts.append(int(p, 10))
+                    if all(0 <= p <= 255 for p in dec_parts):
+                        literal_ip = ipaddress.IPv4Address(".".join(str(p) for p in dec_parts))
+                except Exception:
+                    pass
+
     if literal_ip is not None and _ip_is_forbidden(literal_ip):
         raise ScraperValidationError(
             "Blocked: target is a private, loopback, link-local or reserved address"

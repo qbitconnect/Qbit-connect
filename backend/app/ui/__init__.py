@@ -31,7 +31,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.deps import get_client_ip, get_db, get_user_agent
 from app.core.errors import QBITError
 from app.core.security import create_access_token, decode_access_token, verify_password
-from app.models.enterprise import Invitation, UserSession
+from app.models.enterprise import Invitation, UserSession, utc_aware
 from app.models.scrape import JobStatus
 from app.models.scrape import ScrapeJob as ScrapeJobModel
 from app.models.user import User
@@ -56,6 +56,10 @@ class UiRedirect(Exception):
 
 async def _resolve_user(request: Request, session: AsyncSession) -> User | None:
     token = request.cookies.get(COOKIE_NAME)
+    if not token:
+        auth_hdr = request.headers.get("Authorization")
+        if auth_hdr and auth_hdr.lower().startswith("bearer "):
+            token = auth_hdr.split(" ", 1)[1].strip()
     if not token:
         return None
     settings = request.app.state.settings
@@ -303,6 +307,11 @@ async def forbidden(request: Request):
     return templates.TemplateResponse(
         request, "403.html", _ctx(request, None), status_code=403
     )
+
+
+@router.get("/settings")
+async def settings_redirect():
+    return RedirectResponse(url="/admin/settings", status_code=303)
 
 
 # --------------------------------------------------------------------- home
@@ -893,14 +902,19 @@ def _form_fields(actor) -> list[dict]:
 # --------------------------------------------------------------------- jobs
 @router.get("/scraping/jobs/{job_id}", response_class=HTMLResponse)
 async def job_detail(
-    job_id: uuid.UUID,
+    job_id: str,
     request: Request,
     user: Annotated[User, Depends(ui_user)],
     session: Annotated[AsyncSession, Depends(get_db)],
 ):
+    try:
+        parsed_id = uuid.UUID(job_id)
+    except (ValueError, AttributeError):
+        raise UiRedirect("/scraping/jobs")
+
     engine = JobEngine(session, request.app.state.queue)
     try:
-        job = await engine.get_job(job_id)
+        job = await engine.get_job(parsed_id)
     except Exception:
         raise UiRedirect("/scraping/jobs")
     registry = request.app.state.scraper_registry
@@ -911,10 +925,13 @@ async def job_detail(
         actor_name, actor_meta = job.actor_id, {}
     leads_page, total = await LeadService().list_for_job(session, job.id, page=1, page_size=20)
     perms = request.state.ui_permissions or set()
-    end_ref = job.completed_at or job.cancelled_at or datetime.now(timezone.utc)
+
+    started = utc_aware(job.started_at)
+    ended = utc_aware(job.completed_at or job.cancelled_at)
+    end_ref = ended or datetime.now(timezone.utc)
     elapsed_display = "—"
-    if job.started_at:
-        seconds = max(0, int((end_ref - job.started_at).total_seconds()))
+    if started:
+        seconds = max(0, int((end_ref - started).total_seconds()))
         elapsed_display = f"{seconds // 60}m {seconds % 60}s"
 
     from app.services.orchestration.orchestrator import ScrapingOrchestrator

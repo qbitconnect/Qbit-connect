@@ -1,198 +1,314 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}QBIT Connect{% endblock %}</title>
-  <link rel="stylesheet" href="/static/css/qbit.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>{% block title %}QBIT GROWTH OS — Enterprise Control Center{% endblock %}</title>
+  
+  <!-- Approved Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/qbit.css"/>
+  
+  <style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; }
+      main > :first-child { margin-top:0 !important; }
+      main > :last-child { margin-bottom:0 !important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Approved Stitch Design Tokens Configuration -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      "darkMode": "class",
+      "theme": {
+        "extend": {
+          "colors": {
+            "on-tertiary-fixed-variant": "#005236",
+            "tertiary-fixed-dim": "#4edea3",
+            "tertiary-fixed": "#6ffbbe",
+            "surface-bright": "#333949",
+            "tertiary": "#4edea3",
+            "on-primary-fixed": "#001849",
+            "secondary-fixed": "#b6ebff",
+            "surface-container-lowest": "#080e1d",
+            "on-surface": "#dde2f7",
+            "on-secondary": "#003543",
+            "on-secondary-fixed-variant": "#004e60",
+            "on-secondary-container": "#00566a",
+            "on-error": "#690005",
+            "on-surface-variant": "#c2c6d8",
+            "tertiary-container": "#008259",
+            "inverse-primary": "#0054d6",
+            "inverse-on-surface": "#2a3040",
+            "surface-container-low": "#151b2b",
+            "primary": "#b3c5ff",
+            "on-tertiary-container": "#e1ffec",
+            "surface": "#0d1322",
+            "secondary-container": "#00d2ff",
+            "on-primary-container": "#f8f7ff",
+            "on-tertiary": "#003824",
+            "inverse-surface": "#dde2f7",
+            "on-primary-fixed-variant": "#003fa4",
+            "outline-variant": "#424656",
+            "primary-fixed-dim": "#b3c5ff",
+            "error-container": "#93000a",
+            "surface-variant": "#2f3445",
+            "surface-tint": "#b3c5ff",
+            "surface-container-high": "#242a3a",
+            "on-background": "#dde2f7",
+            "on-secondary-fixed": "#001f28",
+            "on-primary": "#002b75",
+            "secondary": "#a5e7ff",
+            "background": "#0d1322",
+            "surface-dim": "#0d1322",
+            "primary-container": "#0066ff",
+            "surface-container-highest": "#2f3445",
+            "primary-fixed": "#dae1ff",
+            "surface-container": "#191f2f",
+            "secondary-fixed-dim": "#47d6ff",
+            "on-error-container": "#ffdad6",
+            "error": "#ffb4ab",
+            "on-tertiary-fixed": "#002113",
+            "outline": "#8c90a1"
+          },
+          "borderRadius": {
+            "none": "0",
+            "sm": "0.25rem",
+            "DEFAULT": "0.375rem",
+            "md": "0.5rem",
+            "lg": "0.625rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "2rem",
+            "space-lg": "1rem",
+            "space-md": "0.75rem",
+            "margin": "1.5rem",
+            "gutter": "1rem",
+            "space-xl": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-2xs": "0.125rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "headline-xl": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "code-sm": ["JetBrains Mono", "monospace"],
+            "label-md": ["Inter", "sans-serif"],
+            "code-xs": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "body-lg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "headline-md": ["18px", {"lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+            "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "headline-sm": ["15px", {"lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "body-md": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "code-xs": ["11px", {"lineHeight": "16px", "fontWeight": "400"}]
+          }
+        }
+      }
+    };
+  </script>
 </head>
-<body>
-{# ------------------------------------------------------------------ icons #}
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-  <defs>
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4.5 10.5 12 4l7.5 6.5"/><path d="M6 9.5V19a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.5"/><path d="M10 20v-5h4v5"/></symbol>
-    <symbol id="i-leads" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3.8V1.6M12 22.4v-2.2M3.8 12H1.6M22.4 12h-2.2"/></symbol>
-    <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 15V4.5M8 8l4-3.9L16 8"/><path d="M4.5 14.5v4a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-4"/></symbol>
-    <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 4.5V15M8 11.5l4 3.9 4-3.9"/><path d="M4.5 14.5v4a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-4"/></symbol>
-    <symbol id="i-scraper" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 2.6v2.4M15 2.6v2.4M9 19v2.4M15 19v2.4M2.6 9H5M2.6 15H5M19 9h2.4M19 15h2.4"/><circle cx="12" cy="12" r="2.1"/></symbol>
-    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></symbol>
-    <symbol id="i-dataset" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.5c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8V5.5"/><path d="M4.5 12v6.5c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8V12"/></symbol>
-    <symbol id="i-tasks" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><rect x="3.5" y="4.7" width="3" height="2.6" rx="0.7"/><rect x="3.5" y="10.7" width="3" height="2.6" rx="0.7"/><rect x="3.5" y="16.7" width="3" height="2.6" rx="0.7"/></symbol>
-    <symbol id="i-webhook" viewBox="0 0 24 24"><circle cx="12" cy="6.2" r="2.7"/><circle cx="5.8" cy="17.2" r="2.7"/><circle cx="18.2" cy="17.2" r="2.7"/><path d="M10.7 8.3 7.6 14.6M13.3 8.3l3.1 6.3M8.5 17.2h7"/></symbol>
-    <symbol id="i-storage" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="6.2" rx="1.6"/><rect x="3.5" y="13.8" width="17" height="6.2" rx="1.6"/><circle cx="7.2" cy="7.1" r="0.9" fill="currentColor" stroke="none"/><circle cx="7.2" cy="16.9" r="0.9" fill="currentColor" stroke="none"/></symbol>
-    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13 5.5l-2.4 13"/></symbol>
-    <symbol id="i-jobs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.2 2"/></symbol>
-    <symbol id="i-results" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></symbol>
-    <symbol id="i-campaigns" viewBox="0 0 24 24"><path d="M20.5 3.5 10 14M20.5 3.5l-6.3 17-3.2-7.5L3.5 9.8z"/></symbol>
-    <symbol id="i-connections" viewBox="0 0 24 24"><path d="M9 7.5 5.5 11a3.5 3.5 0 0 0 5 5L14 12.5M15 16.5 18.5 13a3.5 3.5 0 0 0-5-5L10 11.5"/></symbol>
-    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13.5 6.6 5a1.6 1.6 0 0 1 1.5-1.1h7.8A1.6 1.6 0 0 1 17.4 5L20 13.5V18a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18z"/><path d="M4 13.5h4.6a3.4 3.4 0 0 0 6.8 0H20"/></symbol>
-    <symbol id="i-automation" viewBox="0 0 24 24"><rect x="3" y="9.5" width="6" height="5" rx="1.6"/><rect x="15" y="3.5" width="6" height="5" rx="1.6"/><rect x="15" y="15.5" width="6" height="5" rx="1.6"/><path d="M9 12h3.5M12.5 12V6h2.5M12.5 12v6h2.5"/></symbol>
-    <symbol id="i-analytics" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12.5 16V8M17 16v-6.5"/></symbol>
-    <symbol id="i-admin" viewBox="0 0 24 24"><path d="M12 3 5 5.8v5.4c0 4.4 3 8.2 7 9.3 4-1.1 7-4.9 7-9.3V5.8z"/><path d="m9.2 11.8 2 2 3.6-3.9"/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.2" r="3.4"/><path d="M3.5 20c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M15.5 5.2a3.4 3.4 0 0 1 0 6M17.3 14.9c1.7.7 2.9 2.4 3.2 5.1"/></symbol>
-    <symbol id="i-teams" viewBox="0 0 24 24"><circle cx="12" cy="7.6" r="2.9"/><circle cx="5.4" cy="10.4" r="2.4"/><circle cx="18.6" cy="10.4" r="2.4"/><path d="M7.5 20c.5-2.8 2.2-4.5 4.5-4.5s4 1.7 4.5 4.5M2.5 17.6c.4-2 1.6-3.3 3.3-3.3M21.5 17.6c-.4-2-1.6-3.3-3.3-3.3"/></symbol>
-    <symbol id="i-roles" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.4"/><path d="m8.8 13.5-1.6 7 4.8-2.6 4.8 2.6-1.6-7"/></symbol>
-    <symbol id="i-invitations" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 6 7.5-6M19 3.5v3M17.5 5h3"/></symbol>
-    <symbol id="i-access" viewBox="0 0 24 24"><path d="M7 9.5 3.8 12 7 14.5M3.8 12H15M17 14.5l3.2-2.5L17 9.5M20.2 12H9"/></symbol>
-    <symbol id="i-keys" viewBox="0 0 24 24"><circle cx="8" cy="14.5" r="4.2"/><path d="m11.2 11.3 8-8M16.5 6l2.6 2.6M14 8.5l2.6 2.6"/></symbol>
-    <symbol id="i-security" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7M12 14.4v2.4"/></symbol>
-    <symbol id="i-audit" viewBox="0 0 24 24"><path d="M5.5 4.5h13v15h-13z" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5"/></symbol>
-    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.14-1.4l2-1.55-2-3.46-2.35.95a7 7 0 0 0-2.42-1.4L13.73 2.6h-3.46l-.36 2.54a7 7 0 0 0-2.42 1.4l-2.35-.95-2 3.46 2 1.55A7 7 0 0 0 5 12c0 .48.05.94.14 1.4l-2 1.55 2 3.46 2.35-.95a7 7 0 0 0 2.42 1.4l.36 2.54h3.46l.36-2.54a7 7 0 0 0 2.42-1.4l2.35.95 2-3.46-2-1.55c.09-.46.14-.92.14-1.4Z"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 15.5V10a6 6 0 1 0-12 0v5.5L4.5 18h15zM10 21h4"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
-    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5.5 6.5 6.5L9 18.5"/></symbol>
-    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4.5H7A1.5 1.5 0 0 0 5.5 6v12A1.5 1.5 0 0 0 7 19.5h7M10.5 12h9.5M17 8.8l3.2 3.2-3.2 3.2"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
-    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M9.5 4.5v15"/></symbol>
-  </defs>
-</svg>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
+  {% if user %}
+  <!-- APPROVED FIXED LEFT SIDEBAR (w-64) -->
+  <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto">
+    <div class="flex flex-col">
+      <!-- Brand Header -->
+      <a href="/" class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30 hover:opacity-90 transition-opacity">
+        <div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]">
+          <span class="material-symbols-outlined text-[18px]">deployed_code</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span>
+          <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span>
+        </div>
+      </a>
 
-<div class="bg-layers" aria-hidden="true"></div>
+      <!-- Navigation Links -->
+      <div class="px-space-md py-space-sm">
+        <nav class="flex flex-col gap-1">
+          <div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_home %}{% endblock %}" data-path="overview" href="/">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">dashboard</span>
+            <span>Overview</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_scrapers %}{% endblock %}" data-path="scraper-marketplace" href="/scraping">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">storefront</span>
+            <span>Scraper Marketplace</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_jobs %}{% endblock %}" data-path="my-runs" href="/scraping/jobs">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">terminal</span>
+            <span>My Runs</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_leads %}{% endblock %}" data-path="leads" href="/leads">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">folder_shared</span>
+            <span>Leads</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_campaigns %}{% endblock %}" data-path="campaigns" href="/campaigns">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">campaign</span>
+            <span>Campaigns</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_automation %}{% endblock %}" data-path="automation" href="/automation">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">account_tree</span>
+            <span>Automation</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_ai %}{% endblock %}" data-path="ai-assistant" href="/ai-assistant">
+            <span class="material-symbols-outlined text-[18px] mr-2.5 text-tertiary-fixed">psychology</span>
+            <span>AI Assistant</span>
+          </a>
 
-{% if user %}
-<div class="shell" id="qbit-shell">
-  <aside class="sidebar" id="qbit-sidebar">
-    <div class="brand">
-      <span class="brand-mark">Q</span>
-      <span class="brand-name">QBIT <em>CONNECT</em></span>
-      <button type="button" class="nav-toggle" id="nav-toggle" title="Collapse navigation" aria-label="Collapse navigation">
-        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-chevron"/></svg>
-      </button>
+          <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_email %}{% endblock %}" data-path="email-marketing" href="/campaigns?channel=EMAIL">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">mail</span>
+            <span>Email</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_whatsapp %}{% endblock %}" data-path="whatsapp-campaigns" href="/campaigns?channel=WHATSAPP">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">chat</span>
+            <span>WhatsApp</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_social %}{% endblock %}" data-path="social-media" href="/social">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">share</span>
+            <span>Social Media</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_inbox %}{% endblock %}" data-path="unified-inbox" href="/inbox">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">inbox</span>
+            <span>Unified Inbox</span>
+          </a>
+
+          <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_teams %}{% endblock %}" data-path="team-management" href="/admin/teams">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">badge</span>
+            <span>Team</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_analytics %}{% endblock %}" data-path="analytics-intelligence" href="/analytics">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">monitoring</span>
+            <span>Analytics</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_audit %}{% endblock %}" data-path="audit-logs" href="/admin/audit">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">history</span>
+            <span>Audit Logs</span>
+          </a>
+          <a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md {% block nav_settings %}{% endblock %}" data-path="settings" href="/admin/settings">
+            <span class="material-symbols-outlined text-[18px] mr-2.5">settings</span>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
     </div>
-    <nav aria-label="Primary">
-      <div class="nav-section">Workspace</div>
-      <a href="/" class="nav-item {% block nav_home %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg></span><span class="nav-label">Home</span></a>
-      <a href="/leads" class="nav-item {% block nav_leads %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-leads"/></svg></span><span class="nav-label">Leads</span></a>
-      <a href="/leads/import" class="nav-item {% block nav_imports %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-import"/></svg></span><span class="nav-label">Imports</span></a>
-      <a href="/leads/exports" class="nav-item {% block nav_exports %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-export"/></svg></span><span class="nav-label">Exports</span></a>
-      <a href="/scraping" class="nav-item {% block nav_scrapers %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-scraper"/></svg></span><span class="nav-label">Scrapers</span></a>
-      <a href="/scraping/jobs" class="nav-item {% block nav_jobs %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-jobs"/></svg></span><span class="nav-label">Jobs</span></a>
-      <a href="/scraping/jobs?status=COMPLETED" class="nav-item {% block nav_results %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-results"/></svg></span><span class="nav-label">Results</span></a>
-      <a href="/actors" class="nav-item {% block nav_actors %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-grid"/></svg></span><span class="nav-label">Actors</span></a>
-      <a href="/datasets" class="nav-item {% block nav_datasets %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-dataset"/></svg></span><span class="nav-label">Datasets</span></a>
-      <a href="/tasks" class="nav-item {% block nav_tasks %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-tasks"/></svg></span><span class="nav-label">Tasks</span></a>
-      <a href="/run-webhooks" class="nav-item {% block nav_webhooks %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-webhook"/></svg></span><span class="nav-label">Run Webhooks</span></a>
-      <a href="/storage" class="nav-item {% block nav_storage %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-storage"/></svg></span><span class="nav-label">Storage</span></a>
-      <a href="/api-docs" class="nav-item {% block nav_apidocs %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-code"/></svg></span><span class="nav-label">API</span></a>
 
-      <div class="nav-section">Growth</div>
-      <a href="/campaigns" class="nav-item {% block nav_campaigns %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-campaigns"/></svg></span><span class="nav-label">Campaigns</span></a>
-      <a href="/connections" class="nav-item {% block nav_connections %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-connections"/></svg></span><span class="nav-label">Connections</span></a>
-      <a href="/inbox" class="nav-item {% block nav_inbox %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-inbox"/></svg></span><span class="nav-label">Inbox</span><span id="inbox-unread-badge" class="nav-badge" hidden></span></a>
-      <a href="/automation" class="nav-item {% block nav_automation %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-automation"/></svg></span><span class="nav-label">Automation</span></a>
-
-      <div class="nav-section">Intelligence</div>
-      <a href="/analytics" class="nav-item {% block nav_analytics %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-analytics"/></svg></span><span class="nav-label">Analytics</span></a>
-
-      {% set admin_nav = ['users.view','teams.view','roles.view','invitations.view','connections.view','apikeys.view','security.view','audit.view','settings.view'] %}
-      {% if perms and admin_nav | select('in', perms) | list %}
-      <div class="nav-section">Admin</div>
-      {% if 'users.view' in perms %}
-      <a href="/admin" class="nav-item {% block nav_admin %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-admin"/></svg></span><span class="nav-label">Overview</span></a>
-      <a href="/admin/users" class="nav-item {% block nav_admin_users %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-users"/></svg></span><span class="nav-label">Users</span></a>
-      {% endif %}
-      {% if 'teams.view' in perms %}
-      <a href="/admin/teams" class="nav-item {% block nav_admin_teams %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-teams"/></svg></span><span class="nav-label">Teams</span></a>
-      {% endif %}
-      {% if 'roles.view' in perms %}
-      <a href="/admin/roles" class="nav-item {% block nav_admin_roles %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-roles"/></svg></span><span class="nav-label">Roles</span></a>
-      {% endif %}
-      {% if 'invitations.view' in perms %}
-      <a href="/admin/invitations" class="nav-item {% block nav_admin_inv %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-invitations"/></svg></span><span class="nav-label">Invitations</span></a>
-      {% endif %}
-      {% if 'connections.view' in perms %}
-      <a href="/admin/connections" class="nav-item {% block nav_admin_conn %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><use href="#i-access"/></svg></span><span class="nav-label">Access</span></a>
-      {% endif %}
-      {% if 'apikeys.view' in perms %}
-      <a href="/admin/api-keys" class="nav-item {% block nav_admin_keys %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-keys"/></svg></span><span class="nav-label">API Keys</span></a>
-      {% endif %}
-      {% if 'security.view' in perms %}
-      <a href="/admin/security" class="nav-item {% block nav_admin_sec %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-security"/></svg></span><span class="nav-label">Security</span></a>
-      {% endif %}
-      {% if 'audit.view' in perms %}
-      <a href="/admin/audit" class="nav-item {% block nav_admin_audit %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-audit"/></svg></span><span class="nav-label">Audit Logs</span></a>
-      {% endif %}
-      {% if 'settings.view' in perms %}
-      <a href="/admin/settings" class="nav-item {% block nav_admin_settings %}{% endblock %}"><span class="nav-ico"><svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-settings"/></svg></span><span class="nav-label">Org Settings</span></a>
-      {% endif %}
-      {% endif %}
-    </nav>
-    <div class="sidebar-foot">
-      <div class="user-chip" title="{{ user.email }}">{{ user.full_name or user.email }}</div>
-      <form method="post" action="/logout"><button class="btn btn-ghost btn-sm" type="submit">Sign out</button></form>
+    <!-- Cluster Telemetry Badge -->
+    <div class="p-space-md border-t border-outline-variant/30">
+      <div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between">
+        <div class="flex items-center gap-space-sm">
+          <div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div>
+          <div class="flex flex-col">
+            <span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span>
+            <span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span>
+          </div>
+        </div>
+        <span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span>
+      </div>
     </div>
   </aside>
 
-  <main class="content page-fade">
-    <div class="topbar">
-      <div class="topbar-context">
-        <button type="button" class="icon-btn mobile-menu-btn" id="mobile-menu" aria-label="Open navigation">
-          <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-menu"/></svg>
-        </button>
-        <span class="topbar-env" title="Runtime environment">{{ env_label }}</span>
+  <!-- MAIN WRAPPER WITH PADDING FOR FIXED SIDEBAR -->
+  <div class="pl-64">
+    <!-- PERSISTENT TOP GLOBAL HEADER -->
+    <header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg">
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-xl">
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span>
+          <input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/>
+          <div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div>
+        </div>
       </div>
-      <div class="topbar-actions">
-        <button type="button" class="search-trigger" id="palette-trigger" aria-label="Open command palette (Ctrl+K)">
-          <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-search"/></svg>
-          <span class="search-hint">Search or jump to…</span>
-          <span class="kbd">Ctrl K</span>
-        </button>
-        <a class="icon-btn {% block nav_notifications %}{% endblock %}" href="/notifications" title="Notifications" aria-label="Notifications">
-          <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-space-md">
+        <!-- Workspace Selector -->
+        <a href="/workspace/select" class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span>
+          <span class="font-label-sm text-label-sm text-on-surface font-medium">{{ active_org.name if active_org else 'QbitPro Workspace' }}</span>
+          <span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span>
         </a>
-        <span class="topbar-avatar" title="{{ user.full_name or user.email }}">{{ (user.full_name or user.email)[:1]|upper }}</span>
+
+        <div class="h-4 w-px bg-outline-variant/40"></div>
+
+        <!-- Notifications -->
+        <a href="/notifications" class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Notifications">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span>
+        </a>
+
+        <!-- Help -->
+        <a href="/api-docs" class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Documentation">
+          <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        </a>
+
+        <!-- User Profile Pill -->
+        <div class="flex items-center gap-space-sm pl-space-xs">
+          <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">
+            {{ (user.full_name or user.email or 'S')[0] | upper }}
+          </div>
+          <div class="hidden xl:flex flex-col">
+            <span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">{{ user.full_name or 'Sagar Singh' }}</span>
+            <span class="font-code-xs text-code-xs text-outline leading-none mt-1">{{ user.email or 'sagar@qbit.os' }}</span>
+          </div>
+        </div>
+
+        <!-- Sign Out Button -->
+        <form action="/logout" method="post" class="ml-1">
+          <button type="submit" title="Sign out" class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+          </button>
+        </form>
       </div>
-    </div>
-{% else %}
-<main class="content page-fade login-shell">
-{% endif %}
-{% block content %}{% endblock %}
-{% if user %}
-  </main>
-</div>
+    </header>
 
-{# ------------------------------------------------- command palette (Ctrl+K) #}
-<div class="palette-backdrop" id="palette-backdrop" role="dialog" aria-modal="true" aria-label="Command palette">
-  <div class="palette">
-    <div class="palette-input-row">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><use href="#i-search"/></svg>
-      <input id="palette-input" type="text" placeholder="Search leads, jobs, campaigns, chats — or jump to a page…" autocomplete="off" spellcheck="false" aria-label="Search">
-      <span class="kbd">ESC</span>
-    </div>
-    <div class="palette-list" id="palette-list"></div>
-    <div class="palette-foot">
-      <span><span class="kbd">↑↓</span> navigate</span>
-      <span><span class="kbd">↵</span> open</span>
-      <span><span class="kbd">ESC</span> close</span>
-    </div>
+    <!-- CONTENT WRAPPER -->
+    <main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg">
+      <div class="flex flex-col w-full text-on-surface">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
   </div>
-</div>
+  {% else %}
+  <div class="w-full min-h-screen">
+    {% block public_content %}
+      {% block content_anonymous %}{% endblock %}
+    {% endblock %}
+  </div>
+  {% endif %}
 
-{% else %}
-  </main>
-{% endif %}
-
-{% block scripts %}{% endblock %}
-{% if user %}
-<script src="/static/js/qbit-app.js" defer></script>
-<script>
-// Phase 8 §36: sidebar unread badge — real database values via /ui/inbox/counters
-(function () {
-  var badge = document.getElementById("inbox-unread-badge");
-  if (!badge) return;
-  function tick() {
-    fetch("/ui/inbox/counters").then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (payload) {
-        if (!payload || !payload.success) return;
-        var total = (payload.data && payload.data.total) || 0;
-        badge.textContent = total > 0 ? String(total) : "";
-        badge.hidden = total === 0;
-      }).catch(function () {});
-  }
-  tick();
-  setInterval(tick, 12000);
-})();
-</script>
-{% endif %}
+  <!-- Global QBIT Application & Dropdown Enhancers -->
+  <script src="/static/js/qbit-dropdown.js"></script>
+  <script src="/static/js/qbit-app.js"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -141,3 +141,44 @@ class WhatsAppCloudClient:
             "text": {"preview_url": False, "body": body[:4096]},
         }
         return await self._request("POST", self._endpoint(f"{phone_number_id}/messages"), json_body=payload)
+
+    async def send_media_message(
+        self, *, phone_number_id: str, to: str, media_type: str,
+        media_id: str | None = None, media_link: str | None = None,
+        caption: str | None = None, filename: str | None = None,
+    ) -> tuple[int, dict]:
+        """Send media message (image, document, audio, video) via official Cloud API."""
+        mtype = (media_type or "image").lower()
+        media_obj = {}
+        if media_id:
+            media_obj["id"] = str(media_id)
+        elif media_link:
+            media_obj["link"] = str(media_link)
+        else:
+            return 400, {"error": {"code": 400, "message": "media_id or media_link is required"}}
+        if caption:
+            media_obj["caption"] = caption[:1024]
+        if filename and mtype == "document":
+            media_obj["filename"] = filename[:256]
+
+        payload = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": to,
+            "type": mtype,
+            mtype: media_obj,
+        }
+        return await self._request("POST", self._endpoint(f"{phone_number_id}/messages"), json_body=payload)
+
+    async def mark_as_read(
+        self, *, phone_number_id: str, message_id: str,
+    ) -> tuple[int, dict]:
+        """Mark incoming message as read on official WhatsApp Cloud API."""
+        if not message_id:
+            return 400, {"error": {"code": 400, "message": "message_id is required"}}
+        payload = {
+            "messaging_product": "whatsapp",
+            "status": "read",
+            "message_id": message_id,
+        }
+        return await self._request("POST", self._endpoint(f"{phone_number_id}/messages"), json_body=payload)

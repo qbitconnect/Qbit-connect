@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error-container":"#93000a","secondary-fixed-dim":"#47d6ff","surface-container":"#191f2f","primary-fixed":"#dae1ff","primary-fixed-dim":"#b3c5ff","on-error-container":"#ffdad6","secondary-container":"#00d2ff","on-primary":"#002b75","on-surface-variant":"#c2c6d8","surface-bright":"#333949","secondary":"#a5e7ff","surface-container-high":"#242a3a","on-tertiary-fixed":"#002113","inverse-surface":"#dde2f7","on-secondary-fixed":"#001f28","secondary-fixed":"#b6ebff","on-background":"#dde2f7","outline":"#8c90a1","surface-container-highest":"#2f3445","primary-container":"#0066ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","on-secondary":"#003543","tertiary-container":"#008259","on-secondary-container":"#00566a","outline-variant":"#424656","tertiary-fixed":"#6ffbbe","on-primary-fixed":"#001849","tertiary-fixed-dim":"#4edea3","surface":"#0d1322","on-tertiary-fixed-variant":"#005236","on-secondary-fixed-variant":"#004e60","on-surface":"#dde2f7","on-tertiary-container":"#e1ffec","surface-dim":"#0d1322","on-primary-container":"#f8f7ff","on-tertiary":"#003824","surface-container-lowest":"#080e1d","error":"#ffb4ab","on-error":"#690005","inverse-on-surface":"#2a3040","inverse-primary":"#0054d6","surface-tint":"#b3c5ff","background":"#0d1322","surface-container-low":"#151b2b","tertiary":"#4edea3"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-md":"0.75rem","space-2xl":"2rem","margin":"1.5rem","gutter":"1rem","space-sm":"0.5rem","space-2xs":"0.125rem"},fontFamily:{"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"label-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"]},fontSize:{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 min-h-0"><div class="h-14 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">QBIT</span><span class="font-label-sm text-label-sm text-secondary leading-none uppercase tracking-wider mt-space-2xs">Growth OS</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-md"><nav class="space-y-space-2xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl"><div class="px-space-md py-space-2xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Main</div><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-semibold rounded-xl" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span>Scraper Marketplace</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">play_circle</span><span>My Runs</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">contacts</span><span>Leads</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Campaigns</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">schema</span><span>Automation</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px]">smart_toy</span><span>AI Assistant</span></a></nav><nav class="space-y-space-2xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl"><div class="px-space-md py-space-2xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Marketing</div><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span>Email</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span>WhatsApp</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span>Social Media</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span>SMS</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span>Telegram</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">all_inbox</span><span>Unified Inbox</span></a></nav><nav class="space-y-space-2xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl"><div class="px-space-md py-space-2xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Management</div><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Team</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics" href="#"><span class="material-symbols-outlined text-[18px]">insights</span><span>Analytics</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Audit Logs</span></a><a class="flex items-center gap-space-md px-space-md py-space-xs rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></nav></div></div><div class="p-space-sm"><div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-2xs"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span></div><span class="font-code-xs text-code-xs text-tertiary font-medium">99.98%</span></div><div class="flex items-center justify-between text-on-surface-variant font-code-xs text-code-xs"><span>Healthy</span><span>v2.4.0</span></div></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 w-full px-space-xl flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-lg flex-1 max-w-xl"><div class="relative flex items-center bg-surface-container-low rounded-xl px-space-md py-space-xs w-full max-w-md"><span class="material-symbols-outlined text-outline text-[18px] mr-space-sm">search</span><span class="font-body-sm text-body-sm text-outline flex-1">Search actors, scrapers, leads...</span><kbd class="font-code-xs text-code-xs px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant font-medium">Ctrl+K</kbd></div><div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-xl bg-surface-container-low text-on-surface font-label-md text-label-md cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-primary text-[18px]">lock</span><span>Private Workspace</span><span class="material-symbols-outlined text-outline text-[16px]">expand_more</span></div></div><div class="flex items-center gap-space-md"><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">help</span></button><div class="h-5 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-sm pl-space-xs cursor-pointer"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden md:flex flex-col"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Sagar Singh</span><span class="font-label-sm text-label-sm text-outline leading-tight">Owner</span></div></div></div></div></header><main class="w-full pt-14 px-space-xl bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle Ambient Glow Orbs -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/4 w-96 h-96 bg-primary-container/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-20 right-10 w-80 h-80 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Hero / Catalog Discovery Header -->
+<div class="relative pt-space-xl pb-space-2xl px-space-xs">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-xl">
+<div class="flex-1 max-w-3xl">
+<!-- Eyebrow Badge -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-2xs rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm tracking-wider uppercase mb-space-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span>QBIT Growth OS • Browse Catalog</span>
+</div>
+<!-- Massive Headline -->
+<h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight mb-space-sm">
+            Intelligence that drives growth.
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+            Discover businesses. Extract actionable intelligence. Turn raw public web footprint into high-converting revenue pipelines.
+          </p>
+</div>
+<!-- Floating Metric Telemetry Capsules -->
+<div class="flex flex-wrap lg:flex-nowrap items-center gap-space-md self-start lg:self-center">
+<div class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl bg-surface-container-low shadow-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">corporate_fare</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold leading-tight">2.4M</span>
+<span class="font-label-sm text-label-sm text-outline leading-tight">Businesses</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl bg-surface-container-low shadow-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">pin_drop</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold leading-tight">180+</span>
+<span class="font-label-sm text-label-sm text-outline leading-tight">Target Cities</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl bg-surface-container-low shadow-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-tertiary font-semibold leading-tight flex items-center gap-space-2xs">
+                Real-time
+                <span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+</span>
+<span class="font-label-sm text-label-sm text-outline leading-tight">Extraction Node</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Omnisearch Bar Container -->
+<div class="mt-space-xl p-space-xs rounded-full bg-surface-container-low shadow-xl flex flex-col md:flex-row items-center gap-space-sm">
+<div class="flex items-center gap-space-sm px-space-md py-space-sm flex-1 w-full">
+<span class="material-symbols-outlined text-outline text-[22px]">search</span>
+<input class="bg-transparent border-0 outline-none w-full font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-0" id="marketplace-search" placeholder="Search scrapers or describe your business objective (e.g. 'Gyms in Miami with email and phone')..." type="text"/>
+<kbd class="hidden sm:inline-flex items-center px-space-xs py-space-2xs rounded bg-surface-container text-on-surface-variant font-code-xs text-code-xs font-medium">⌘K</kbd>
+</div>
+<div class="flex items-center gap-space-xs w-full md:w-auto justify-end px-space-xs pb-space-2xs md:pb-0">
+<button class="px-space-md py-space-sm rounded-full bg-surface-container-high text-secondary hover:bg-surface-bright transition-all font-label-md text-label-md flex items-center gap-space-xs shadow-sm cursor-pointer whitespace-nowrap" onclick="triggerAiModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+<span>AI Plan</span>
+</button>
+<button class="px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container hover:opacity-95 transition-all font-label-md text-label-md flex items-center gap-space-xs shadow-md cursor-pointer whitespace-nowrap" type="button">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+<span>Find Tools</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Category Filters & Toolbar Row -->
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md py-space-md px-space-xs mb-space-lg">
+<!-- Scrollable Category Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto w-full lg:w-auto pb-space-2xs lg:pb-0 no-scrollbar">
+<button class="filter-pill active px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md whitespace-nowrap shadow-sm transition-colors cursor-pointer" data-category="all">
+          All Actors (72)
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="leads">
+          Business Leads
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="maps">
+          Google Maps
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="web">
+          Web Crawlers
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="social">
+          Social Media
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="email">
+          Email Intelligence
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="gov">
+          Government Data
+        </button>
+<button class="filter-pill px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md whitespace-nowrap transition-colors cursor-pointer" data-category="retail">
+          E-Commerce &amp; Retail
+        </button>
+</div>
+<!-- Sorting & View Controls -->
+<div class="flex items-center gap-space-sm self-end lg:self-center">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md cursor-pointer transition-colors">
+<span class="text-outline">Sort:</span>
+<span class="font-semibold text-on-surface">Most Popular</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+<div class="flex items-center p-space-2xs rounded-full bg-surface-container">
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="w-8 h-8 rounded-full text-outline hover:text-on-surface flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Scraper Actors Bento Grid (6 Major Actors) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg mb-space-2xl" id="actor-grid">
+<!-- ACTOR CARD 1: Google Maps -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row: Icon + Header + Badges -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-tertiary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Google Maps Business Scraper
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-tertiary-container/30 text-tertiary font-code-xs text-code-xs font-semibold flex items-center gap-space-2xs">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Ready
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Extract comprehensive business details, reviews, contact phones, direct emails, website URLs, and verified opening hours from Google Maps globally.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Locations</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Contacts</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Reviews</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Opening Hours</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.8</span>
+<span class="font-code-xs text-code-xs text-outline">(1.8K)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>621K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('Google Maps Business Scraper')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- ACTOR CARD 2: Instagram Business Scraper -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-secondary">
+<span class="material-symbols-outlined text-[28px]">photo_camera</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Instagram Business Scraper
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-primary-container/20 text-primary-fixed-dim font-code-xs text-code-xs font-semibold">
+                Hot
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Extract business profiles, bio emails, follower counts, engagement ratios, and recent tagged media directly with zero account ban risk.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Profiles</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Posts</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Bio Emails</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Hashtags</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.7</span>
+<span class="font-code-xs text-code-xs text-outline">(599)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>407K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('Instagram Business Scraper')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- ACTOR CARD 3: LinkedIn Company Research -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-primary-fixed">
+<span class="material-symbols-outlined text-[28px]">hub</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  LinkedIn Company Research
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-surface-container-highest text-secondary-fixed font-code-xs text-code-xs font-semibold">
+                B2B Prime
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Find companies, employee headcounts, growth trajectories, C-suite decision makers, and rich departmental tech stacks.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Companies</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Headcount</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Execs</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Growth</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.6</span>
+<span class="font-code-xs text-code-xs text-outline">(432)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>298K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('LinkedIn Company Research')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- ACTOR CARD 4: Website Intelligence Crawler -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-secondary-container">
+<span class="material-symbols-outlined text-[28px]">language</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Website Intelligence Crawler
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-surface-container-highest text-on-surface-variant font-code-xs text-code-xs font-semibold">
+                Fast v2
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Crawl target company websites to extract JSON-LD, structured catalog items, meta descriptions, pricing tiers, and embedded chat providers.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Schema</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Tech Stack</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Sitemaps</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Markdown</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.5</span>
+<span class="font-code-xs text-code-xs text-outline">(321)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>190K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('Website Intelligence Crawler')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- ACTOR CARD 5: Restaurant & Hospitality Leads -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-tertiary-fixed">
+<span class="material-symbols-outlined text-[28px]">restaurant</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Restaurant &amp; Hospitality Leads
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-tertiary-container/30 text-tertiary font-code-xs text-code-xs font-semibold">
+                High ROI
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Find restaurants, boutique hotels, lounges and cafes with verified owner contacts, reservation system handles, and guest sentiments.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Restaurants</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Hotels</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Owner Direct</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">POS Data</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.7</span>
+<span class="font-code-xs text-code-xs text-outline">(384)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>276K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('Restaurant &amp; Hospitality Leads')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- ACTOR CARD 6: Email Discovery & Verification -->
+<div class="group actor-card flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-200 shadow-md">
+<div class="flex flex-col gap-space-md">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shadow-inner text-primary-fixed-dim">
+<span class="material-symbols-outlined text-[28px]">mark_email_read</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Email Discovery &amp; Verification
+                </h3>
+<span class="font-label-sm text-label-sm text-outline">by <span class="text-on-surface-variant font-medium">QbitPro</span></span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="px-space-xs py-space-2xs rounded-full bg-primary-container/20 text-secondary font-code-xs text-code-xs font-semibold">
+                99.4% Deliverable
+              </span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+            Discover verified corporate work emails from domain names, corporate staff rosters, and social profiles with deep SMTP ping validation.
+          </p>
+<!-- Feature Tag Pills -->
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Verification</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">SMTP Handshake</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">MX Routing</span>
+<span class="px-space-sm py-space-2xs rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">Syntax Clean</span>
+</div>
+</div>
+<!-- Footer / Stats & CTA -->
+<div class="mt-space-xl pt-space-md flex items-center justify-between bg-surface-container-lowest/40 -mx-space-lg -mb-space-lg p-space-lg rounded-b-xl">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-semibold text-on-surface">4.6</span>
+<span class="font-code-xs text-code-xs text-outline">(512)</span>
+</div>
+<div class="flex items-center gap-space-2xs text-outline font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[15px]">play_arrow</span>
+<span>333K</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-90 transition-all flex items-center gap-space-xs shadow-sm cursor-pointer" onclick="openActorDetail('Email Discovery &amp; Verification')" type="button">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Live Activity & Scraper Pipeline Quick Banner -->
+<div class="mb-space-2xl p-space-xl rounded-xl bg-surface-container-low shadow-lg relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-space-xl">
+<div class="flex items-center gap-space-lg z-10">
+<div class="w-14 h-14 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-fixed shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[32px]">psychology</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs mb-space-2xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Need a bespoke scraping pipeline?</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container-high text-secondary font-label-sm text-label-sm uppercase font-semibold">AI Builder</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+            Let QBIT Autonomous AI build and test a production-grade headless scraper tailored to your target domain in under 60 seconds. Zero coding required.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-md z-10 w-full lg:w-auto justify-end">
+<button class="px-space-lg py-space-sm rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-bright font-label-md text-label-md transition-colors cursor-pointer" onclick="openDocumentation()" type="button">
+          View API Docs
+        </button>
+<button class="px-space-lg py-space-sm rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-95 shadow-md flex items-center gap-space-xs transition-transform active:scale-95 cursor-pointer whitespace-nowrap" onclick="triggerAiModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+<span>Create Custom Scraper ✨</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive Slide-over Actor Quick Inspector / Details Modal -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-md z-50 hidden transition-opacity" id="actor-drawer-overlay" onclick="closeActorDrawer()">
+<div class="fixed right-0 top-0 bottom-0 w-full max-w-xl bg-surface-container-low shadow-2xl p-space-xl flex flex-col justify-between overflow-y-auto" id="actor-drawer" onclick="event.stopPropagation()">
+<div class="flex flex-col gap-space-lg">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs text-outline font-label-sm text-label-sm uppercase">
+<span>Marketplace</span>
+<span>/</span>
+<span class="text-secondary font-semibold" id="drawer-actor-category">Actor Overview</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center cursor-pointer" onclick="closeActorDrawer()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Actor Hero Header in Drawer -->
+<div class="flex items-start gap-space-md">
+<div class="w-14 h-14 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[32px]">travel_explore</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold" id="drawer-actor-name">Actor Name</h2>
+<span class="font-label-sm text-label-sm text-outline">v2.4.0 • Maintained by QbitPro Labs</span>
+</div>
+</div>
+<!-- Metric Cards Grid inside Drawer -->
+<div class="grid grid-cols-3 gap-space-sm">
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Avg Run Time</span>
+<span class="font-code-sm text-code-sm text-on-surface font-semibold mt-space-2xs">2m 45s</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Extraction Rate</span>
+<span class="font-code-sm text-code-sm text-tertiary font-semibold mt-space-2xs">99.8%</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Cost / 1K items</span>
+<span class="font-code-sm text-code-sm text-secondary-fixed font-semibold mt-space-2xs">$0.006</span>
+</div>
+</div>
+<!-- Quick Form Input Preview -->
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface font-semibold">Target Search Query / Category</label>
+<input class="px-space-md py-space-sm rounded-xl bg-surface-container text-on-surface font-body-md text-body-md border-0 outline-none focus:bg-surface-container-high" placeholder="e.g. Italian Restaurants, Brooklyn, NY" type="text"/>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface font-semibold">Max Extraction Depth</label>
+<div class="grid grid-cols-3 gap-space-sm">
+<button class="py-space-xs rounded-xl bg-surface-container text-on-surface-variant hover:bg-surface-container-high text-body-sm font-body-sm font-medium">100 Records</button>
+<button class="py-space-xs rounded-xl bg-primary-container text-on-primary-container text-body-sm font-body-sm font-semibold">1,000 Records</button>
+<button class="py-space-xs rounded-xl bg-surface-container text-on-surface-variant hover:bg-surface-container-high text-body-sm font-body-sm font-medium">10,000 Records</button>
+</div>
+</div>
+<!-- JSON Input Spec Toggle -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest font-code-xs text-code-xs text-secondary-fixed space-y-space-2xs">
+<div class="flex items-center justify-between text-outline">
+<span>JSON CONFIG SPEC</span>
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+</div>
+<pre class="overflow-x-auto text-on-surface-variant leading-relaxed">{
+  "max_concurrency": 16,
+  "proxy_rotation": "residential",
+  "enrich_social_links": true,
+  "export_format": "JSON_CSV"
+}
+          </pre>
+</div>
+</div>
+<!-- Drawer Bottom Action Buttons -->
+<div class="flex items-center justify-between gap-space-md pt-space-lg">
+<button class="flex-1 py-space-sm rounded-xl bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors cursor-pointer" onclick="closeActorDrawer()" type="button">
+          Cancel
+        </button>
+<button class="flex-1 py-space-sm rounded-xl bg-primary-container text-on-primary-container hover:opacity-95 font-label-md text-label-md font-semibold transition-all flex items-center justify-center gap-space-xs shadow-md cursor-pointer" onclick="launchExecution()" type="button">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span>Launch Run</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // Category pill filtering interaction
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', function() {
+        document.querySelectorAll('.filter-pill').forEach(p => {
+          p.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+          p.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        this.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+        this.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      });
+    });
+
+    // Omnisearch filtering mock
+    const searchInput = document.getElementById('marketplace-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase();
+        document.querySelectorAll('.actor-card').forEach(card => {
+          const title = card.querySelector('h3').innerText.toLowerCase();
+          const desc = card.querySelector('p').innerText.toLowerCase();
+          if (title.includes(query) || desc.includes(query)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Modal / Drawer handling
+    function openActorDetail(actorName) {
+      const overlay = document.getElementById('actor-drawer-overlay');
+      const titleElem = document.getElementById('drawer-actor-name');
+      if (titleElem) titleElem.textContent = actorName;
+      if (overlay) overlay.classList.remove('hidden');
+    }
+
+    function closeActorDrawer() {
+      const overlay = document.getElementById('actor-drawer-overlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    function triggerAiModal() {
+      alert("QBIT AI Agent initialized. Generating autonomous extraction pipeline...");
+    }
+
+    function openDocumentation() {
+      alert("Loading API Reference for headless execution & webhook payloads...");
+    }
+
+    function launchExecution() {
+      alert("Cluster node allocated. Run scheduled in background queue!");
+      closeActorDrawer();
+    }
+  </script>
+</div></main></div></body></html>

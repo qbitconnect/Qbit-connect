@@ -8,6 +8,7 @@
     <h1>{{ lead_data.business_name or '(no name)' }}</h1>
     <p class="muted">
       <span class="badge badge-{{ lead_data.status | lower }}">{{ lead_data.status }}</span>
+      <span class="badge" style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:6px;background:{% if lead_data.priority == 'URGENT' %}rgba(239,68,68,.2);color:#ef4444{% elif lead_data.priority == 'HIGH' %}rgba(245,158,11,.2);color:#f59e0b{% elif lead_data.priority == 'LOW' %}rgba(107,114,128,.2);color:#9ca3af{% else %}rgba(59,130,246,.2);color:#3b82f6{% endif %}">Priority: {{ lead_data.priority or 'MEDIUM' }}</span>
       &nbsp; Quality: <strong>{{ lead_data.quality_score if lead_data.quality_score is not none else '—' }}/100</strong>
       {% if lead_data.enrichment_status and lead_data.enrichment_status != 'UNRICHED' %}
       &nbsp; Enrichment: <span class="badge badge-{{ 'ready' if lead_data.enrichment_status == 'ENRICHED' else 'paused' }}">{{ lead_data.enrichment_status }}</span>
@@ -50,9 +51,66 @@
 {% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
 {% if lead_data.merged_into_id %}<div class="alert alert-warn">This lead was merged into <a href="/leads/{{ lead_data.merged_into_id }}">{{ lead_data.merged_into_id[:8] }}</a> — it is read-only.</div>{% endif %}
 
+<!-- Pipeline Stage Progression Stepper -->
+<div class="card" style="margin-bottom:20px;padding:16px 20px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <h3 style="margin:0;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;color:#94a3b8">Pipeline Stage Progression</h3>
+    {% if can_edit and not lead_data.merged_into_id %}
+    <form method="post" action="/leads/{{ lead.id }}/stage" class="inline-form" style="display:flex;gap:6px;align-items:center">
+      <select name="stage" style="padding:4px 8px;font-size:12px">
+        {% for st in pipeline_stages %}<option value="{{ st }}" {% if st == lead_data.status %}selected{% endif %}>{{ st }}</option>{% endfor %}
+      </select>
+      <input type="text" name="reason" placeholder="Stage transition reason (optional)" size="22" style="padding:4px 8px;font-size:12px">
+      <button class="btn btn-sm btn-primary" type="submit">Advance Stage</button>
+    </form>
+    {% endif %}
+  </div>
+  <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
+    {% for st in pipeline_stages %}
+      {% set is_current = st == lead_data.status %}
+      <div style="flex:1;min-width:110px;text-align:center;padding:10px 8px;border-radius:6px;background:{% if is_current %}rgba(59,130,246,.25){% else %}rgba(255,255,255,.03){% endif %};border:1px solid {% if is_current %}#3b82f6{% else %}rgba(255,255,255,.08){% endif %};color:{% if is_current %}#60a5fa{% else %}#94a3b8{% endif %};font-size:12px;font-weight:{% if is_current %}600{% else %}400{% endif %}">
+        {% if is_current %}<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#60a5fa;margin-right:4px"></span>{% endif %}
+        {{ st }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
 <div class="section-grid">
+  <!-- Assignment & Ownership -->
   <div class="card">
-    <h2>Contact</h2>
+    <h2>Assignment &amp; Ownership</h2>
+    <div class="kv"><span class="k">Assigned to</span><span class="v">
+      {% set curr_assignee = namespace(found=false) %}
+      {% for u in assignees %}{% if u.id == lead_data.assigned_user_id %}{% set curr_assignee.found = true %}<strong>{{ u.name }}</strong> ({{ u.email }}){% endif %}{% endfor %}
+      {% if not curr_assignee.found %}<span class="muted">{{ lead_data.assigned_user_id or 'Unassigned' }}</span>{% endif %}
+    </span></div>
+    <div class="kv"><span class="k">Priority</span><span class="v">
+      <span class="badge" style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:{% if lead_data.priority == 'URGENT' %}rgba(239,68,68,.2);color:#ef4444{% elif lead_data.priority == 'HIGH' %}rgba(245,158,11,.2);color:#f59e0b{% elif lead_data.priority == 'LOW' %}rgba(107,114,128,.2);color:#9ca3af{% else %}rgba(59,130,246,.2);color:#3b82f6{% endif %}">{{ lead_data.priority or 'MEDIUM' }}</span>
+    </span></div>
+    <div class="kv"><span class="k">Last Activity</span><span class="v">{{ (lead_data.last_activity_at or lead_data.updated_at or '—')[:19].replace('T',' ') }}</span></div>
+    {% if can_assign and not lead_data.merged_into_id %}
+    <form method="post" action="/leads/{{ lead.id }}/assign" class="form-actions" style="margin-top:12px;border-top:1px solid rgba(255,255,255,.06);padding-top:10px">
+      <select name="assigned_user_id" style="width:100%;margin-bottom:8px">
+        <option value="">Unassigned</option>
+        {% for u in assignees %}<option value="{{ u.id }}" {% if u.id == lead_data.assigned_user_id %}selected{% endif %}>{{ u.name }} ({{ u.email }})</option>{% endfor %}
+      </select>
+      <input type="text" name="reason" placeholder="Assignment note (optional)" style="width:100%;margin-bottom:8px">
+      <button class="btn btn-sm btn-ghost" type="submit">Reassign Lead</button>
+    </form>
+    {% endif %}
+    {% if can_edit and not lead_data.merged_into_id %}
+    <form method="post" action="/leads/{{ lead.id }}/priority" class="inline-form" style="margin-top:8px">
+      <select name="priority">
+        {% for pr in priorities %}<option value="{{ pr }}" {% if pr == lead_data.priority %}selected{% endif %}>{{ pr }}</option>{% endfor %}
+      </select>
+      <button class="btn btn-sm btn-ghost" type="submit">Set Priority</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Contact Information</h2>
     <div class="kv"><span class="k">Contact name</span><span class="v">{{ lead_data.contact_name or '—' }}</span></div>
     <div class="kv"><span class="k">First name</span><span class="v">{{ lead_data.first_name or '—' }}</span></div>
     <div class="kv"><span class="k">Last name</span><span class="v">{{ lead_data.last_name or '—' }}</span></div>
@@ -62,13 +120,15 @@
       {% if lead_data.website %}<a href="{{ lead_data.website }}" rel="noopener noreferrer nofollow">{{ lead_data.website }}</a>{% else %}—{% endif %}
     </span></div>
   </div>
+
   <div class="card">
-    <h2>Business</h2>
+    <h2>Business &amp; Industry</h2>
     <div class="kv"><span class="k">Category</span><span class="v">{{ lead_data.category or '—' }}</span></div>
     <div class="kv"><span class="k">Industry</span><span class="v">{{ lead_data.industry or '—' }}</span></div>
     <div class="kv"><span class="k">Rating</span><span class="v">{{ lead_data.rating if lead_data.rating is not none else '—' }}</span></div>
     <div class="kv"><span class="k">Reviews</span><span class="v">{{ lead_data.review_count if lead_data.review_count is not none else '—' }}</span></div>
   </div>
+
   <div class="card">
     <h2>Location</h2>
     <div class="kv"><span class="k">Address</span><span class="v">{{ lead_data.address or '—' }}</span></div>
@@ -77,26 +137,133 @@
     <div class="kv"><span class="k">Postal code</span><span class="v">{{ lead_data.postal_code or '—' }}</span></div>
     <div class="kv"><span class="k">Country</span><span class="v">{{ lead_data.country or '—' }}</span></div>
   </div>
-  <div class="card">
-    <h2>Source &amp; Quality</h2>
-    <div class="kv"><span class="k">Source</span><span class="v">{{ lead_data.source or '—' }}</span></div>
-    <div class="kv"><span class="k">Source type</span><span class="v">{{ lead_data.source_type or '—' }}</span></div>
-    <div class="kv"><span class="k">Source URL</span><span class="v">{% if lead_data.source_url %}<a href="{{ lead_data.source_url }}" rel="noopener noreferrer nofollow" class="mono small">{{ lead_data.source_url[:60] }}</a>{% else %}—{% endif %}</span></div>
-    <div class="kv"><span class="k">Scraper</span><span class="v">{{ lead_data.source_actor_id or '—' }} {{ ('v' + lead_data.source_actor_version) if lead_data.source_actor_version else '' }}</span></div>
-    <div class="kv"><span class="k">Scrape job</span><span class="v">{% if lead_data.source_job_id %}<a href="/scraping/jobs/{{ lead_data.source_job_id }}" class="mono small">{{ lead_data.source_job_id[:8] }}</a>{% else %}—{% endif %}</span></div>
-    <div class="kv"><span class="k">Import batch</span><span class="v mono small">{{ (lead_data.import_batch_id or '—')[:8] }}</span></div>
-    <div class="kv"><span class="k">Scraped at</span><span class="v">{{ (lead_data.scraped_at or '—')[:19].replace('T',' ') }}</span></div>
-    <div class="kv"><span class="k">Last verified</span><span class="v">{{ (lead_data.last_verified_at or '—')[:19].replace('T',' ') }}</span></div>
-    <div class="kv"><span class="k">Created</span><span class="v">{{ (lead_data.created_at or '—')[:19].replace('T',' ') }}</span></div>
-    <div class="kv"><span class="k">Updated</span><span class="v">{{ (lead_data.updated_at or '—')[:19].replace('T',' ') }}</span></div>
-  </div>
 </div>
 
+<!-- Follow-Up Tasks & Reminders -->
 <div class="card">
-  <h2>Quality</h2>
-  <span class="score-bar" style="width:220px;height:10px"><span style="width: {{ lead_data.quality_score or 0 }}%"></span></span>
-  <span class="stat-value" style="margin-left:10px">{{ lead_data.quality_score if lead_data.quality_score is not none else '—' }}/100</span>
-  <p class="muted small">Deterministic data-completeness score (name 20 · phone 20 · email 20 · website 15 · address 10 · city 5 · state 5 · provenance 5). Not an AI prediction.</p>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <h2 style="margin:0">Follow-Up Tasks &amp; Reminders</h2>
+  </div>
+  {% for task in followups %}
+    <div class="activity-line" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <div>
+        <strong>{{ task.title }}</strong>
+        <span class="badge" style="font-size:10px;padding:2px 6px;margin-left:6px;background:{% if task.status == 'COMPLETED' %}rgba(16,185,129,.2);color:#10b981{% elif task.status == 'CANCELLED' %}rgba(107,114,128,.2);color:#9ca3af{% else %}rgba(245,158,11,.2);color:#f59e0b{% endif %}">{{ task.status }}</span>
+        <span class="badge" style="font-size:10px;padding:2px 6px;margin-left:4px;background:rgba(59,130,246,.15);color:#60a5fa">{{ task.priority }}</span>
+        <div class="muted small" style="margin-top:2px">Due: {{ (task.due_at or '')[:16].replace('T',' ') }} {% if task.notes %}· {{ task.notes }}{% endif %}</div>
+      </div>
+      {% if can_edit and task.status == 'PENDING' and not lead_data.merged_into_id %}
+      <div style="display:flex;gap:6px">
+        <form method="post" action="/leads/{{ lead.id }}/followups/{{ task.id }}/complete" class="inline-form">
+          <button class="btn btn-sm btn-primary" type="submit" style="padding:2px 8px;font-size:11px">Complete</button>
+        </form>
+        <form method="post" action="/leads/{{ lead.id }}/followups/{{ task.id }}/cancel" class="inline-form">
+          <button class="btn btn-sm btn-ghost" type="submit" style="padding:2px 8px;font-size:11px">Cancel</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <p class="muted">No follow-up tasks scheduled.</p>
+  {% endfor %}
+  {% if can_edit and not lead_data.merged_into_id %}
+  <details style="margin-top:14px">
+    <summary class="muted small" style="cursor:pointer;color:#60a5fa">+ Schedule new follow-up</summary>
+    <form method="post" action="/leads/{{ lead.id }}/followups" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <label style="grid-column:1 / -1">Task Title<input type="text" name="title" placeholder="e.g. Call regarding proposal" required></label>
+      <label>Due Date<input type="date" name="due_date" required></label>
+      <label>Due Time<input type="time" name="due_time" value="10:00"></label>
+      <label>Priority
+        <select name="priority">
+          {% for pr in priorities %}<option value="{{ pr }}" {% if pr == 'MEDIUM' %}selected{% endif %}>{{ pr }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Assignee
+        <select name="assigned_user_id">
+          <option value="">Current Lead Assignee</option>
+          {% for u in assignees %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label style="grid-column:1 / -1">Notes<textarea name="notes" rows="2" placeholder="Task notes or objectives…"></textarea></label>
+      <div style="grid-column:1 / -1"><button class="btn btn-sm btn-primary" type="submit">Schedule Task</button></div>
+    </form>
+  </details>
+  {% endif %}
+</div>
+
+<!-- Associated Contacts -->
+<div class="card">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <h2 style="margin:0">Contact Persons</h2>
+  </div>
+  {% for contact in contacts %}
+    <div class="activity-line" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <div>
+        <strong>{{ contact.first_name }} {{ contact.last_name or '' }}</strong>
+        {% if contact.title %}<span class="muted small">· {{ contact.title }}</span>{% endif %}
+        {% if contact.is_primary %}<span class="badge" style="font-size:10px;padding:2px 6px;margin-left:4px;background:rgba(59,130,246,.2);color:#60a5fa">PRIMARY</span>{% endif %}
+        {% if contact.is_verified %}<span class="badge" style="font-size:10px;padding:2px 6px;margin-left:4px;background:rgba(16,185,129,.2);color:#10b981">VERIFIED</span>{% endif %}
+        <div class="muted small" style="margin-top:2px">
+          {% if contact.email %}Email: <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}
+          {% if contact.phone %} · Phone: {{ contact.phone }}{% endif %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <p class="muted">No additional contact persons registered.</p>
+  {% endfor %}
+  {% if can_edit and not lead_data.merged_into_id %}
+  <details style="margin-top:14px">
+    <summary class="muted small" style="cursor:pointer;color:#60a5fa">+ Add contact person</summary>
+    <form method="post" action="/leads/{{ lead.id }}/contacts" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <label>First Name<input type="text" name="first_name" required></label>
+      <label>Last Name<input type="text" name="last_name"></label>
+      <label>Title / Role<input type="text" name="title" placeholder="e.g. Sales Director"></label>
+      <label>Email<input type="email" name="email"></label>
+      <label>Phone<input type="text" name="phone"></label>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:22px">
+        <input type="checkbox" name="is_primary" value="true"> Primary Contact
+      </label>
+      <div style="grid-column:1 / -1"><button class="btn btn-sm btn-primary" type="submit">Save Contact</button></div>
+    </form>
+  </details>
+  {% endif %}
+</div>
+
+<!-- Log Communication -->
+<div class="card">
+  <h2>Log Communication / Interaction</h2>
+  {% if can_edit and not lead_data.merged_into_id %}
+  <form method="post" action="/leads/{{ lead.id }}/interactions" style="display:grid;grid-template-columns:140px 1fr auto;gap:10px;align-items:start">
+    <select name="interaction_type">
+      <option value="CALL">📞 Phone Call</option>
+      <option value="EMAIL">✉️ Email Sent</option>
+      <option value="MEETING">🤝 Meeting</option>
+      <option value="WHATSAPP">💬 WhatsApp</option>
+      <option value="NOTE">📝 Note</option>
+    </select>
+    <textarea name="notes" rows="2" placeholder="Interaction summary, discussed points, or outcome…" required style="width:100%"></textarea>
+    <button class="btn btn-sm btn-primary" type="submit" style="height:36px">Log</button>
+  </form>
+  {% else %}
+  <p class="muted">Read-only lead.</p>
+  {% endif %}
+</div>
+
+<!-- Stage History -->
+<div class="card log-card">
+  <h2>Stage Transition History</h2>
+  <div class="log">
+    {% for h in stage_history %}
+      <div class="log-line">
+        <span class="log-time">{{ (h.created_at or '')[:19].replace('T',' ') }}</span>
+        <span class="log-type" style="color:#60a5fa">{{ h.previous_status or 'NEW' }} → {{ h.new_status }}</span>
+        <span>{% if h.reason %}{{ h.reason }}{% else %}<span class="muted">(no reason recorded)</span>{% endif %}</span>
+      </div>
+    {% else %}
+      <div class="log-line"><span class="muted">No stage transitions recorded yet.</span></div>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="card">
@@ -160,7 +327,7 @@
 </div>
 
 <div class="card log-card">
-  <h2>Activity</h2>
+  <h2>Timeline Activity</h2>
   <div class="log">
     {% for a in activity %}
       <div class="log-line">
@@ -175,7 +342,12 @@
 </div>
 
 <div class="card log-card">
-  <h2>Metadata</h2>
-  <pre class="mono small muted" style="overflow-x:auto">{{ metadata_json }}</pre>
+  <h2>Source Provenance &amp; Metadata</h2>
+  <div class="kv"><span class="k">Source</span><span class="v">{{ lead_data.source or '—' }}</span></div>
+  <div class="kv"><span class="k">Source type</span><span class="v">{{ lead_data.source_type or '—' }}</span></div>
+  <div class="kv"><span class="k">Source URL</span><span class="v">{% if lead_data.source_url %}<a href="{{ lead_data.source_url }}" rel="noopener noreferrer nofollow" class="mono small">{{ lead_data.source_url[:60] }}</a>{% else %}—{% endif %}</span></div>
+  <div class="kv"><span class="k">Scraper</span><span class="v">{{ lead_data.source_actor_id or '—' }} {{ ('v' + lead_data.source_actor_version) if lead_data.source_actor_version else '' }}</span></div>
+  <div class="kv"><span class="k">Scrape job</span><span class="v">{% if lead_data.source_job_id %}<a href="/scraping/jobs/{{ lead_data.source_job_id }}" class="mono small">{{ lead_data.source_job_id[:8] }}</a>{% else %}—{% endif %}</span></div>
+  <pre class="mono small muted" style="overflow-x:auto;margin-top:10px">{{ metadata_json }}</pre>
 </div>
 {% endblock %}

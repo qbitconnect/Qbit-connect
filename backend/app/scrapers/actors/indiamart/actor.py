@@ -48,6 +48,28 @@ class IndiaMartActor(ScraperActor):
         "price / MOQ hints",
     )
     supports_pause = True
+    source_type = "commercial_platform"
+    implementation_status = "RESTRICTED"
+    access_method = "partner_api"
+    terms_verified = True
+    permitted_use = "Authorized access via official IndiaMART CRM / Lead Manager API with seller credentials"
+    retention_policy = "Transactional B2B inquiry records under IndiaMART API agreement"
+    export_restrictions = ("No mass directory redistribution without enterprise agreement",)
+    required_credentials = ("QBIT_INDIAMART_API_KEY",)
+
+    def __init__(self, settings=None) -> None:
+        self._settings = settings
+
+    async def health_check(self) -> ActorHealth:
+        from app.scrapers.core.base import ActorStatus
+        api_key = getattr(self._settings, "QBIT_INDIAMART_API_KEY", None) if self._settings else None
+        if not api_key:
+            return ActorHealth(
+                status=ActorStatus.DEGRADED,
+                detail="CONFIGURATION REQUIRED: IndiaMART Terms of Use prohibit unauthorized automated scraping; official IndiaMART CRM API Key (QBIT_INDIAMART_API_KEY) is required.",
+                dependencies={"indiamart_api": "missing"},
+            )
+        return ActorHealth(status=ActorStatus.READY, detail="IndiaMART API configured", dependencies={"indiamart_api": "configured"})
 
     def validate_policy(self, model) -> dict[str, str]:
         return model.validate_policy()
@@ -125,10 +147,3 @@ class IndiaMartActor(ScraperActor):
                 "No public IndiaMART content could be retrieved — walls or "
                 "unrecognized markup. Nothing fabricated."
             )
-
-    async def health_check(self) -> ActorHealth:
-        return ActorHealth(
-            status="READY",
-            detail="Public search/supplier pages only; walls reported as blocked.",
-            dependencies={},
-        )

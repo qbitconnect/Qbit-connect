@@ -155,6 +155,61 @@ class WhatsAppMockProvider(WhatsAppProvider):
             ) if t is not None
         ]
 
+    async def send_session_text(
+        self, *, account_config: dict, recipient_address: str, body: str,
+        idempotency_key: str, credentials: dict | None = None,
+    ) -> SendResult:
+        if not (credentials or {}).get("access_token"):
+            return SendResult.failure(
+                "No access token available for this sending account",
+                code="CREDENTIALS_MISSING", error_class=ErrorClass.CONFIGURATION,
+            )
+        ok, e164, reason = normalize_recipient_phone(recipient_address)
+        if not ok:
+            return SendResult.failure(
+                f"Recipient phone is invalid ({reason})",
+                code="INVALID_RECIPIENT", error_class=ErrorClass.PERMANENT,
+            )
+        digits = (e164 or "").lstrip("+")
+        token = str((credentials or {}).get("access_token") or "")
+
+        if "00000000" in digits:
+            return self._fail("Recipient phone number is not on WhatsApp", "INVALID_RECIPIENT")
+        if "9999" in digits:
+            result = self._fail("Rate limit hit — wait and retry", "RATE_LIMITED", ErrorClass.TRANSIENT)
+            result.metadata = {"mock": True, "retry_after_seconds": 90.0}
+            return result
+        if "555000" in digits or "flaky" in recipient_address:
+            return self._fail("Provider temporarily unavailable", "PROVIDER_UNAVAILABLE", ErrorClass.TRANSIENT)
+        if "fail" in recipient_address:
+            return self._fail("Mock permanent failure (invalid recipient)", "MOCK_PERMANENT", ErrorClass.PERMANENT)
+        if token.startswith("EAAG-expired"):
+            return self._fail("Access token validation failed", "AUTHENTICATION_ERROR")
+
+        return SendResult.success(
+            f"wamid.mock{abs(hash(idempotency_key)) % 10**12:012d}",
+            status="SENT",
+            metadata={"mock": True, "provider_status": "accepted", "session_text": True},
+        )
+
+    async def send_media_message(
+        self, *, account_config: dict, recipient_address: str,
+        media_type: str, media_id: str | None = None, media_link: str | None = None,
+        caption: str | None = None, filename: str | None = None,
+        idempotency_key: str | None = None, credentials: dict | None = None,
+    ) -> SendResult:
+        return SendResult.success(
+            f"wamid.mock{abs(hash(idempotency_key or 'media')) % 10**12:012d}",
+            status="SENT",
+            metadata={"mock": True, "media": True},
+        )
+
+    async def mark_message_as_read(
+        self, *, account_config: dict, message_id: str,
+        credentials: dict | None = None,
+    ) -> bool:
+        return True
+
     @staticmethod
     def _fail(message: str, code: str, error_class: ErrorClass = ErrorClass.PERMANENT) -> SendResult:
         result = SendResult.failure(message, code=code, error_class=error_class)

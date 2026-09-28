@@ -1,129 +1,971 @@
 {% extends "base.html" %}
-{% block title %}New campaign — QBIT Connect{% endblock %}
+{% block title %}New Campaign — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>NEW CAMPAIGN</h1>
-    <p class="muted">9-step wizard — details, channel, audience, template, sender, eligibility, schedule, review, launch.</p>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Breadcrumb & Top Bar -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <a href="/campaigns" class="text-outline hover:text-on-surface transition-colors flex items-center gap-1 font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Campaigns
+        </a>
+        <span class="text-outline/40">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          9-Step Wizard
+        </span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+        Create Outbound Campaign
+      </h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Configure campaign targeting, multichannel templates, sender routing, and eligibility verification.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-space-sm">
+      <a class="btn btn-ghost" href="/campaigns">Cancel</a>
+      <button type="button" onclick="document.getElementById('campaignForm').scrollIntoView({behavior: 'smooth'})" class="btn btn-ghost text-primary hover:text-white">
+        <span class="material-symbols-outlined text-[16px]">list_alt</span>
+        Overview
+      </button>
+    </div>
   </div>
-  <div class="head-actions"><a class="btn btn-ghost" href="/campaigns">Back</a></div>
+
+  <!-- Global Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-space-sm rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
+
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-space-sm rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
+
+  {% if not provider_configured %}
+  <div class="rounded-xl p-space-md bg-surface-container-high border border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div class="flex items-center gap-space-sm">
+      <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline">
+        <span class="material-symbols-outlined text-[20px]">warning</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-md text-label-md text-on-surface font-semibold">No Sending Account Configured</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Campaigns can be drafted and previewed, but launch remains locked until a verified provider is connected.</span>
+      </div>
+    </div>
+    <a href="/campaigns/accounts" class="btn btn-ghost text-xs whitespace-nowrap">
+      Configure Senders
+      <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+    </a>
+  </div>
+  {% endif %}
+
+  <!-- 9-Step Interactive Stepper Rail -->
+  <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 overflow-x-auto">
+    <div class="flex items-center justify-between min-w-[760px] gap-2">
+      <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-nav-btn active flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-code-xs text-code-xs font-bold flex items-center justify-center">1</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-on-surface">Details</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">2</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Channel</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">3</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Audience</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">4</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Template</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">5</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Sender</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(6)" id="stepTab-6" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">6</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Eligibility</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(7)" id="stepTab-7" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">7</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Schedule</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(8)" id="stepTab-8" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">8</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Review</span>
+      </button>
+
+      <span class="text-outline-variant/40 font-bold">›</span>
+
+      <button type="button" onclick="goToStep(9)" id="stepTab-9" class="step-nav-btn flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all">
+        <span class="step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center">9</span>
+        <span class="step-name font-label-sm text-label-sm font-semibold text-outline">Launch</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Wizard Form Container -->
+  <form id="campaignForm" method="post" action="/campaigns" class="space-y-space-lg">
+
+    <!-- STEP 1: CAMPAIGN DETAILS -->
+    <div id="stepSection-1" class="step-content card p-space-xl space-y-space-lg">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 1 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Campaign Details</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Provide an identifiable title and operational notes for this outreach campaign.</p>
+      </div>
+
+      <div class="space-y-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="campaignName">
+            Campaign Name <span class="text-error">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="campaignName" 
+            name="name" 
+            required 
+            maxlength="200" 
+            placeholder="e.g. Surat Textile POS Upgrade — Q4 Outreach" 
+            class="qbit-input" 
+            value="{{ form.name if form else '' }}"
+            oninput="updateReview()"
+          />
+          <span class="qbit-form-hint">A concise name shown across dashboards, analytics, and dispatch logs.</span>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="campaignDescription">
+            Operational Description (Optional)
+          </label>
+          <textarea 
+            id="campaignDescription" 
+            name="description" 
+            maxlength="5000" 
+            rows="3" 
+            placeholder="Document campaign objectives, target audience cohort, discount codes, or key sales reps assigned..." 
+            class="qbit-input"
+            oninput="updateReview()"
+          >{{ form.description if form else '' }}</textarea>
+          <span class="qbit-form-hint">Internal notes visible to your team members and management reports.</span>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(2)" class="btn btn-primary">
+          Next: Select Channel
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: CHANNEL -->
+    <div id="stepSection-2" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 2 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Outbound Channel</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Select the communication channel for dispatching outbound messages.</p>
+      </div>
+
+      <!-- Selectable Channel Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <!-- WhatsApp -->
+        <label class="channel-card relative flex flex-col p-space-md rounded-xl bg-surface-container border border-outline-variant/40 cursor-pointer hover:border-primary/60 transition-all">
+          <input type="radio" name="channel_radio" value="WHATSAPP" class="sr-only" onchange="selectChannel('WHATSAPP')" {% if not form or form.channel == 'WHATSAPP' %}checked{% endif %}>
+          <div class="flex items-center justify-between mb-space-sm">
+            <div class="w-10 h-10 rounded-lg bg-tertiary-container/30 text-tertiary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">chat</span>
+            </div>
+            <span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-tertiary/20 text-tertiary font-bold">Recommended</span>
+          </div>
+          <span class="font-headline-sm text-headline-sm font-bold text-on-surface mb-1">WhatsApp Business</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant flex-1">
+            Meta Cloud API & QR channel. Ideal for instant Indian B2B outreach with 98% open rates and rich media support.
+          </p>
+          <div class="mt-space-md pt-space-xs border-t border-outline-variant/20 flex items-center text-xs text-outline">
+            <span class="material-symbols-outlined text-[14px] mr-1 text-tertiary">check_circle</span>
+            High Engagement
+          </div>
+        </label>
+
+        <!-- Email -->
+        <label class="channel-card relative flex flex-col p-space-md rounded-xl bg-surface-container border border-outline-variant/40 cursor-pointer hover:border-primary/60 transition-all">
+          <input type="radio" name="channel_radio" value="EMAIL" class="sr-only" onchange="selectChannel('EMAIL')" {% if form and form.channel == 'EMAIL' %}checked{% endif %}>
+          <div class="flex items-center justify-between mb-space-sm">
+            <div class="w-10 h-10 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">mail</span>
+            </div>
+            <span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-primary-container/30 text-primary font-bold">Corporate</span>
+          </div>
+          <span class="font-headline-sm text-headline-sm font-bold text-on-surface mb-1">Email Marketing</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant flex-1">
+            SMTP & SendGrid pipelines. High-deliverability corporate sequences with bounce protection and open tracking.
+          </p>
+          <div class="mt-space-md pt-space-xs border-t border-outline-variant/20 flex items-center text-xs text-outline">
+            <span class="material-symbols-outlined text-[14px] mr-1 text-primary">verified</span>
+            Long-form Pitches
+          </div>
+        </label>
+
+        <!-- SMS -->
+        <label class="channel-card relative flex flex-col p-space-md rounded-xl bg-surface-container border border-outline-variant/40 cursor-pointer hover:border-primary/60 transition-all opacity-70">
+          <input type="radio" name="channel_radio" value="SMS" class="sr-only" onchange="selectChannel('SMS')" {% if form and form.channel == 'SMS' %}checked{% endif %}>
+          <div class="flex items-center justify-between mb-space-sm">
+            <div class="w-10 h-10 rounded-lg bg-surface-container-highest text-outline flex items-center justify-center">
+              <span class="material-symbols-outlined text-[24px]">sms</span>
+            </div>
+            <span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-surface-container-highest text-outline font-bold">Preview</span>
+          </div>
+          <span class="font-headline-sm text-headline-sm font-bold text-on-surface mb-1">SMS DLT Gateway</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant flex-1">
+            Indian telecom DLT gateway integration for urgent transactional alerts and shortcode reminders.
+          </p>
+          <div class="mt-space-md pt-space-xs border-t border-outline-variant/20 flex items-center text-xs text-outline">
+            <span class="material-symbols-outlined text-[14px] mr-1">info</span>
+            DLT Header Required
+          </div>
+        </label>
+      </div>
+
+      <!-- Synchronized native select for backend compatibility -->
+      <div class="hidden">
+        <select id="channelSelect" name="channel" required>
+          {% for value, label in channels %}
+          <option value="{{ value }}" {% if (form and form.channel == value) or (not form and value == 'WHATSAPP') %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(1)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(3)" class="btn btn-primary">
+          Next: Define Audience
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: AUDIENCE BUILDER -->
+    <div id="stepSection-3" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 3 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Target Audience Definition</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Choose how leads are selected for this campaign. The audience will be snapshotted at launch.</p>
+      </div>
+
+      <!-- Audience Mode Segmented Switcher -->
+      <div class="flex flex-wrap gap-2 p-1.5 bg-surface-container rounded-xl border border-outline-variant/40">
+        <button type="button" onclick="setAudienceType('filters')" id="audBtn-filters" class="aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all bg-primary-container text-white shadow-sm">
+          Attribute Filters
+        </button>
+        <button type="button" onclick="setAudienceType('saved_view')" id="audBtn-saved_view" class="aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all text-on-surface-variant hover:text-on-surface">
+          Saved View
+        </button>
+        <button type="button" onclick="setAudienceType('tags')" id="audBtn-tags" class="aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all text-on-surface-variant hover:text-on-surface">
+          Lead Tags
+        </button>
+        <button type="button" onclick="setAudienceType('selected')" id="audBtn-selected" class="aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all text-on-surface-variant hover:text-on-surface">
+          Specific Lead IDs
+        </button>
+      </div>
+
+      <!-- Hidden Audience Type Input -->
+      <input type="hidden" id="audienceTypeInput" name="audience_type" value="{{ form.audience_type if form else 'filters' }}">
+
+      <!-- SUB-PANEL A: Attribute Filters -->
+      <div id="audPanel-filters" class="aud-subpanel space-y-space-md">
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 space-y-space-md">
+          <div class="flex items-center justify-between">
+            <span class="font-label-md text-label-md text-on-surface font-semibold">Structured Criteria Rules</span>
+            <span class="font-code-xs text-code-xs text-outline">Combines with AND logic</span>
+          </div>
+
+          <div id="filterRulesContainer" class="space-y-space-sm">
+            <!-- Filter Row 1 -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm items-center filter-row">
+              <select class="filter-field qbit-input" onchange="syncFiltersToJSON()">
+                <option value="city" selected>City</option>
+                <option value="state">State</option>
+                <option value="category">Category / Industry</option>
+                <option value="quality_score">Quality Score</option>
+                <option value="rating">Rating (Stars)</option>
+              </select>
+              <select class="filter-op qbit-input" onchange="syncFiltersToJSON()">
+                <option value="eq" selected>Equals (exact)</option>
+                <option value="contains">Contains text</option>
+                <option value="gte">Is greater than or equal</option>
+                <option value="lte">Is less than or equal</option>
+              </select>
+              <input type="text" class="filter-val qbit-input" placeholder="e.g. Surat or 70" value="Surat" oninput="syncFiltersToJSON()">
+            </div>
+          </div>
+
+          <!-- Advanced JSON Drawer Toggle -->
+          <details class="adv-panel mt-2">
+            <summary class="font-code-xs text-code-xs text-primary cursor-pointer">Advanced Filter JSON Payload</summary>
+            <div class="pt-space-sm">
+              <input 
+                type="text" 
+                id="filtersRawInput" 
+                name="filters_raw" 
+                class="font-mono text-xs qbit-input" 
+                value="{{ form.filters_raw if form else '{\"and\":[{\"field\":\"city\",\"op\":\"eq\",\"value\":\"Surat\"}]}' }}"
+                placeholder='e.g. {"and":[{"field":"city","op":"eq","value":"Surat"}]}'
+              />
+              <span class="qbit-form-hint">Direct JSON definition parsed by backend AudienceService.</span>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- SUB-PANEL B: Saved View -->
+      <div id="audPanel-saved_view" class="aud-subpanel space-y-space-md hidden">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="savedViewSelect">Select Saved View</label>
+          <select id="savedViewSelect" name="saved_view_id" class="qbit-input">
+            <option value="">— Select an existing saved view —</option>
+            {% for v in saved_views %}
+            <option value="{{ v.id }}" {% if form and form.saved_view_id == v.id %}selected{% endif %}>
+              {{ v.name }} ({{ v.visibility }})
+            </option>
+            {% endfor %}
+          </select>
+          <span class="qbit-form-hint">Loads leads that match the saved query criteria from your Leads workspace.</span>
+        </div>
+      </div>
+
+      <!-- SUB-PANEL C: Lead Tags -->
+      <div id="audPanel-tags" class="aud-subpanel space-y-space-md hidden">
+        <div class="space-y-space-sm">
+          <label class="qbit-form-label" for="tagsRawInput">Filter by Tags (comma separated)</label>
+          <input 
+            type="text" 
+            id="tagsRawInput" 
+            name="tags_raw" 
+            placeholder="e.g. Surat-POS, High-Value, Verified" 
+            class="qbit-input" 
+            value="{{ form.tags_raw if form else '' }}"
+          />
+          {% if tags %}
+          <div class="pt-2">
+            <span class="text-xs text-outline block mb-1.5">Click to toggle existing tags:</span>
+            <div class="flex flex-wrap gap-1.5">
+              {% for t in tags %}
+              <button type="button" onclick="toggleTag('{{ t }}')" class="tag-chip text-xs px-2.5 py-1 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-white hover:border-primary/50 transition-colors">
+                + {{ t }}
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- SUB-PANEL D: Specific Lead IDs -->
+      <div id="audPanel-selected" class="aud-subpanel space-y-space-md hidden">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="leadIdsRawInput">Target Lead UUIDs</label>
+          <textarea 
+            id="leadIdsRawInput" 
+            name="lead_ids_raw" 
+            rows="4" 
+            placeholder="Paste lead IDs (comma or newline separated, e.g. 550e8400-e29b-41d4-a716-446655440000)..." 
+            class="font-mono text-xs qbit-input"
+          >{{ form.lead_ids_raw if form else '' }}</textarea>
+          <span class="qbit-form-hint">Explicit manual recipient list for high-priority bespoke campaigns.</span>
+        </div>
+      </div>
+
+      <!-- Common Status Filter Filter -->
+      <div class="qbit-form-group pt-space-sm border-t border-outline-variant/20">
+        <label class="qbit-form-label" for="statusesInput">Status Filter (Optional)</label>
+        <input 
+          type="text" 
+          id="statusesInput" 
+          name="statuses" 
+          placeholder="e.g. NEW, QUALIFIED (comma-separated, leave blank for all)" 
+          class="qbit-input" 
+          value="{{ form.statuses if form else '' }}"
+        />
+        <span class="qbit-form-hint">Restrict audience to leads matching specific pipeline stages.</span>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(2)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(4)" class="btn btn-primary">
+          Next: Choose Template
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 4: TEMPLATE -->
+    <div id="stepSection-4" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 4 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Message Template</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Select an approved message template matching your outbound channel.</p>
+      </div>
+
+      <div class="space-y-space-md">
+        <div class="qbit-form-group">
+          <div class="flex items-center justify-between mb-1">
+            <label class="qbit-form-label" for="templateSelect">Select Template</label>
+            <a href="/campaigns/templates" target="_blank" class="text-xs text-primary hover:underline flex items-center gap-1">
+              Create New Template
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+            </a>
+          </div>
+          <select id="templateSelect" name="template_id" class="qbit-input" onchange="updateReview()">
+            <option value="">— Select approved template —</option>
+            {% for t in templates %}
+            <option value="{{ t.id }}" {% if form and form.template_id == t.id %}selected{% endif %}>
+              {{ t.name }} ({{ t.channel }}{% if t.status != 'ACTIVE' %}, {{ t.status }}{% endif %})
+            </option>
+            {% endfor %}
+          </select>
+          <span class="qbit-form-hint">Supports dynamic variables: {&#123;business_name&#125;}, {&#123;city&#125;}, {&#123;contact_name&#125;}.</span>
+        </div>
+
+        <div id="templatePreviewCard" class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 space-y-2">
+          <span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Template Specifications</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            Templates must be approved in Meta Business Suite (WhatsApp) or follow anti-spam guidelines with mandatory unsubscribe links (Email).
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(3)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(5)" class="btn btn-primary">
+          Next: Sending Account
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 5: SENDER -->
+    <div id="stepSection-5" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 5 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Sending Account</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Choose the verified provider profile that will dispatch messages.</p>
+      </div>
+
+      <div class="space-y-space-md">
+        <div class="qbit-form-group">
+          <div class="flex items-center justify-between mb-1">
+            <label class="qbit-form-label" for="sendingAccountSelect">Outbound Provider Account</label>
+            <a href="/campaigns/accounts" target="_blank" class="text-xs text-primary hover:underline flex items-center gap-1">
+              Manage Accounts
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+            </a>
+          </div>
+          <select id="sendingAccountSelect" name="sending_account_id" class="qbit-input" onchange="updateReview()">
+            <option value="">— Select sending account —</option>
+            {% for a in accounts %}
+            <option value="{{ a.id }}" {% if form and form.sending_account_id == a.id %}selected{% endif %}>
+              {{ a.name }} ({{ a.channel }} · {{ a.provider }}{% if a.config_metadata.get('configured') %} · Configured{% else %} · Not Configured{% endif %})
+            </option>
+            {% endfor %}
+          </select>
+          <span class="qbit-form-hint">Accounts enforce rate limits and daily sending quotas.</span>
+        </div>
+
+        {% if not provider_configured %}
+        <div class="p-space-md rounded-xl bg-error-container/10 border border-error/30 text-error flex items-start gap-space-sm">
+          <span class="material-symbols-outlined text-[20px] mt-0.5">error</span>
+          <div class="space-y-1">
+            <span class="font-label-md text-label-md font-bold block">No Configured Provider Available</span>
+            <span class="font-body-sm text-body-sm block text-on-surface-variant">
+              You must configure credentials for Meta WhatsApp Cloud API or SMTP in <a href="/campaigns/accounts" class="underline text-primary">Sending Accounts</a> before launching this campaign.
+            </span>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(4)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(6)" class="btn btn-primary">
+          Next: Eligibility Check
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 6: ELIGIBILITY PREVIEW -->
+    <div id="stepSection-6" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 6 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Eligibility Engine Verification</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Dry-run your audience against suppression lists, opt-in records, and missing contact addresses.</p>
+      </div>
+
+      <div class="space-y-space-md">
+        {% if preview %}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm">
+          <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/30">
+            <span class="font-label-sm text-label-sm text-outline block">Total Audience</span>
+            <span class="font-headline-md text-headline-md font-bold text-on-surface block mt-1">{{ preview.total }}</span>
+          </div>
+
+          <div class="bg-surface-container rounded-xl p-space-md border border-tertiary/40">
+            <span class="font-label-sm text-label-sm text-tertiary-fixed block font-semibold">Eligible</span>
+            <span class="font-headline-md text-headline-md font-bold text-tertiary block mt-1">{{ preview.eligible }}</span>
+          </div>
+
+          <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/30">
+            <span class="font-label-sm text-label-sm text-outline block">Skipped</span>
+            <span class="font-headline-md text-headline-md font-bold text-on-surface block mt-1">{{ preview.skipped }}</span>
+          </div>
+
+          <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/30">
+            <span class="font-label-sm text-label-sm text-outline block">Suppressed</span>
+            <span class="font-headline-md text-headline-md font-bold text-on-surface block mt-1">{{ preview.suppressed }}</span>
+          </div>
+
+          <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/30">
+            <span class="font-label-sm text-label-sm text-outline block">Missing Contact</span>
+            <span class="font-headline-md text-headline-md font-bold text-on-surface block mt-1">{{ preview.missing }}</span>
+          </div>
+
+          <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/30">
+            <span class="font-label-sm text-label-sm text-outline block">No Opt-In</span>
+            <span class="font-headline-md text-headline-md font-bold text-on-surface block mt-1">{{ preview.no_opt_in }}</span>
+          </div>
+        </div>
+        {% elif preview_error %}
+        <div class="alert alert-error">{{ preview_error }}</div>
+        {% else %}
+        <div class="p-space-lg rounded-xl bg-surface-container border border-outline-variant/30 text-center space-y-space-sm">
+          <span class="material-symbols-outlined text-[32px] text-primary">flaky</span>
+          <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">No Eligibility Run Performed Yet</h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant max-w-md mx-auto">
+            Run "Preview Eligibility" to inspect exactly how many contacts in your selected audience will receive messages and how many will be skipped.
+          </p>
+          <div class="pt-2">
+            <button type="submit" formaction="/campaigns/preview" class="btn btn-ghost border-primary text-primary hover:bg-primary/10">
+              <span class="material-symbols-outlined text-[16px]">visibility</span>
+              Run Eligibility Preview Now
+            </button>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(5)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(7)" class="btn btn-primary">
+          Next: Set Schedule
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 7: SCHEDULE -->
+    <div id="stepSection-7" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 7 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Delivery Schedule</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Specify whether to execute immediate dispatch upon launch or schedule for a specific date and time.</p>
+      </div>
+
+      <div class="space-y-space-md">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="scheduleTypeSelect">Schedule Type</label>
+          <select id="scheduleTypeSelect" name="schedule_type" class="qbit-input" onchange="toggleScheduleDate(this.value)">
+            <option value="SEND_NOW" {% if not form or form.schedule_type == 'SEND_NOW' %}selected{% endif %}>Send Now (Immediate Dispatch on Launch)</option>
+            <option value="SCHEDULED" {% if form and form.schedule_type == 'SCHEDULED' %}selected{% endif %}>Scheduled (Future Date & Time)</option>
+          </select>
+        </div>
+
+        <div id="scheduleDateGroup" class="qbit-form-group {% if not form or form.schedule_type != 'SCHEDULED' %}hidden{% endif %}">
+          <label class="qbit-form-label" for="scheduledAtInput">Scheduled Date & Time (UTC)</label>
+          <input 
+            type="datetime-local" 
+            id="scheduledAtInput" 
+            name="scheduled_at" 
+            class="qbit-input max-w-sm" 
+            value="{{ form.scheduled_at if form else '' }}"
+            oninput="updateReview()"
+          />
+          <span class="qbit-form-hint">Time is evaluated in UTC timezone according to server clock.</span>
+        </div>
+
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 flex items-start gap-space-sm">
+          <span class="material-symbols-outlined text-outline mt-0.5 text-[18px]">verified_user</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">
+            Outreach compliance note: Scraped contacts require valid business purpose and explicit opt-out mechanisms under Indian DPDP act and telecom guidelines.
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(6)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Previous
+        </button>
+        <button type="button" onclick="goToStep(8)" class="btn btn-primary">
+          Next: Review Configuration
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 8: REVIEW & CREATE -->
+    <div id="stepSection-8" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-primary font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 8 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Review & Pre-Flight Confirmation</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Verify all campaign parameters before creating the campaign draft.</p>
+      </div>
+
+      <!-- Pre-flight Summary Card -->
+      <div class="rounded-xl bg-surface-container border border-outline-variant/30 overflow-hidden">
+        <div class="p-space-md border-b border-outline-variant/30 bg-surface-container-high flex items-center justify-between">
+          <span class="font-label-md text-label-md font-bold text-on-surface">Campaign Pre-Flight Summary</span>
+          <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-primary-container text-white font-semibold">Ready to Draft</span>
+        </div>
+
+        <div class="divide-y divide-outline-variant/20 font-body-sm text-body-sm">
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Campaign Name:</span>
+            <span id="revName" class="sm:col-span-2 text-on-surface font-bold">Not provided</span>
+          </div>
+
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Channel:</span>
+            <span id="revChannel" class="sm:col-span-2 text-on-surface font-semibold">WHATSAPP</span>
+          </div>
+
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Audience Definition:</span>
+            <span id="revAudience" class="sm:col-span-2 text-on-surface">Attribute Filters</span>
+          </div>
+
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Template ID:</span>
+            <span id="revTemplate" class="sm:col-span-2 text-on-surface">Auto-detected</span>
+          </div>
+
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Sending Account:</span>
+            <span id="revSender" class="sm:col-span-2 text-on-surface">Primary Provider</span>
+          </div>
+
+          <div class="p-space-md grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <span class="text-outline font-semibold">Schedule Mode:</span>
+            <span id="revSchedule" class="sm:col-span-2 text-on-surface">Send Now (Immediate)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-md border-t border-outline-variant/30">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="goToStep(7)" class="btn btn-ghost">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Previous
+          </button>
+          <button type="submit" formaction="/campaigns/preview" class="btn btn-ghost border-outline-variant/60">
+            <span class="material-symbols-outlined text-[16px]">visibility</span>
+            Re-run Preview
+          </button>
+        </div>
+
+        <div class="flex items-center gap-space-sm">
+          <button type="button" onclick="goToStep(9)" class="btn btn-ghost text-primary">
+            Step 9: Launch Guidance
+          </button>
+          <button type="submit" formaction="/campaigns" class="btn btn-primary px-6 py-2 shadow-lg">
+            <span class="material-symbols-outlined text-[18px]">check</span>
+            Create Campaign Draft
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 9: LAUNCH & VERIFICATION INFO -->
+    <div id="stepSection-9" class="step-content card p-space-xl space-y-space-lg hidden">
+      <div class="border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2 text-tertiary-fixed font-code-xs text-code-xs uppercase tracking-wider font-semibold">
+          <span>Step 9 of 9</span>
+        </div>
+        <h2 class="font-headline-md text-headline-md font-bold text-on-surface">Launch Verification & Dispatch Lifecycle</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">What happens once you click "Create Campaign Draft".</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 space-y-2">
+          <span class="font-code-xs text-code-xs text-primary font-bold">1. IMMUTABLE SNAPSHOT</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            The matching audience leads are frozen into an immutable campaign recipient list. Subsequent CRM lead edits will not alter the launched campaign.
+          </p>
+        </div>
+
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 space-y-2">
+          <span class="font-code-xs text-code-xs text-primary font-bold">2. PRE-DISPATCH VALIDATION</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            On the Campaign Details page, click "Validate" to execute final provider handshake checks, verify suppression entries, and inspect tokens.
+          </p>
+        </div>
+
+        <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 space-y-2">
+          <span class="font-code-xs text-code-xs text-primary font-bold">3. RATE-LIMITED DISPATCH</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            Click "Launch" to dispatch. Messages are queued through the Celery/Redis background worker pipeline with exponential backoff and reply tracking.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+        <button type="button" onclick="goToStep(8)" class="btn btn-ghost">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Back to Review
+        </button>
+        <button type="submit" formaction="/campaigns" class="btn btn-primary px-6 py-2 shadow-lg">
+          <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+          Create Campaign Draft Now
+        </button>
+      </div>
+    </div>
+
+  </form>
 </div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-{% if not provider_configured %}
-<div class="alert">No sending provider configured — launch will be blocked until one is configured (Sending accounts).</div>
-{% endif %}
+<script>
+  var currentStep = 1;
 
-<form method="post" class="card" style="padding:20px;display:flex;flex-direction:column;gap:18px;max-width:900px">
+  function goToStep(step) {
+    if (step < 1 || step > 9) return;
+    currentStep = step;
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 1 — Campaign details</h3>
-    <div class="toolbar" style="flex-wrap:wrap">
-      <input type="text" name="name" required maxlength="200" placeholder="Campaign name (e.g. Ahmedabad Manufacturers — July outreach)" style="flex:2;min-width:260px" value="{{ form.name if form else '' }}">
-      <input type="text" name="description" maxlength="5000" placeholder="Description (optional)" style="flex:3;min-width:260px" value="{{ form.description if form else '' }}">
-    </div>
-  </div>
+    // Hide all step sections
+    for (var i = 1; i <= 9; i++) {
+      var sec = document.getElementById('stepSection-' + i);
+      var tab = document.getElementById('stepTab-' + i);
+      if (sec) {
+        if (i === step) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      }
+      if (tab) {
+        var num = tab.querySelector('.step-num');
+        var name = tab.querySelector('.step-name');
+        if (i === step) {
+          tab.classList.add('active', 'bg-surface-container');
+          if (num) {
+            num.className = 'step-num w-6 h-6 rounded-full bg-primary-container text-white font-code-xs text-code-xs font-bold flex items-center justify-center';
+          }
+          if (name) name.className = 'step-name font-label-sm text-label-sm font-semibold text-on-surface';
+        } else if (i < step) {
+          tab.classList.remove('active', 'bg-surface-container');
+          if (num) {
+            num.className = 'step-num w-6 h-6 rounded-full bg-tertiary-container/40 text-tertiary font-code-xs text-code-xs font-bold flex items-center justify-center';
+          }
+          if (name) name.className = 'step-name font-label-sm text-label-sm font-semibold text-on-surface-variant';
+        } else {
+          tab.classList.remove('active', 'bg-surface-container');
+          if (num) {
+            num.className = 'step-num w-6 h-6 rounded-full bg-surface-container-highest text-outline font-code-xs text-code-xs font-bold flex items-center justify-center';
+          }
+          if (name) name.className = 'step-name font-label-sm text-label-sm font-semibold text-outline';
+        }
+      }
+    }
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 2 — Channel</h3>
-    <div class="toolbar">
-      <select name="channel" required>
-        {% for value, label in channels %}
-        <option value="{{ value }}" {% if form and form.channel == value %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-      <span class="muted small">Real provider integrations (WhatsApp Business API / email) arrive in the next phase.</span>
-    </div>
-  </div>
+    updateReview();
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  }
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 3 — Audience</h3>
-    <div class="toolbar" style="flex-wrap:wrap">
-      <select name="audience_type">
-        {% for value, label in audience_types %}
-        <option value="{{ value }}" {% if form and form.audience_type == value %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-      <select name="saved_view_id" title="Used when type = Saved view">
-        <option value="">— saved view —</option>
-        {% for v in saved_views %}
-        <option value="{{ v.id }}" {% if form and form.saved_view_id == v.id %}selected{% endif %}>{{ v.name }} ({{ v.visibility }})</option>
-        {% endfor %}
-      </select>
-      <input type="text" name="filters_raw" placeholder='Filters JSON for type = Filters, e.g. {"and":[{"field":"city","op":"eq","value":"Surat"}]}' maxlength="20000" style="flex:2;min-width:240px" value="{{ form.filters_raw if form else '' }}">
-      <input type="text" name="tags_raw" placeholder="Tags for type = Tags (comma separated)" maxlength="500" style="min-width:170px" value="{{ form.tags_raw if form else '' }}">
-      <input type="text" name="lead_ids_raw" placeholder="Lead ids for type = Selected (comma separated)" maxlength="100000" style="flex:2;min-width:240px" value="{{ form.lead_ids_raw if form else '' }}">
-      <input type="text" name="statuses" placeholder="Statuses (optional, comma separated)" maxlength="500" value="{{ form.statuses if form else '' }}">
-    </div>
-    <p class="muted small">The matching audience is snapshotted at launch — later changes to the saved view never alter a launched campaign.</p>
-  </div>
+  function selectChannel(channel) {
+    var select = document.getElementById('channelSelect');
+    if (select) {
+      select.value = channel;
+      var ev = new Event('change', { bubbles: true });
+      select.dispatchEvent(ev);
+    }
+    // Update card styling
+    document.querySelectorAll('.channel-card').forEach(function(card) {
+      var radio = card.querySelector('input[type="radio"]');
+      if (radio && radio.value === channel) {
+        card.classList.add('border-primary', 'bg-primary-container/10');
+      } else {
+        card.classList.remove('border-primary', 'bg-primary-container/10');
+      }
+    });
+    updateReview();
+  }
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 4 — Template</h3>
-    <div class="toolbar">
-      <select name="template_id">
-        <option value="">— select template —</option>
-        {% for t in templates %}
-        <option value="{{ t.id }}" {% if form and form.template_id == t.id %}selected{% endif %}>{{ t.name }} ({{ t.channel }}{% if t.status != 'ACTIVE' %}, {{ t.status }}{% endif %})</option>
-        {% endfor %}
-      </select>
-      <a class="btn btn-ghost" href="/campaigns/templates">Create template</a>
-    </div>
-  </div>
+  function setAudienceType(type) {
+    document.getElementById('audienceTypeInput').value = type;
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 5 — Sending account</h3>
-    <div class="toolbar">
-      <select name="sending_account_id">
-        <option value="">— select sender —</option>
-        {% for a in accounts %}
-        <option value="{{ a.id }}" {% if form and form.sending_account_id == a.id %}selected{% endif %}>{{ a.name }} ({{ a.channel }} · {{ a.provider }}{% if a.config_metadata.get('configured') %} · configured{% else %} · not configured{% endif %})</option>
-        {% endfor %}
-      </select>
-      <a class="btn btn-ghost" href="/campaigns/accounts">Manage senders</a>
-    </div>
-  </div>
+    // Update buttons
+    ['filters', 'saved_view', 'tags', 'selected'].forEach(function(t) {
+      var btn = document.getElementById('audBtn-' + t);
+      var panel = document.getElementById('audPanel-' + t);
+      if (btn) {
+        if (t === type) {
+          btn.className = 'aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all bg-primary-container text-white shadow-sm';
+        } else {
+          btn.className = 'aud-tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-semibold text-center transition-all text-on-surface-variant hover:text-on-surface';
+        }
+      }
+      if (panel) {
+        if (t === type) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      }
+    });
+    updateReview();
+  }
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 6 — Eligibility preview</h3>
-    {% if preview %}
-    <div class="stat-grid">
-      <div class="stat"><span class="stat-label">AUDIENCE</span><span class="stat-value">{{ preview.total }}</span></div>
-      <div class="stat"><span class="stat-label">ELIGIBLE</span><span class="stat-value" style="color:var(--ok)">{{ preview.eligible }}</span></div>
-      <div class="stat"><span class="stat-label">SKIPPED</span><span class="stat-value">{{ preview.skipped }}</span></div>
-      <div class="stat"><span class="stat-label">SUPPRESSED</span><span class="stat-value">{{ preview.suppressed }}</span></div>
-      <div class="stat"><span class="stat-label">MISSING ADDRESS</span><span class="stat-value">{{ preview.missing }}</span></div>
-      <div class="stat"><span class="stat-label">NO OPT-IN</span><span class="stat-value">{{ preview.no_opt_in }}</span></div>
-    </div>
-    {% elif preview_error %}
-    <div class="alert alert-error">{{ preview_error }}</div>
-    {% else %}
-    <p class="muted small">Run "Preview eligibility" before creating — it reports exactly who would be skipped and why.</p>
-    {% endif %}
-  </div>
+  function toggleTag(tagName) {
+    var input = document.getElementById('tagsRawInput');
+    if (!input) return;
+    var tags = input.value.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+    var idx = tags.indexOf(tagName);
+    if (idx >= 0) {
+      tags.splice(idx, 1);
+    } else {
+      tags.push(tagName);
+    }
+    input.value = tags.join(', ');
+    updateReview();
+  }
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 7 — Schedule</h3>
-    <div class="toolbar" style="flex-wrap:wrap">
-      <select name="schedule_type">
-        <option value="SEND_NOW" {% if form and form.schedule_type == 'SCHEDULED' %}{% else %}selected{% endif %}>Send now</option>
-        <option value="SCHEDULED" {% if form and form.schedule_type == 'SCHEDULED' %}selected{% endif %}>Scheduled</option>
-      </select>
-      <input type="datetime-local" name="scheduled_at" placeholder="Schedule time (UTC)" value="{{ form.scheduled_at if form else '' }}">
-      <span class="muted small">Opt-in is enforced by the eligibility engine — scraped contacts are never treated as consent.</span>
-    </div>
-  </div>
+  function syncFiltersToJSON() {
+    var container = document.getElementById('filterRulesContainer');
+    if (!container) return;
+    var rows = container.querySelectorAll('.filter-row');
+    var rules = [];
 
-  <div>
-    <h3 style="margin:0 0 8px">STEP 8 — Review &amp; create</h3>
-    <p class="muted small">Creating saves the campaign as a DRAFT. Then validate and launch from the campaign page (STEP 9).</p>
-    <div class="form-actions">
-      <button class="btn btn-ghost" type="submit" formaction="/campaigns/preview">Preview eligibility</button>
-      <button class="btn btn-primary" type="submit" formaction="/campaigns">Create campaign</button>
-      <a class="btn btn-ghost" href="/campaigns">Cancel</a>
-    </div>
-  </div>
-</form>
+    rows.forEach(function(row) {
+      var field = row.querySelector('.filter-field').value;
+      var op = row.querySelector('.filter-op').value;
+      var val = row.querySelector('.filter-val').value.trim();
+      if (val) {
+        rules.push({ field: field, op: op, value: val });
+      }
+    });
+
+    var rawInput = document.getElementById('filtersRawInput');
+    if (rawInput && rules.length > 0) {
+      rawInput.value = JSON.stringify({ and: rules });
+    }
+    updateReview();
+  }
+
+  function toggleScheduleDate(val) {
+    var group = document.getElementById('scheduleDateGroup');
+    if (group) {
+      if (val === 'SCHEDULED') {
+        group.classList.remove('hidden');
+      } else {
+        group.classList.add('hidden');
+      }
+    }
+    updateReview();
+  }
+
+  function updateReview() {
+    var name = document.getElementById('campaignName').value || 'Not provided';
+    var channel = document.getElementById('channelSelect').value || 'WHATSAPP';
+    var audType = document.getElementById('audienceTypeInput').value || 'filters';
+    var tmplSelect = document.getElementById('templateSelect');
+    var tmplName = tmplSelect && tmplSelect.selectedIndex >= 0 ? tmplSelect.options[tmplSelect.selectedIndex].text : 'None';
+    var sndSelect = document.getElementById('sendingAccountSelect');
+    var sndName = sndSelect && sndSelect.selectedIndex >= 0 ? sndSelect.options[sndSelect.selectedIndex].text : 'None';
+    var schedType = document.getElementById('scheduleTypeSelect').value;
+    var schedDate = document.getElementById('scheduledAtInput').value;
+
+    var revName = document.getElementById('revName');
+    var revChannel = document.getElementById('revChannel');
+    var revAudience = document.getElementById('revAudience');
+    var revTemplate = document.getElementById('revTemplate');
+    var revSender = document.getElementById('revSender');
+    var revSchedule = document.getElementById('revSchedule');
+
+    if (revName) revName.textContent = name;
+    if (revChannel) revChannel.textContent = channel;
+    if (revAudience) revAudience.textContent = audType.toUpperCase().replace('_', ' ');
+    if (revTemplate) revTemplate.textContent = tmplName;
+    if (revSender) revSender.textContent = sndName;
+    if (revSchedule) {
+      revSchedule.textContent = schedType === 'SCHEDULED' ? ('Scheduled at ' + (schedDate || 'unspecified date')) : 'Send Now (Immediate)';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    selectChannel(document.getElementById('channelSelect').value || 'WHATSAPP');
+    var initAud = document.getElementById('audienceTypeInput').value || 'filters';
+    setAudienceType(initAud);
+    updateReview();
+  });
+</script>
 {% endblock %}

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed-variant":"#005236","tertiary-fixed-dim":"#4edea3","tertiary-fixed":"#6ffbbe","surface-bright":"#333949","tertiary":"#4edea3","on-primary-fixed":"#001849","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","on-surface":"#dde2f7","on-secondary":"#003543","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-error":"#690005","on-surface-variant":"#c2c6d8","tertiary-container":"#008259","inverse-primary":"#0054d6","inverse-on-surface":"#2a3040","surface-container-low":"#151b2b","primary":"#b3c5ff","on-tertiary-container":"#e1ffec","surface":"#0d1322","secondary-container":"#00d2ff","on-primary-container":"#f8f7ff","on-tertiary":"#003824","inverse-surface":"#dde2f7","on-primary-fixed-variant":"#003fa4","outline-variant":"#424656","primary-fixed-dim":"#b3c5ff","error-container":"#93000a","surface-variant":"#2f3445","surface-tint":"#b3c5ff","surface-container-high":"#242a3a","on-background":"#dde2f7","on-secondary-fixed":"#001f28","on-primary":"#002b75","secondary":"#a5e7ff","background":"#0d1322","surface-dim":"#0d1322","primary-container":"#0066ff","surface-container-highest":"#2f3445","primary-fixed":"#dae1ff","surface-container":"#191f2f","secondary-fixed-dim":"#47d6ff","on-error-container":"#ffdad6","error":"#ffb4ab","on-tertiary-fixed":"#002113","outline":"#8c90a1"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-lg":"1rem","space-md":"0.75rem","margin":"1.5rem","gutter":"1rem","space-xl":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem"},"fontFamily":{"body-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"label-md":["Inter"],"code-xs":["JetBrains Mono"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a aria-current="page" class="flex items-center px-space-sm py-2 rounded-lg transition-colors bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<div class="flex flex-col gap-space-md">
+<!-- Top Bar: Canvas Title, Breadcrumb & Workflow Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-container-low px-space-xl py-space-md rounded-xl shadow-lg relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-space-lg min-w-0 z-10">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shadow-[0_0_16px_rgba(0,102,255,0.25)]">
+<span class="material-symbols-outlined text-[22px]">account_tree</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Workflow Engine / Production</span>
+<span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">ID: wf_9921e</span>
+</div>
+<div class="flex items-center gap-space-md mt-0.5">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface truncate">Lead Nurturing Automation</h1>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-container/30 shadow-[0_0_8px_rgba(78,222,163,0.3)]">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-semibold text-tertiary-fixed">Active</span>
+</div>
+<span class="hidden md:inline-block font-code-xs text-code-xs text-on-surface-variant">Last executed 2m ago</span>
+</div>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-space-sm z-10">
+<!-- Execution Stats Chips -->
+<div class="hidden 2xl:flex items-center gap-space-md bg-surface-container px-space-md py-1.5 rounded-lg shadow-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Run Rate</span>
+<span class="font-code-sm text-code-sm text-on-surface font-semibold">1,420/day</span>
+</div>
+<div class="w-px h-6 bg-surface-variant"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Success Ratio</span>
+<span class="font-code-sm text-code-sm text-tertiary font-semibold">99.4%</span>
+</div>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant transition-all text-body-md font-body-md shadow-sm" id="btn-test-wf">
+<span class="material-symbols-outlined text-[18px] text-secondary">play_arrow</span>
+<span>Test Run</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant transition-all text-body-md font-body-md shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-outline">save</span>
+<span>Save</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-inverse-primary transition-all text-body-md font-body-md font-semibold shadow-[0_0_14px_rgba(0,102,255,0.4)]">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>Publish Flow</span>
+</button>
+</div>
+</div>
+<!-- Main Builder Canvas Stage -->
+<div class="relative w-full h-[820px] rounded-xl overflow-hidden bg-surface-container-lowest shadow-2xl flex">
+<!-- Ambient Visual Background Grid (Dark Dot Matrix) -->
+<div class="absolute inset-0 pointer-events-none opacity-40" style="background-image: radial-gradient(rgba(179, 197, 255, 0.18) 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="absolute -left-20 top-1/4 w-96 h-96 bg-primary-container/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute right-10 bottom-10 w-96 h-96 bg-secondary-container/5 rounded-full blur-[120px] pointer-events-none"></div>
+<!-- LEFT PANEL: Node Toolbox / Component Palette -->
+<div class="relative z-20 w-80 h-full bg-surface-container-low/95 backdrop-blur-md flex flex-col shadow-xl">
+<!-- Toolbox Header -->
+<div class="p-space-lg bg-surface-container-lowest/60">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">apps</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Node Palette</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">18 Nodes</span>
+</div>
+<!-- Search in toolbox -->
+<div class="relative mt-2">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-outline text-[16px]">filter_list</span>
+<input class="w-full bg-surface-container border-0 rounded-lg pl-8 pr-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none shadow-inner" id="node-search-input" placeholder="Search triggers, logic, actions..." type="text"/>
+</div>
+</div>
+<!-- Scrollable Palette Items -->
+<div class="flex-1 overflow-y-auto px-space-md py-space-sm flex flex-col gap-space-lg custom-scrollbar">
+<!-- Category 1: Triggers -->
+<div>
+<div class="flex items-center justify-between px-space-xs mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                Triggers
+              </span>
+<span class="font-code-xs text-code-xs text-outline">5</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm hover:shadow-md">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">travel_explore</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">New Scraper Run</span>
+<span class="font-code-xs text-code-xs text-outline">Listen to active crawlers</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-primary-container/20 shadow-[0_0_12px_rgba(0,102,255,0.2)] cursor-grab active:cursor-grabbing">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md font-semibold text-primary">New Leads Added</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<span class="font-code-xs text-code-xs text-primary-fixed-dim">Canvas Selected (Root)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">task_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Campaign Finished</span>
+<span class="font-code-xs text-code-xs text-outline">Trigger on completion</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Time Based / Cron</span>
+<span class="font-code-xs text-code-xs text-outline">Hourly, daily, schedule</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">webhook</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Inbound Webhook</span>
+<span class="font-code-xs text-code-xs text-outline">REST endpoint trigger</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+</div>
+</div>
+<!-- Category 2: Actions & Enrichment -->
+<div>
+<div class="flex items-center justify-between px-space-xs mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+                Execution Actions
+              </span>
+<span class="font-code-xs text-code-xs text-outline">6</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-secondary-container/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">contact_mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Find Email &amp; Phone</span>
+<span class="font-code-xs text-code-xs text-outline">Deep enrich AI engine</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-secondary-container/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Send Email Sequence</span>
+<span class="font-code-xs text-code-xs text-outline">Outreach email template</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-tertiary/15 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Send WhatsApp</span>
+<span class="font-code-xs text-code-xs text-outline">Official Meta template</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-secondary-container/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">add_box</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Add to Segment List</span>
+<span class="font-code-xs text-code-xs text-outline">Assign tag or cohort</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-error-container/40 text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Notify Team (Slack)</span>
+<span class="font-code-xs text-code-xs text-outline">Broadcast alert channel</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Push to HubSpot / CRM</span>
+<span class="font-code-xs text-code-xs text-outline">Sync contacts &amp; deals</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+</div>
+</div>
+<!-- Category 3: Conditions & Flow Logic -->
+<div>
+<div class="flex items-center justify-between px-space-xs mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed-dim"></span>
+                Logic &amp; Filters
+              </span>
+<span class="font-code-xs text-code-xs text-outline">4</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-highest text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">If / Else Decision</span>
+<span class="font-code-xs text-code-xs text-outline">Multi-variable branch</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-highest text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">hourglass_empty</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Delay &amp; Wait</span>
+<span class="font-code-xs text-code-xs text-outline">Pause flow (e.g. 24h)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+<div class="group flex items-center justify-between p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-all cursor-grab active:cursor-grabbing shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-highest text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">grade</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Lead Score Gate</span>
+<span class="font-code-xs text-code-xs text-outline">Threshold filter</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">drag_indicator</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Node Toolbox Footer Status -->
+<div class="p-space-md bg-surface-container-lowest/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">Live Runtime Engine</span>
+</div>
+<span class="font-code-xs text-code-xs text-primary font-semibold">Auto-saved</span>
+</div>
+</div>
+<!-- CENTER / MAIN INTERACTIVE WORKFLOW GRAPH CANVAS -->
+<div class="relative flex-1 h-full overflow-hidden select-none cursor-default flex items-center justify-center" id="flowchart-viewport">
+<!-- Graph Canvas Inner Transform Plane -->
+<div class="relative w-full h-full flex items-center justify-center transition-transform duration-150 ease-out" id="graph-plane" style="transform: scale(1) translate(0px, 0px);">
+<!-- SVG CONNECTIONS LAYER (Cubic Bezier Curves & Glowing Pulses) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" style="overflow: visible;">
+<defs>
+<lineargradient id="grad-blue-cyan" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#b3c5ff"></stop>
+<stop offset="100%" stop-color="#0066ff"></stop>
+</lineargradient>
+<lineargradient id="grad-amber" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#0066ff"></stop>
+<stop offset="100%" stop-color="#47d6ff"></stop>
+</lineargradient>
+<lineargradient id="grad-branch-yes" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#4edea3"></stop>
+<stop offset="100%" stop-color="#008259"></stop>
+</lineargradient>
+<lineargradient id="grad-branch-no" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#ffb4ab"></stop>
+<stop offset="100%" stop-color="#93000a"></stop>
+</lineargradient>
+<!-- Filter for glow on execution streams -->
+<filter height="140%" id="glow-cyan" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- 1. Trigger to Enrich Connector -->
+<path d="M 450 115 C 450 155, 450 155, 450 185" fill="none" stroke="#2f3445" stroke-linecap="round" stroke-width="2.5"></path>
+<path class="animate-pulse" d="M 450 115 C 450 155, 450 155, 450 185" fill="none" stroke="url(#grad-blue-cyan)" stroke-dasharray="6,4" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="450" cy="150" fill="#00d2ff" filter="url(#glow-cyan)" r="3.5">
+<animate attributename="cy" dur="2s" repeatcount="indefinite" values="115;185"></animate>
+</circle>
+<!-- 2. Enrich to Condition Connector -->
+<path d="M 450 295 C 450 335, 450 335, 450 365" fill="none" stroke="#2f3445" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M 450 295 C 450 335, 450 335, 450 365" fill="none" stroke="url(#grad-amber)" stroke-dasharray="6,4" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="450" cy="330" fill="#47d6ff" filter="url(#glow-cyan)" r="3.5">
+<animate attributename="cy" dur="2.2s" repeatcount="indefinite" values="295;365"></animate>
+</circle>
+<!-- 3. Condition Branch YES to Email Outreach (Left Downward Bezier) -->
+<path d="M 370 482 C 370 540, 240 520, 240 580" fill="none" stroke="#005236" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M 370 482 C 370 540, 240 520, 240 580" fill="none" stroke="url(#grad-branch-yes)" stroke-dasharray="5,3" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="300" cy="530" fill="#4edea3" filter="url(#glow-cyan)" r="3.5">
+<animate attributename="cx" dur="2.4s" repeatcount="indefinite" values="370;240"></animate>
+<animate attributename="cy" dur="2.4s" repeatcount="indefinite" values="482;580"></animate>
+</circle>
+<!-- 4. Condition Branch NO to Slack Alert (Right Downward Bezier) -->
+<path d="M 530 482 C 530 540, 660 520, 660 580" fill="none" stroke="#424656" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M 530 482 C 530 540, 660 520, 660 580" fill="none" stroke="url(#grad-branch-no)" stroke-dasharray="5,3" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="600" cy="530" fill="#ffb4ab" filter="url(#glow-cyan)" r="3.5">
+<animate attributename="cx" dur="2.8s" repeatcount="indefinite" values="530;660"></animate>
+<animate attributename="cy" dur="2.8s" repeatcount="indefinite" values="482;580"></animate>
+</circle>
+</svg>
+<!-- GRAPH NODES CONTAINER (Absolute layout positioned within canvas coordinates) -->
+<div class="relative w-[900px] h-[740px]">
+<!-- NODE 1: Trigger (Top Center) -->
+<div class="absolute left-[310px] top-[20px] w-[280px] bg-surface-container rounded-xl shadow-xl hover:shadow-[0_0_24px_rgba(0,102,255,0.35)] transition-all cursor-pointer group" id="node-1">
+<!-- Top Highlight bar -->
+<div class="h-1.5 w-full bg-gradient-to-r from-primary to-primary-container rounded-t-xl"></div>
+<div class="p-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Trigger Event</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">#01</span>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">more_vert</span></button>
+</div>
+</div>
+<div class="flex items-start gap-space-sm mt-1">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high text-primary flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[20px]">travel_explore</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">New Leads from Scraper</span>
+<span class="font-code-xs text-code-xs text-outline truncate mt-0.5">Google Maps: Hotels Bareilly</span>
+</div>
+</div>
+<!-- Node Meta / Pill stats -->
+<div class="mt-space-sm pt-space-xs flex items-center justify-between text-outline">
+<span class="font-code-xs text-code-xs flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-tertiary">database</span>
+<span>2,431 Records</span>
+</span>
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-primary-container/20 text-primary">Every 15m</span>
+</div>
+</div>
+<!-- Output Handle -->
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary-container border-2 border-surface-container shadow-[0_0_8px_rgba(0,102,255,0.7)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary-container"></div>
+</div>
+</div>
+<!-- NODE 2: Enrichment (Middle Center) -->
+<div class="absolute left-[310px] top-[185px] w-[280px] bg-surface-container rounded-xl shadow-xl hover:shadow-[0_0_24px_rgba(0,210,255,0.3)] transition-all cursor-pointer group" id="node-2">
+<!-- Input Handle -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface-bright border-2 border-surface-container flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+</div>
+<div class="h-1.5 w-full bg-gradient-to-r from-secondary-container to-secondary rounded-t-xl"></div>
+<div class="p-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">auto_fix_high</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-bold">Enrichment AI</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">#02</span>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">more_vert</span></button>
+</div>
+</div>
+<div class="flex items-start gap-space-sm mt-1">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high text-secondary-container flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[20px]">contact_mail</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Find Email &amp; Phone</span>
+<span class="font-code-xs text-code-xs text-outline truncate mt-0.5">MX Verified &amp; Deep Validate</span>
+</div>
+</div>
+<!-- Mini Progress/Status inside node -->
+<div class="mt-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 flex flex-col gap-1">
+<div class="flex items-center justify-between font-code-xs text-code-xs">
+<span class="text-outline">Confidence Score</span>
+<span class="text-tertiary font-bold">98.2%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary-container to-tertiary w-[94%]"></div>
+</div>
+</div>
+</div>
+<!-- Output Handle -->
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary-container border-2 border-surface-container shadow-[0_0_8px_rgba(0,210,255,0.7)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></div>
+</div>
+</div>
+<!-- NODE 3: Condition / Logic Gateway (Center Branch) -->
+<div class="absolute left-[290px] top-[365px] w-[320px] bg-surface-container rounded-xl shadow-xl hover:shadow-[0_0_24px_rgba(71,214,255,0.3)] transition-all cursor-pointer group" id="node-3">
+<!-- Input Handle -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface-bright border-2 border-surface-container flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></div>
+</div>
+<div class="h-1.5 w-full bg-gradient-to-r from-secondary-fixed-dim via-primary to-secondary-container rounded-t-xl"></div>
+<div class="p-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-fixed-dim">alt_route</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed-dim font-bold">Decision Gateway</span>
+</div>
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">#03</span>
+</div>
+<div class="flex items-start gap-space-sm mt-1">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high text-secondary-fixed-dim flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">filter_alt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Lead Score &amp; Email Check</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant truncate mt-0.5">Rating &gt; 4.0 &amp; Has Verified Email</span>
+</div>
+</div>
+<!-- Two Branch Outcome Anchors -->
+<div class="grid grid-cols-2 gap-space-sm mt-space-md">
+<div class="flex items-center justify-between px-3 py-1.5 rounded-lg bg-tertiary-container/20 text-tertiary shadow-sm">
+<span class="font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> YES
+                    </span>
+<span class="font-code-xs text-code-xs text-tertiary-fixed font-semibold">1,980 (81%)</span>
+</div>
+<div class="flex items-center justify-between px-3 py-1.5 rounded-lg bg-error-container/20 text-error shadow-sm">
+<span class="font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">close</span> NO
+                    </span>
+<span class="font-code-xs text-code-xs text-error font-semibold">451 (19%)</span>
+</div>
+</div>
+</div>
+<!-- Output Handles for Yes & No -->
+<div class="absolute -bottom-2 left-[80px] w-4 h-4 rounded-full bg-tertiary border-2 border-surface-container shadow-[0_0_8px_rgba(78,222,163,0.8)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></div>
+</div>
+<div class="absolute -bottom-2 right-[80px] w-4 h-4 rounded-full bg-error border-2 border-surface-container shadow-[0_0_8px_rgba(255,180,171,0.8)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-on-error"></div>
+</div>
+</div>
+<!-- NODE 4: Action (Yes Branch) -> Email Campaign Sequence (Left Side) -->
+<div class="absolute left-[100px] top-[580px] w-[280px] bg-surface-container rounded-xl shadow-xl hover:shadow-[0_0_24px_rgba(0,102,255,0.35)] transition-all cursor-pointer group" id="node-4">
+<!-- Input Handle -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-tertiary border-2 border-surface-container shadow-[0_0_8px_rgba(78,222,163,0.7)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></div>
+</div>
+<div class="h-1.5 w-full bg-gradient-to-r from-primary to-primary-container rounded-t-xl"></div>
+<div class="p-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-bold">Branch: Qualified</span>
+</div>
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">#04</span>
+</div>
+<div class="flex items-start gap-space-sm mt-1">
+<div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Send Email Campaign</span>
+<span class="font-code-xs text-code-xs text-outline truncate mt-0.5">Hotel Outreach Sequence v2</span>
+</div>
+</div>
+<div class="mt-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 flex items-center justify-between text-outline font-code-xs text-code-xs">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-primary">schedule_send</span>
+<span>Delay: 10 mins</span>
+</span>
+<span class="text-tertiary font-medium">98.4% Delivered</span>
+</div>
+</div>
+</div>
+<!-- NODE 5: Action (No Branch) -> Slack Alert to Team (Right Side) -->
+<div class="absolute left-[520px] top-[580px] w-[280px] bg-surface-container rounded-xl shadow-xl hover:shadow-[0_0_24px_rgba(255,180,171,0.25)] transition-all cursor-pointer group" id="node-5">
+<!-- Input Handle -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-error border-2 border-surface-container shadow-[0_0_8px_rgba(255,180,171,0.7)] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-on-error"></div>
+</div>
+<div class="h-1.5 w-full bg-gradient-to-r from-error to-error-container rounded-t-xl"></div>
+<div class="p-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error font-bold">Branch: Disqualified</span>
+</div>
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-outline">#05</span>
+</div>
+<div class="flex items-start gap-space-sm mt-1">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high text-error flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Notify Team in Slack</span>
+<span class="font-code-xs text-code-xs text-outline truncate mt-0.5">#unqualified-leads channel</span>
+</div>
+</div>
+<div class="mt-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 flex items-center justify-between text-outline font-code-xs text-code-xs">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-error">warning</span>
+<span>Flag Manual Review</span>
+</span>
+<span class="text-outline">Instant Alert</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FLOATING BOTTOM CONTROLS: Zoom & Reset Canvas -->
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-surface-container-low/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-2xl">
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors" id="zoom-out-btn">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface px-2 w-12 text-center" id="zoom-display">100%</span>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors" id="zoom-in-btn">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<div class="w-px h-4 bg-outline-variant/40 mx-1"></div>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-colors" id="zoom-reset-btn" title="Fit to Screen">
+<span class="material-symbols-outlined text-[16px]">filter_center_focus</span>
+<span>Center</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-colors" id="toggle-grid-btn" title="Toggle Grid Snapping">
+<span class="material-symbols-outlined text-[16px]">grid_4x4</span>
+</button>
+</div>
+<!-- FLOATING TOP-RIGHT: Active Flow Execution Inspector Pill -->
+<div class="absolute top-5 right-5 z-30 hidden md:flex items-center gap-3 bg-surface-container-low/90 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-tertiary"></span>
+</span>
+<span class="font-code-xs text-code-xs text-on-surface font-medium">Worker Thread #4</span>
+</div>
+<div class="w-px h-3.5 bg-outline-variant/50"></div>
+<span class="font-code-xs text-code-xs text-secondary-container">12 req/sec</span>
+</div>
+<!-- RIGHT FLOATING PANEL: Mini-Map Navigator & Logic Summary -->
+<div class="absolute bottom-5 right-5 z-30 w-64 bg-surface-container-low/95 backdrop-blur-md rounded-xl p-space-sm shadow-2xl flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary">map</span>
+              Flow Mini-Map
+            </span>
+<span class="font-code-xs text-code-xs text-tertiary font-semibold">5 Nodes Synced</span>
+</div>
+<!-- Mini-map Visual Replica Canvas -->
+<div class="w-full h-28 bg-surface-container-lowest rounded-lg p-2 relative overflow-hidden flex items-center justify-center">
+<!-- Simulated Miniature Node Nodes -->
+<div class="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-primary/40 rounded shadow-xs"></div>
+<div class="absolute top-8 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-secondary-container/40 rounded shadow-xs"></div>
+<div class="absolute top-14 left-1/2 -translate-x-1/2 w-14 h-4 bg-secondary-fixed-dim/40 rounded shadow-xs"></div>
+<!-- Branch connectors -->
+<div class="absolute bottom-2 left-4 w-12 h-3.5 bg-tertiary/40 rounded shadow-xs"></div>
+<div class="absolute bottom-2 right-4 w-12 h-3.5 bg-error/40 rounded shadow-xs"></div>
+<!-- Viewport Window Overlay Indicator -->
+<div class="absolute inset-x-2 inset-y-1 bg-primary/10 rounded pointer-events-none"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-code-xs text-code-xs text-outline">Trigger: Google Maps API</span>
+<button class="font-label-sm text-label-sm text-primary hover:underline">View Logs</button>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDE CONTEXT DRAWER / INSPECTOR: Selected Node Inspector (Docked Collapsible) -->
+<div class="relative z-20 w-84 h-full bg-surface-container-low/95 backdrop-blur-md flex flex-col shadow-2xl transition-all duration-300" id="inspector-drawer">
+<!-- Inspector Header -->
+<div class="p-space-lg bg-surface-container-lowest/60 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary-container">tune</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Node Config</span>
+<span class="font-code-xs text-code-xs text-outline">Selected: Node #03 (Decision)</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" id="close-inspector-btn">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Inspector Body -->
+<div class="flex-1 overflow-y-auto p-space-lg flex flex-col gap-space-lg custom-scrollbar">
+<!-- Node General Information -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Label Title</label>
+<input class="w-full bg-surface-container border-0 rounded-lg px-3 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none shadow-inner" type="text" value="Lead Score &amp; Email Check"/>
+</div>
+<!-- Logic Condition Ruleset -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Rule Conditions</label>
+<span class="font-code-xs text-code-xs text-primary cursor-pointer hover:underline">+ Add Condition</span>
+</div>
+<!-- Condition 1 -->
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-secondary-fixed">Rule 1: Property Match</span>
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer hover:text-error">delete</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-high px-2 py-1.5 rounded text-body-sm font-body-sm text-on-surface truncate">rating_score</div>
+<div class="bg-surface-container-high px-2 py-1.5 rounded text-body-sm font-body-sm text-primary font-medium">&gt;= 4.0</div>
+</div>
+</div>
+<!-- Condition 2 -->
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-secondary-fixed">Rule 2: Contact Deliverability</span>
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer hover:text-error">delete</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-high px-2 py-1.5 rounded text-body-sm font-body-sm text-on-surface truncate">email_status</div>
+<div class="bg-surface-container-high px-2 py-1.5 rounded text-body-sm font-body-sm text-tertiary font-medium">== "verified"</div>
+</div>
+</div>
+</div>
+<!-- Matching Operator -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Condition Operator</label>
+<div class="grid grid-cols-2 gap-2 p-1 bg-surface-container rounded-lg">
+<button class="py-1.5 rounded text-body-sm font-body-sm font-semibold bg-primary-container text-on-primary-container shadow-sm">AND (All Match)</button>
+<button class="py-1.5 rounded text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface transition-colors">OR (Any Match)</button>
+</div>
+</div>
+<!-- Execution Branch Analytics -->
+<div class="flex flex-col gap-2 bg-surface-container-lowest/80 p-space-md rounded-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Simulated Throughput</span>
+<div class="flex items-center justify-between mt-1">
+<span class="font-body-sm text-body-sm text-on-surface">Qualified for Outreach</span>
+<span class="font-code-sm text-code-sm text-tertiary font-semibold">1,980 items</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Filtered to Slack Alert</span>
+<span class="font-code-sm text-code-sm text-error font-semibold">451 items</span>
+</div>
+</div>
+<!-- Raw Configuration JSON Preview -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Node JSON Payload</span>
+<span class="font-code-xs text-code-xs text-outline">Read-Only</span>
+</div>
+<pre class="bg-surface-container-lowest p-space-md rounded-lg font-code-xs text-code-xs text-secondary-fixed overflow-x-auto select-all shadow-inner leading-relaxed">{
+  "id": "node_03_condition",
+  "type": "logic_gate",
+  "rules": [
+    {"field": "rating", "op": "gte", "val": 4.0},
+    {"field": "email", "op": "exists", "val": true}
+  ],
+  "pass_node": "node_04_email",
+  "fail_node": "node_05_slack"
+}</pre>
+</div>
+</div>
+<!-- Inspector Action Footer -->
+<div class="p-space-md bg-surface-container-lowest/80 flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant text-body-sm font-body-sm transition-colors">Discard</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary-container text-body-sm font-body-sm font-semibold shadow-md hover:bg-inverse-primary transition-all">Apply Changes</button>
+</div>
+</div>
+</div>
+<!-- Bottom Metrics & Live Execution Activity Log -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Live Log Stream Container -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-xl p-space-lg shadow-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">terminal</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Workflow Live Execution Console</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-xs text-code-xs text-tertiary flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              Streaming Real-time
+            </span>
+<button class="text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">clear_all</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-md font-code-xs text-code-xs flex flex-col gap-2 overflow-x-auto shadow-inner h-44 custom-scrollbar">
+<div class="flex items-center gap-3">
+<span class="text-outline">16:42:01.104</span>
+<span class="text-primary font-semibold">[TRIGGER]</span>
+<span class="text-on-surface">Batch extracted: 2,431 Google Maps items received from scraper task #8812</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline">16:42:02.890</span>
+<span class="text-secondary-container font-semibold">[ENRICH]</span>
+<span class="text-on-surface-variant">Validated 2,398 domains via MX lookup. Found 1,980 valid direct emails.</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline">16:42:04.120</span>
+<span class="text-secondary-fixed-dim font-semibold">[DECISION]</span>
+<span class="text-tertiary">1,980 contacts met rating &gt;= 4.0 threshold → Routed to 'Send Email Campaign'</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline">16:42:04.122</span>
+<span class="text-error font-semibold">[DECISION]</span>
+<span class="text-error">451 contacts failed score criterion → Dispatched incident alert to Slack #unqualified-leads</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline">16:42:05.400</span>
+<span class="text-tertiary font-semibold">[SUCCESS]</span>
+<span class="text-on-surface">Queue dispatch initialized for 1,980 recipients via SendGrid SMTP relay. Response 200 OK.</span>
+</div>
+</div>
+</div>
+<!-- Quick Summary Stats Bento Card -->
+<div class="lg:col-span-4 bg-surface-container-low rounded-xl p-space-lg shadow-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Workflow Health</span>
+<span class="material-symbols-outlined text-[20px] text-tertiary">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Zero dropped leads detected over the last 14 days of autonomous operations.</p>
+</div>
+<div class="grid grid-cols-2 gap-space-md my-space-md">
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Avg Latency</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold mt-1">4.2s</span>
+<span class="font-code-xs text-code-xs text-tertiary mt-0.5">↓ 180ms faster</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Delivered</span>
+<span class="font-headline-md text-headline-md text-primary font-bold mt-1">98.4%</span>
+<span class="font-code-xs text-code-xs text-tertiary mt-0.5">High sender trust</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-sm">
+<button class="text-label-md font-label-md text-secondary-container hover:underline flex items-center gap-1">
+<span>Configure Fallback Proxies</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<span class="font-code-xs text-code-xs text-outline">v2.1 build 49</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Client-side Logic for Canvas Zoom, Pan, and Node Inspecting -->
+<script>
+  (function initWorkflowBuilder() {
+    let currentZoom = 100;
+    const graphPlane = document.getElementById('graph-plane');
+    const zoomDisplay = document.getElementById('zoom-display');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const zoomResetBtn = document.getElementById('zoom-reset-btn');
+    const inspectorDrawer = document.getElementById('inspector-drawer');
+    const closeInspectorBtn = document.getElementById('close-inspector-btn');
+    const testWfBtn = document.getElementById('btn-test-wf');
+
+    function updateZoom(newZoom) {
+      currentZoom = Math.min(Math.max(newZoom, 50), 160);
+      if (graphPlane) {
+        graphPlane.style.transform = `scale(${currentZoom / 100})`;
+      }
+      if (zoomDisplay) {
+        zoomDisplay.textContent = `${currentZoom}%`;
+      }
+    }
+
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => updateZoom(currentZoom + 10));
+    }
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => updateZoom(currentZoom - 10));
+    }
+    if (zoomResetBtn) {
+      zoomResetBtn.addEventListener('click', () => updateZoom(100));
+    }
+
+    // Toggle Inspector Drawer
+    if (closeInspectorBtn && inspectorDrawer) {
+      closeInspectorBtn.addEventListener('click', () => {
+        if (inspectorDrawer.style.display === 'none') {
+          inspectorDrawer.style.display = 'flex';
+          closeInspectorBtn.querySelector('span').textContent = 'chevron_right';
+        } else {
+          inspectorDrawer.style.display = 'none';
+          closeInspectorBtn.querySelector('span').textContent = 'chevron_left';
+        }
+      });
+    }
+
+    // Interactive Node Selection
+    const nodes = ['node-1', 'node-2', 'node-3', 'node-4', 'node-5'];
+    nodes.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          nodes.forEach(otherId => {
+            const otherEl = document.getElementById(otherId);
+            if (otherEl) otherEl.classList.remove('ring-2', 'ring-primary');
+          });
+          el.classList.add('ring-2', 'ring-primary');
+          if (inspectorDrawer && inspectorDrawer.style.display === 'none') {
+            inspectorDrawer.style.display = 'flex';
+          }
+        });
+      }
+    });
+
+    // Test Run notification micro-interaction
+    if (testWfBtn) {
+      testWfBtn.addEventListener('click', () => {
+        const originalText = testWfBtn.innerHTML;
+        testWfBtn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin text-tertiary">sync</span><span>Testing...</span>`;
+        testWfBtn.disabled = true;
+        setTimeout(() => {
+          testWfBtn.innerHTML = `<span class="material-symbols-outlined text-[18px] text-tertiary">check</span><span>Success (200 OK)</span>`;
+          setTimeout(() => {
+            testWfBtn.innerHTML = originalText;
+            testWfBtn.disabled = false;
+          }, 2000);
+        }, 1200);
+      });
+    }
+  })();
+</script></main></div></body></html>

@@ -44,10 +44,14 @@ DEFAULT_ORG_SLUG = "default"
 #: (backward compatibility, Phase 11 §42). Tighten via org settings or member
 #: overrides; enforcement is centralized and tested.
 ROLE_DEFAULT_VISIBILITY: dict[str, str] = {
+    rbac_service.ROLE_CEO: VisibilityScope.ALL.value,
     rbac_service.ROLE_SUPER_ADMIN: VisibilityScope.ALL.value,
     rbac_service.ROLE_ADMIN: VisibilityScope.ALL.value,
+    rbac_service.ROLE_MARKETING_MANAGER: VisibilityScope.TEAM.value,
     rbac_service.ROLE_MANAGER: VisibilityScope.ALL.value,
+    rbac_service.ROLE_MARKETING_EXECUTIVE: VisibilityScope.ASSIGNED_ONLY.value,
     rbac_service.ROLE_OPERATOR: VisibilityScope.ALL.value,
+    rbac_service.ROLE_RESEARCHER: VisibilityScope.ALL.value,
     rbac_service.ROLE_VIEWER: VisibilityScope.ALL.value,
 }
 
@@ -117,7 +121,8 @@ async def user_role_codes(session: AsyncSession, user_id: uuid.UUID) -> list[str
 
 
 async def user_is_super_admin(session: AsyncSession, user_id: uuid.UUID) -> bool:
-    return rbac_service.ROLE_SUPER_ADMIN in await user_role_codes(session, user_id)
+    codes = await user_role_codes(session, user_id)
+    return bool({rbac_service.ROLE_SUPER_ADMIN, rbac_service.ROLE_CEO} & set(codes))
 
 
 async def get_default_organization(session: AsyncSession) -> Organization | None:
@@ -219,7 +224,7 @@ async def resolve_context(session: AsyncSession, user: User, permissions: set[st
         )
     )
     role_codes = await user_role_codes(session, user.id)
-    is_super = rbac_service.ROLE_SUPER_ADMIN in role_codes
+    is_super = bool({rbac_service.ROLE_SUPER_ADMIN, rbac_service.ROLE_CEO} & set(role_codes))
     return MemberContext(
         user, membership, organization, team_ids, led_team_ids, permissions,
         is_super_admin=is_super, member_role_codes=role_codes,
@@ -248,7 +253,7 @@ async def resolve_context_for_organization(
     )
     led_team_ids = {r for r in led_rows}
     role_codes = await user_role_codes(session, user.id)
-    is_super = rbac_service.ROLE_SUPER_ADMIN in role_codes
+    is_super = bool({rbac_service.ROLE_SUPER_ADMIN, rbac_service.ROLE_CEO} & set(role_codes))
     return MemberContext(
         user, membership, organization, team_ids, led_team_ids, permissions,
         is_super_admin=is_super, member_role_codes=role_codes,

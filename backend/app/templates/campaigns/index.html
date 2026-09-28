@@ -1,96 +1,242 @@
 {% extends "base.html" %}
 {% block title %}Campaigns — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<section class="hero" style="padding:30px 34px 28px">
-  <span class="hero-eyebrow">Marketing operations</span>
-  <h1>Reach the right audience, on every channel.</h1>
-  <p class="hero-sub">Draft, launch and monitor WhatsApp &amp; email campaigns against your lead
-    audiences — with honest delivery analytics and suppression handling.</p>
-</section>
+<div class="space-y-space-lg">
+  <!-- Top Hero Header -->
+  <div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-xl border border-outline-variant/30">
+    <div class="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-space-md">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+            Marketing Operations
+          </span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Outbound Campaigns & Multichannel Delivery
+        </h1>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Draft, execute, and monitor automated WhatsApp, email, and SMS campaigns with honest delivery rates and suppression compliance.
+        </p>
+      </div>
 
-<div class="page-head">
-  <div></div>
-  <div class="head-actions">
-    {% if can_create %}<a class="btn btn-primary" href="/campaigns/new">New campaign</a>{% endif %}
-    <a class="btn btn-ghost" href="/campaigns/templates">Templates</a>
-    <a class="btn btn-ghost" href="/campaigns/accounts">Sending accounts</a>
-    <a class="btn btn-ghost" href="/campaigns/suppression">Suppression</a>
+      <div class="flex flex-wrap items-center gap-space-sm">
+        <a class="btn btn-ghost" href="/campaigns/templates">
+          <span class="material-symbols-outlined text-[16px]">description</span>
+          Templates
+        </a>
+        <a class="btn btn-ghost" href="/campaigns/accounts">
+          <span class="material-symbols-outlined text-[16px]">account_balance_wallet</span>
+          Sending Accounts
+        </a>
+        <a class="btn btn-ghost" href="/campaigns/suppression">
+          <span class="material-symbols-outlined text-[16px]">block</span>
+          Suppression
+        </a>
+        {% if can_create %}
+        <a class="btn btn-primary" href="/campaigns/new">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          New Campaign
+        </a>
+        {% endif %}
+      </div>
+    </div>
   </div>
-</div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
+  <!-- Global Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
 
-{% if not provider_configured %}
-<div class="alert">No sending provider configured. Campaigns can be drafted and validated, but launch stays blocked until a provider is configured in Sending accounts.</div>
-{% endif %}
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
 
-<div class="stat-grid">
-  <div class="stat"><span class="stat-label">TOTAL CAMPAIGNS</span><span class="stat-value">{{ totals.total_campaigns }}</span></div>
-  <div class="stat"><span class="stat-label">DRAFTS</span><span class="stat-value">{{ totals.drafts }}</span></div>
-  <div class="stat"><span class="stat-label">SCHEDULED</span><span class="stat-value">{{ totals.scheduled }}</span></div>
-  <div class="stat"><span class="stat-label">RUNNING</span><span class="stat-value">{{ totals.running + totals.queued }}</span></div>
-  <div class="stat"><span class="stat-label">COMPLETED</span><span class="stat-value">{{ totals.completed }}</span></div>
-</div>
+  {% if not provider_configured %}
+  <div class="rounded-xl p-space-md bg-surface-container-high border border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div class="flex items-center gap-space-sm">
+      <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline">
+        <span class="material-symbols-outlined text-[20px]">warning</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-md text-label-md text-on-surface font-semibold">No Sending Account Configured</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Campaigns can be drafted and validated, but launch stays blocked until a provider is configured in Sending Accounts.</span>
+      </div>
+    </div>
+    <a href="/campaigns/accounts" class="btn btn-ghost text-xs whitespace-nowrap">
+      Configure Senders
+      <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+    </a>
+  </div>
+  {% endif %}
 
-<form method="get" action="/campaigns" class="toolbar">
-  <select name="status">
-    <option value="">Status: any</option>
-    {% for s in statuses %}{% if s %}<option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>{% endif %}{% endfor %}
-  </select>
-  <button class="btn btn-primary" type="submit">Filter</button>
-  <a class="btn btn-ghost" href="/campaigns">Reset</a>
-</form>
+  <!-- Stat Cards Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-space-sm">
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Total Campaigns</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-on-surface">{{ totals.total_campaigns }}</span>
+        <span class="font-code-xs text-code-xs text-outline">Lifetime</span>
+      </div>
+    </div>
 
-<div class="card table-card">
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Channel</th><th>Status</th><th>Recipients</th>
-          <th>Sent</th><th>Delivered</th><th>Replies</th><th>Created</th><th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for c in campaigns %}
-        {% set a = counts.get(str(c.id)) %}
-        <tr>
-          <td><a href="/campaigns/{{ c.id }}"><strong>{{ c.name }}</strong></a></td>
-          <td>{{ c.channel }}</td>
-          <td><span class="badge badge-{{ c.status | lower }}">{{ c.status }}</span></td>
-          <td class="mono">{{ a.recipients.total if a else 0 }}</td>
-          <td class="mono">{{ a.messages.sent if a else 0 }}</td>
-          <td class="mono">{{ a.messages.delivered if a else 0 }}</td>
-          <td class="mono">{{ a.messages.replied if a else 0 }}</td>
-          <td class="muted small">{{ str(c.created_at)[:16].replace('T',' ') }}</td>
-          <td><a class="btn btn-sm btn-ghost" href="/campaigns/{{ c.id }}">Open</a></td>
-        </tr>
-        {% else %}
-        <tr><td colspan="9" style="padding:0">
-          <div class="empty-state">
-            <svg viewBox="0 0 130 130" fill="none" aria-hidden="true">
-              <circle cx="65" cy="65" r="58" stroke="rgba(61,123,255,.3)" stroke-dasharray="2 7"/>
-              <path d="M50 65l10 10 22-24" stroke="rgba(61,123,255,.7)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h3>No campaigns yet</h3>
-            <p>Create your first campaign from a lead audience — WhatsApp or email.</p>
-            {% if can_create %}<a class="btn btn-primary" href="/campaigns/new">New campaign</a>{% endif %}
-          </div>
-        </td></tr>
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Drafts</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-on-surface">{{ totals.drafts }}</span>
+        <span class="font-code-xs text-code-xs text-primary">In Progress</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Scheduled</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-on-surface">{{ totals.scheduled }}</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed">Pending Date</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Running / Queued</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-tertiary">{{ totals.running + totals.queued }}</span>
+        <span class="font-code-xs text-code-xs text-tertiary flex items-center">
+          <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse mr-1"></span>Active
+        </span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Completed</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-on-surface">{{ totals.completed }}</span>
+        <span class="font-code-xs text-code-xs text-outline">Dispatched</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Toolbar -->
+  <form method="get" action="/campaigns" class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-wrap items-center gap-space-sm">
+    <div class="w-full sm:w-64">
+      <select name="status" class="qbit-input">
+        <option value="">Status: All Statuses</option>
+        {% for s in statuses %}
+          {% if s %}
+          <option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>
+          {% endif %}
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+      </select>
+    </div>
 
-{% if total > page_size %}
-<div class="pager">
-  {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
-    {% if p <= page + 2 and p >= page - 2 %}
-      <a class="pager-item {% if p == page %}active{% endif %}" href="/campaigns?status={{ status }}&page={{ p }}">{{ p }}</a>
-    {% endif %}
-  {% endfor %}
+    <div class="flex items-center gap-2">
+      <button class="btn btn-primary" type="submit">
+        <span class="material-symbols-outlined text-[16px]">filter_alt</span>
+        Filter
+      </button>
+      <a class="btn btn-ghost" href="/campaigns">Reset</a>
+    </div>
+
+    <div class="ml-auto text-xs text-outline font-code-xs hidden md:block">
+      Showing {{ campaigns | length }} of {{ total }} campaigns
+    </div>
+  </form>
+
+  <!-- Campaigns Table Card -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Campaign Name</th>
+            <th>Channel</th>
+            <th>Status</th>
+            <th>Recipients</th>
+            <th>Sent</th>
+            <th>Delivered</th>
+            <th>Replies</th>
+            <th>Created</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in campaigns %}
+          {% set a = counts.get(str(c.id)) %}
+          <tr>
+            <td>
+              <a href="/campaigns/{{ c.id }}" class="hover:text-primary transition-colors flex flex-col">
+                <strong class="text-on-surface font-semibold">{{ c.name }}</strong>
+                {% if c.description %}
+                <span class="text-xs text-outline truncate max-w-xs">{{ c.description }}</span>
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface">
+                {{ c.channel }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-{{ c.status | lower }}">
+                {{ c.status }}
+              </span>
+            </td>
+            <td class="mono font-semibold">{{ a.recipients.total if a else 0 }}</td>
+            <td class="mono text-outline">{{ a.messages.sent if a else 0 }}</td>
+            <td class="mono text-tertiary">{{ a.messages.delivered if a else 0 }}</td>
+            <td class="mono text-secondary-fixed">{{ a.messages.replied if a else 0 }}</td>
+            <td class="text-outline text-xs whitespace-nowrap">{{ str(c.created_at)[:16].replace('T',' ') }}</td>
+            <td class="text-right">
+              <a class="btn btn-sm btn-ghost" href="/campaigns/{{ c.id }}">
+                <span>View</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="p-0">
+              <div class="py-16 px-4 text-center space-y-3">
+                <div class="w-12 h-12 rounded-full bg-surface-container-high mx-auto flex items-center justify-center text-outline">
+                  <span class="material-symbols-outlined text-[28px]">campaign</span>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">No Campaigns Found</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant max-w-md mx-auto">
+                  Create your first outbound campaign targeted to your CRM leads across WhatsApp, Email, or SMS.
+                </p>
+                {% if can_create %}
+                <div class="pt-2">
+                  <a class="btn btn-primary" href="/campaigns/new">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Create Campaign
+                  </a>
+                </div>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {% if total > page_size %}
+  <div class="flex items-center justify-center gap-2 pt-space-sm">
+    {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
+      {% if p <= page + 2 and p >= page - 2 %}
+        <a class="pager-item {% if p == page %}active{% endif %}" href="/campaigns?status={{ status }}&page={{ p }}">{{ p }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
-{% endif %}
 {% endblock %}

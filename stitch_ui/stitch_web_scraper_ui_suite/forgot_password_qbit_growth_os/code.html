@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#080E1D]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QBIT GROWTH OS - Sign In</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Custom Colors & Fonts -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              400: '#38bdf8',
+              500: '#0066FF',
+              600: '#0052cc',
+              700: '#003d99',
+            },
+            cyber: {
+              base: '#080E1D',
+              surface: '#0D1322',
+              card: '#10182A',
+              border: '#1E293B',
+              borderLight: '#26334D',
+              muted: '#64748B',
+              text: '#94A3B8',
+              highlight: '#38BDF8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow': '0 0 35px -5px rgba(0, 102, 255, 0.25)',
+            'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-background">
+    /* Subtle ambient dark cyber background glow */
+    .cyber-bg-glow {
+      background: radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.12) 0%, rgba(8, 14, 29, 0) 65%),
+                  radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, rgba(8, 14, 29, 0) 50%);
+    }
+    /* Subtle grid pattern overlay */
+    .grid-overlay {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+  </style>
+<meta content="web_standard" name="shell-type"/></head>
+<body class="min-h-full flex flex-col font-sans text-slate-100 bg-[#080E1D] cyber-bg-glow grid-overlay antialiased selection:bg-brand-500 selection:text-white">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="w-full border-b border-cyber-border/70 backdrop-blur-md bg-cyber-base/70 sticky top-0 z-30" data-purpose="top-navigation">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand Logo & Name -->
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-brand-600 via-brand-500 to-sky-400 p-[1px] shadow-sm">
+<div class="h-full w-full bg-cyber-base rounded-[7px] flex items-center justify-center">
+<!-- Isometric QBIT Cube Icon -->
+<svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+<line x1="12" x2="12" y1="22.08" y2="12"></line>
+</svg>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold tracking-wider text-white uppercase">Qbit Growth OS</span>
+<span class="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/25">v2.4.0</span>
+</div>
+<span class="text-[11px] text-cyber-muted font-normal">AI Powered Business Intelligence &amp; Marketing Automation</span>
+</div>
+</div>
+<!-- Right Header Status & Badges -->
+<div class="flex items-center gap-3">
+<!-- Private Internal Tool Badge -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+<span>Private Internal Tool</span>
+</div>
+<!-- Environment Indicator -->
+<div class="hidden md:flex items-center gap-1.5 text-xs text-cyber-muted border-l border-cyber-border pl-3">
+<span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+<span>Prod-Asia-East</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- BEGIN: MainContentAuthArea -->
+<main class="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 relative z-10" data-purpose="auth-view-container"><div class="flex flex-col w-full items-center justify-center relative">
+<div class="absolute -top-32 w-96 h-96 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 w-80 h-80 rounded-full bg-secondary-container/5 blur-3xl pointer-events-none"></div>
+<div class="w-full max-w-[480px] z-10 flex flex-col items-center">
+<div class="mb-5 flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high shadow-sm">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Account Recovery Flow</span>
+<span class="text-outline-variant font-code-xs text-code-xs">•</span>
+<span class="font-code-xs text-code-xs text-primary-fixed-dim">SEC-ID: #8821-RST</span>
+</div>
+<div class="w-full bg-surface-container-low rounded-xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+<div class="absolute -top-16 -right-16 w-36 h-36 bg-primary-container/15 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex flex-col items-center text-center">
+<div class="relative mb-6">
+<div class="absolute inset-0 rounded-xl bg-primary-container/20 blur-md"></div>
+<div class="relative w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">mark_email_unread</span>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">lock_reset</span>
+</div>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-2">Reset your password</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm mb-7 leading-relaxed">
+          Enter your company email to receive reset instructions and a secure one-time authorization link.
+        </p>
+</div>
+<form class="space-y-5" id="recoveryForm" onsubmit="event.preventDefault(); triggerSentState();">
+<div class="space-y-1.5 text-left">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold" for="companyEmail">
+              Company Email
+            </label>
+<span class="font-code-xs text-code-xs text-outline">SSO / Okta Linked</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-lg">mail</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-2.5 outline-none placeholder:text-outline focus:bg-surface-container-highest transition-colors shadow-inner" id="companyEmail" placeholder="you@company.com" required="" type="email" value="sagar@qbit.os"/>
+</div>
+</div>
+<div class="bg-surface-container-high/60 rounded-lg p-3.5 flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary-container text-lg mt-0.5 shrink-0">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+            A secure cryptographic link will be dispatched to your authorized domain inbox. Valid for <span class="text-on-surface font-semibold">15 minutes</span>.
+          </p>
+</div>
+<button class="w-full py-3 px-4 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center justify-center gap-2 shadow-lg shadow-primary-container/25 hover:opacity-95 active:scale-[0.99] transition-all cursor-pointer" id="submitBtn" type="submit">
+<span id="btnText">Send Reset Link</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+</button>
+</form>
+<div class="hidden mt-4 p-4 rounded-lg bg-surface-container-highest text-left animate-fade-in" id="successNotice">
+<div class="flex items-center gap-2 text-tertiary mb-1">
+<span class="material-symbols-outlined text-base">check_circle</span>
+<span class="font-label-md text-label-md">Dispatch Initiated</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Link sent to <span class="text-on-surface font-semibold" id="dispatchedEmail">sagar@qbit.os</span>. Check your inbox or corporate quarantine filter.
+        </p>
+</div>
+<div class="mt-8 pt-6 flex flex-col items-center gap-5">
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#login">
+<span class="material-symbols-outlined text-base">west</span>
+<span>Back to login</span>
+</a>
+<div class="flex items-center justify-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-xs">shield_lock</span>
+<span class="font-code-xs text-code-xs tracking-tight">Protected by Enterprise Zero-Trust Identity Guard • 256-bit TLS</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex flex-wrap items-center justify-center gap-y-2 gap-x-4 text-center">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-code-xs text-code-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>SOC-2 Type II Certified Enclave</span>
+</div>
+<span class="text-outline-variant font-code-xs text-code-xs">•</span>
+<span class="text-on-surface-variant font-code-xs text-code-xs">End-to-End Encrypted Session</span>
+<span class="text-outline-variant font-code-xs text-code-xs">•</span>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-code-xs text-code-xs underline" href="#incident-desk">Incident Desk</a>
+</div>
+</div>
+<div class="sr-only">
+<img alt="Reference for forgot password authentication workflow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_VnS7hyLK7DLzUoHNR-Xsn1lPrpU0IccDLAhEd_MLl7aPJe-c7oHYnmTeNZAHrAtiV-pLlBmXe4V-NfNM6iNlsyvp6q3OGiTzaN3SQqmwD6NuOrB7dIcJ1sBrHOcDPppTx9IFWz6c5Fy9mdY4zsGaXc6SEuPsCenp5czNBRce7-tsmeiZweGzCj44tERR_5yWBl6dysmB-ZmrZyLdEvn3vrO0ctW0fNXULndGOKaHKoQyuS1al2JZqzH4wv-BwRgQ8AU"/>
+</div>
+</div>
+<script>
+  function triggerSentState() {
+    const emailInput = document.getElementById('companyEmail');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const successNotice = document.getElementById('successNotice');
+    const dispatchedEmail = document.getElementById('dispatchedEmail');
+
+    if (emailInput && emailInput.value) {
+      dispatchedEmail.textContent = emailInput.value;
+      btnText.textContent = 'Link Dispatched';
+      submitBtn.classList.remove('bg-primary-container', 'shadow-primary-container/25');
+      submitBtn.classList.add('bg-surface-container-highest', 'text-tertiary');
+      submitBtn.disabled = true;
+      successNotice.classList.remove('hidden');
+    }
+  }
+</script></main>
+<!-- END: MainContentAuthArea -->
+<!-- BEGIN: BottomGlobalFooter -->
+<footer class="w-full border-t border-cyber-border/70 py-4 bg-cyber-base/80 text-xs text-cyber-muted" data-purpose="site-footer">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+<!-- System status indicator -->
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-slate-400">All systems operational</span>
+<span class="text-cyber-border">|</span>
+<span class="text-[11px] font-mono text-cyber-muted">Latency 24ms</span>
+</div>
+<!-- Legal and Compliance Links -->
+<nav aria-label="Footer Navigation" class="flex items-center gap-4 text-xs">
+<a class="hover:text-slate-300 transition-colors" href="#privacy">Privacy Policy</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#terms">Terms of Service</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#security">Security Whitepaper</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#support">Help Desk</a>
+</nav>
+<!-- Copyright note -->
+<div class="text-[11px] text-cyber-muted">
+        © 2026 QBIT Systems Inc. All rights reserved.
+      </div>
+</div>
+</footer>
+<!-- END: BottomGlobalFooter -->
+<!-- Interactive JavaScript for Password Visibility Toggle -->
+<script data-purpose="password-visibility-handler">
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', function() {
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          if (isPassword) {
+            passwordInput.setAttribute('type', 'text');
+            // Slash icon for visible password
+            eyeIcon.innerHTML = `
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            `;
+          } else {
+            passwordInput.setAttribute('type', 'password');
+            // Standard eye icon
+            eyeIcon.innerHTML = `
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            `;
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

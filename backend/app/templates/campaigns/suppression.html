@@ -1,103 +1,202 @@
 {% extends "base.html" %}
-{% block title %}Suppression — QBIT Connect{% endblock %}
+{% block title %}Suppression List — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>SUPPRESSION LIST</h1>
-    <p class="muted">Global do-not-contact. Suppressed contacts never enter the send queue — enforced at eligibility AND re-checked before every send.</p>
-  </div>
-  <div class="head-actions"><a class="btn btn-ghost" href="/campaigns">Back</a></div>
-</div>
-
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-
-{% if can_manage %}
-<div style="display:flex;gap:14px;flex-wrap:wrap;max-width:1100px">
-  <form method="post" action="/campaigns/suppression" class="card" style="padding:16px;flex:1;min-width:380px">
-    <h3 style="margin:0 0 8px">ADD SUPPRESSION ENTRY</h3>
-    <div class="toolbar" style="flex-wrap:wrap">
-      <select name="type">
-        {% for t in types %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
-      </select>
-      <input type="text" name="address" required maxlength="320" placeholder="Email / phone / lead id / *" style="flex:2;min-width:200px">
-      <select name="reason">
-        {% for r in reasons %}<option value="{{ r }}">{{ r }}</option>{% endfor %}
-      </select>
-      <select name="channel">
-        <option value="">Any channel</option>
-        <option value="WHATSAPP">WhatsApp</option>
-        <option value="EMAIL">Email</option>
-        <option value="SMS">SMS</option>
-      </select>
-      <button class="btn btn-primary" type="submit">Add</button>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Header & Back Navigation -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <a href="/campaigns" class="text-outline hover:text-on-surface transition-colors flex items-center gap-1 font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Campaigns
+        </a>
+        <span class="text-outline/40">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          Compliance
+        </span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+        Global Suppression & Do-Not-Contact List
+      </h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Suppressed contacts are strictly blocked from dispatch pipelines. Enforced at audience eligibility and re-checked immediately prior to every message delivery.
+      </p>
     </div>
-  </form>
-  <form method="post" action="/campaigns/suppression/opt-out" class="card" style="padding:16px;flex:1;min-width:380px">
-    <h3 style="margin:0 0 8px">RECORD OPT-OUT</h3>
-    <div class="toolbar" style="flex-wrap:wrap">
-      <select name="channel">
-        <option value="WHATSAPP">WhatsApp</option>
-        <option value="EMAIL">Email</option>
-        <option value="SMS">SMS</option>
-      </select>
-      <input type="text" name="address" required maxlength="320" placeholder="Address that opted out" style="flex:2;min-width:200px">
-      <button class="btn btn-primary" type="submit">Record</button>
+
+    <div class="flex items-center gap-2">
+      <a class="btn btn-ghost" href="/campaigns">Back to Campaigns</a>
     </div>
-    <p class="muted small">Opt-outs also create a suppression entry and can never be removed.</p>
-  </form>
-</div>
-{% endif %}
-
-<div class="card table-card" style="margin-top:14px">
-  <div class="page-head" style="padding:12px 12px 0"><div><h3 style="margin:0">ENTRIES ({{ total }})</h3></div></div>
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Type</th><th>Address</th><th>Channel</th><th>Reason</th><th>Source</th><th>Added</th>{% if can_manage %}<th></th>{% endif %}</tr></thead>
-      <tbody>
-        {% for e in entries %}
-        <tr>
-          <td>{{ e.type }}</td>
-          <td class="mono">{{ e.address }}</td>
-          <td>{{ e.channel or 'ANY' }}</td>
-          <td>{{ e.reason }}</td>
-          <td class="muted small">{{ e.source or '' }}</td>
-          <td class="muted small">{{ str(e.created_at)[:16].replace('T',' ') }}</td>
-          {% if can_manage %}
-          <td>
-            <form method="post" action="/campaigns/suppression/{{ e.id }}/delete" class="inline-form">
-              <button class="btn btn-sm btn-danger">Remove</button>
-            </form>
-          </td>
-          {% endif %}
-        </tr>
-        {% else %}
-        <tr><td colspan="7" class="center muted" style="padding:28px">Suppression list is empty.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
   </div>
-</div>
 
-<div class="card table-card" style="margin-top:14px">
-  <div class="page-head" style="padding:12px 12px 0"><div><h3 style="margin:0">RECENT OPT-OUTS ({{ opt_total }})</h3></div></div>
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Channel</th><th>Address</th><th>Reason</th><th>Recorded</th></tr></thead>
-      <tbody>
-        {% for o in opt_outs %}
-        <tr>
-          <td>{{ o.channel }}</td>
-          <td class="mono">{{ o.address }}</td>
-          <td>{{ o.reason }}</td>
-          <td class="muted small">{{ str(o.created_at)[:16].replace('T',' ') }}</td>
-        </tr>
-        {% else %}
-        <tr><td colspan="4" class="center muted" style="padding:20px">No opt-outs recorded.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
   </div>
+  {% endif %}
+
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
+
+  <!-- Dual Action Cards (Add Entry & Record Opt-Out) -->
+  {% if can_manage %}
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+    <!-- Card 1: Add Suppression Entry -->
+    <div class="card p-space-lg space-y-space-md">
+      <div class="border-b border-outline-variant/30 pb-space-xs">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Add Suppression Rule</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Manually blacklist an address or identifier.</p>
+      </div>
+
+      <form method="post" action="/campaigns/suppression" class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="qbit-form-group">
+            <label class="qbit-form-label" for="supType">Match Type</label>
+            <select id="supType" name="type" class="qbit-input">
+              {% for t in types %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+            </select>
+          </div>
+
+          <div class="qbit-form-group">
+            <label class="qbit-form-label" for="supChannel">Channel</label>
+            <select id="supChannel" name="channel" class="qbit-input">
+              <option value="">All Channels</option>
+              <option value="WHATSAPP">WhatsApp</option>
+              <option value="EMAIL">Email</option>
+              <option value="SMS">SMS</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="supAddress">Address / Phone / Pattern <span class="text-error">*</span></label>
+          <input type="text" id="supAddress" name="address" required maxlength="320" placeholder="e.g. +919876543210 or user@example.com" class="qbit-input">
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="supReason">Reason</label>
+          <select id="supReason" name="reason" class="qbit-input">
+            {% for r in reasons %}<option value="{{ r }}">{{ r }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div class="pt-2 flex justify-end">
+          <button class="btn btn-primary" type="submit">
+            <span class="material-symbols-outlined text-[16px]">add_circle</span>
+            Add to Suppression
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Card 2: Record Direct Opt-Out -->
+    <div class="card p-space-lg space-y-space-md">
+      <div class="border-b border-outline-variant/30 pb-space-xs">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Record User Opt-Out</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Permanent compliance record from STOP reply or unsubscribe click.</p>
+      </div>
+
+      <form method="post" action="/campaigns/suppression/opt-out" class="space-y-3">
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="optChannel">Channel <span class="text-error">*</span></label>
+          <select id="optChannel" name="channel" required class="qbit-input">
+            <option value="WHATSAPP">WhatsApp (STOP reply)</option>
+            <option value="EMAIL">Email (Unsubscribe link)</option>
+            <option value="SMS">SMS (DLT STOP)</option>
+          </select>
+        </div>
+
+        <div class="qbit-form-group">
+          <label class="qbit-form-label" for="optAddress">Opted-Out Identifier <span class="text-error">*</span></label>
+          <input type="text" id="optAddress" name="address" required maxlength="320" placeholder="e.g. +919876543210 or lead@gmail.com" class="qbit-input">
+          <span class="qbit-form-hint">Opt-out entries are legally binding under DPDP act and cannot be deleted.</span>
+        </div>
+
+        <div class="pt-2 flex justify-end">
+          <button class="btn btn-ghost border-error/50 text-error hover:bg-error/10" type="submit">
+            <span class="material-symbols-outlined text-[16px]">block</span>
+            Record Permanent Opt-Out
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Suppression Entries Table -->
+  <div class="table-card">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <h3 class="font-label-md text-label-md font-bold text-on-surface">Active Suppression Entries ({{ total }})</h3>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Suppressed Address / Identifier</th>
+            <th>Channel</th>
+            <th>Reason</th>
+            <th>Source</th>
+            <th>Date Added</th>
+            {% if can_manage %}<th class="text-right">Actions</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in entries %}
+          <tr>
+            <td>
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-outline">
+                {{ e.type }}
+              </span>
+            </td>
+            <td class="mono font-semibold text-on-surface">{{ e.address }}</td>
+            <td>{{ e.channel or 'All' }}</td>
+            <td>
+              <span class="badge badge-warn text-xs">
+                {{ e.reason }}
+              </span>
+            </td>
+            <td class="text-xs text-outline">{{ e.source or 'System' }}</td>
+            <td class="text-xs text-outline whitespace-nowrap">{{ str(e.created_at)[:16].replace('T',' ') }}</td>
+            {% if can_manage %}
+            <td class="text-right">
+              {% if e.reason != 'OPT_OUT' %}
+              <form method="post" action="/campaigns/suppression/{{ e.id }}/delete" class="inline-form" onsubmit="return confirm('Remove suppression for {{ e.address }}?')">
+                <button class="btn btn-sm btn-ghost text-error" type="submit">
+                  <span class="material-symbols-outlined text-[14px]">delete</span>
+                  Remove
+                </button>
+              </form>
+              {% else %}
+              <span class="text-xs text-outline italic">Protected</span>
+              {% endif %}
+            </td>
+            {% endif %}
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[32px] text-outline block mb-2">shield</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Suppressed Contacts</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Your suppression list is empty. Suppressed entries will appear here when added or when contacts opt out.
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

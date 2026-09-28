@@ -290,6 +290,26 @@ async def archive_campaign(
     return {"success": True, "data": campaign.to_public_dict()}
 
 
+@router.post("/{campaign_id}/duplicate")
+async def duplicate_campaign(
+    campaign_id: uuid.UUID,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("campaigns.create")),
+):
+    campaign = await _visible_campaign(session, campaign_id, user, permission="campaigns.view")
+    duplicated = await campaigns_service.duplicate(session, campaign.id, user_id=user.id)
+    await audit.log(
+        session,
+        action="campaign.duplicated",
+        resource_type="campaign",
+        resource_id=str(duplicated.id),
+        actor_user_id=user.id,
+        metadata={"original_campaign_id": str(campaign.id)},
+    )
+    return {"success": True, "data": duplicated.to_public_dict()}
+
+
 # ------------------------------------------------------------------ recipients
 @router.get("/{campaign_id}/recipients")
 async def list_recipients(

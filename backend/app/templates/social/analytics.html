@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Social Media Analytics — QBIT Growth OS{% endblock %}
+{% block nav_social %}active bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+  <!-- Top Bar -->
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-lg">
+    <div>
+      <div class="flex items-center gap-2 text-outline font-code-xs text-code-xs mb-1">
+        <a href="/social" class="hover:underline">Social Media</a>
+        <span>/</span>
+        <span class="text-secondary-fixed">Analytics</span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface">Social Media Analytics</h1>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+        Real provider-reported engagement metrics from Meta Graph API, Instagram Insights, and LinkedIn REST.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-space-sm">
+      <div class="flex items-center bg-surface-container-high rounded-lg p-1 border border-outline-variant/30 text-label-sm font-label-sm">
+        <a href="/social/analytics?days=7" class="px-2.5 py-1 rounded {% if days == 7 %}bg-primary-container text-on-primary-container font-semibold{% else %}text-outline hover:text-on-surface{% endif %}">7D</a>
+        <a href="/social/analytics?days=30" class="px-2.5 py-1 rounded {% if days == 30 %}bg-primary-container text-on-primary-container font-semibold{% else %}text-outline hover:text-on-surface{% endif %}">30D</a>
+        <a href="/social/analytics?days=90" class="px-2.5 py-1 rounded {% if days == 90 %}bg-primary-container text-on-primary-container font-semibold{% else %}text-outline hover:text-on-surface{% endif %}">90D</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metric Overview Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-lg">
+    <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Impressions</span>
+      <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-2">{{ metrics.total_impressions }}</div>
+      <span class="font-code-xs text-code-xs text-outline mt-1">Total post views</span>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Unique Reach</span>
+      <div class="font-headline-lg text-headline-lg font-bold text-secondary mt-2">{{ metrics.total_reach }}</div>
+      <span class="font-code-xs text-code-xs text-outline mt-1">Unique accounts touched</span>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Engagement Rate</span>
+      <div class="font-headline-lg text-headline-lg font-bold text-tertiary-fixed mt-2">{{ metrics.engagement_rate }}%</div>
+      <span class="font-code-xs text-code-xs text-outline mt-1">Total interactions / impressions</span>
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Reactions &amp; Likes</span>
+      <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-2">{{ metrics.reactions }}</div>
+      <span class="font-code-xs text-code-xs text-outline mt-1">{{ metrics.comments }} comments &bull; {{ metrics.shares }} shares</span>
+    </div>
+  </div>
+
+  <!-- Real Data Notice Pill -->
+  <div class="mb-space-lg p-3 rounded-lg bg-surface-container-low border border-outline-variant/30 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px] text-tertiary">verified_user</span>
+      <span>All metrics are synchronized directly from official platform insight nodes. Missing values are indicated as &mdash; and never fabricated.</span>
+    </div>
+    <span class="font-code-xs text-code-xs text-outline">QBIT Zero-Hallucination Policy</span>
+  </div>
+
+  <!-- Performance Table -->
+  <div class="bg-surface-container-low rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between">
+      <h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Recent Published Posts &amp; Insights</h3>
+      <span class="font-code-xs text-code-xs text-outline">{{ recent_published|length }} Posts</span>
+    </div>
+
+    {% if not recent_published %}
+    <div class="p-space-2xl text-center text-outline font-body-sm text-body-sm">
+      No published posts available in this reporting period.
+    </div>
+    {% else %}
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse font-body-sm text-body-sm text-on-surface">
+        <thead>
+          <tr class="border-b border-outline-variant/20 bg-surface-container-lowest/50 text-outline font-label-sm text-label-sm uppercase tracking-wider">
+            <th class="py-3 px-4">Platform &amp; Account</th>
+            <th class="py-3 px-4">Provider Post ID</th>
+            <th class="py-3 px-4">Impressions</th>
+            <th class="py-3 px-4">Reach</th>
+            <th class="py-3 px-4">Reactions</th>
+            <th class="py-3 px-4">Comments</th>
+            <th class="py-3 px-4">Published At</th>
+            <th class="py-3 px-4 text-right">Live Link</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/10 font-body-sm text-body-sm">
+          {% for t in recent_published %}
+          <tr class="hover:bg-surface-container-high/40 transition-colors">
+            <td class="py-3 px-4 font-semibold text-on-surface">
+              <span class="px-2 py-0.5 rounded text-[10px] font-code-xs bg-surface-container-highest text-on-surface mr-1">
+                {{ t.platform }}
+              </span>
+              {{ t.account_name or 'Account' }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs text-outline">
+              {{ t.provider_post_id or '&mdash;' }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs">
+              {{ t.analytics.impressions if t.analytics and t.analytics.impressions is defined else '&mdash;' }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs">
+              {{ t.analytics.reach if t.analytics and t.analytics.reach is defined else '&mdash;' }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs">
+              {{ t.analytics.reactions if t.analytics and t.analytics.reactions is defined else (t.analytics.likes if t.analytics and t.analytics.likes is defined else '&mdash;') }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs">
+              {{ t.analytics.comments if t.analytics and t.analytics.comments is defined else '&mdash;' }}
+            </td>
+            <td class="py-3 px-4 font-code-xs text-code-xs text-outline">
+              {{ t.published_at[:16] if t.published_at else '&mdash;' }}
+            </td>
+            <td class="py-3 px-4 text-right">
+              {% if t.provider_post_url %}
+              <a href="{{ t.provider_post_url }}" target="_blank" rel="noopener" class="text-secondary-fixed hover:underline font-label-sm text-label-sm inline-flex items-center gap-0.5">
+                <span>View</span>
+                <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+              </a>
+              {% else %}
+              <span class="text-outline text-label-sm">&mdash;</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

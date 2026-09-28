@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
 from fastapi.responses import Response
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import AuditDep, DbSession, FileServiceDep, require_permission
@@ -22,19 +22,29 @@ from app.core.errors import NotFoundError, PermissionDeniedError, ValidationErro
 from app.core.logging import get_logger
 from app.models.lead import (
     DuplicateStatus,
+    FollowUpPriority,
+    FollowUpStatus,
     ImportBatch,
+    LeadContact,
     LeadDuplicateCandidate,
     LeadExportRecord,
+    LeadFollowUp,
+    LeadStatusHistory,
     LeadTag,
+    PIPELINE_STAGES,
     SavedView,
 )
 from app.models.scrape import Lead
 from app.models.user import User
 from app.schemas.leads import (
     BulkActionRequest,
+    ContactCreateRequest,
     DuplicateResolveRequest,
     ExportRequest,
+    FollowUpCreateRequest,
     ImportMappingRequest,
+    InteractionCreateRequest,
+    LeadAssignmentRequest,
     LeadCreate,
     LeadTagAssignRequest,
     LeadUpdate,
@@ -42,6 +52,7 @@ from app.schemas.leads import (
     NoteCreate,
     SavedViewCreate,
     SavedViewUpdate,
+    StageChangeRequest,
     StatusChangeRequest,
     TagCreate,
     TagUpdate,
@@ -56,8 +67,11 @@ from app.services.leads import (
     TagService,
 )
 from app.services.leads.activity import LeadActivityService
+from app.services.leads.contacts import ContactService
 from app.services.leads.exporter import LeadExportService
+from app.services.leads.followups import FollowUpService
 from app.services.leads.importer import LeadImportService
+from app.services.leads.pipeline import PipelineService
 
 logger = get_logger("qbit.api.leads")
 
@@ -90,6 +104,9 @@ view_service = SavedViewService()
 duplicates_service = DuplicateDetectionService()
 merge_service = MergeService()
 activities = LeadActivityService()
+pipeline_service = PipelineService(activities=activities)
+followup_service = FollowUpService(activities=activities)
+contact_service = ContactService(activities=activities)
 
 
 def _settings(request: Request) -> Settings:
@@ -373,6 +390,37 @@ async def merge_duplicate(
         session, action="lead.merged", resource_type="lead", resource_id=str(primary_id),
         actor_user_id=user.id,
         metadata={"merged_lead_id": str(merged_id), "candidate_id": str(candidate_id)},
+    )
+    return {"success": True, "data": lead.to_public_dict()}
+
+
+@router.post("/{lead_id}/merge")
+async def merge_lead_direct(
+    lead_id: uuid.UUID,
+    payload: MergeRequest,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.merge")),
+):
+    try:
+        primary_id = uuid.UUID(payload.primary_lead_id)
+    except ValueError as exc:
+        raise ValidationError("primary_lead_id must be a UUID") from exc
+    await _visible_lead(session, lead_id, user)
+    await _visible_lead(session, primary_id, user)
+    lead = await merge_service.merge(
+        session,
+        primary_id=primary_id,
+        merged_id=lead_id,
+        user_id=user.id,
+    )
+    await audit.log(
+        session,
+        action="lead.merged",
+        resource_type="lead",
+        resource_id=str(primary_id),
+        actor_user_id=user.id,
+        metadata={"merged_lead_id": str(lead_id)},
     )
     return {"success": True, "data": lead.to_public_dict()}
 
@@ -688,6 +736,179 @@ async def create_lead(
     return {"success": True, "data": lead.to_public_dict()}
 
 
+# ----------------------------------------------------------- Phase 5: CRM Dashboard
+@router.get("/crm-dashboard")
+async def get_crm_dashboard(
+    session: DbSession,
+    user=Depends(require_permission("leads.view")),
+):
+    """Aggregate CRM metrics scoped by tenant and employee visibility."""
+    from datetime import datetime, time, timezone
+    from app.services import authorization as authz
+
+    ctx = await _ctx_for(session, user)
+    extra = authz.visibility_clause(Lead, ctx)
+
+    base_q = select(Lead).where(Lead.merged_into_id.is_(None))
+    if extra is not None:
+        base_q = base_q.where(extra)
+
+    subq = base_q.subquery()
+    total_leads = int(await session.scalar(select(func.count()).select_from(subq)) or 0)
+
+    # Status breakdown
+    status_q = (
+        select(subq.c.status, func.count())
+        .group_by(subq.c.status)
+    )
+    status_rows = (await session.execute(status_q)).all()
+    stages = {st: 0 for st in PIPELINE_STAGES}
+    for st, count in status_rows:
+        if st in stages:
+            stages[st] = int(count)
+
+    # Priority breakdown
+    prio_q = (
+        select(subq.c.priority, func.count())
+        .group_by(subq.c.priority)
+    )
+    prio_rows = (await session.execute(prio_q)).all()
+    priorities = {"LOW": 0, "MEDIUM": 0, "HIGH": 0, "URGENT": 0}
+    for p, count in prio_rows:
+        if p in priorities:
+            priorities[p] = int(count)
+
+    converted_count = stages.get("CONVERTED", 0)
+    conversion_rate = (converted_count / total_leads * 100.0) if total_leads > 0 else 0.0
+
+    # Task metrics
+    now = datetime.now(timezone.utc)
+    start_of_day = datetime.combine(now.date(), time.min).replace(tzinfo=timezone.utc)
+    end_of_day = datetime.combine(now.date(), time.max).replace(tzinfo=timezone.utc)
+
+    fu_base = select(LeadFollowUp)
+    if ctx.organization_id is not None:
+        fu_base = fu_base.where(LeadFollowUp.organization_id == ctx.organization_id)
+    if not getattr(user, "is_superuser", False) and "leads.view_all" not in ctx.permissions:
+        fu_base = fu_base.where(
+            or_(
+                LeadFollowUp.assigned_user_id == user.id,
+                LeadFollowUp.created_by == user.id,
+            )
+        )
+
+    pending_tasks = int(await session.scalar(
+        select(func.count()).select_from(fu_base.where(LeadFollowUp.status == FollowUpStatus.PENDING.value).subquery())
+    ) or 0)
+
+    due_today = int(await session.scalar(
+        select(func.count()).select_from(
+            fu_base.where(
+                LeadFollowUp.status == FollowUpStatus.PENDING.value,
+                LeadFollowUp.due_at >= start_of_day,
+                LeadFollowUp.due_at <= end_of_day,
+            ).subquery()
+        )
+    ) or 0)
+
+    overdue = int(await session.scalar(
+        select(func.count()).select_from(
+            fu_base.where(
+                LeadFollowUp.status == FollowUpStatus.PENDING.value,
+                LeadFollowUp.due_at < now,
+            ).subquery()
+        )
+    ) or 0)
+
+    return {
+        "success": True,
+        "data": {
+            "total_leads": total_leads,
+            "stages": stages,
+            "priorities": priorities,
+            "converted": converted_count,
+            "conversion_rate_pct": round(conversion_rate, 2),
+            "tasks": {
+                "pending": pending_tasks,
+                "due_today": due_today,
+                "overdue": overdue,
+            },
+        },
+    }
+
+
+# ------------------------------------------------------- Phase 5: Task Dashboard
+@router.get("/followups/dashboard")
+async def followups_dashboard(
+    session: DbSession,
+    user=Depends(require_permission("leads.view")),
+    status: str | None = Query(default=None),
+    overdue_only: bool = Query(default=False),
+    due_today_only: bool = Query(default=False),
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+):
+    ctx = await _ctx_for(session, user)
+    user_id_filter = None if (getattr(user, "is_superuser", False) or "leads.view_all" in ctx.permissions) else user.id
+    tasks, total = await followup_service.list_user_tasks(
+        session,
+        user_id=user_id_filter,
+        organization_id=ctx.organization_id,
+        status=status,
+        overdue_only=overdue_only,
+        due_today_only=due_today_only,
+        limit=limit,
+        offset=offset,
+    )
+    return {
+        "success": True,
+        "data": {
+            "items": [t.to_public_dict() for t in tasks],
+            "total": total,
+            "limit": limit,
+            "offset": offset,
+        },
+    }
+
+
+@router.post("/followups/{followup_id}/complete")
+async def complete_followup(
+    followup_id: uuid.UUID,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    task = await followup_service.complete(session, followup_id, user_id=user.id)
+    await audit.log(
+        session,
+        action="lead.followup.completed",
+        resource_type="lead_followup",
+        resource_id=str(task.id),
+        actor_user_id=user.id,
+        metadata={"lead_id": str(task.lead_id)},
+    )
+    return {"success": True, "data": task.to_public_dict()}
+
+
+@router.post("/followups/{followup_id}/cancel")
+async def cancel_followup(
+    followup_id: uuid.UUID,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    task = await followup_service.cancel(session, followup_id, user_id=user.id)
+    await audit.log(
+        session,
+        action="lead.followup.cancelled",
+        resource_type="lead_followup",
+        resource_id=str(task.id),
+        actor_user_id=user.id,
+        metadata={"lead_id": str(task.lead_id)},
+    )
+    return {"success": True, "data": task.to_public_dict()}
+
+
 @router.get("/{lead_id}")
 async def get_lead(
     lead_id: uuid.UUID,
@@ -826,6 +1047,172 @@ async def lead_activity(
     await _visible_lead(session, lead_id, _user)  # 404 when missing
     rows, total = await activities.list_for_lead(session, lead_id, page=page, page_size=page_size)
     return _page_envelope([a.to_public_dict() for a in rows], total, page, page_size)
+
+
+# ------------------------------------------------- Phase 5: CRM Operations
+@router.post("/{lead_id}/stage")
+async def change_lead_stage(
+    lead_id: uuid.UUID,
+    payload: StageChangeRequest,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    lead = await _visible_lead(session, lead_id, user)
+    ctx = await _ctx_for(session, user)
+    is_admin = getattr(user, "is_superuser", False) or "org.admin" in ctx.permissions or "leads.manage" in ctx.permissions
+    updated = await pipeline_service.change_stage(
+        session,
+        lead,
+        payload.stage,
+        user_id=user.id,
+        is_admin_or_manager=is_admin,
+        reason=payload.reason,
+    )
+    await audit.log(
+        session,
+        action="lead.stage_changed",
+        resource_type="lead",
+        resource_id=str(lead.id),
+        actor_user_id=user.id,
+        metadata={"target_stage": payload.stage, "reason": payload.reason},
+    )
+    return {"success": True, "data": updated.to_public_dict()}
+
+
+@router.get("/{lead_id}/stage-history")
+async def get_stage_history(
+    lead_id: uuid.UUID,
+    session: DbSession,
+    user=Depends(require_permission("leads.view")),
+):
+    await _visible_lead(session, lead_id, user)
+    res = await session.execute(
+        select(LeadStatusHistory)
+        .where(LeadStatusHistory.lead_id == lead_id)
+        .order_by(LeadStatusHistory.created_at.desc())
+    )
+    rows = res.scalars().all()
+    return {"success": True, "data": [r.to_public_dict() for r in rows]}
+
+
+@router.get("/{lead_id}/followups")
+async def list_lead_followups(
+    lead_id: uuid.UUID,
+    session: DbSession,
+    user=Depends(require_permission("leads.view")),
+    status: str | None = Query(default=None),
+):
+    await _visible_lead(session, lead_id, user)
+    tasks = await followup_service.list_for_lead(session, lead_id, status=status)
+    return {"success": True, "data": [t.to_public_dict() for t in tasks]}
+
+
+@router.post("/{lead_id}/followups")
+async def create_lead_followup(
+    lead_id: uuid.UUID,
+    payload: FollowUpCreateRequest,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    lead = await _visible_lead(session, lead_id, user)
+    ctx = await _ctx_for(session, user)
+    assignee = uuid.UUID(payload.assigned_user_id) if payload.assigned_user_id else lead.assigned_user_id
+    task = await followup_service.create(
+        session,
+        lead.id,
+        title=payload.title,
+        due_at=payload.due_at,
+        notes=payload.notes,
+        priority=payload.priority,
+        assigned_user_id=assignee,
+        created_by=user.id,
+        organization_id=ctx.organization_id or lead.organization_id,
+    )
+    await audit.log(
+        session,
+        action="lead.followup.created",
+        resource_type="lead_followup",
+        resource_id=str(task.id),
+        actor_user_id=user.id,
+        metadata={"lead_id": str(lead.id), "title": task.title},
+    )
+    return {"success": True, "data": task.to_public_dict()}
+
+
+@router.get("/{lead_id}/contacts")
+async def list_lead_contacts(
+    lead_id: uuid.UUID,
+    session: DbSession,
+    user=Depends(require_permission("leads.view")),
+):
+    await _visible_lead(session, lead_id, user)
+    contacts = await contact_service.list_contacts(session, lead_id)
+    return {"success": True, "data": [c.to_public_dict() for c in contacts]}
+
+
+@router.post("/{lead_id}/contacts")
+async def add_lead_contact(
+    lead_id: uuid.UUID,
+    payload: ContactCreateRequest,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    lead = await _visible_lead(session, lead_id, user)
+    ctx = await _ctx_for(session, user)
+    contact = await contact_service.add_contact(
+        session,
+        lead.id,
+        first_name=payload.first_name,
+        last_name=payload.last_name,
+        title=payload.title,
+        email=payload.email,
+        phone=payload.phone,
+        is_primary=payload.is_primary,
+        is_verified=payload.is_verified,
+        created_by=user.id,
+        organization_id=ctx.organization_id or lead.organization_id,
+    )
+    await audit.log(
+        session,
+        action="lead.contact.created",
+        resource_type="lead_contact",
+        resource_id=str(contact.id),
+        actor_user_id=user.id,
+        metadata={"lead_id": str(lead.id), "name": f"{contact.first_name} {contact.last_name or ''}".strip()},
+    )
+    return {"success": True, "data": contact.to_public_dict()}
+
+
+@router.post("/{lead_id}/interactions")
+async def log_lead_interaction(
+    lead_id: uuid.UUID,
+    payload: InteractionCreateRequest,
+    session: DbSession,
+    audit: AuditDep,
+    user=Depends(require_permission("leads.edit")),
+):
+    lead = await _visible_lead(session, lead_id, user)
+    contact_uuid = uuid.UUID(payload.contact_id) if payload.contact_id else None
+    result = await contact_service.log_interaction(
+        session,
+        lead.id,
+        interaction_type=payload.interaction_type,
+        notes=payload.notes,
+        user_id=user.id,
+        contact_id=contact_uuid,
+    )
+    await audit.log(
+        session,
+        action="lead.interaction.logged",
+        resource_type="lead",
+        resource_id=str(lead.id),
+        actor_user_id=user.id,
+        metadata={"type": payload.interaction_type},
+    )
+    return {"success": True, "data": result}
 
 
 # ------------------------------------------------- Phase 11: lead assignment

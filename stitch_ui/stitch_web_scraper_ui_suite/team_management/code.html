@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed-variant":"#005236","tertiary-fixed-dim":"#4edea3","tertiary-fixed":"#6ffbbe","surface-bright":"#333949","tertiary":"#4edea3","on-primary-fixed":"#001849","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","on-surface":"#dde2f7","on-secondary":"#003543","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-error":"#690005","on-surface-variant":"#c2c6d8","tertiary-container":"#008259","inverse-primary":"#0054d6","inverse-on-surface":"#2a3040","surface-container-low":"#151b2b","primary":"#b3c5ff","on-tertiary-container":"#e1ffec","surface":"#0d1322","secondary-container":"#00d2ff","on-primary-container":"#f8f7ff","on-tertiary":"#003824","inverse-surface":"#dde2f7","on-primary-fixed-variant":"#003fa4","outline-variant":"#424656","primary-fixed-dim":"#b3c5ff","error-container":"#93000a","surface-variant":"#2f3445","surface-tint":"#b3c5ff","surface-container-high":"#242a3a","on-background":"#dde2f7","on-secondary-fixed":"#001f28","on-primary":"#002b75","secondary":"#a5e7ff","background":"#0d1322","surface-dim":"#0d1322","primary-container":"#0066ff","surface-container-highest":"#2f3445","primary-fixed":"#dae1ff","surface-container":"#191f2f","secondary-fixed-dim":"#47d6ff","on-error-container":"#ffdad6","error":"#ffb4ab","on-tertiary-fixed":"#002113","outline":"#8c90a1"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-lg":"1rem","space-md":"0.75rem","margin":"1.5rem","gutter":"1rem","space-xl":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem"},"fontFamily":{"body-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"label-md":["Inter"],"code-xs":["JetBrains Mono"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Sub-header / Breadcrumbs & Page Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-xl">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-outline font-label-sm text-label-sm mb-1">
+<span class="hover:text-on-surface cursor-pointer transition-colors">Management</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-secondary-fixed-dim">Team</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Team Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Manage workspace operators, govern tier permissions, and audit platform clearance.</p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="h-9 px-space-md rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-2 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">tune</span>
+<span>Role Matrix</span>
+</button>
+<button class="h-9 px-space-md rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md flex items-center gap-2 transition-all shadow-[0_0_12px_rgba(0,102,255,0.35)] active:scale-[0.98]" onclick="document.getElementById('invite-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>+ Invite Member</span>
+</button>
+</div>
+</div>
+<!-- Top KPI / Stat Row (Bento Metrics) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<!-- Seats Metric -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary-container/10 rounded-full blur-xl pointer-events-none transition-transform group-hover:scale-125"></div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Total Seats</span>
+<span class="material-symbols-outlined text-[18px] text-primary">groups</span>
+</div>
+<div class="my-space-sm">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl font-bold text-on-surface">12</span>
+<span class="font-body-md text-body-md text-outline">/ 20 Active</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 60%"></div>
+</div>
+<div class="flex justify-between items-center text-outline font-code-xs text-code-xs">
+<span>60% allocated</span>
+<span class="text-tertiary">8 available</span>
+</div>
+</div>
+</div>
+<!-- Admin & Managers -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Admin &amp; Managers</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">shield_person</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl font-bold text-on-surface">4</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary-fixed-dim font-code-xs text-code-xs">Root Scope</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary">verified_user</span>
+<span>Full credential provisioning</span>
+</div>
+</div>
+<!-- Operational Members -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operational Members</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">bolt</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl font-bold text-on-surface">8</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-tertiary-fixed font-code-xs text-code-xs">+2 this week</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px] text-outline">memory</span>
+<span>Active scrapers &amp; outreach pipelines</span>
+</div>
+</div>
+<!-- Pending Invites -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Pending Invites</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">mail</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl font-bold text-on-surface">2</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-outline font-code-xs text-code-xs">Expires in 48h</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span>Awaiting 2FA handshake</span>
+<button class="text-primary hover:text-on-surface font-label-sm text-label-sm" onclick="document.getElementById('invite-modal').classList.remove('hidden')">Resend</button>
+</div>
+</div>
+</div>
+<!-- Main Management Panel -->
+<div class="rounded-xl bg-surface-container-low shadow-md overflow-hidden flex flex-col mb-space-xl">
+<!-- Filter, Search and Tab Bar -->
+<div class="p-space-md bg-surface-container flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1 max-w-lg">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:bg-surface-container-low transition-colors shadow-inner" id="team-search-input" oninput="filterTeamTable()" placeholder="Search members by name, handle, or corporate email..." type="text"/>
+</div>
+<!-- Filters & Bulk Controls -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Role Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg pl-3 pr-8 py-2 focus:outline-none cursor-pointer hover:bg-surface-container-high transition-colors shadow-sm" id="role-filter" onchange="filterTeamTable()">
+<option value="ALL">All Roles</option>
+<option value="CEO">Leadership (CEO)</option>
+<option value="MARKETING">Marketing Managers</option>
+<option value="EXECUTIVE">Campaign Executives</option>
+<option value="RESEARCHER">Data Researchers</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[16px] text-outline">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg pl-3 pr-8 py-2 focus:outline-none cursor-pointer hover:bg-surface-container-high transition-colors shadow-sm" id="status-filter" onchange="filterTeamTable()">
+<option value="ALL">All Statuses</option>
+<option value="ACTIVE">Active Status</option>
+<option value="INVITED">Invited / Pending</option>
+<option value="SUSPENDED">Suspended</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[16px] text-outline">expand_more</span>
+</div>
+<button class="h-9 px-3 rounded-lg bg-surface-container-lowest hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>CSV Export</span>
+</button>
+</div>
+</div>
+<!-- Active Filter Chips Bar -->
+<div class="px-space-md py-space-xs bg-surface-container-lowest flex items-center justify-between text-outline font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm">
+<span class="uppercase tracking-wider">Active Workspace:</span>
+<span class="text-on-surface font-code-xs text-code-xs bg-surface-container-high px-2 py-0.5 rounded">PRD-NORTH-01</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline"></span>
+<span class="text-secondary-fixed-dim" id="filtered-count-badge">Showing 6 Members</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-tertiary">lock</span>
+<span class="font-code-xs text-code-xs text-outline">SAML 2.0 / Okta Sync Enabled</span>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="team-table">
+<thead>
+<tr class="bg-surface-container text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md w-10">
+<input class="rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" id="bulk-select" onclick="toggleSelectAll(this)" type="checkbox"/>
+</th>
+<th class="py-3 px-space-md">Member Profile</th>
+<th class="py-3 px-space-md">Role &amp; Title</th>
+<th class="py-3 px-space-md">Email Address</th>
+<th class="py-3 px-space-md">Status</th>
+<th class="py-3 px-space-md">Last Active</th>
+<th class="py-3 px-space-md">2FA Status</th>
+<th class="py-3 px-space-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-none text-body-md text-body-md font-body-md" id="team-rows">
+<!-- Row 1: Sagar Singh (CEO) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group" data-role="CEO" data-status="ACTIVE">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Sagar Singh</span>
+<span class="material-symbols-outlined text-secondary-container text-[16px]" title="Workspace Super Admin">verified</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">@sagarsingh</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container/20 text-primary-fixed">Chief Executive Officer</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">sagar@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-on-surface-variant">Just now</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Enforced</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">Edit</button>
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors">Perms</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Rahul V. (Marketing Manager) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group bg-surface-container-lowest/30" data-role="MARKETING" data-status="ACTIVE">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Portrait photo of Rahul V, sharp professional headshot of a south-asian growth strategist in a dark tech apparel, cinematic neon blue key lighting, high resolution studio look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD32lFgRoB4zVQbQ0TT-W0NK2s0nnkGE_XRN-KcpsMf_qpAwt7LoUHvdyIdaSF2CPZ6TK0AKjkFPlAIp8mjRMTtRrm5ZSqshJAQ1H4zG4jU-GMGxEuD1uLEIjtZHXtZKkKVPBYufdt8uGtrn7eiBaLaxQ2PVndX8mn8f-XhWgk2RyWnUwjcZYDAXSF2fb6uSmIoGIMv5WVdniSR-n_k_Bu22irI9Z92k_DGxQhuYVH2mx7dmk0Q-YSbCA"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Rahul Verma</span>
+<span class="material-symbols-outlined text-outline text-[16px]">check_circle</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">@rahulv</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-secondary-container/20 text-secondary-fixed">Marketing Manager</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">rahul@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-on-surface-variant">1 hour ago</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Enforced</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">Edit</button>
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors">Perms</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Priya Sharma (Digital Marketer) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group" data-role="MARKETING" data-status="ACTIVE">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Portrait photo of Priya Sharma, professional headshot of a female growth analyst with sleek hair and blazer in a modern high-tech office, subtle cyan and slate rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD78yJqzFQBuxwooriEK0V3NeJAAs8CK7qVoAnUahtZg2gv5_UgF2YXLFAgWaAd91WNhzkgW2POgTrB3-MnyCz77jlcDk2ZhL6Y5qp6IZio00fpnq6rb3Zaiwbc6e6jX3bvoxO0XrEvVNcWbgg7oEjLLcPbFEtNDNadl21PZmX8DpAjLNMAoWIrc2H9g-3-BSxmUE_ZWEyf1cXUxIgZEgGGfoHnS-Tq2SUkgRPkD61xMlNRDPr7GSkVKA"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Priya Sharma</span>
+<span class="material-symbols-outlined text-outline text-[16px]">check_circle</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">@priyasharma</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface">Digital Marketer</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">priya@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-on-surface-variant">2 hours ago</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Enforced</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">Edit</button>
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors">Perms</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Aman Kapoor (Campaign Executive) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group bg-surface-container-lowest/30" data-role="EXECUTIVE" data-status="ACTIVE">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-label-md text-label-md text-secondary font-bold">AK</div>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Aman Kapoor</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">@amank</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface">Campaign Executive</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">aman@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-on-surface-variant">5 hours ago</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Enforced</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">Edit</button>
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors">Perms</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Neha Mehta (Data Researcher) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group" data-role="RESEARCHER" data-status="ACTIVE">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Portrait photo of Neha Mehta, data research scientist in modern computational intelligence setting, glasses, subtle blue reflection from multi-display setup, deep navy backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkWbj7S53_nYWDERjizWw_TPYl4e7zBbqzgBiEmLC3pNA6DdBzwxYgVQ4VobLvllexYIBnm0wFa0jSvyOj7SRhQ4t2vClGbUhyZk_Z-ctJuMSfsAiIM_VL5Tb7QtUlCuyvQh3xl0HbNhxeKAj5wtJNVb6Q1ENSYzH81UdQjsn4mK2fPP5wJ1B-iQr7YAu7lceuMMbBKj_KpNtNPui6ypqNDl9xpRkSGSm7U_Ev0rQayp2Fa7aqtTMnMw"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Neha Mehta</span>
+<span class="material-symbols-outlined text-outline text-[16px]">check_circle</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">@neham</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-tertiary">Data Researcher</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">neha@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-on-surface-variant">1 day ago</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span>Enforced</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">Edit</button>
+<button class="px-2 py-1 rounded bg-surface-container-highest hover:bg-surface-bright text-primary font-label-sm text-label-sm transition-colors">Perms</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Taran Gulati (Invited - Data Researcher) -->
+<tr class="hover:bg-surface-container-high/60 transition-colors group bg-surface-container-lowest/30" data-role="RESEARCHER" data-status="INVITED">
+<td class="py-3.5 px-space-md">
+<input class="row-checkbox rounded bg-surface-container-lowest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-label-md text-label-md text-outline font-medium">TG</div>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-outline ring-2 ring-surface-container-low"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface truncate">Taran Gulati</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Invite dispatched</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-tertiary">Data Researcher</span>
+</td>
+<td class="py-3.5 px-space-md font-code-sm text-code-sm text-on-surface-variant">taran@qbitpro.in</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-highest text-secondary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-ping"></span>
+                Invited
+              </span>
+</td>
+<td class="py-3.5 px-space-md font-code-xs text-code-xs text-outline">Never</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1 text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>Pending</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="px-2 py-1 rounded bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary-container font-label-sm text-label-sm transition-colors">Resend</button>
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination / Footer -->
+<div class="p-space-md bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-sm text-outline font-body-sm text-body-sm">
+<div class="flex items-center gap-space-sm">
+<span>Rows per page:</span>
+<select class="bg-surface-container-lowest text-on-surface font-code-xs text-code-xs rounded px-2 py-1 focus:outline-none">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+<span>Showing 1-6 of 12 operators</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded bg-surface-container-lowest hover:bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center transition-colors">2</button>
+<button class="w-8 h-8 rounded bg-surface-container-lowest hover:bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inline Quick Invite Dock (Fast Team Expansion) -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shadow-[0_0_12px_rgba(0,102,255,0.2)]">
+<span class="material-symbols-outlined text-[20px]">mark_email_read</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Quick Invite Provisioning</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Send an instant enterprise onboarding invite with zero friction.</p>
+</div>
+</div>
+<!-- Quick Form -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm flex-1 max-w-2xl">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[16px]">alternate_email</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg pl-9 pr-3 py-2 placeholder:text-outline focus:outline-none focus:bg-surface-container shadow-inner" id="quick-invite-email" placeholder="colleague@domain.com" type="email"/>
+</div>
+<div class="relative min-w-[160px]">
+<select class="w-full appearance-none bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg pl-3 pr-8 py-2 focus:outline-none cursor-pointer hover:bg-surface-container transition-colors shadow-inner" id="quick-invite-role">
+<option value="MARKETING">Marketing Manager</option>
+<option value="EXECUTIVE">Campaign Exec</option>
+<option value="RESEARCHER">Data Researcher</option>
+<option value="VIEWER">Read-Only Viewer</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[16px] text-outline">expand_more</span>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md flex items-center justify-center gap-1.5 whitespace-nowrap shadow-[0_0_10px_rgba(0,102,255,0.3)] transition-all" onclick="handleQuickInvite()">
+<span class="material-symbols-outlined text-[16px]">send</span>
+<span>Send Invite</span>
+</button>
+</div>
+</div>
+<!-- Modal / Drawer Preview (Invite Member Modal) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-container-lowest/80 backdrop-blur-md" id="invite-modal">
+<div class="bg-surface-container-low rounded-xl w-full max-w-lg shadow-[0_16px_40px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+<!-- Modal Header -->
+<div class="p-space-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface leading-tight">Invite Colleague</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Deploy credentials to QBIT Growth OS.</p>
+</div>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="document.getElementById('invite-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Corporate Email</label>
+<input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg px-3 py-2 placeholder:text-outline focus:outline-none focus:bg-surface-container shadow-inner" placeholder="name@company.com" type="email"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Access Role &amp; Permission Tier</label>
+<div class="grid grid-cols-2 gap-space-sm">
+<label class="flex flex-col p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Marketing Mgr</span>
+<input checked="" class="text-primary-container" name="modal-role" type="radio"/>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Full scraper launches &amp; outreach controls</span>
+</label>
+<label class="flex flex-col p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Data Researcher</span>
+<input class="text-primary-container" name="modal-role" type="radio"/>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Scraping queues &amp; dataset downloads</span>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Require 2FA Authentication</span>
+<span class="font-code-xs text-code-xs text-outline">Forces hardware/authenticator token enrollment</span>
+</div>
+</div>
+<input checked="" class="rounded bg-surface-container text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-space-lg bg-surface-container flex items-center justify-end gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors" onclick="document.getElementById('invite-modal').classList.add('hidden')">Cancel</button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md shadow-[0_0_12px_rgba(0,102,255,0.35)] transition-all" onclick="document.getElementById('invite-modal').classList.add('hidden')">Issue Invitation</button>
+</div>
+</div>
+</div>
+<!-- Notification Toast Simulation -->
+<div class="fixed bottom-6 right-6 z-50 hidden bg-surface-container-high text-on-surface px-4 py-3 rounded-lg shadow-xl flex items-center gap-3" id="toast-notify">
+<span class="material-symbols-outlined text-tertiary text-[20px]">check_circle</span>
+<span class="font-body-md text-body-md" id="toast-msg">Invitation sent successfully</span>
+</div>
+<script>
+    function toggleSelectAll(masterCheckbox) {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+    }
+
+    function filterTeamTable() {
+      const searchTerm = (document.getElementById('team-search-input')?.value || '').toLowerCase().trim();
+      const roleFilter = document.getElementById('role-filter')?.value || 'ALL';
+      const statusFilter = document.getElementById('status-filter')?.value || 'ALL';
+      
+      const rows = document.querySelectorAll('#team-rows tr');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const role = row.getAttribute('data-role');
+        const status = row.getAttribute('data-status');
+
+        const matchesSearch = !searchTerm || text.includes(searchTerm);
+        const matchesRole = roleFilter === 'ALL' || role === roleFilter;
+        const matchesStatus = statusFilter === 'ALL' || status === statusFilter;
+
+        if (matchesSearch && matchesRole && matchesStatus) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      const badge = document.getElementById('filtered-count-badge');
+      if (badge) {
+        badge.innerText = `Showing ${visibleCount} Members`;
+      }
+    }
+
+    function handleQuickInvite() {
+      const emailInput = document.getElementById('quick-invite-email');
+      const email = emailInput?.value.trim();
+      if (!email) {
+        showToast('Please specify a valid corporate email address', true);
+        return;
+      }
+
+      showToast(`Invited ${email} to QBIT workspace`);
+      emailInput.value = '';
+    }
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast-notify');
+      const toastMsg = document.getElementById('toast-msg');
+      if (!toast || !toastMsg) return;
+
+      toastMsg.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+  </script>
+</div></main></div></body></html>

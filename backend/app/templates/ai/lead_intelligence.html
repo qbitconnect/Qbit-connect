@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% block title %}AI Intelligence — {{ lead.business_name }} — QBIT Growth OS{% endblock %}
+{% block nav_leads %}bg-surface-container-high text-on-surface{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-6">
+
+  <!-- Breadcrumb -->
+  <div class="flex items-center gap-2 text-body-sm text-on-surface-variant mb-4">
+    <a href="/leads" class="hover:text-on-surface transition-colors">Leads</a>
+    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+    <span class="text-on-surface">{{ lead.business_name }}</span>
+    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+    <span class="text-on-surface">AI Intelligence</span>
+  </div>
+
+  <!-- Lead Header -->
+  <div class="flex items-start justify-between mb-6">
+    <div>
+      <h1 class="text-display-sm font-bold text-on-surface">{{ lead.business_name }}</h1>
+      <div class="flex items-center gap-3 mt-1 text-body-sm text-on-surface-variant">
+        {% if lead.category %}<span>{{ lead.category }}</span>{% endif %}
+        {% if lead.city %}<span>· {{ lead.city }}{% if lead.state %}, {{ lead.state }}{% endif %}</span>{% endif %}
+      </div>
+    </div>
+    {% if ai_configured %}
+    <div class="flex gap-2">
+      <button onclick="runEnrichment('{{ lead.id }}')"
+              class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary text-label-md font-medium hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined text-[18px]">manage_search</span>
+        Enrich
+      </button>
+      <button onclick="runScore('{{ lead.id }}')"
+              class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high text-on-surface text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+        <span class="material-symbols-outlined text-[18px]">grade</span>
+        Score
+      </button>
+      <button onclick="runBrief('{{ lead.id }}')"
+              class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high text-on-surface text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+        <span class="material-symbols-outlined text-[18px]">summarize</span>
+        Sales Brief
+      </button>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- LEFT: Intelligence + Score -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- Lead Score -->
+      {% if score %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-title-sm font-semibold text-on-surface">Lead Score</h2>
+          {% if score.is_overridden %}
+          <span class="text-label-xs bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full">Overridden</span>
+          {% endif %}
+        </div>
+        <div class="flex items-center gap-6 mb-4">
+          <div class="w-20 h-20 rounded-full border-4
+            {% set s = score.override_score if score.is_overridden and score.override_score is not none else score.score %}
+            {% if s >= 70 %}border-tertiary{% elif s >= 40 %}border-primary{% else %}border-error{% endif %}
+            flex items-center justify-center flex-shrink-0">
+            <span class="text-display-sm font-bold text-on-surface">{{ score.override_score if score.is_overridden and score.override_score is not none else score.score }}</span>
+          </div>
+          <div class="flex-1">
+            <p class="text-body-sm text-on-surface-variant mb-3">{{ score.explanation or '' }}</p>
+            <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-body-xs">
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Category Fit</span>
+                <span class="font-medium text-on-surface">{{ score.category_fit_score }}/25</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Contact</span>
+                <span class="font-medium text-on-surface">{{ score.contact_completeness_score }}/20</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Reviews</span>
+                <span class="font-medium text-on-surface">{{ score.rating_review_score }}/20</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Location</span>
+                <span class="font-medium text-on-surface">{{ score.location_fit_score }}/15</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">POS Fit</span>
+                <span class="font-medium text-on-surface">{{ score.pos_hardware_fit_score }}/10</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Engagement</span>
+                <span class="font-medium text-on-surface">{{ score.engagement_history_score }}/10</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5 text-center">
+        <span class="material-symbols-outlined text-3xl text-on-surface-variant opacity-40 mb-2 block">grade</span>
+        <p class="text-body-sm text-on-surface-variant">No score yet. Click <strong>Score</strong> to calculate.</p>
+      </div>
+      {% endif %}
+
+      <!-- Business Intelligence -->
+      {% if intelligence %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-title-sm font-semibold text-on-surface">Business Intelligence</h2>
+          <span class="text-body-xs text-on-surface-variant">{{ (intelligence.data_completeness * 100) | int }}% complete</span>
+        </div>
+
+        {% if intelligence.business_summary %}
+        <p class="text-body-sm text-on-surface mb-4 leading-relaxed">{{ intelligence.business_summary }}</p>
+        {% endif %}
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          {% if intelligence.business_category %}
+          <div>
+            <div class="text-label-xs text-on-surface-variant mb-1">Category</div>
+            <div class="text-body-sm text-on-surface">{{ intelligence.business_category }}</div>
+          </div>
+          {% endif %}
+          {% if intelligence.business_subcategory %}
+          <div>
+            <div class="text-label-xs text-on-surface-variant mb-1">Subcategory</div>
+            <div class="text-body-sm text-on-surface">{{ intelligence.business_subcategory }}</div>
+          </div>
+          {% endif %}
+          {% if intelligence.classification_confidence > 0 %}
+          <div>
+            <div class="text-label-xs text-on-surface-variant mb-1">Confidence</div>
+            <div class="text-body-sm text-on-surface">{{ (intelligence.classification_confidence * 100) | int }}%</div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Key Decision Makers -->
+        {% if intelligence.key_decision_makers %}
+        <div class="mt-4">
+          <div class="text-label-sm font-medium text-on-surface mb-2">Key Decision Makers (AI Enriched)</div>
+          <div class="space-y-2">
+            {% for person in intelligence.key_decision_makers %}
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-surface-container-low">
+              <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-label-sm font-semibold text-on-primary-container">
+                {{ person.name[0] | upper if person.name else '?' }}
+              </div>
+              <div>
+                <div class="text-body-sm font-medium text-on-surface">{{ person.name or 'Unknown' }}</div>
+                <div class="text-body-xs text-on-surface-variant">{{ person.title or '' }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Sentiment Signals -->
+        {% if intelligence.sentiment_signals %}
+        <div class="mt-4">
+          <div class="text-label-sm font-medium text-on-surface mb-2">Customer Sentiment &amp; Signals</div>
+          <div class="flex items-center gap-4 text-body-sm">
+            {% if intelligence.sentiment_signals.avg_rating %}
+            <div class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px] text-tertiary">star</span>
+              <span class="text-on-surface font-medium">{{ intelligence.sentiment_signals.avg_rating }}</span>
+            </div>
+            {% endif %}
+            {% if intelligence.sentiment_signals.review_count %}
+            <span class="text-on-surface-variant">{{ intelligence.sentiment_signals.review_count }} reviews</span>
+            {% endif %}
+            {% if intelligence.sentiment_signals.sentiment_label %}
+            <span class="px-2 py-0.5 rounded-full text-label-xs
+              {% if intelligence.sentiment_signals.sentiment_label == 'positive' %}bg-tertiary-container text-on-tertiary-container
+              {% elif intelligence.sentiment_signals.sentiment_label == 'negative' %}bg-error-container text-on-error-container
+              {% else %}bg-surface-container-high text-on-surface-variant{% endif %}">
+              {{ intelligence.sentiment_signals.sentiment_label | title }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% else %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5 text-center">
+        <span class="material-symbols-outlined text-3xl text-on-surface-variant opacity-40 mb-2 block">manage_search</span>
+        <p class="text-body-sm text-on-surface-variant">No intelligence yet. Click <strong>Enrich</strong> to analyse this lead.</p>
+      </div>
+      {% endif %}
+
+      <!-- Sales Brief -->
+      {% if sales_brief %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+        <h2 class="text-title-sm font-semibold text-on-surface mb-3">Sales Brief</h2>
+        <p class="text-body-sm text-on-surface mb-4 leading-relaxed">{{ sales_brief.business_overview }}</p>
+
+        {% if sales_brief.recommended_products %}
+        <div class="mb-4">
+          <div class="text-label-sm font-medium text-on-surface mb-2">Recommended Products</div>
+          <div class="space-y-2">
+            {% for prod in sales_brief.recommended_products %}
+            <div class="flex items-start gap-2 text-body-sm">
+              <span class="material-symbols-outlined text-[16px] text-tertiary mt-0.5">shopping_cart</span>
+              <div>
+                <span class="font-medium text-on-surface">{{ prod.name or prod.sku }}</span>
+                {% if prod.reason %}<p class="text-body-xs text-on-surface-variant">{{ prod.reason }}</p>{% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if sales_brief.suggested_discovery_questions %}
+        <div class="mb-4">
+          <div class="text-label-sm font-medium text-on-surface mb-2">Discovery Questions</div>
+          <ul class="space-y-1">
+            {% for q in sales_brief.suggested_discovery_questions %}
+            <li class="text-body-sm text-on-surface-variant flex items-start gap-2">
+              <span class="text-primary mt-1 flex-shrink-0">·</span>{{ q }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="mt-4 p-3 rounded-lg bg-primary-container border border-primary">
+          <div class="text-label-sm font-semibold text-on-primary-container mb-1">Recommended Next Action</div>
+          <p class="text-body-sm text-on-primary-container">{{ sales_brief.recommended_next_action }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- RIGHT: Proposals + Runs -->
+    <div class="space-y-6">
+
+      <!-- Enrichment Proposals -->
+      {% if proposals %}
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+        <h2 class="text-title-sm font-semibold text-on-surface mb-3">Enrichment Proposals</h2>
+        <div class="space-y-3">
+          {% for p in proposals %}
+          <div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-label-xs px-1.5 py-0.5 rounded-full
+                {% if p.status == 'PENDING' %}bg-primary-container text-on-primary-container
+                {% elif p.status == 'APPROVED' or p.status == 'APPLIED' %}bg-tertiary-container text-on-tertiary-container
+                {% else %}bg-error-container text-on-error-container{% endif %}">
+                {{ p.status }}
+              </span>
+              <span class="text-body-xs text-on-surface-variant">{{ p.created_at.strftime('%d %b') if p.created_at else '' }}</span>
+            </div>
+            <div class="text-body-xs text-on-surface-variant space-y-1">
+              {% for field, value in (p.proposed_changes or {}).items() %}
+              <div><strong class="text-on-surface">{{ field }}:</strong> {{ value }}</div>
+              {% endfor %}
+            </div>
+            {% if p.status == 'PENDING' %}
+            <div class="flex gap-2 mt-2">
+              <button onclick="reviewProposal('{{ lead.id }}', '{{ p.id }}', 'approve')"
+                      class="flex-1 py-1 rounded text-label-xs bg-tertiary-container text-on-tertiary-container hover:opacity-90">Approve</button>
+              <button onclick="reviewProposal('{{ lead.id }}', '{{ p.id }}', 'reject')"
+                      class="flex-1 py-1 rounded text-label-xs bg-error-container text-on-error-container hover:opacity-90">Reject</button>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Recent Runs -->
+      <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+        <h2 class="text-title-sm font-semibold text-on-surface mb-3">Recent Runs</h2>
+        {% if recent_runs %}
+        <div class="space-y-2">
+          {% for run in recent_runs %}
+          <a href="/ai/runs/{{ run.id }}"
+             class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+            <div>
+              <div class="text-body-sm text-on-surface">{{ run.task_name.replace('ai_agent:', '') | replace('-', ' ') | title }}</div>
+              <div class="text-body-xs text-on-surface-variant">{{ run.created_at.strftime('%d %b %H:%M') if run.created_at else '' }}</div>
+            </div>
+            <span class="text-label-xs px-1.5 py-0.5 rounded
+              {% if run.status == 'COMPLETED' %}bg-tertiary-container text-on-tertiary-container
+              {% elif run.status == 'FAILED' %}bg-error-container text-on-error-container
+              {% else %}bg-surface-container-high text-on-surface-variant{% endif %}">
+              {{ run.status }}
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-body-sm text-on-surface-variant text-center py-2">No runs yet</p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Spinner overlay -->
+  <div id="spinner" class="hidden fixed inset-0 bg-surface/70 flex items-center justify-center z-50">
+    <div class="flex items-center gap-3 bg-surface-container rounded-xl px-6 py-4 border border-outline-variant">
+      <span class="material-symbols-outlined animate-spin text-primary text-2xl">progress_activity</span>
+      <span class="text-body-md text-on-surface">Running agent…</span>
+    </div>
+  </div>
+</div>
+
+<script>
+async function apiPost(url, body = {}) {
+  document.getElementById('spinner').classList.remove('hidden');
+  try {
+    const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await resp.json();
+    if (!resp.ok) { alert('Error: ' + (data.detail || JSON.stringify(data))); return null; }
+    return data;
+  } finally {
+    document.getElementById('spinner').classList.add('hidden');
+  }
+}
+
+async function runEnrichment(leadId) {
+  await apiPost(`/api/v1/ai/leads/${leadId}/enrich`);
+  location.reload();
+}
+async function runScore(leadId) {
+  await apiPost(`/api/v1/ai/leads/${leadId}/score`);
+  location.reload();
+}
+async function runBrief(leadId) {
+  await apiPost(`/api/v1/ai/leads/${leadId}/sales-brief/generate`);
+  location.reload();
+}
+async function reviewProposal(leadId, proposalId, action) {
+  await apiPost(`/api/v1/ai/leads/${leadId}/enrichment-proposals/${proposalId}/review`, { action });
+  location.reload();
+}
+</script>
+{% endblock %}

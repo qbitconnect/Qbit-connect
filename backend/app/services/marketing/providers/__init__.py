@@ -20,12 +20,19 @@ from __future__ import annotations
 from app.core.config import Settings
 from app.services.marketing.providers.base import BaseMarketingProvider
 from app.services.marketing.providers.email import (
+    AmazonSESEmailProvider,
     EmailMockProvider,
     GenericEmailAPIProvider,
     SMTPProvider,
 )
 from app.services.marketing.providers.interfaces import EmailProvider, SMSProvider
 from app.services.marketing.providers.mock import MockProvider
+from app.services.marketing.providers.social import (
+    InstagramGraphProvider,
+    LinkedInProvider,
+    MetaFacebookProvider,
+    SocialMockProvider,
+)
 from app.services.marketing.providers.whatsapp import (
     WhatsAppMockProvider,
     WhatsAppProvider,
@@ -57,14 +64,28 @@ class MarketingProviderRegistry:
 
 
 def build_provider_registry(settings: Settings) -> MarketingProviderRegistry:
-    """Registry factory: real WhatsApp + email adapters always available; mock
+    """Registry factory: real WhatsApp + email + social adapters always available; mock
     providers only when (and only when) the environment allows it."""
     registry = MarketingProviderRegistry()
     registry.register(WhatsAppProvider())
     registry.register(SMTPProvider())
     registry.register(GenericEmailAPIProvider())
+    registry.register(AmazonSESEmailProvider())
     registry.register(EmailProvider())   # generic EMAIL interface (reporting id)
     registry.register(SMSProvider())
+    # Phase 8: Social Media Providers
+    registry.register(MetaFacebookProvider(
+        app_id=getattr(settings, "META_APP_ID", None),
+        app_secret=getattr(settings, "META_APP_SECRET", None),
+    ))
+    registry.register(InstagramGraphProvider(
+        app_id=getattr(settings, "META_APP_ID", None),
+        app_secret=getattr(settings, "META_APP_SECRET", None),
+    ))
+    registry.register(LinkedInProvider(
+        client_id=getattr(settings, "LINKEDIN_CLIENT_ID", None),
+        client_secret=getattr(settings, "LINKEDIN_CLIENT_SECRET", None),
+    ))
     if settings.QBIT_ENV == "test" or (
         settings.QBIT_MARKETING_ALLOW_MOCK_PROVIDER
         and settings.QBIT_ENV != "production"
@@ -72,4 +93,8 @@ def build_provider_registry(settings: Settings) -> MarketingProviderRegistry:
         registry.register(MockProvider())
         registry.register(WhatsAppMockProvider())
         registry.register(EmailMockProvider())
+        registry.register(SocialMockProvider())
+        registry.register(SocialMockProvider("FACEBOOK"))
+        registry.register(SocialMockProvider("INSTAGRAM"))
+        registry.register(SocialMockProvider("LINKEDIN"))
     return registry

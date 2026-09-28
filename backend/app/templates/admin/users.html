@@ -1,66 +1,166 @@
 {% extends "base.html" %}
-{% block title %}Users — Admin — QBIT Connect{% endblock %}
+{% block title %}User Management — Admin — QBIT Growth OS{% endblock %}
 {% block nav_admin_users %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>USERS</h1>
-    <p class="muted">Accounts, roles and lifecycle. Deactivation keeps all history — users are never hard-deleted.</p>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Header & Actions -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="font-code-xs text-code-xs text-outline uppercase tracking-widest">QBIT Admin</span>
+        <span class="text-outline-variant font-code-xs text-code-xs">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          IAM Governance
+        </span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+        User Accounts & Access Control
+      </h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        Manage employee credentials, security roles, and account lifecycles. Inactive accounts preserve audit history.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-space-sm">
+      <a class="btn btn-ghost" href="/admin/teams">Teams</a>
+      <a class="btn btn-ghost" href="/admin/roles">Roles & Permissions</a>
+      {% if can_manage %}
+      <a class="btn btn-primary" href="/admin/invitations">
+        <span class="material-symbols-outlined text-[16px]">person_add</span>
+        Invite Colleague
+      </a>
+      {% endif %}
+    </div>
   </div>
-  <div class="head-actions">{% if can_manage %}<a class="btn btn-ghost" href="/admin/invitations">Invite via invitations</a>{% endif %}</div>
-</div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
 
-<form method="get" action="/admin/users" class="toolbar">
-  <input type="text" name="search" value="{{ search }}" placeholder="Search email or name" maxlength="200">
-  <select name="status">
-    <option value="">Status: any</option>
-    {% for s in ['ACTIVE','INVITED','SUSPENDED','DEACTIVATED'] %}
-    <option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>
-    {% endfor %}
-  </select>
-  <button class="btn btn-primary" type="submit">Filter</button>
-  <a class="btn btn-ghost" href="/admin/users">Reset</a>
-</form>
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
 
-<div class="card table-card">
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th>User</th><th>Status</th><th>Roles</th><th>Created</th><th></th></tr>
-      </thead>
-      <tbody>
-        {% for u in users %}
-        <tr>
-          <td>
-            <a href="/admin/users/{{ u.id }}"><strong>{{ u.full_name or u.email }}</strong></a>
-            {% if u.full_name %}<div class="muted small">{{ u.email }}</div>{% endif %}
-          </td>
-          <td><span class="badge badge-{{ u.status | lower }}">{{ u.status }}</span></td>
-          <td>
-            {% for r in u.roles %}<span class="badge">{{ r }}</span> {% endfor %}
-            {% if u.is_super and total_super_admins <= 1 %}<span class="muted small" title="Cannot be removed — last SUPER_ADMIN">last admin</span>{% endif %}
-          </td>
-          <td class="muted small">{{ u.created }}</td>
-          <td><a class="btn btn-sm btn-ghost" href="/admin/users/{{ u.id }}">Manage</a></td>
-        </tr>
-        {% else %}
-        <tr><td colspan="5" class="center muted" style="padding:32px">No users match the filters.</td></tr>
+  <!-- Filter Toolbar -->
+  <form method="get" action="/admin/users" class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-wrap items-center gap-space-sm">
+    <div class="relative flex-1 min-w-[240px]">
+      <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+      <input type="text" name="search" value="{{ search }}" placeholder="Search by name or email address..." class="qbit-input pl-10" maxlength="200">
+    </div>
+
+    <div class="w-48">
+      <select name="status" class="qbit-input">
+        <option value="">Status: All Accounts</option>
+        {% for s in ['ACTIVE','INVITED','SUSPENDED','DEACTIVATED'] %}
+        <option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+      </select>
+    </div>
 
-{% if total > page_size %}
-<div class="pager">
-  {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
-    {% if p <= page + 2 and p >= page - 2 %}
-      <a class="pager-item {% if p == page %}active{% endif %}" href="/admin/users?search={{ search }}&status={{ status }}&page={{ p }}">{{ p }}</a>
-    {% endif %}
-  {% endfor %}
+    <button class="btn btn-primary" type="submit">
+      <span class="material-symbols-outlined text-[16px]">filter_alt</span>
+      Filter
+    </button>
+    <a class="btn btn-ghost" href="/admin/users">Reset</a>
+
+    <div class="ml-auto text-xs text-outline font-code-xs hidden md:block">
+      Showing {{ users | length }} of {{ total }} accounts
+    </div>
+  </form>
+
+  <!-- Users Table Card -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>User Identity</th>
+            <th>Account Status</th>
+            <th>Assigned Roles</th>
+            <th>Date Created</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/40 flex items-center justify-center font-bold text-xs text-primary shadow-sm">
+                  {{ (u.full_name or u.email)[0] | upper }}
+                </div>
+                <div class="flex flex-col">
+                  <a href="/admin/users/{{ u.id }}" class="hover:text-primary transition-colors">
+                    <strong class="text-on-surface font-semibold">{{ u.full_name or u.email }}</strong>
+                  </a>
+                  {% if u.full_name %}
+                  <span class="text-xs text-outline font-mono">{{ u.email }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="badge badge-{{ u.status | lower }}">
+                {{ u.status }}
+              </span>
+            </td>
+            <td>
+              <div class="flex flex-wrap gap-1.5 items-center">
+                {% for r in u.roles %}
+                <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface">
+                  {{ r }}
+                </span>
+                {% endfor %}
+                {% if u.is_super and total_super_admins <= 1 %}
+                <span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-warn/10 text-warn border border-warn/30" title="Cannot be removed — last SUPER_ADMIN">
+                  Last Admin
+                </span>
+                {% endif %}
+              </div>
+            </td>
+            <td class="text-xs text-outline whitespace-nowrap">{{ u.created }}</td>
+            <td class="text-right">
+              <a class="btn btn-sm btn-ghost" href="/admin/users/{{ u.id }}">
+                <span>Manage</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[32px] text-outline block mb-2">group_off</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Users Match Criteria</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Try adjusting active filter criteria or invite a new colleague.
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {% if total > page_size %}
+  <div class="flex items-center justify-center gap-2 pt-space-sm">
+    {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
+      {% if p <= page + 2 and p >= page - 2 %}
+        <a class="pager-item {% if p == page %}active{% endif %}" href="/admin/users?search={{ search }}&status={{ status }}&page={{ p }}">{{ p }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
 </div>
-{% endif %}
 {% endblock %}

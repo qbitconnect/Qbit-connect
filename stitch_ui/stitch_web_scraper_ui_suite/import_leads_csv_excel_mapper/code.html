@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full pb-16">
+<!-- Sub-header & Action Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">group</span>
+          Leads
+        </a>
+<span class="text-outline">/</span>
+<span class="text-on-surface font-semibold">Import Leads from CSV / Excel</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Upload your existing lead data and map the fields to standardized schema.</p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[16px] text-secondary">download</span>
+        Download Template (.csv)
+      </a>
+<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[16px] text-outline">description</span>
+        View Documentation
+      </a>
+</div>
+</div>
+<!-- Stepper Navigation -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md mb-space-lg shadow-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Step 1: Upload File (Completed) -->
+<div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-low transition-all">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-tertiary-fixed flex items-center justify-center font-label-md text-label-md shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Step 01</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">1. Upload File</span>
+</div>
+</div>
+<!-- Step 2: Map Fields (Active Highlight) -->
+<div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-high shadow-md">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md text-label-md shadow-sm">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Step 02</span>
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">2. Map Fields</span>
+</div>
+</div>
+<!-- Step 3: Preview (Pending) -->
+<div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest opacity-70">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-outline flex items-center justify-center font-label-md text-label-md">
+          3
+        </div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Step 03</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">3. Preview</span>
+</div>
+</div>
+<!-- Step 4: Import (Pending) -->
+<div class="flex items-center gap-3 p-space-sm rounded-lg bg-surface-container-lowest opacity-70">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-outline flex items-center justify-center font-label-md text-label-md">
+          4
+        </div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Step 04</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">4. Import</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Uploaded File Status Banner -->
+<div class="relative bg-surface-container-low rounded-xl p-space-md mb-space-lg shadow-sm overflow-hidden">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md relative z-10">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest text-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">csv</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface font-bold truncate">california_hotels_q3.csv</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-secondary font-code-xs text-code-xs uppercase tracking-wide">Valid Structure</span>
+</div>
+<div class="flex items-center gap-space-md text-outline font-code-xs text-code-xs mt-1 flex-wrap">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sd_card</span> Size: 2.4 MB</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">table_rows</span> 1,420 rows detected</span>
+<span>•</span>
+<span>UTF-8 encoded</span>
+<span>•</span>
+<span>Delimiter: Comma (,)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 w-full sm:w-auto justify-end">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+          Replace File
+        </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-error font-label-md text-label-md hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+          Clear
+        </button>
+</div>
+</div>
+</div>
+<!-- Reference Showcase Preview Strip -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md mb-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-col justify-between overflow-hidden relative shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">dataset</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Data Parsing Engine</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">QBIT AI v2.4</span>
+</div>
+<div class="relative w-full h-32 rounded-lg overflow-hidden my-space-xs bg-surface-container">
+<img alt="Data Schema Parser Snapshot" class="w-full h-full object-cover object-center opacity-80 mix-blend-luminosity hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7qdnhqbYRPHIR_vfNYd0F5iotQZ8jGU_MRUnZk8PtqR9fQEXgLsvHourwlY3BelZVx_CXFF6dlmIlTohfAuiOKdLwQX-xLvG42gisktofuxtfu_rzoF_1uh4xN8k3ooMkmc3JPQ1QRliHeBGg9gcWgwbiUSgTY7KEJ68r1jL6okmbAK9Y7ZdCzlU46Xw4EffTnqPehOa7uD4XEa79D-mN1w2B_cQ2IOl1JWsxNNG9D7Tmoky8e8unmXjT9lsaOOU_GIs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm mt-1">
+<span>Raw Payload Extractor</span>
+<span class="text-tertiary">Real-time Validation</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-col justify-between overflow-hidden relative shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">model_training</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Neural Entity Normalizer</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Confidence Score</span>
+</div>
+<div class="relative w-full h-32 rounded-lg overflow-hidden my-space-xs bg-surface-container">
+<img alt="Entity Normalization Pipeline Visual" class="w-full h-full object-cover object-center opacity-80 mix-blend-luminosity hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-EavmoO-JuER3kP4C86OzDXCbk9lScIn8kd8uwiMlbNlT30ZQ3s92tCUD3XDufK39cvV5dlLuPdqdnYNmm5g7yZ95qjAeG1LAeqIADMwWUVtZVLeVgR_BuHNxWdaJPgirPFjzHX8Lblf0SnL17H_qdBXqwAty3STQoXwukyi78eIbiur8Ru2ke1X6ZVAvfREAwK0m3_OvXx_bhcH63U600llQQtM3iO5wVI9qAIcIM37QymNfcccEFq6xTq_1z127JzI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm mt-1">
+<span>Standardized Schema Registry</span>
+<span class="text-secondary font-semibold">99.8% Field Precision</span>
+</div>
+</div>
+</div>
+<!-- Column Mapping Engine & Schema Matcher Card -->
+<div class="bg-surface-container-low rounded-xl shadow-md p-space-md mb-space-lg flex flex-col">
+<!-- Header of Schema Mapping Engine -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md mb-space-md bg-surface-container rounded-lg p-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center gap-space-md">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Schema Field Mapping</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Review automatic alignments or adjust fields manually before ingestion.</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>11 of 13 Fields Automatically Mapped (85% Confidence)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-highest text-secondary font-label-md text-label-md hover:bg-surface-container hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[16px]">magic_button</span>
+          Re-analyze &amp; Auto-Match
+        </button>
+<label class="flex items-center gap-2 cursor-pointer bg-surface-container-lowest px-3 py-1.5 rounded-lg">
+<input class="w-4 h-4 rounded bg-surface-container-high text-primary-container focus:ring-0 focus:outline-none" id="toggle-unmapped" type="checkbox"/>
+<span class="font-label-sm text-label-sm text-on-surface-variant select-none">Show only unmapped fields</span>
+</label>
+</div>
+</div>
+<!-- Mapping Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-md text-body-md" id="schema-table">
+<thead>
+<tr class="bg-surface-container-highest text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md rounded-l-lg">Source Column (CSV)</th>
+<th class="py-2.5 px-space-md">Sample Value (Row 1)</th>
+<th class="py-2.5 px-space-md w-72">Destination System Field (QBIT OS)</th>
+<th class="py-2.5 px-space-md">Data Type</th>
+<th class="py-2.5 px-space-md rounded-r-lg">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Business_Name</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">The Grand Vista Resort</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Business Name (company_name)</option>
+<option>Decision Maker Name (contact_name)</option>
+<option>Custom Note (notes)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Street_Address</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">742 Evergreen Terrace, Ste 400</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Full Physical Address (address_full)</option>
+<option>City (city)</option>
+<option>Postal / ZIP Code (postal_code)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">City_Loc</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">San Francisco</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">City (city)</option>
+<option>Postal / ZIP Code (postal_code)</option>
+<option>Full Physical Address (address_full)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Postal_Code</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">94102</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Postal / ZIP Code (postal_code)</option>
+<option>City (city)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Contact_Tel</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md font-code-xs text-code-xs">+1 (415) 892-1200</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Phone Number (phone_formatted)</option>
+<option>Direct_Email</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary">Phone</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Direct_Email</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md font-code-xs text-code-xs">reservations@grandvista.com</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Email Contact (email_primary)</option>
+<option>Website URL (website)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary">Email</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Web_URL</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md font-code-xs text-code-xs">https://www.grandvista.com</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Website URL (website)</option>
+<option>Direct_Email</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary">URL</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Category_Tag</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">Resort &amp; Spa</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Primary Category (category)</option>
+<option>Custom Note (notes)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 9 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Review_Stars</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md font-code-xs text-code-xs">4.7</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Star Rating (rating)</option>
+<option>Review Count (reviews_count)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary-fixed">Float</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 10 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Total_Ratings</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md font-code-xs text-code-xs">1,248</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Review Count (reviews_count)</option>
+<option>Star Rating (rating)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary-fixed">Integer</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 11 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Contact_Person</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">Marcus Vance (GM)</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Decision Maker Name (contact_name)</option>
+<option>Business Name (company_name)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-tertiary text-[18px] pointer-events-none">check_circle</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Mapped (Auto)
+              </span>
+</td>
+</tr>
+<!-- Row 12 (Manual Mapped) -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-secondary font-semibold">Internal_Notes</td>
+<td class="py-2.5 px-space-md text-on-surface font-body-md">Lead from trade show 2026</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">Custom Note (notes)</option>
+<option>Primary Category (category)</option>
+<option>[ Ignore / Do Not Import ]</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-primary-container text-[18px] pointer-events-none">edit</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">String</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                Mapped (Manual)
+              </span>
+</td>
+</tr>
+<!-- Row 13 (Ignored) -->
+<tr class="hover:bg-surface-container transition-colors group opacity-80" data-ignored="true">
+<td class="py-2.5 px-space-md font-code-sm text-code-sm text-outline font-semibold line-through">Legacy_ID</td>
+<td class="py-2.5 px-space-md text-on-surface-variant font-body-md font-code-xs text-code-xs">TMP-99120</td>
+<td class="py-2.5 px-space-md">
+<div class="relative flex items-center">
+<select class="w-full bg-surface-container-highest text-error rounded-lg px-2.5 py-1.5 font-body-sm text-body-sm focus:outline-none appearance-none pr-8">
+<option selected="">[ Ignore / Do Not Import ]</option>
+<option class="text-on-surface">External Reference ID (ref_id)</option>
+<option class="text-on-surface">Custom Note (notes)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 text-error text-[18px] pointer-events-none">block</span>
+</div>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline">None</span>
+</td>
+<td class="py-2.5 px-space-md">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-highest text-error font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                Ignored
+              </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Import Options & Deduplication Strategy -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md mb-space-lg">
+<div class="flex items-center gap-2 mb-space-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">tune</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Import Options &amp; Deduplication Strategy</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- Left Column: Strategy Checkboxes -->
+<div class="flex flex-col gap-space-md">
+<label class="flex items-start gap-3 p-space-sm rounded-lg bg-surface-container-highest cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container text-primary-container focus:ring-0 focus:outline-none shrink-0" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Auto-enrich missing phone numbers and emails</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Use QBIT AI crawler pipeline during ingestion (+0.02 credits / enriched record).</span>
+</div>
+</label>
+<label class="flex items-start gap-3 p-space-sm rounded-lg bg-surface-container-highest cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container text-primary-container focus:ring-0 focus:outline-none shrink-0" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface font-medium">Skip duplicate records based on Phone &amp; Email match</span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">Recommended</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Prevents collision with active campaigns and retains preexisting engagement history.</span>
+</div>
+</label>
+</div>
+<!-- Right Column: Target List & Tags -->
+<div class="flex flex-col gap-space-md">
+<!-- Target Lead List -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Target Lead List</label>
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<select class="w-full bg-surface-container-highest rounded-lg px-3 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none appearance-none pr-8">
+<option selected="">California Hospitality Q3 (New List)</option>
+<option>Enterprise Tech West Coast</option>
+<option>SaaS Founders High-Intent</option>
+<option>+ Create New Destination List...</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-outline text-[18px] pointer-events-none">expand_more</span>
+</div>
+<button class="px-3 py-2 rounded-lg bg-surface-container-highest text-secondary hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-1 shrink-0">
+<span class="material-symbols-outlined text-[16px]">add</span>
+              New
+            </button>
+</div>
+</div>
+<!-- Tag Assignment -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Assign Tags</label>
+<div class="flex items-center gap-2 flex-wrap bg-surface-container-highest rounded-lg p-2">
+<span class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-secondary font-code-xs text-code-xs">
+              #Import-Batch-0926
+              <button class="material-symbols-outlined text-[14px] hover:text-error">close</button>
+</span>
+<span class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-tertiary-fixed font-code-xs text-code-xs">
+              #Hospitality
+              <button class="material-symbols-outlined text-[14px] hover:text-error">close</button>
+</span>
+<span class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-primary font-code-xs text-code-xs">
+              #Hot-Outreach
+              <button class="material-symbols-outlined text-[14px] hover:text-error">close</button>
+</span>
+<input class="bg-transparent font-code-xs text-code-xs text-on-surface placeholder:text-outline focus:outline-none px-2 py-1 flex-1 min-w-[80px]" placeholder="+ Add tag..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer Bar -->
+<div class="sticky bottom-4 z-30 bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-xl flex items-center justify-between gap-space-md">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface-variant hover:text-error hover:bg-surface-container-highest transition-colors font-label-md text-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">close</span>
+      Cancel Import
+    </button>
+<div class="flex items-center gap-space-sm">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-md text-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+        Save Mapping as Preset
+      </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold hover:bg-inverse-primary transition-all flex items-center gap-2 shadow-lg">
+        Proceed to Preview (1,420 Records)
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for toggle filter
+  const toggle = document.getElementById('toggle-unmapped');
+  if (toggle) {
+    toggle.addEventListener('change', function() {
+      const rows = document.querySelectorAll('#schema-table tbody tr');
+      rows.forEach(row => {
+        const isIgnored = row.getAttribute('data-ignored') === 'true';
+        if (this.checked) {
+          if (!isIgnored) {
+            row.classList.add('hidden');
+          }
+        } else {
+          row.classList.remove('hidden');
+        }
+      });
+    });
+  }
+</script></main></div></body></html>

@@ -42,6 +42,12 @@ FILTERABLE: dict[str, tuple[str, str]] = {f: (f, "text") for f in TEXT_FIELDS}
 FILTERABLE.update(
     {
         "status": ("status", "text"),
+        "priority": ("priority", "text"),
+        "assigned_user_id": ("assigned_user_id", "uuid"),
+        "assigned_team_id": ("assigned_team_id", "uuid"),
+        "is_verified": ("is_verified", "bool"),
+        "last_activity_at": ("last_activity_at", "datetime"),
+        "last_verified_at": ("last_verified_at", "datetime"),
         "quality_score": ("quality_score", "int"),
         "rating": ("rating", "float"),
         "review_count": ("review_count", "int"),
@@ -66,6 +72,9 @@ SORTABLE: dict[str, Any] = {
     "business_name": Lead.business_name,
     "created_at": Lead.created_at,
     "updated_at": Lead.updated_at,
+    "last_activity_at": Lead.last_activity_at,
+    "priority": Lead.priority,
+    "assigned_user_id": Lead.assigned_user_id,
     "quality_score": Lead.quality_score,
     "status": Lead.status,
     "city": Lead.city,
@@ -112,6 +121,10 @@ def _coerce_single(kind: str, value: Any) -> Any:
 
             return str(uuid_mod.UUID(str(value)))
         if kind == "has":
+            return bool(value)
+        if kind == "bool":
+            if isinstance(value, str):
+                return value.strip().lower() in ("true", "1", "yes", "t")
             return bool(value)
         return str(value)
     except (ValueError, TypeError, IndexError) as exc:

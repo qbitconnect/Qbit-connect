@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg transition-colors bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Breadcrumbs & Quick Back Nav -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<a class="flex items-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">storefront</span>
+<span>Marketplace</span>
+</a>
+<span class="text-outline text-[14px] leading-none">/</span>
+<span class="text-on-surface font-semibold">Google Maps Business Scraper</span>
+</div>
+<div class="flex items-center gap-space-sm font-code-xs text-code-xs text-outline">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+        Actor Online
+      </span>
+<span>ID: <span class="text-secondary-fixed-dim">act_gmaps_biz_v2</span></span>
+</div>
+</div>
+<!-- Top Hero / Actor Header Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg pt-space-xs pb-space-lg">
+<!-- Left: Actor Identity & Action Toolbar -->
+<div class="xl:col-span-8 flex flex-col justify-between bg-surface-container-low rounded-xl p-space-xl shadow-sm relative overflow-hidden">
+<!-- Ambient Vector Glow -->
+<div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-md">
+<!-- Identity Lockup -->
+<div class="flex items-start gap-space-lg">
+<div class="relative w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shadow-md shrink-0 overflow-hidden">
+<svg class="w-10 h-10" fill="none" viewbox="0 0 48 48">
+<path d="M24 4C15.16 4 8 11.16 8 20c0 11.25 14.4 23.36 15.02 23.87.58.48 1.38.48 1.96 0C25.6 43.36 40 31.25 40 20c0-8.84-7.16-16-16-16z" fill="#EA4335"></path>
+<path d="M24 13a7 7 0 100 14 7 7 0 000-14z" fill="#FFFFFF"></path>
+<path d="M24 16a4 4 0 100 8 4 4 0 000-8z" fill="#4285F4"></path>
+<path d="M19 32c5 4 5 7 5 11.87.62-.51 1.44-1.22 2.38-2.07" stroke="#34A853" stroke-width="2"></path>
+</svg>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex flex-wrap items-center gap-space-xs mb-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Google Maps Business Scraper</h1>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                Ready
+              </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary-container/25 text-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                Official
+              </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-code-xs text-code-xs">
+                v2.3.4
+              </span>
+</div>
+<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 font-body-sm text-body-sm text-on-surface-variant">
+<span>by <strong class="text-on-surface font-medium">QbitPro</strong></span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline"></span>
+<div class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-on-surface">4.8</span>
+<span class="text-outline font-code-xs text-code-xs">(1,817 reviews)</span>
+</div>
+<span class="inline-block w-1 h-1 rounded-full bg-outline"></span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">group</span>
+<span>621K active executions</span>
+</div>
+</div>
+<p class="mt-space-sm font-body-md text-body-md text-on-surface-variant max-w-2xl">
+              Industrial-grade extractor for Google Maps places, local businesses, geo-coordinates, operating hours, public reviews, direct phone leads, and verified domain names.
+            </p>
+</div>
+</div>
+<!-- CTA Vector Controls -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-xs mt-auto">
+<button class="flex items-center gap-2 px-space-xl py-2.5 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-semibold shadow-[0_0_16px_rgba(0,102,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Run Actor</span>
+<span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container-lowest/30 text-on-primary-container font-code-xs text-code-xs font-normal">⌘↵</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+<span>Save Configuration</span>
+</button>
+<button class="flex items-center gap-2 px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Schedule Run</span>
+</button>
+<div class="ml-auto flex items-center gap-2 font-code-xs text-code-xs text-outline">
+<span class="material-symbols-outlined text-[16px] text-tertiary">bolt</span>
+<span>Avg ~40 places/sec</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: High-Density Lead Snapshot Preview Card -->
+<div class="xl:col-span-4 bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Sample Scraped Place</span>
+<span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-highest text-secondary-fixed">LIVE PAYLOAD</span>
+</div>
+<!-- Hotel Visual Preview Tile -->
+<div class="relative w-full h-36 rounded-lg overflow-hidden my-space-xs bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A grand luxury heritage palace hotel illuminated at twilight with ambient outdoor pool lighting, stone archways, and manicured royal gardens under a deep indigo sky. Cinematic corporate dark photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA3wla97grPEm_Af8cY73PajRSJkTK09IED3b5F02w0vB-Liw6zKVxaPepogCVufplUtyiD-c2KE5eSopBnVMufDOWYDyNN7gIhKRWWglpn252AiWMEDljGa7VUPuspGlUgoxAUFsghgiSM24B4bwqSQ1RaAwyA9ku9vQzuRlRHcz66rXOFXzelDjA9QyiHGkPwxNADE85_sTq913K5AWPvAcyyJ7XHcdlLmSG91T2iXYrpPlFTzCpeQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/30 to-transparent"></div>
+<div class="absolute bottom-2 left-2 right-2 flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface drop-shadow-sm leading-tight">The Royal Palace Hotel</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span>
+              Civil Lines, Bareilly, UP
+            </span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur text-tertiary font-semibold">
+            ★ 4.6 (1,842)
+          </span>
+</div>
+</div>
+<!-- Quick Extracted Metadata Snippet -->
+<div class="flex flex-col gap-1.5 py-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex justify-between items-center text-[12px]">
+<span class="text-outline">Class:</span>
+<span class="font-medium text-on-surface">Hotel • Luxury Accommodations • $$$</span>
+</div>
+<div class="flex justify-between items-center text-[12px]">
+<span class="text-outline">Contact:</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim">+91 98765 43210</span>
+</div>
+</div>
+<!-- Mini Action Pills -->
+<div class="grid grid-cols-3 gap-1.5 pt-space-xs">
+<a class="flex items-center justify-center gap-1 py-1.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors text-center" href="#">
+<span class="material-symbols-outlined text-[14px]">call</span>
+<span>Call</span>
+</a>
+<a class="flex items-center justify-center gap-1 py-1.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors text-center" href="#">
+<span class="material-symbols-outlined text-[14px]">language</span>
+<span>Website</span>
+</a>
+<a class="flex items-center justify-center gap-1 py-1.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors text-center" href="#">
+<span class="material-symbols-outlined text-[14px]">near_me</span>
+<span>Route</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Segmented Navigation Tabstrip -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest rounded-xl p-1 shadow-sm mb-space-lg overflow-x-auto">
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold shadow-sm transition-all">
+<span class="material-symbols-outlined text-[17px] text-primary">visibility</span>
+<span>Overview</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[17px]">tune</span>
+<span>Input Schema</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest font-code-xs text-code-xs text-outline">14</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[17px]">payments</span>
+<span>Pricing</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/30 text-tertiary font-code-xs text-code-xs font-semibold">$0.005</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[17px]">webhook</span>
+<span>API &amp; Webhooks</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[17px]">history</span>
+<span>Runs</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest font-code-xs text-code-xs text-outline">2.8k</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[17px]">menu_book</span>
+<span>Documentation</span>
+</button>
+</div>
+<!-- Main Content Layout (Two Column High-Density Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Detailed Intel, Use Cases, Sample Output Table -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- Card: What It Does -->
+<div class="bg-surface-container-low rounded-xl p-space-xl shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">psychology_alt</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">What it does</h2>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+          Extract comprehensive business data directly from Google Maps search results, local places, and business profiles. It captures company names, direct addresses, geolocation (lat/long), verified phone numbers, official websites, operating hours, review scores, and extracted customer reviews without encountering rate limits.
+        </p>
+<!-- Metric Sparkline Bar -->
+<div class="grid grid-cols-3 gap-space-md mt-space-lg pt-space-md bg-surface-container-lowest/50 rounded-lg p-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Extraction Speed</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold mt-1">2,400 <span class="font-body-sm text-body-sm text-tertiary font-normal">rec/min</span></span>
+<span class="font-code-xs text-code-xs text-outline mt-0.5">High-concurrency cluster</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Success Rate</span>
+<span class="font-headline-md text-headline-md text-tertiary font-bold mt-1">99.82%</span>
+<span class="font-code-xs text-code-xs text-outline mt-0.5">Automated captcha solve</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Max Batch Limit</span>
+<span class="font-headline-md text-headline-md text-secondary-container font-bold mt-1">50,000</span>
+<span class="font-code-xs text-code-xs text-outline mt-0.5">Per single execution</span>
+</div>
+</div>
+</div>
+<!-- Card: Popular Use Cases -->
+<div class="bg-surface-container-low rounded-xl p-space-xl shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Popular use cases</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-secondary-container text-[20px] shrink-0 mt-0.5">restaurant</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Targeted Local Directory Sourcing</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Discover all hotels, restaurants, clinics, or gyms within a 15km polygon boundary.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0 mt-0.5">contact_phone</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Outbound B2B Cold Outreach</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Harvest valid mobile numbers, business emails, and domains for multi-channel sales pipelines.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px] shrink-0 mt-0.5">monitoring</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Competitive Sentiment &amp; Reviews</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Track rival ratings, monitor customer negative reviews, and uncover unmet local market demands.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">hub</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Direct CRM &amp; Funnel Ingestion</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Pipe cleaned leads automatically into HubSpot, Salesforce, or Qbit Lead OS via Webhooks.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card: Sample Output Data Grid Table -->
+<div class="bg-surface-container-low rounded-xl p-space-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Sample output preview</h2>
+<span class="font-code-xs text-code-xs text-outline">Real-time normalized JSON to tabular representation</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-code-xs text-code-xs flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+<span>JSON</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-outline hover:text-on-surface font-code-xs text-code-xs flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- High-Density Output Table -->
+<div class="overflow-x-auto rounded-lg bg-surface-container-lowest">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-high text-outline uppercase font-label-sm text-label-sm tracking-wider">
+<th class="py-2.5 px-space-md">Business Name</th>
+<th class="py-2.5 px-space-md">Category</th>
+<th class="py-2.5 px-space-md">Phone</th>
+<th class="py-2.5 px-space-md">Website</th>
+<th class="py-2.5 px-space-md text-right">Rating</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-space-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+                  The Royal Palace Hotel
+                </td>
+<td class="py-3 px-space-md text-on-surface-variant">Hotel</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-secondary-fixed">+91 98765 43210</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-primary-fixed hover:underline cursor-pointer">royalpalace.com</td>
+<td class="py-3 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-code-xs text-code-xs font-bold">
+                    4.6 ★
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-space-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  Spice Garden Restaurant
+                </td>
+<td class="py-3 px-space-md text-on-surface-variant">Restaurant</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-secondary-fixed">+91 87654 32109</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-primary-fixed hover:underline cursor-pointer">spicegarden.in</td>
+<td class="py-3 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-code-xs text-code-xs font-bold">
+                    4.4 ★
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-space-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                  Hotel Surya International
+                </td>
+<td class="py-3 px-space-md text-on-surface-variant">Hotel</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-secondary-fixed">+91 87656 32109</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-primary-fixed hover:underline cursor-pointer">suryahotel.com</td>
+<td class="py-3 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-code-xs text-code-xs font-bold">
+                    4.4 ★
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3 px-space-md font-semibold text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+                  The Urban Cafe &amp; Roastery
+                </td>
+<td class="py-3 px-space-md text-on-surface-variant">Cafe</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-secondary-fixed">+91 43210 98765</td>
+<td class="py-3 px-space-md font-code-xs text-code-xs text-primary-fixed hover:underline cursor-pointer">urbancafe.in</td>
+<td class="py-3 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-code-xs text-code-xs font-bold">
+                    4.3 ★
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: Actor Specifications, Details, Available Fields -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Specifications Card -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm border-b border-transparent">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-[18px]">info</span>
+            Details &amp; Specifications
+          </h3>
+<span class="material-symbols-outlined text-outline text-[18px]">more_horiz</span>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-sm font-body-sm text-body-sm divide-y divide-surface-container">
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+              Provider
+            </span>
+<span class="font-semibold text-on-surface">QbitPro Enterprise</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">update</span>
+              Last updated
+            </span>
+<span class="font-code-xs text-code-xs text-on-surface">Sep 15, 2026</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">category</span>
+              Category
+            </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-label-sm text-label-sm font-medium">Business Leads</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">terminal</span>
+              Input mode
+            </span>
+<span class="font-code-xs text-code-xs text-on-surface">Visual Form / JSON Payload</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">folder_zip</span>
+              Output formats
+            </span>
+<span class="font-code-xs text-code-xs text-on-surface">JSON, CSV, XLSX, Parquet</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">timer</span>
+              Average run time
+            </span>
+<span class="font-code-xs text-code-xs text-tertiary">2 - 10 minutes</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">group</span>
+              Monthly users
+            </span>
+<span class="font-semibold text-on-surface">621,000+</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">lock_open</span>
+              Proxy network
+            </span>
+<span class="text-tertiary font-label-sm text-label-sm font-semibold">Residential / Rotating</span>
+</div>
+</div>
+</div>
+<!-- Extractable Fields Card -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">checklist</span>
+            Available Data Fields
+          </h3>
+<span class="px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-code-xs text-code-xs font-bold">10 Extracted</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pb-space-sm">
+          Every run extracts complete place entities normalized into cleanly mapped key-value attributes:
+        </p>
+<div class="grid grid-cols-1 gap-2 pt-space-xs">
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Business Name &amp; Title</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">place_name</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Direct Phone Number</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">formatted_phone, international_phone</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Website &amp; Domain URL</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">website, canonical_domain</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Direct Email (Enriched)</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">contact_email (crawled from home &amp; contact page)</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Full Physical Address</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">street, city, state, postal_code, country</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Category &amp; Industry Subtags</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">primary_category, all_categories[]</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Rating &amp; Review Count</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">aggregate_rating, total_reviews_count</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Opening Hours &amp; Live Status</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">weekly_schedule_json, open_now_bool</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Place Photos &amp; Featured Images</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">highres_image_urls[]</span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-2 rounded-lg bg-surface-container-high/50 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-medium leading-none">Precise Coordinates</span>
+<span class="font-code-xs text-code-xs text-outline leading-tight mt-0.5">latitude, longitude, plus_code</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Run Sticky Helper Box -->
+<div class="bg-gradient-to-br from-surface-container-high to-surface-container rounded-xl p-space-md shadow-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">Ready to scrape?</span>
+<span class="font-code-xs text-code-xs text-outline">Compute cost: $0.005 / 100 items</span>
+</div>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-semibold transition-colors">
+          Configure Run
+        </button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,75 +1,180 @@
 {% extends "base.html" %}
-{% block title %}Automation — QBIT Connect{% endblock %}
+{% block title %}Automation Workflows — QBIT Connect{% endblock %}
 {% block nav_automation %}active{% endblock %}
 
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>AUTOMATION</h1>
-    <p class="muted">Workflow engine — triggers, conditions, actions and waits that run your growth ops while you sleep.</p>
-  </div>
-  <div class="page-actions">
-    {% if "automation.create" in perms %}
-      <a class="btn btn-primary" href="/automation/new">+ New workflow</a>
-    {% endif %}
-    {% if "automation.view_executions" in perms %}
-      <a class="btn btn-ghost" href="/automation/executions">Executions</a>
-    {% endif %}
-  </div>
-</div>
-
-{% if flash %}
-  <div class="alert {{ 'alert-error' if flash_kind == 'error' else 'alert-ok' }}">{{ flash }}</div>
-{% endif %}
-
-<div class="card table-card">
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Trigger</th><th>Status</th><th>Version</th>
-          <th>Executions</th><th>Success</th><th>Failed</th><th>Last run</th><th></th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for wf in items %}
-        <tr>
-          <td><a href="/automation/{{ wf.id }}"><strong>{{ wf.name }}</strong></a>
-              {% if wf.description %}<div class="muted small">{{ wf.description[:90] }}</div>{% endif %}</td>
-          <td>{{ trigger_labels.get(wf.trigger_type, wf.trigger_type) }}</td>
-          <td><span class="badge badge-{{ wf.status|lower }}">{{ wf.status }}</span></td>
-          <td>{{ wf.current_version or "—" }}</td>
-          <td>{{ wf.executions_total }}</td>
-          <td>{{ wf.executions_completed }}{% if wf.success_rate is not none %} <span class="muted small">({{ (wf.success_rate * 100)|round(1) }}%)</span>{% endif %}</td>
-          <td>{{ wf.executions_failed }}</td>
-          <td class="muted small">{{ wf.last_execution_at[:16].replace("T", " ") if wf.last_execution_at else "—" }}</td>
-          <td class="row-actions">
-            <a class="btn btn-sm btn-ghost" href="/automation/{{ wf.id }}">Open</a>
-          </td>
-        </tr>
-      {% else %}
-        <tr><td colspan="9" class="muted" style="padding:28px;text-align:center">
-          No workflows yet. Create one from scratch or start from a template below.
-        </td></tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
-
-{% if templates and "automation.create" in perms %}
-<div class="card" style="margin-top:20px">
-  <h2 class="section-title">Starter templates</h2>
-  <p class="muted small">Templates create a DRAFT you configure and publish yourself — nothing runs automatically.</p>
-  <div class="template-grid">
-    {% for tid, spec in templates.items() %}
-      <div class="template-card">
-        <strong>{{ spec.name }}</strong>
-        <p class="muted small">{{ spec.description[:140] }}</p>
-        <a class="btn btn-sm btn-ghost" href="/automation/new?from_template={{ tid }}">Use template</a>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Hero Header -->
+  <div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-xl border border-outline-variant/30">
+    <div class="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-space-md">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+            Operational Orchestration
+          </span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Workflow Automations & Event Triggers
+        </h1>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Automate CRM lead qualification, multichannel messaging actions, and timed delays with visual branch logic.
+        </p>
       </div>
-    {% endfor %}
+
+      <div class="flex flex-wrap items-center gap-space-sm">
+        {% if "automation.view_executions" in perms %}
+        <a class="btn btn-ghost" href="/automation/executions">
+          <span class="material-symbols-outlined text-[16px]">history</span>
+          Execution History
+        </a>
+        {% endif %}
+        {% if "automation.create" in perms %}
+        <a class="btn btn-primary" href="/automation/new">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          New Workflow
+        </a>
+        {% endif %}
+      </div>
+    </div>
   </div>
+
+  <!-- Operational Flash Alerts -->
+  {% if flash %}
+  <div class="alert {{ 'alert-error' if flash_kind == 'error' else 'alert-ok' }} flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">info</span>
+    <span>{{ flash }}</span>
+  </div>
+  {% endif %}
+
+  <!-- Active Workflows Table Card -->
+  <div class="table-card">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <div class="space-y-0.5">
+        <h3 class="font-label-md text-label-md font-bold text-on-surface">Configured Workflows ({{ items | length }})</h3>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Workflow Name</th>
+            <th>Trigger Event</th>
+            <th>Status</th>
+            <th>Version</th>
+            <th>Executions</th>
+            <th>Success Rate</th>
+            <th>Failed</th>
+            <th>Last Dispatched</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for wf in items %}
+          <tr>
+            <td>
+              <a href="/automation/{{ wf.id }}" class="hover:text-primary transition-colors flex flex-col">
+                <strong class="text-on-surface font-semibold">{{ wf.name }}</strong>
+                {% if wf.description %}
+                <span class="text-xs text-outline truncate max-w-xs">{{ wf.description }}</span>
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-on-surface">
+                {{ trigger_labels.get(wf.trigger_type, wf.trigger_type) }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-{{ wf.status|lower }}">
+                {{ wf.status }}
+              </span>
+            </td>
+            <td class="font-code-xs text-xs text-outline">{{ wf.current_version or "—" }}</td>
+            <td class="mono font-semibold">{{ wf.executions_total }}</td>
+            <td>
+              {% if wf.success_rate is not none %}
+              <span class="text-xs font-semibold text-tertiary">{{ (wf.success_rate * 100)|round(1) }}%</span>
+              {% else %}
+              <span class="text-xs text-outline">—</span>
+              {% endif %}
+            </td>
+            <td class="mono text-xs {% if wf.executions_failed > 0 %}text-error font-semibold{% else %}text-outline{% endif %}">
+              {{ wf.executions_failed }}
+            </td>
+            <td class="text-xs text-outline whitespace-nowrap">{{ wf.last_execution_at[:16].replace("T", " ") if wf.last_execution_at else "—" }}</td>
+            <td class="text-right">
+              <a class="btn btn-sm btn-ghost" href="/automation/{{ wf.id }}">
+                <span>Inspect</span>
+                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[36px] text-outline block mb-2">account_tree</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Workflows Configured</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Create your first automated workflow using visual branching or start from a pre-built template below.
+              </p>
+              {% if "automation.create" in perms %}
+              <div class="pt-3">
+                <a class="btn btn-primary" href="/automation/new">
+                  <span class="material-symbols-outlined text-[16px]">add</span>
+                  Create Workflow
+                </a>
+              </div>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Starter Templates Grid -->
+  {% if templates and "automation.create" in perms %}
+  <div class="card p-space-xl space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm flex items-center justify-between">
+      <div class="space-y-0.5">
+        <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Curated Starter Templates</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Pre-assembled workflow graphs. Choosing a template creates an editable draft with no automatic dispatch.
+        </p>
+      </div>
+      <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high text-primary font-semibold">Ready to Clone</span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-md">
+      {% for tid, spec in templates.items() %}
+      <div class="p-space-md rounded-xl bg-surface-container border border-outline-variant/30 hover:border-primary/40 flex flex-col justify-between space-y-space-sm transition-all group">
+        <div class="space-y-1">
+          <div class="w-8 h-8 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">bolt</span>
+          </div>
+          <strong class="font-label-md text-label-md text-on-surface block group-hover:text-primary transition-colors">
+            {{ spec.name }}
+          </strong>
+          <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+            {{ spec.description }}
+          </p>
+        </div>
+
+        <div class="pt-space-xs border-t border-outline-variant/20 flex justify-end">
+          <a class="btn btn-sm btn-ghost hover:text-white" href="/automation/new?from_template={{ tid }}">
+            <span>Use Template</span>
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
 </div>
-{% endif %}
 {% endblock %}

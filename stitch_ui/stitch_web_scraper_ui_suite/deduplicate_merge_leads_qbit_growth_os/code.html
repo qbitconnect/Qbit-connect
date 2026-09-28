@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Metadata Stream -->
+<div class="flex flex-wrap items-center justify-between gap-y-space-sm mb-space-md">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span class="hover:text-on-surface transition-colors cursor-pointer">Leads</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-on-surface transition-colors cursor-pointer">Management</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary-fixed-dim font-medium">Deduplicate &amp; Merge</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-high text-tertiary-fixed text-code-xs font-code-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>SCAN ENGINE: ACTIVE (AUTO-DEEP 0.4s)</span>
+</div>
+<div class="px-space-sm py-1 rounded bg-surface-container-high text-outline text-code-xs font-code-xs">
+        CLUSTER_HASH: <span class="text-on-surface font-semibold">0x7F18C9D2</span>
+</div>
+</div>
+</div>
+<!-- Header Banner Section -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-low p-space-lg rounded-xl shadow-md mb-space-lg relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-1 max-w-2xl relative z-10">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-fixed shadow-[0_0_12px_rgba(0,102,255,0.3)]">
+<span class="material-symbols-outlined text-[20px]">merge_type</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Find and merge duplicate leads</h1>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Keep your database unified and pristine. Resolve clustered collision sets triggered by Google Place ID, normalized E.164 phone numbers, and domain fingerprinting.
+      </p>
+</div>
+<!-- Cluster Mode Tabs & Primary Actions -->
+<div class="flex flex-wrap items-center gap-space-sm relative z-10">
+<div class="flex items-center bg-surface-container-lowest p-1 rounded-lg">
+<button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)] transition-all">
+<span class="material-symbols-outlined text-[16px]">call_split</span>
+<span>Potential Duplicates</span>
+<span class="ml-1 px-1.5 py-0.2 rounded bg-surface-container-lowest text-primary-fixed text-code-xs font-code-xs">48</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>Merged History</span>
+<span class="ml-1 text-code-xs font-code-xs text-outline">12</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary-fixed font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">bolt</span>
+<span>Auto-Merge Safe (32)</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-semibold shadow-[0_0_16px_rgba(0,102,255,0.4)] transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span>Merge Selected (4)</span>
+</button>
+</div>
+</div>
+<!-- Interactive Filter & Scan Controls Bar -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm bg-surface-container-low p-space-md rounded-xl shadow-sm mb-space-lg">
+<!-- Search Bar -->
+<div class="md:col-span-4 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest rounded-lg pl-9 pr-8 py-2 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container" placeholder="Search by lead name, phone, or location..." type="text" value="Bareilly"/>
+<span class="material-symbols-outlined absolute right-2.5 text-outline text-[16px] cursor-pointer hover:text-on-surface">close</span>
+</div>
+<!-- Match Criteria Dropdown -->
+<div class="md:col-span-3 flex items-center bg-surface-container-lowest rounded-lg px-space-sm py-1.5 justify-between cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">rule</span>
+<div class="flex flex-col text-left">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider leading-none">Strategy</span>
+<span class="font-label-md text-label-md text-on-surface leading-snug">Strict (Phone | Place ID)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</div>
+<!-- Confidence Score Filter -->
+<div class="md:col-span-2 flex items-center bg-surface-container-lowest rounded-lg px-space-sm py-1.5 justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary">speed</span>
+<div class="flex flex-col text-left">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider leading-none">Min Threshold</span>
+<span class="font-code-xs text-code-xs text-tertiary-fixed font-semibold">Confidence &gt; 85%</span>
+</div>
+</div>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<!-- Source Picker -->
+<div class="md:col-span-2 flex items-center bg-surface-container-lowest rounded-lg px-space-sm py-1.5 justify-between cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">source</span>
+<span class="font-body-sm text-body-sm text-on-surface">All Sources (3)</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</div>
+<!-- Rescan Button -->
+<div class="md:col-span-1 flex items-center">
+<button class="w-full h-full min-h-[36px] flex items-center justify-center gap-1 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors" title="Trigger fresh cross-index scan">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+</div>
+<!-- Primary Workspace: Two Columns (Clusters left, Diagnostic Rail right) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start mb-space-2xl">
+<!-- Left Clusters Stream (8 Columns) -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg min-w-0">
+<!-- Cluster Group 1: EXPANDED DETAILED MATRIX -->
+<div class="flex flex-col bg-surface-container-low rounded-xl shadow-md overflow-hidden transition-all duration-200">
+<!-- Cluster Header -->
+<div class="p-space-md bg-surface-container flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">apartment</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">The Royal Palace Hotel</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container/40 text-error font-label-sm text-[11px] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  2 duplicates found
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed font-code-xs text-[10px]">98% CONFIDENCE</span>
+</div>
+<div class="flex items-center gap-space-md font-code-xs text-code-xs text-outline mt-0.5">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">call</span> +91 98765 43210</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">pin_drop</span> Bareilly, UP</span>
+<span>•</span>
+<span class="text-secondary-fixed-dim">Exact Place ID collision [ChIJO4V9...2x]</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm flex items-center gap-1 transition-colors">
+<span>Auto-Fill Missing</span>
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+</button>
+<button class="w-7 h-7 rounded flex items-center justify-center bg-surface-container-high text-on-surface hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_up</span>
+</button>
+</div>
+</div>
+<!-- Side-by-Side Comparison Container -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="text-label-sm font-label-sm uppercase tracking-wider text-outline flex items-center justify-between">
+<span>Select attributes to retain into the master record:</span>
+<span class="text-code-xs text-secondary-fixed-dim font-code-xs">CONFLICTS HIGHLIGHTED IN AMBER</span>
+</div>
+<!-- Comparison Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Column 1: Record A (Recommended Master) -->
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col gap-space-sm relative">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-[11px] font-bold tracking-wide">MASTER CANDIDATE</span>
+<span class="font-code-xs text-code-xs text-outline">ID: #REC-88219</span>
+</div>
+<span class="text-code-xs text-tertiary-fixed font-code-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified</span> 94% Completeness
+                </span>
+</div>
+<div class="text-code-xs text-on-surface-variant font-code-xs pb-space-xs">
+                Source: <span class="text-on-surface font-semibold">Google Maps Scraper (Actor #GMS-11)</span> • Captured 12:42 PM
+              </div>
+<!-- Field list -->
+<div class="flex flex-col gap-2 pt-1 font-body-sm text-body-sm">
+<!-- Business Name -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Business Name</span>
+<span class="font-medium text-on-surface">The Royal Palace Hotel</span>
+</div>
+<input checked="" class="text-primary-container accent-primary-container" name="name_group_1" type="radio"/>
+</div>
+<!-- Category -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Category</span>
+<span class="text-on-surface">Hotel &amp; Hospitality</span>
+</div>
+<input checked="" class="text-primary-container accent-primary-container" name="cat_group_1" type="radio"/>
+</div>
+<!-- Phone -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Primary Phone</span>
+<span class="font-code-xs text-code-xs text-on-surface font-semibold">+91 98765 43210</span>
+</div>
+<span class="text-tertiary-fixed text-[11px] font-label-sm font-semibold">Match Identical</span>
+</div>
+<!-- Email (Split conflict) -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-high/60">
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-[10px] text-secondary-fixed uppercase tracking-wider">Email (Primary)</span>
+<span class="px-1 rounded bg-tertiary-container/30 text-tertiary-fixed font-code-xs text-[9px]">MX PASS</span>
+</div>
+<span class="font-code-xs text-code-xs text-on-surface font-medium">info@royalpalace.hotel</span>
+</div>
+<input checked="" class="text-primary-container accent-primary-container" name="email_group_1" type="radio"/>
+</div>
+<!-- Address -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col max-w-[80%]">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Address</span>
+<span class="text-on-surface text-[12px] truncate">Civil Lines, Bareilly, UP 243001</span>
+</div>
+<input checked="" class="text-primary-container accent-primary-container" name="addr_group_1" type="radio"/>
+</div>
+<!-- Extra Metas -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-code-xs text-code-xs text-outline">
+<span>Rating: <strong class="text-tertiary-fixed">4.6 ★</strong> (820)</span>
+<span>Social: <strong class="text-secondary">@royalpalace_bly</strong></span>
+</div>
+</div>
+</div>
+<!-- Column 2: Record B (Duplicate candidate) -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md flex flex-col gap-space-sm opacity-90">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-label-sm text-[11px] font-semibold">SECONDARY RECORD</span>
+<span class="font-code-xs text-code-xs text-outline">ID: #CSV-09431</span>
+</div>
+<span class="text-code-xs text-outline font-code-xs">68% Completeness</span>
+</div>
+<div class="text-code-xs text-on-surface-variant font-code-xs pb-space-xs">
+                Source: <span class="text-on-surface font-semibold">CSV Import (Bareilly_Hospitality_v1.xlsx)</span> • Sep 20
+              </div>
+<!-- Field list -->
+<div class="flex flex-col gap-2 pt-1 font-body-sm text-body-sm">
+<!-- Business Name -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Business Name</span>
+<span class="text-on-surface-variant">Royal Palace Hotel &amp; Banquet</span>
+</div>
+<input class="text-primary-container accent-primary-container" name="name_group_1" type="radio"/>
+</div>
+<!-- Category -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Category</span>
+<span class="text-on-surface-variant">Hotel / Banquet</span>
+</div>
+<input class="text-primary-container accent-primary-container" name="cat_group_1" type="radio"/>
+</div>
+<!-- Phone -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Primary Phone</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant font-semibold">+91 98765 43210</span>
+</div>
+<span class="text-outline text-[11px] font-label-sm">Exact</span>
+</div>
+<!-- Email (Alternative) -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-high/40">
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Secondary Email</span>
+<span class="px-1 rounded bg-surface-container-highest text-secondary-fixed-dim font-code-xs text-[9px]">ALTERNATE</span>
+</div>
+<span class="font-code-xs text-code-xs text-on-surface-variant">bookings@royalpalace.hotel</span>
+</div>
+<input class="text-primary-container accent-primary-container" name="email_group_1" type="radio"/>
+</div>
+<!-- Address -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low">
+<div class="flex flex-col max-w-[80%]">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Address</span>
+<span class="text-on-surface-variant text-[12px] truncate">Civil Lines Near Station, Bareilly</span>
+</div>
+<input class="text-primary-container accent-primary-container" name="addr_group_1" type="radio"/>
+</div>
+<!-- Extra Metas -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-code-xs text-code-xs text-outline">
+<span>Tags: <strong class="text-primary-fixed">#VIP #Banquet</strong></span>
+<span>Website: <strong class="text-on-surface-variant">royalpalace.com</strong></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Smart Preservation Rules for this cluster -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex flex-wrap items-center gap-space-md">
+<label class="flex items-center gap-2 cursor-pointer font-label-sm text-label-sm text-on-surface">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface-container text-primary-container accent-primary-container" type="checkbox"/>
+<span>Append secondary email (<span class="text-secondary-fixed">bookings@...</span>) to Master as alternate contact</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer font-label-sm text-label-sm text-on-surface">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface-container text-primary-container accent-primary-container" type="checkbox"/>
+<span>Preserve unique CSV tags (<span class="text-primary-fixed">#VIP</span>)</span>
+</label>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors">
+                Mark as Not Duplicate
+              </button>
+<button class="px-space-lg py-1.5 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-semibold shadow-[0_0_12px_rgba(0,102,255,0.3)] transition-all">
+                Merge into Master
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Cluster Group 2: SUMMARY ROW -->
+<div class="flex flex-col bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+<div class="p-space-md flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Hotel Surya International</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container/40 text-error font-label-sm text-[11px] font-semibold">
+                  3 duplicates found
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed font-code-xs text-[10px]">94% MATCH</span>
+</div>
+<div class="flex items-center gap-space-md font-code-xs text-code-xs text-outline mt-0.5">
+<span>+91 87656 32109</span>
+<span>•</span>
+<span>Station Road, Bareilly, UP</span>
+<span>•</span>
+<span class="text-secondary-fixed">Domain: suryahotel.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px] text-primary">visibility</span>
+<span>Review &amp; Compare</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container/20 hover:bg-primary-container/30 text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>Fast Merge</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Cluster Group 3: SUMMARY ROW -->
+<div class="flex flex-col bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+<div class="p-space-md flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Spice Garden Restaurant</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container/40 text-error font-label-sm text-[11px] font-semibold">
+                  2 duplicates found
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed font-code-xs text-[10px]">92% MATCH</span>
+</div>
+<div class="flex items-center gap-space-md font-code-xs text-code-xs text-outline mt-0.5">
+<span>+91 65432 10987</span>
+<span>•</span>
+<span>Civil Lines, Bareilly</span>
+<span>•</span>
+<span class="text-tertiary-fixed">Street address collision</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px] text-primary">visibility</span>
+<span>Review &amp; Compare</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container/20 hover:bg-primary-container/30 text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>Fast Merge</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Cluster Group 4: SUMMARY ROW -->
+<div class="flex flex-col bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+<div class="p-space-md flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-lowest text-primary-container accent-primary-container cursor-pointer" type="checkbox"/>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">bed</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Hotel Comfort Inn</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container/40 text-error font-label-sm text-[11px] font-semibold">
+                  2 duplicates found
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed font-code-xs text-[10px]">89% MATCH</span>
+</div>
+<div class="flex items-center gap-space-md font-code-xs text-code-xs text-outline mt-0.5">
+<span>+91 76543 21098</span>
+<span>•</span>
+<span>Rampur Garden, Bareilly</span>
+<span>•</span>
+<span class="text-secondary-fixed-dim">ChIJ4f8_... geo vector match</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px] text-primary">visibility</span>
+<span>Review &amp; Compare</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container/20 hover:bg-primary-container/30 text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>Fast Merge</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Rail: Intelligence & Diagnostics (4 Columns) -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Card: Cleanliness Health Meter -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary">health_and_safety</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Health Diagnostics</span>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary-fixed px-1.5 py-0.5 rounded bg-surface-container-highest">OPTIMAL</span>
+</div>
+<!-- SVG Donut Cleanliness Representation -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container rounded-lg">
+<div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-tertiary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="88, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<div class="absolute flex flex-col items-center justify-center">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">88%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Database Cleanliness</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">48 duplicate sets detected across 12,530 indexed entities.</span>
+</div>
+</div>
+<!-- Metric rows -->
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Clean Leads</span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface mt-1">12,482</span>
+<span class="font-code-xs text-code-xs text-tertiary-fixed mt-0.5">99.6% unique</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Merged (30d)</span>
+<span class="font-headline-md text-headline-md font-bold text-secondary-fixed mt-1">324</span>
+<span class="font-code-xs text-code-xs text-outline mt-0.5">+42 today</span>
+</div>
+</div>
+</div>
+<!-- Card: Master Resolution Protocol -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">tune</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Active Merge Rules</span>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5">
+<span>Configure</span>
+<span class="material-symbols-outlined text-[14px]">settings</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0 mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Completeness Bias</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">The record with highest attribute coverage automatically assumes master status.</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0 mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Non-Destructive Arrays</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Emails, tags, and phone lines are merged as secondary items rather than replaced.</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5 p-space-sm rounded-lg bg-surface-container">
+<span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Audit Snapshots</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Point-in-time state is cached for 30 days. Full 1-click unmerge is supported.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card: Cluster Attribution Breakdown Visual -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Collision Trigger Origin</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Primary attribution vector causing duplicate clustering:</span>
+<div class="flex flex-col gap-2 pt-2">
+<!-- Item 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Phone Number (E.164)</span>
+<span class="font-code-xs text-code-xs text-primary-fixed">64% (31 clusters)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 64%"></div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Google Place ID</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed">24% (11 clusters)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 24%"></div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface">Name + Geographic Fuzzy</span>
+<span class="font-code-xs text-code-xs text-tertiary-fixed">12% (6 clusters)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Sticky Batch Resolution Floating Console -->
+<div class="sticky bottom-4 z-30 w-full bg-surface-container-high/95 backdrop-blur-xl p-space-md rounded-xl shadow-xl flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">4 duplicate clusters checked</span>
+</div>
+<span class="text-outline text-body-sm">•</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">9 duplicate entity rows queued for compaction</span>
+<span class="hidden md:inline text-outline text-body-sm">•</span>
+<span class="hidden md:inline font-code-xs text-code-xs text-tertiary-fixed">Storage saved: ~42.8 KB</span>
+</div>
+<div class="flex items-center gap-space-sm ml-auto">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-outline hover:text-on-surface font-label-md text-label-md transition-colors">
+        Deselect All
+      </button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors">
+        Ignore Selected
+      </button>
+<button class="flex items-center gap-2 px-space-xl py-2 rounded-lg bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md font-bold shadow-[0_0_16px_rgba(0,102,255,0.45)] transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span>Confirm Merge (4 Clusters)</span>
+</button>
+</div>
+</div>
+</div></main></div></body></html>

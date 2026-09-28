@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg transition-colors bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-xl">
+<!-- Top Breadcrumb & Status Telemetry Bar -->
+<div class="flex items-center justify-between px-space-md py-space-xs bg-surface-container-low rounded-lg shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-xs text-code-xs text-outline uppercase tracking-wider">Marketplace</span>
+<span class="text-outline-variant font-code-xs text-code-xs">/</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider">Actor Registry v2.4</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-tertiary-fixed font-code-xs text-code-xs flex items-center gap-1 ml-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+        72 Actors Operational
+      </span>
+</div>
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline">Compute Pool:</span>
+<span class="font-code-xs text-code-xs text-on-surface">32 Nodes (US-East / EU-Central)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline">Avg Response:</span>
+<span class="font-code-xs text-code-xs text-tertiary">42ms</span>
+</div>
+</div>
+</div>
+<!-- Hero Banner Section -->
+<div class="relative w-full rounded-xl bg-surface-container-lowest p-space-2xl overflow-hidden shadow-xl">
+<!-- Ambient Glow Blobs -->
+<div class="absolute -top-24 left-1/4 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-20 right-10 w-80 h-80 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-2xl">
+<!-- Title & Mission Pitch -->
+<div class="max-w-2xl flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm mb-1">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-secondary font-code-xs text-code-xs tracking-wider uppercase">
+            QBIT GROWTH OS • RECONNAISSANCE ENGINE
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-code-xs text-code-xs">
+            Multi-Source Scraping
+          </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight leading-tight">
+          Intelligence that drives growth.
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+          Discover businesses. Extract actionable intelligence. Turn raw public vectors into guaranteed pipeline revenue.
+        </p>
+</div>
+<!-- Tactical Micro-Stat HUD on Right -->
+<div class="grid grid-cols-3 gap-space-md w-full xl:w-auto">
+<!-- Stat 1 -->
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-md flex flex-col justify-between min-w-[130px] hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between mb-1">
+<span class="font-code-xs text-code-xs text-outline uppercase tracking-wider">Total Scraped</span>
+<span class="material-symbols-outlined text-secondary-fixed-dim text-[16px]">database</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-secondary-container font-bold tracking-tight">2.4M</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Verified records</span>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-md flex flex-col justify-between min-w-[130px] hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between mb-1">
+<span class="font-code-xs text-code-xs text-outline uppercase tracking-wider">Territories</span>
+<span class="material-symbols-outlined text-primary text-[16px]">public</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">180+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Global metropolitan areas</span>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-md flex flex-col justify-between min-w-[130px] hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between mb-1">
+<span class="font-code-xs text-code-xs text-outline uppercase tracking-wider">Data Pipeline</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[16px]">bolt</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-tertiary font-bold tracking-tight">Real-Time</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">99.98% extraction rate</span>
+</div>
+</div>
+</div>
+<!-- Integrated Search Bar -->
+<div class="relative z-10 mt-space-xl">
+<div class="bg-surface-container-high p-space-xs rounded-xl shadow-2xl flex flex-col md:flex-row items-center gap-space-xs">
+<div class="flex items-center gap-space-sm flex-1 px-space-md py-space-xs w-full">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">search_spark</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" placeholder="Search scrapers or describe your business objective (e.g. 'find boutique fitness in Austin with owner emails')..." type="text"/>
+</div>
+<div class="flex items-center gap-space-xs w-full md:w-auto self-end md:self-center pr-1">
+<button class="flex items-center gap-1.5 px-space-lg py-2 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-tertiary">psychology</span>
+<span>AI Plan</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-xl py-2 rounded-lg bg-primary-container text-on-primary-container hover:opacity-95 shadow-[0_0_12px_rgba(0,102,255,0.45)] transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Find Tools</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Horizontal Filter Pills & Marketplace Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<!-- Category Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 max-w-full">
+<button class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_0_10px_rgba(0,102,255,0.3)] whitespace-nowrap">
+        All Actors (72)
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Business Leads
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Google Maps
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Web Crawlers
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Social Media
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Email Intelligence
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors font-label-md text-label-md whitespace-nowrap">
+        Government Data
+      </button>
+</div>
+<!-- Right Utility Sort / Layout toggle -->
+<div class="flex items-center gap-space-sm self-end md:self-auto shrink-0">
+<div class="flex items-center gap-1.5 bg-surface-container-high px-space-sm py-1 rounded-lg text-on-surface-variant text-label-sm font-label-sm">
+<span class="text-outline">Sort:</span>
+<span class="text-on-surface font-semibold cursor-pointer">Most Popular</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</div>
+<div class="flex items-center bg-surface-container-high p-0.5 rounded-lg text-outline">
+<button class="p-1 rounded bg-surface-container text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]">grid_view</span>
+</button>
+<button class="p-1 rounded hover:text-on-surface">
+<span class="material-symbols-outlined text-[16px]">view_list</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Marketplace Actor Grid (3-Columns) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg">
+<!-- CARD 1: Google Maps Business Scraper -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header: Icon + Titles + Verified Badge -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-tertiary">pin_drop</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                  Google Maps Business Scraper
+                </h3>
+</div>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-tertiary-fixed-dim">Official</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Extract comprehensive business details, reviews, contact phone numbers, websites, hours, and geo-coordinates from Google Maps.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Locations
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Contacts
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Reviews
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Geo-Polygon
+          </span>
+</div>
+<!-- Inline Visual: Extraction Speed Telemetry Chart -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Throughput</span>
+<span class="font-code-xs text-code-xs text-tertiary font-bold">1,420 leads/min</span>
+</div>
+<!-- Sparkline SVG -->
+<svg class="w-24 h-6 text-tertiary" fill="none" viewbox="0 0 100 24">
+<path d="M0 18 L15 14 L30 19 L45 8 L60 12 L75 4 L90 7 L100 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M0 18 L15 14 L30 19 L45 8 L60 12 L75 4 L90 7 L100 2 V 24 H 0 Z" fill="currentColor" fill-opacity="0.1"></path>
+</svg>
+</div>
+</div>
+<!-- Card Footer: Stats & CTA Button -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.8</span>
+<span class="font-code-xs text-code-xs text-outline">(1.8K)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>621K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 2: Instagram Business Scraper -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-secondary-fixed-dim">photo_camera</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                Instagram Business Scraper
+              </h3>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-secondary">Verified</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Extract business profiles, posts, public direct contact email/phones, follower metrics and engagement analytics in batch mode.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Profiles
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Posts
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Contacts
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Reels
+          </span>
+</div>
+<!-- Inline Visual: Metric Gauge -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Success Index</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim font-bold">99.4% clean rate</span>
+</div>
+<svg class="w-24 h-6 text-secondary-fixed-dim" fill="none" viewbox="0 0 100 24">
+<path d="M0 12 L20 15 L40 6 L60 9 L80 4 L100 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M0 12 L20 15 L40 6 L60 9 L80 4 L100 7 V 24 H 0 Z" fill="currentColor" fill-opacity="0.1"></path>
+</svg>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.7</span>
+<span class="font-code-xs text-code-xs text-outline">(599)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>407K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 3: LinkedIn Company Research -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-primary">domain</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                LinkedIn Company Research
+              </h3>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-primary-fixed-dim">B2B Prime</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Find companies, verified C-level employees, org structure charts, hiring signals, and technographic intelligence.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Companies
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Employees
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Emails
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Headcount
+          </span>
+</div>
+<!-- Inline Visual: Metric Gauge -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Enrichment Depth</span>
+<span class="font-code-xs text-code-xs text-primary font-bold">28 Data Points</span>
+</div>
+<svg class="w-24 h-6 text-primary" fill="none" viewbox="0 0 100 24">
+<path d="M0 20 L25 12 L50 15 L75 6 L100 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M0 20 L25 12 L50 15 L75 6 L100 4 V 24 H 0 Z" fill="currentColor" fill-opacity="0.1"></path>
+</svg>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.6</span>
+<span class="font-code-xs text-code-xs text-outline">(432)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>298K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 4: Website Intelligence Crawler -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-secondary">travel_explore</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                Website Intelligence Crawler
+              </h3>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-secondary-fixed">AI Ready</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Deep crawl domains with headless chromium. Extract markdown, schema markup, product catalogs, and site emails for LLM RAG pipelines.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Websites
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Contacts
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Products
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            RAG / MD
+          </span>
+</div>
+<!-- Inline Visual: Latency Bar -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Render Execution</span>
+<span class="font-code-xs text-code-xs text-tertiary-fixed font-bold">Headless Stealth</span>
+</div>
+<div class="w-24 bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-4/5 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.5</span>
+<span class="font-code-xs text-code-xs text-outline">(321)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>190K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 5: Restaurant & Hospitality Leads -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-tertiary">restaurant</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                Restaurant &amp; Hospitality Leads
+              </h3>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-tertiary">Niche Pack</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Targeted scrapers for food &amp; beverage: owner names, kitchen tech stack, delivery app links, Yelp metrics, and liquor licensing.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Restaurants
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Hotels
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Cafes
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            POS Data
+          </span>
+</div>
+<!-- Inline Visual: Mini Bar Graph -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Field Match</span>
+<span class="font-code-xs text-code-xs text-tertiary font-bold">98.2% Direct Owner</span>
+</div>
+<div class="flex items-end gap-1 h-6">
+<div class="w-2 bg-tertiary/40 h-2 rounded-t-sm"></div>
+<div class="w-2 bg-tertiary/60 h-3 rounded-t-sm"></div>
+<div class="w-2 bg-tertiary/80 h-5 rounded-t-sm"></div>
+<div class="w-2 bg-tertiary h-6 rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.7</span>
+<span class="font-code-xs text-code-xs text-outline">(384)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>276K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- CARD 6: Email Discovery & Verification -->
+<div class="group relative bg-surface-container rounded-xl p-space-lg shadow-md hover:shadow-[0_8px_24px_rgba(0,102,255,0.18)] transition-all duration-300 flex flex-col justify-between">
+<div class="flex flex-col gap-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shadow-inner overflow-hidden">
+<span class="material-symbols-outlined text-[28px] text-secondary-container">mark_email_read</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                Email Discovery &amp; Verification
+              </h3>
+<div class="flex items-center gap-1 font-code-xs text-code-xs text-outline mt-0.5">
+<span>by</span>
+<span class="text-secondary-container font-semibold">QbitPro</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<span class="text-secondary-fixed">Zero Bounce</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+          Real-time SMTP handshake verification, MX record checks, pattern discovery, and spam trap avoidance from multi-vector endpoints.
+        </p>
+<!-- Feature Tags -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Emails
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Verification
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            Contacts
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-code-xs text-code-xs">
+            SMTP Ping
+          </span>
+</div>
+<!-- Inline Visual: Circle Progress -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Deliverability SLA</span>
+<span class="font-code-xs text-code-xs text-secondary-container font-bold">99.1% Inbox Rate</span>
+</div>
+<svg class="w-7 h-7 -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-secondary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="94, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-md rounded-b-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">4.6</span>
+<span class="font-code-xs text-code-xs text-outline">(512)</span>
+</div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">group</span>
+<span>333K</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_10px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Use Actor</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Workspace Integration Banner -->
+<div class="bg-surface-container-low rounded-xl p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-lg shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Custom Scraper Development &amp; Private Proxies</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Need dedicated residential proxy pools or bespoke headless scrapers for gated sources?</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<button class="px-space-lg py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors w-full md:w-auto">
+        API Documentation
+      </button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold shadow-sm hover:opacity-90 transition-opacity w-full md:w-auto whitespace-nowrap">
+        Deploy Custom Node
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction for search input glow and filter pill selection
+  document.addEventListener('DOMContentLoaded', () => {
+    const pills = document.querySelectorAll('button.rounded-full');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => {
+          p.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_10px_rgba(0,102,255,0.3)]');
+          p.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+        });
+        pill.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        pill.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_10px_rgba(0,102,255,0.3)]');
+      });
+    });
+  });
+</script></main></div></body></html>

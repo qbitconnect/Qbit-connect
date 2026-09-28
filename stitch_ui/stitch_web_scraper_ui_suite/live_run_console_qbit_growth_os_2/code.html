@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#0d1322","on-secondary-fixed":"#001f28","on-error-container":"#ffdad6","primary":"#b3c5ff","secondary":"#a5e7ff","tertiary-container":"#008259","inverse-on-surface":"#2a3040","outline-variant":"#424656","on-tertiary-container":"#e1ffec","on-primary-container":"#f8f7ff","error":"#ffb4ab","on-error":"#690005","on-background":"#dde2f7","on-primary-fixed":"#001849","on-secondary":"#003543","surface-bright":"#333949","on-primary":"#002b75","on-surface-variant":"#c2c6d8","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","inverse-primary":"#0054d6","tertiary-fixed":"#6ffbbe","tertiary":"#4edea3","surface":"#0d1322","on-primary-fixed-variant":"#003fa4","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-tertiary-fixed":"#002113","tertiary-fixed-dim":"#4edea3","on-surface":"#dde2f7","surface-container-high":"#242a3a","outline":"#8c90a1","on-tertiary":"#003824","secondary-fixed-dim":"#47d6ff","surface-container-low":"#151b2b","primary-container":"#0066ff","secondary-container":"#00d2ff","surface-container-highest":"#2f3445","on-tertiary-fixed-variant":"#005236","surface-container":"#191f2f","surface-dim":"#0d1322","error-container":"#93000a","surface-variant":"#2f3445","inverse-surface":"#dde2f7","primary-fixed-dim":"#b3c5ff","surface-tint":"#b3c5ff","primary-fixed":"#dae1ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-md":"0.75rem","space-lg":"1rem","margin":"1.5rem","gutter":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem","space-xl":"1.5rem"},"fontFamily":{"body-lg":["Inter"],"headline-xl":["Inter"],"code-xs":["JetBrains Mono"],"label-md":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"code-sm":["JetBrains Mono"],"headline-lg":["Inter"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="role-and-permissions" href="#">Role &amp; Permissions</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns, roles..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Execution Bar & Header -->
+<div class="flex flex-col gap-space-md mb-space-lg">
+<!-- Breadcrumb & Top Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-secondary-fixed-dim uppercase tracking-wider font-semibold">QBIT SYSTEM // 18 / RUN CONSOLE</span>
+<span class="text-outline-variant">/</span>
+<span class="text-outline">Scrapers</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface-variant">Google Maps Business Scraper</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold bg-surface-container-high px-2 py-0.5 rounded">#GM-20260926-001</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">file_download</span>
+          Download Partial (JSON)
+        </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">ios_share</span>
+          Share Run
+        </button>
+</div>
+</div>
+<!-- Main Run Identity Banner -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-lg flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex items-start sm:items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container shadow-[0_0_16px_rgba(0,102,255,0.25)] shrink-0">
+<span class="material-symbols-outlined text-[28px] text-secondary-container">location_on</span>
+</div>
+<div class="flex flex-col">
+<div class="flex flex-wrap items-center gap-space-sm">
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">
+              Running: Google Maps Business Scraper
+            </h1>
+<div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm shadow-[0_0_8px_rgba(78,222,163,0.35)]">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>Running</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary-fixed-dim">hub</span>
+              12 Active Nodes
+            </div>
+</div>
+<p class="font-body-md text-body-md text-outline mt-0.5">
+            Extracting businesses from Bareilly, Uttar Pradesh... (Target: 1,000 places)
+          </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm self-end lg:self-center">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-all shadow-sm" id="pause-btn">
+<span class="material-symbols-outlined text-[18px] text-secondary">pause</span>
+<span>Pause Run</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-error-container/30 hover:bg-error-container/60 text-error font-label-md text-label-md transition-all shadow-sm" id="stop-btn">
+<span class="material-symbols-outlined text-[18px]">stop_circle</span>
+<span>Stop / Abort</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Progress Bar Strip -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-md mb-space-lg flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-label-sm">
+<div class="flex items-center gap-2">
+<span class="text-on-surface font-semibold tracking-wide uppercase font-label-sm">Total Progress</span>
+<span class="text-secondary-container font-code-xs text-code-xs bg-surface-container-high px-2 py-0.5 rounded">Scraping In-Depth Contact Data</span>
+</div>
+<div class="flex items-center gap-3 font-code-sm text-code-sm">
+<span class="text-on-surface font-semibold">68%</span>
+<span class="text-outline">(687 / 1,000 places resolved)</span>
+</div>
+</div>
+<!-- Interactive Track -->
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full bg-gradient-to-r from-primary-container via-secondary-container to-tertiary rounded-full shadow-[0_0_12px_rgba(0,210,255,0.6)] transition-all duration-500 ease-out" style="width: 68%;"></div>
+</div>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-space-md mb-space-lg">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Places Found</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">storefront</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight" id="places-counter">687</span>
+<span class="font-body-sm text-body-sm text-outline">/ 1,000</span>
+</div>
+<div class="mt-1 flex items-center gap-1 font-code-xs text-code-xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+14/sec pace</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">HTTP Requests</span>
+<span class="material-symbols-outlined text-[18px] text-primary">swap_calls</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">2,134</span>
+</div>
+<div class="mt-1 flex items-center gap-1 font-code-xs text-code-xs text-on-surface-variant">
+<span class="text-tertiary">0 err 429</span>
+<span class="text-outline-variant">•</span>
+<span>100% bypass</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Elapsed Time</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">timer</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight font-code-sm">00:01:08</span>
+</div>
+<div class="mt-1 flex items-center gap-1 font-code-xs text-code-xs text-outline">
+<span>Est. rem: <strong class="text-on-surface">~00:00:32</strong></span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Estimated Cost</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">credit_card</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">$0.041</span>
+<span class="font-body-sm text-body-sm text-outline">/ ~$0.06</span>
+</div>
+<div class="mt-1 flex items-center gap-1 font-code-xs text-code-xs text-secondary-fixed-dim">
+<span>687 credits used</span>
+</div>
+</div>
+<!-- Metric 5 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between col-span-2 md:col-span-1">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Node Concurrency</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">speed</span>
+</div>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">380</span>
+<span class="font-body-sm text-body-sm text-outline">places/min</span>
+</div>
+<div class="mt-1 flex items-center gap-1 font-code-xs text-code-xs text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>12 Nodes saturated</span>
+</div>
+</div>
+</div>
+<!-- Dual Workspace Stage: Stream Terminal vs Live Extracted Inspector -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left 8 Columns: Live Terminal & Tabs -->
+<div class="xl:col-span-8 flex flex-col bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<!-- Tabs Bar -->
+<div class="flex flex-wrap items-center justify-between px-space-md py-space-sm bg-surface-container-low gap-2">
+<div class="flex items-center gap-1">
+<button class="tab-btn px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold flex items-center gap-2 shadow-[0_0_10px_rgba(0,102,255,0.4)]">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>Live Logs</span>
+<span class="px-1.5 py-0.2 rounded-full bg-primary text-on-primary font-code-xs text-code-xs">142</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">table_rows</span>
+<span>Results Stream</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container font-code-xs text-code-xs text-outline">687</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">dns</span>
+<span>Worker Grid (12)</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">bug_report</span>
+<span>Errors (0)</span>
+</button>
+</div>
+<!-- Terminal Controls -->
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<label class="flex items-center gap-1.5 cursor-pointer text-on-surface-variant hover:text-on-surface">
+<input checked="" class="rounded bg-surface-container text-primary-container accent-primary-container cursor-pointer" id="autoscroll-toggle" type="checkbox"/>
+<span>Auto-scroll</span>
+</label>
+<div class="h-3 w-px bg-outline-variant/40"></div>
+<button class="p-1 hover:text-on-surface text-outline rounded hover:bg-surface-container-high transition-colors" id="clear-log-btn" title="Clear View">
+<span class="material-symbols-outlined text-[16px]">clear_all</span>
+</button>
+<button class="p-1 hover:text-on-surface text-outline rounded hover:bg-surface-container-high transition-colors" id="copy-log-btn" title="Copy raw stdout">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Live Terminal Console Stream -->
+<div class="bg-[#050811] p-space-md font-code-xs text-code-xs overflow-y-auto max-h-[560px] min-h-[460px] flex flex-col gap-1.5 text-on-surface select-text" id="terminal-viewport">
+<div class="text-outline pb-1 font-code-xs flex items-center justify-between">
+<span>// ACTOR INSTANCE: QBIT-RUN-GM-AP-SOUTH-1A [CONNECTED VIA SECURE TLS 1.3]</span>
+<span class="text-tertiary">STREAM OK (100% HEALTH)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:11</span>
+<span class="px-1 py-0.2 rounded bg-surface-container-high text-secondary-fixed-dim uppercase tracking-wider font-semibold">INFO</span>
+<span class="text-on-surface-variant">Starting Google Maps scraper actor runtime v2.4.0 (Cluster: Mumbai-1A)...</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:12</span>
+<span class="px-1 py-0.2 rounded bg-surface-container-high text-primary uppercase tracking-wider font-semibold">CONF</span>
+<span class="text-on-surface-variant">Loaded target: Category = "Hotel / Hospitality", Search Query = "hotel, restaurant, cafe"</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:13</span>
+<span class="px-1 py-0.2 rounded bg-primary-container/20 text-secondary-container uppercase tracking-wider font-semibold">GEO</span>
+<span class="text-secondary-fixed">Geocoding Bareilly, UP (28.3670° N, 79.4304° E) - Mesh Grid partition into 8 quadrant tiles</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:15</span>
+<span class="px-1 py-0.2 rounded bg-surface-container text-tertiary-fixed-dim uppercase tracking-wider font-semibold">DISCO</span>
+<span class="text-on-surface">Centroid Tile 01: Found 20 places matching search radius (5km)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:18</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">The Royal Palace Hotel</strong> (Civil Lines, Bareilly • ★ 4.6 • 2,843 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors pl-6">
+<span class="text-tertiary">↳</span>
+<span class="px-1 py-0.2 rounded bg-primary-container/30 text-primary-fixed uppercase tracking-wider font-semibold">AI-ENRICH</span>
+<span class="text-tertiary-fixed-dim">Found verified domain email: info@royalpalace.com • Direct phone: +91 98765 43210</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:21</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">Hotel Surya International</strong> (Station Rd • ★ 4.4 • 1,290 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors pl-6">
+<span class="text-tertiary">↳</span>
+<span class="px-1 py-0.2 rounded bg-primary-container/30 text-primary-fixed uppercase tracking-wider font-semibold">AI-ENRICH</span>
+<span class="text-tertiary-fixed-dim">Parsed domain suryahotel.com • Social links: IG/hotel_surya, FB/suryabareilly</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:23</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">Hotel Comfort Inn</strong> (Rampur Garden • ★ 4.2 • 890 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:25</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">Spice Garden Restaurant</strong> (Stadium Road • ★ 4.4 • 612 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:26</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">Zaika Family Restaurant</strong> (DD Puram • ★ 4.1 • 530 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:27</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">The Urban Cafe</strong> (Pilibhit Bypass Rd • ★ 4.3 • 1,120 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors pl-6">
+<span class="text-tertiary">↳</span>
+<span class="px-1 py-0.2 rounded bg-primary-container/30 text-primary-fixed uppercase tracking-wider font-semibold">AI-ENRICH</span>
+<span class="text-tertiary-fixed-dim">Found owner contact: hello@urbancafe.in • WhatsApp API direct routing verified</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:28</span>
+<span class="px-1 py-0.2 rounded bg-tertiary-container/20 text-tertiary uppercase tracking-wider font-semibold">EXTRACT</span>
+<span class="text-on-surface">Extracted: <strong class="text-secondary">Hotel Grand Plaza</strong> (Civil Lines • ★ 4.5 • 940 reviews)</span>
+</div>
+<div class="flex items-start gap-2.5 py-0.5 hover:bg-surface-container-low/40 px-1 rounded transition-colors">
+<span class="text-outline font-mono select-none">12:42:29</span>
+<span class="px-1 py-0.2 rounded bg-surface-container text-secondary-container uppercase tracking-wider font-semibold">GRID</span>
+<span class="text-outline">Centroid Tile 02: Initializing deep crawl over Pilibhit bypass sector...</span>
+</div>
+<!-- Live Cursor Animation -->
+<div class="flex items-center gap-2 mt-2 text-tertiary font-code-xs">
+<span class="w-2 h-3.5 bg-tertiary inline-block animate-pulse"></span>
+<span class="text-outline">Listening to SSE pipeline at wss://cluster-04.qbit.os/stream...</span>
+</div>
+</div>
+<!-- Quick Filter / Live Log Query Input -->
+<div class="p-space-sm bg-surface-container flex items-center justify-between gap-space-md">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2 text-outline text-[16px]">filter_list</span>
+<input class="w-full bg-surface-container-lowest rounded-lg pl-9 pr-3 py-1.5 font-code-xs text-code-xs text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container" placeholder="Filter console messages (e.g. 'EXTRACT', 'AI-ENRICH', phone, 429)..." type="text"/>
+</div>
+<div class="flex items-center gap-2 text-outline font-code-xs text-code-xs whitespace-nowrap">
+<span>Buffer: <strong class="text-on-surface">1,000 / 10,000</strong></span>
+</div>
+</div>
+</div>
+<!-- Right 4 Columns: Latest Extracted Record & Cluster Telemetry -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Latest Extracted Entity Drawer Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Latest Record Scraped</span>
+</div>
+<span class="font-code-xs text-code-xs text-secondary-fixed bg-surface-container-high px-2 py-0.5 rounded">Just now</span>
+</div>
+<!-- Business Card Preview -->
+<div class="rounded-xl overflow-hidden bg-surface-container-low shadow-md">
+<div class="relative h-28 w-full bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A modern luxury boutique hotel exterior with evening warm architectural lighting, palm trees, and elegant entryway in Uttar Pradesh India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgC2uwWc_3_3jSvLZilQ3KqcZy_pSe4lhIJm9qZfmpZmdISuX4gHKVCFCNb_puXSNrcLi1siM6aI1TKASjtURNbJPNXbbeWHQTeXRjzkGPBh27EFBnX9ZDKr45iOl2O7Y4JEDYI_6cZj94L7h66sMunjE-u88QcG5Cp0JH6nBpRlYcanp3669VI9Mij2QAN5vHoWm58O8fZzdIk7XdLqp1qiZ4fMwtPoHRcaZb71slnFnMPN1cJAd1vQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<div class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-tertiary font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+              Verified Record
+            </div>
+<div class="absolute bottom-2 left-3 right-3 flex items-end justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">The Royal Palace Hotel</h2>
+<p class="font-body-sm text-body-sm text-outline">Civil Lines, Bareilly, Uttar Pradesh</p>
+</div>
+</div>
+</div>
+<!-- Structured Payload Data Points -->
+<div class="p-space-md flex flex-col gap-2 font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">category</span> Category
+              </span>
+<span class="text-on-surface font-medium">Hotel / Hospitality</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">star</span> Rating &amp; Reviews
+              </span>
+<span class="text-on-surface font-medium flex items-center gap-1">
+<span class="text-secondary font-bold">4.6</span>
+<span class="text-outline text-code-xs font-code-xs">(2,843 reviews)</span>
+</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">call</span> Phone
+              </span>
+<span class="text-on-surface font-code-xs text-code-xs font-medium">+91 98765 43210</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary-container">mail</span> Email (AI Enrich)
+              </span>
+<span class="text-secondary-fixed font-code-xs text-code-xs">info@royalpalace.com</span>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline">language</span> Website
+              </span>
+<a class="text-primary hover:underline font-code-xs text-code-xs truncate max-w-[170px]" href="#">https://royalpalace.com</a>
+</div>
+<div class="flex items-center justify-between py-1 bg-surface-container/50 px-2 rounded">
+<span class="text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline">schedule</span> Opening Hours
+              </span>
+<span class="text-tertiary font-code-xs text-code-xs font-semibold">Open 24 Hours</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Cluster Hardware & Proxy Telemetry -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">memory</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Cluster Resource Health</span>
+</div>
+<span class="text-tertiary font-code-xs text-code-xs flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 99.98%
+          </span>
+</div>
+<div class="flex flex-col gap-3 font-body-sm text-body-sm">
+<!-- CPU Usage Bar -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-outline font-label-sm text-label-sm">
+<span>Cluster CPU Load</span>
+<span class="text-on-surface font-code-xs text-code-xs">24% across 12 pods</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 24%;"></div>
+</div>
+</div>
+<!-- Memory Usage Bar -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-outline font-label-sm text-label-sm">
+<span>RAM Consumption</span>
+<span class="text-on-surface font-code-xs text-code-xs">1.8 GB / 8.0 GB</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 22.5%;"></div>
+</div>
+</div>
+<!-- Proxy Pool Box -->
+<div class="mt-1 bg-surface-container p-space-sm rounded-lg flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">security</span>
+                Rotating Residential Proxies
+              </span>
+<span class="text-tertiary font-code-xs text-code-xs">Zero Blocks</span>
+</div>
+<p class="font-code-xs text-code-xs text-outline leading-tight">
+              Gateway: <span class="text-on-surface">India-Tier1-Jio/Airtel Pool</span> • Node ID: <span class="text-secondary-fixed">#IN-4412</span>
+</p>
+<div class="flex items-center justify-between text-code-xs font-code-xs text-outline pt-1">
+<span>Bandwidth: <strong class="text-on-surface">48.2 MB</strong></span>
+<span>Avg Latency: <strong class="text-tertiary">42ms</strong></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Controls JavaScript -->
+<script>
+    (function initRunConsole() {
+      const pauseBtn = document.getElementById('pause-btn');
+      const stopBtn = document.getElementById('stop-btn');
+      const terminalViewport = document.getElementById('terminal-viewport');
+      const autoScrollToggle = document.getElementById('autoscroll-toggle');
+      const clearBtn = document.getElementById('clear-log-btn');
+      const copyBtn = document.getElementById('copy-log-btn');
+      const counter = document.getElementById('places-counter');
+
+      let isPaused = false;
+      let placeCount = 687;
+
+      if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+          isPaused = !isPaused;
+          if (isPaused) {
+            pauseBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-tertiary">play_arrow</span><span>Resume Run</span>';
+            pauseBtn.classList.add('bg-tertiary-container/30', 'text-tertiary');
+          } else {
+            pauseBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary">pause</span><span>Pause Run</span>';
+            pauseBtn.classList.remove('bg-tertiary-container/30', 'text-tertiary');
+          }
+        });
+      }
+
+      if (stopBtn) {
+        stopBtn.addEventListener('click', () => {
+          if (confirm('Are you sure you want to stop this actor run? Partial data will remain intact.')) {
+            stopBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Stopped</span>';
+            stopBtn.disabled = true;
+            stopBtn.classList.add('opacity-60');
+          }
+        });
+      }
+
+      if (clearBtn && terminalViewport) {
+        clearBtn.addEventListener('click', () => {
+          terminalViewport.innerHTML = '<div class="text-outline font-code-xs">// Console cleared. Stream listening...</div>';
+        });
+      }
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const text = terminalViewport.innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-tertiary">done</span>';
+            setTimeout(() => { copyBtn.innerHTML = original; }, 1500);
+          });
+        });
+      }
+
+      // Micro simulation for live feeling
+      setInterval(() => {
+        if (!isPaused && placeCount < 1000) {
+          placeCount += Math.floor(Math.random() * 2);
+          if (counter) counter.textContent = placeCount;
+          if (autoScrollToggle && autoScrollToggle.checked && terminalViewport) {
+            terminalViewport.scrollTop = terminalViewport.scrollHeight;
+          }
+        }
+      }, 2500);
+    })();
+  </script>
+</div></main></div></body></html>

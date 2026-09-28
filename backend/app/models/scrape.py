@@ -274,6 +274,9 @@ class Lead(Base):
         Index("ix_leads_assigned_user", "assigned_user_id"),
         Index("ix_leads_assigned_team", "assigned_team_id"),
         Index("ix_leads_enrichment_status", "enrichment_status"),
+        # --- Phase 5 CRM pipeline & priority ---------------------------------
+        Index("ix_leads_priority", "priority"),
+        Index("ix_leads_last_activity", "last_activity_at"),
     )
 
     id: Mapped[uuid.UUID] = uuid_pk()
@@ -324,6 +327,9 @@ class Lead(Base):
     seen_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     #: workflow status (LeadStatus); legacy values are mapped by migration 0003
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="NEW")
+    #: CRM priority (LOW | MEDIUM | HIGH | URGENT)
+    priority: Mapped[str] = mapped_column(String(20), nullable=False, default="MEDIUM", server_default="MEDIUM")
+    last_activity_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     #: deterministic 0-100 completeness score (Phase 4 §15) — not an AI prediction
     quality_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
     archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -345,6 +351,18 @@ class Lead(Base):
     assigned_team_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
     created_at: Mapped[datetime] = timestamp_columns()[0]
     updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    @property
+    def is_verified(self) -> bool:
+        return self.last_verified_at is not None
+
+    @is_verified.setter
+    def is_verified(self, val: bool) -> None:
+        if val:
+            if self.last_verified_at is None:
+                self.last_verified_at = datetime.now(timezone.utc)
+        else:
+            self.last_verified_at = None
 
     def to_public_dict(self) -> dict:
         return {
@@ -383,9 +401,12 @@ class Lead(Base):
             "website_norm": self.website_norm,
             "seen_count": self.seen_count,
             "status": self.status,
+            "priority": self.priority,
+            "last_activity_at": self.last_activity_at.isoformat() if self.last_activity_at else None,
             "quality_score": self.quality_score,
             "enrichment_status": self.enrichment_status,
             "confidence": self.confidence,
+            "is_verified": self.is_verified,
             "last_verified_at": self.last_verified_at.isoformat() if self.last_verified_at else None,
             "merged_into_id": str(self.merged_into_id) if self.merged_into_id else None,
             "archived_at": self.archived_at.isoformat() if self.archived_at else None,

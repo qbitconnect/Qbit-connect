@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Scraper Context Strip -->
+<div class="flex flex-col gap-space-sm pb-space-lg">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<a class="hover:text-primary transition-colors" href="#">Scrapers</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">Google Maps Business Scraper</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary-fixed-dim font-medium">Advanced Configuration</span>
+</div>
+<!-- Header Actions & Meta Block -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Advanced Settings &amp; JSON Configuration</h1>
+<span class="px-2 py-0.5 rounded-full font-code-xs text-code-xs bg-surface-container-high text-secondary-fixed-dim border border-outline-variant/30">task_id: qb_gmap_9942</span>
+</div>
+<p class="font-body-md text-body-md text-outline mt-0.5">
+          Fine-tune extraction parameters, custom HTTP headers, proxy routing, or edit the raw task payload directly.
+        </p>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center flex-wrap gap-space-sm">
+<!-- Visual / JSON Mode Selector Pill -->
+<div class="bg-surface-container-lowest p-1 rounded-lg flex items-center shadow-inner">
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-outline hover:text-on-surface transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">view_quilt</span>
+            Visual Form
+          </button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md bg-primary-container text-on-primary-container shadow-[0_0_12px_rgba(0,102,255,0.45)] flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">data_object</span>
+            JSON Configuration
+          </button>
+</div>
+<div class="h-6 w-px bg-outline-variant/40 hidden sm:block"></div>
+<!-- Secondary Controls -->
+<div class="relative inline-block">
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">bookmark</span>
+<span>Use Template</span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</button>
+</div>
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-colors" id="btn-beautify" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_fix_high</span>
+<span>Format JSON</span>
+</button>
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-outline hover:text-error font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-colors" title="Revert to default configuration" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span class="hidden md:inline">Reset</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Workspace Grid: 60% Code Editor + 40% Control Deck -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: VS Code Aesthetic Editor (7 cols on XL) -->
+<div class="xl:col-span-7 flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-xl">
+<!-- Editor Chrome Bar -->
+<div class="h-11 bg-surface-container-low px-space-md flex items-center justify-between">
+<!-- Tab & Metadata -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-t-lg">
+<span class="material-symbols-outlined text-[16px] text-amber-400">javascript</span>
+<span class="font-code-xs text-code-xs font-medium text-on-surface">config.json</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Syntax Valid • JSON Schema v2</span>
+</div>
+</div>
+<!-- Editor View Tools -->
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" id="copy-json-btn" title="Copy raw payload" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" title="Search inside payload" type="button">
+<span class="material-symbols-outlined text-[16px]">find_in_page</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" title="Fullscreen editor" type="button">
+<span class="material-symbols-outlined text-[16px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Line-Numbered Code Viewport -->
+<div class="p-space-md font-code-sm text-code-sm bg-surface-container-lowest overflow-x-auto max-h-[640px] select-text">
+<div class="flex">
+<!-- Line Numbers -->
+<div class="pr-space-md text-right select-none text-outline-variant/60 font-code-xs text-code-xs leading-6 flex flex-col min-w-[2.2rem]">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+<span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+<span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+<span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+<span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+<span>26</span><span>27</span><span>28</span>
+</div>
+<!-- Code Lines with VS Code/Monaco Highlighting -->
+<div class="flex-1 leading-6 font-code-sm text-code-sm">
+<div class="text-on-surface-variant font-medium">{</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"searchLocation"</span><span class="text-outline-variant">: </span><span class="text-tertiary">"Bareilly, Uttar Pradesh"</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"radius"</span><span class="text-outline-variant">: </span><span class="text-amber-300">5000</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"category"</span><span class="text-outline-variant">: </span><span class="text-tertiary">"hotel"</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"searchTerms"</span><span class="text-outline-variant">: [</span>
+</div>
+<div class="pl-8">
+<span class="text-tertiary">"hotel"</span><span class="text-outline-variant">, </span><span class="text-tertiary">"restaurant"</span><span class="text-outline-variant">, </span><span class="text-tertiary">"cafe"</span>
+</div>
+<div class="pl-4 text-outline-variant">],</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"maxResults"</span><span class="text-outline-variant">: </span><span class="text-amber-300">1000</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"language"</span><span class="text-outline-variant">: </span><span class="text-tertiary">"en"</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"dataFields"</span><span class="text-outline-variant">: [</span>
+</div>
+<div class="pl-8 text-tertiary">
+              "name"<span class="text-outline-variant">, </span>"category"<span class="text-outline-variant">, </span>"address"<span class="text-outline-variant">, </span>"phone"<span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8 text-tertiary">
+              "email"<span class="text-outline-variant">, </span>"website"<span class="text-outline-variant">, </span>"rating"<span class="text-outline-variant">, </span>"reviewsCount"<span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8 text-tertiary">
+              "openingHours"
+            </div>
+<div class="pl-4 text-outline-variant">],</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"filters"</span><span class="text-outline-variant">: {</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"minRating"</span><span class="text-outline-variant">: </span><span class="text-amber-300">0</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"onlyVerified"</span><span class="text-outline-variant">: </span><span class="text-secondary-container">false</span>
+</div>
+<div class="pl-4 text-outline-variant">},</div>
+<div class="pl-4">
+<span class="text-secondary-fixed">"crawlerOptions"</span><span class="text-outline-variant">: {</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"maxConcurrency"</span><span class="text-outline-variant">: </span><span class="text-amber-300">10</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"pageTimeoutSecs"</span><span class="text-outline-variant">: </span><span class="text-amber-300">60</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"stealthMode"</span><span class="text-outline-variant">: </span><span class="text-secondary-container">true</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"proxyGroup"</span><span class="text-outline-variant">: </span><span class="text-tertiary">"residential_premium_in"</span><span class="text-outline-variant">,</span>
+</div>
+<div class="pl-8">
+<span class="text-secondary-fixed">"customHeaders"</span><span class="text-outline-variant">: {</span>
+</div>
+<div class="pl-12">
+<span class="text-secondary-fixed">"Accept-Language"</span><span class="text-outline-variant">: </span><span class="text-tertiary">"en-US,en;q=0.9"</span>
+</div>
+<div class="pl-8 text-outline-variant">}</div>
+<div class="pl-4 text-outline-variant">}</div>
+<div class="text-on-surface-variant font-medium">}</div>
+</div>
+</div>
+</div>
+<!-- Schema Validation Footer Bar -->
+<div class="px-space-md py-2.5 bg-surface-container-low flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<span class="font-code-xs text-code-xs text-on-surface">Payload validated successfully against <span class="text-secondary-fixed font-medium">apify/google-maps-scraper:v2.3.8</span></span>
+</div>
+<div class="flex items-center gap-space-md text-outline font-code-xs text-code-xs">
+<span>UTF-8</span>
+<span>JSON</span>
+<span>Tab Size: 2</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Advanced Execution Parameters & Proxy Controls (5 cols on XL) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Section 1: Proxy & Network Routing -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">hub</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Proxy &amp; Network Routing</h2>
+</div>
+<span class="px-2 py-0.5 rounded font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary font-semibold">Tier 1 Active</span>
+</div>
+<!-- Proxy Type Selector -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-outline">Routing Pool Architecture</label>
+<div class="grid grid-cols-1 gap-2">
+<!-- Option 1: Selected -->
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-high cursor-pointer shadow-inner">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="text-primary-container focus:ring-0 w-3.5 h-3.5 bg-surface-container-lowest" name="proxy_type" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Residential Premium (Rotating)</span>
+<span class="font-code-xs text-code-xs text-outline">Real residential IPs • Automatic node rotation</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary">verified_user</span>
+</label>
+<!-- Option 2 -->
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="text-primary-container focus:ring-0 w-3.5 h-3.5 bg-surface-container-lowest" name="proxy_type" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Datacenter Fast (Low Latency)</span>
+<span class="font-code-xs text-code-xs text-outline">High throughput • Cost effective for lightweight crawls</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline">bolt</span>
+</label>
+<!-- Option 3 -->
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input class="text-primary-container focus:ring-0 w-3.5 h-3.5 bg-surface-container-lowest" name="proxy_type" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Custom Private Proxy Pool</span>
+<span class="font-code-xs text-code-xs text-outline">Bring your own HTTP/SOCKS5 credentials</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline">vpn_key</span>
+</label>
+</div>
+</div>
+<!-- Geo & Stealth Controls -->
+<div class="grid grid-cols-2 gap-space-md pt-1">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-outline">Exit Node Geolocation</label>
+<div class="flex items-center justify-between h-9 px-3 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-2">
+<!-- Mini Flag SVG -->
+<svg class="w-4 h-3 rounded-sm shadow-sm" viewbox="0 0 640 480">
+<path d="M0 0h640v160H0z" fill="#f93"></path>
+<path d="M0 160h640v160H0z" fill="#fff"></path>
+<path d="M0 320h640v160H0z" fill="#128807"></path>
+<circle cx="320" cy="240" fill="#000088" r="40"></circle>
+</svg>
+<span class="font-medium">India (IN)</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">lock</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-outline">Session Sticky Window</label>
+<div class="flex items-center justify-between h-9 px-3 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm">
+<span class="font-code-xs text-code-xs">Per Domain (10m)</span>
+<span class="material-symbols-outlined text-[16px] text-outline">timer</span>
+</div>
+</div>
+</div>
+<!-- Ultra Stealth Toggle Bar -->
+<div class="p-3 rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-secondary-container/10 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Anti-Bot Bypass Tier: Ultra Stealth</span>
+<span class="font-code-xs text-code-xs text-outline">Fingerprint Spoofing &amp; TLS Jitter Injection</span>
+</div>
+</div>
+<!-- Toggle switch -->
+<button class="w-10 h-5 bg-primary-container rounded-full p-0.5 flex items-center justify-end shadow-sm" type="button">
+<span class="w-4 h-4 bg-on-primary-container rounded-full shadow-md"></span>
+</button>
+</div>
+</div>
+<!-- Section 2: Concurrency & Rate Limiting -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">speed</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Concurrency &amp; Rate Limiting</h2>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Engine: Playwright Cluster</span>
+</div>
+<!-- Thread Slider -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Max Concurrent Requests</span>
+<span class="font-code-sm text-code-sm font-semibold text-secondary-fixed-dim">10 worker threads</span>
+</div>
+<div class="relative w-full flex items-center">
+<input class="w-full h-1.5 bg-surface-container rounded-lg appearance-none cursor-pointer accent-primary" max="30" min="1" type="range" value="10"/>
+</div>
+<div class="flex items-center justify-between font-code-xs text-code-xs text-outline">
+<span>1 thread (Stealth)</span>
+<span class="text-tertiary">Recommended: 8 - 15</span>
+<span>30 threads (Aggressive)</span>
+</div>
+</div>
+<!-- Detailed Timing Inputs -->
+<div class="grid grid-cols-2 gap-space-md pt-1">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-outline">Request Delay / Jitter</label>
+<div class="flex items-center justify-between h-9 px-3 rounded-lg bg-surface-container text-on-surface font-code-xs text-code-xs">
+<span class="text-amber-300">1.5s - 3.2s</span>
+<span class="text-outline">Randomized</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-outline">Page Load Timeout</label>
+<div class="flex items-center justify-between h-9 px-3 rounded-lg bg-surface-container text-on-surface font-code-xs text-code-xs">
+<span class="text-on-surface">60s</span>
+<span class="text-outline">Max failover</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Webhook & Downstream Automation -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">sync_alt</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Webhook &amp; Downstream Pipeline</h2>
+</div>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+<!-- Webhook Trigger Toggle -->
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input checked="" class="mt-0.5 rounded text-primary-container focus:ring-0 bg-surface-container-high w-4 h-4" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Trigger Webhook on Run Completion</span>
+<span class="font-code-xs text-code-xs text-outline">Broadcasts JSON payload with extracted records and scrape metrics.</span>
+</div>
+</label>
+<!-- Webhook URL Field -->
+<div class="flex flex-col gap-1">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-[16px] text-outline absolute left-3">link</span>
+<input class="w-full h-9 pl-9 pr-20 bg-surface-container rounded-lg font-code-xs text-code-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" type="text" value="https://api.qbitpro.in/v1/webhooks/scrapers/ingest"/>
+<button class="absolute right-1.5 px-2 py-1 rounded font-code-xs text-code-xs bg-surface-container-high text-secondary hover:text-on-surface transition-colors" type="button">
+              Ping Test
+            </button>
+</div>
+</div>
+<!-- Automation Export Toggles -->
+<div class="pt-1 flex flex-col gap-2">
+<div class="p-2.5 rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">table_view</span>
+<span class="font-body-sm text-body-sm text-on-surface">Auto-sync to Google Sheets / Airtable</span>
+</div>
+<button class="w-8 h-4.5 bg-primary-container rounded-full p-0.5 flex items-center justify-end" type="button">
+<span class="w-3.5 h-3.5 bg-on-primary-container rounded-full shadow-sm"></span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- STICKY ACTION FOOTER BAR -->
+<div class="mt-space-xl p-space-md bg-surface-container-lowest rounded-xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-space-md sticky bottom-4 z-30">
+<!-- Back & Status Context -->
+<div class="flex items-center gap-space-lg w-full md:w-auto justify-between md:justify-start">
+<button class="h-10 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back to Data Fields</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Estimated Credit Usage: <span class="text-tertiary-fixed font-semibold">~1,000 places ($0.06 est.)</span></span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">84,553 platform credits remaining in subscription</span>
+</div>
+</div>
+<!-- Final CTA Cluster -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<button class="h-10 px-4 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-outline">save</span>
+<span>Save as Preset</span>
+</button>
+<button class="h-10 px-6 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-sm text-headline-sm font-semibold flex items-center gap-2 shadow-[0_0_16px_rgba(0,102,255,0.4)] transition-all" type="button">
+<span>Review &amp; Run</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction for Copy JSON action
+  const copyBtn = document.getElementById('copy-json-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const rawConfig = {
+        "searchLocation": "Bareilly, Uttar Pradesh",
+        "radius": 5000,
+        "category": "hotel",
+        "searchTerms": ["hotel", "restaurant", "cafe"],
+        "maxResults": 1000,
+        "language": "en",
+        "dataFields": [
+          "name", "category", "address", "phone", "email",
+          "website", "rating", "reviewsCount", "openingHours"
+        ],
+        "filters": {
+          "minRating": 0,
+          "onlyVerified": false
+        },
+        "crawlerOptions": {
+          "maxConcurrency": 10,
+          "pageTimeoutSecs": 60,
+          "stealthMode": true,
+          "proxyGroup": "residential_premium_in",
+          "customHeaders": {
+            "Accept-Language": "en-US,en;q=0.9"
+          }
+        }
+      };
+      navigator.clipboard.writeText(JSON.stringify(rawConfig, null, 2)).then(() => {
+        const icon = copyBtn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.textContent = 'done';
+          setTimeout(() => { icon.textContent = 'content_copy'; }, 1800);
+        }
+      });
+    });
+  }
+
+  // Format button visual feedback
+  const formatBtn = document.getElementById('btn-beautify');
+  if (formatBtn) {
+    formatBtn.addEventListener('click', () => {
+      formatBtn.classList.add('bg-surface-container-highest');
+      setTimeout(() => formatBtn.classList.remove('bg-surface-container-highest'), 300);
+    });
+  }
+</script></main></div></body></html>

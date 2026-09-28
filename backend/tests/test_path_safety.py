@@ -50,7 +50,10 @@ def test_symlink_escape_blocked(root: Path, tmp_path: Path):
     outside = tmp_path / "outside.txt"
     outside.write_text("secret")
     link = root / "exports" / "link.txt"
-    link.symlink_to(outside)
+    try:
+        link.symlink_to(outside)
+    except OSError:
+        pytest.skip("Symlink creation requires elevated privileges on Windows")
 
     # The symlink resolves OUTSIDE the root -> must be rejected.
     with pytest.raises(PathAccessDeniedError):

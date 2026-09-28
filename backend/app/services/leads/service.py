@@ -18,6 +18,7 @@ from datetime import datetime, timezone
 from sqlalchemy import func, or_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.models.lead import LeadStatusHistory, PIPELINE_STAGES
 from app.models.scrape import Lead
 
 #: custom (non-default) statuses must look like canonical workflow codes
@@ -108,6 +109,32 @@ class LeadService:
         if merge and match is not None and match.lead_id is not None:
             lead = await session.get(Lead, match.lead_id)
             if lead is not None:
+                # Check if lead has been operator-verified (Phase 3 brief §22)
+                is_verified = bool(
+                    lead.last_verified_at is not None
+                    or (lead.metadata_json or {}).get("manually_verified") is True
+                    or (lead.metadata_json or {}).get("verified") is True
+                )
+                if is_verified:
+                    # STRICT PRESERVATION: Do not alter any existing data with scraper items.
+                    # Record provenance and seen counter only.
+                    lead.seen_count = (lead.seen_count or 1) + 1
+                    lead.last_seen_at = now
+                    lead.metadata_json = _merge_metadata(
+                        lead.metadata_json or {},
+                        {
+                            "last_job_id": str(job_id),
+                            "last_actor_id": actor_id,
+                            "last_match_confidence": match.confidence.value if match.confidence else None,
+                            "matched_on": match.matched_on,
+                            "verified_protected": True,
+                        },
+                    )
+                    if commit:
+                        await session.commit()
+                        await session.refresh(lead)
+                    return lead, False
+
                 for key, value in base.items():
                     if value is not None and (getattr(lead, key) is None or getattr(lead, key) == ""):
                         setattr(lead, key, value)
@@ -338,6 +365,10 @@ class LeadWorkspaceService:
         if not clean.get("business_name") and not clean.get("contact_name"):
             raise _ValidationError("business_name or contact_name is required")
         now = datetime.now(timezone.utc)
+        priority = payload.get("priority") or "MEDIUM"
+        last_verified_at = payload.get("last_verified_at")
+        if payload.get("is_verified") and not last_verified_at:
+            last_verified_at = now
         lead = Lead(
             **{k: v for k, v in clean.items() if not k.endswith("_norm") and k != "name_key"},
             email_norm=clean.get("email_norm"),
@@ -347,6 +378,9 @@ class LeadWorkspaceService:
             source=source,
             source_type=source_type,
             status=(status or LeadStatus.NEW.value),
+            priority=priority,
+            last_verified_at=last_verified_at,
+            last_activity_at=now,
             quality_score=None,  # set below
             first_seen_at=now,
             last_seen_at=now,
@@ -397,9 +431,21 @@ class LeadWorkspaceService:
         for key in ("email_norm", "phone_norm", "website_norm", "name_key"):
             if key in clean:
                 setattr(lead, key, clean[key])
+        if "is_verified" in payload and payload["is_verified"] is not None:
+            is_v = bool(payload["is_verified"])
+            if lead.is_verified != is_v:
+                changed["is_verified"] = {"from": lead.is_verified, "to": is_v}
+                lead.is_verified = is_v
+        if "priority" in payload and payload["priority"]:
+            p = str(payload["priority"]).upper()
+            if lead.priority != p:
+                changed["priority"] = {"from": lead.priority, "to": p}
+                lead.priority = p
         if changed:
             lead.quality_score = compute_quality_score(lead.to_public_dict())
-            lead.updated_at = datetime.now(timezone.utc)
+            now = datetime.now(timezone.utc)
+            lead.updated_at = now
+            lead.last_activity_at = now
             await self.activities.log(
                 session, lead.id, EVENT_UPDATED,
                 message="Lead updated: " + ", ".join(sorted(changed.keys())),
@@ -417,30 +463,46 @@ class LeadWorkspaceService:
 
     async def set_status(
         self, session: AsyncSession, lead: Lead, status: str, *,
-        user_id: uuid.UUID | None = None, commit: bool = True,
+        user_id: uuid.UUID | None = None, reason: str | None = None, commit: bool = True,
     ) -> Lead:
-        allowed = {s.value for s in LeadStatus}
+        allowed = {s.value for s in LeadStatus} | set(PIPELINE_STAGES)
         if status not in allowed and not _CUSTOM_STATUS_RE.match(status or ""):
             raise _ValidationError(f"Unknown status: {status}")
         old = lead.status
         if old == status:
             return lead
         lead.status = status
-        lead.updated_at = datetime.now(timezone.utc)
+        now = datetime.now(timezone.utc)
+        lead.updated_at = now
+        lead.last_activity_at = now
+
+        session.add(
+            LeadStatusHistory(
+                lead_id=lead.id,
+                organization_id=getattr(lead, "organization_id", None),
+                previous_status=old,
+                new_status=status,
+                changed_by=user_id,
+                reason=reason,
+                created_at=now,
+            )
+        )
+
+        msg_suffix = f": {reason}" if reason else ""
         if status == LeadStatus.ARCHIVED.value:
-            lead.archived_at = lead.archived_at or datetime.now(timezone.utc)
+            lead.archived_at = lead.archived_at or now
             await self.activities.log(session, lead.id, EVENT_ARCHIVED,
-                                      message=f"Status {old} → {status}", user_id=user_id)
+                                      message=f"Status {old} → {status}{msg_suffix}", user_id=user_id)
         elif old == LeadStatus.ARCHIVED.value:
             lead.archived_at = None
             await self.activities.log(session, lead.id, EVENT_RESTORED,
-                                      message=f"Restored from {old} → {status}", user_id=user_id)
+                                      message=f"Restored from {old} → {status}{msg_suffix}", user_id=user_id)
         else:
             await self.activities.log(session, lead.id, EVENT_STATUS_CHANGED,
-                                      message=f"Status {old} → {status}", user_id=user_id)
+                                      message=f"Status {old} → {status}{msg_suffix}", user_id=user_id)
         await _emit_automation(
             session, event_type="lead.status_changed", entity_type="lead", entity_id=lead.id,
-            payload={"from_status": old, "to_status": status},
+            payload={"from_status": old, "to_status": status, "reason": reason},
         )
         if commit:
             await session.commit()
@@ -564,6 +626,60 @@ class LeadWorkspaceService:
                      for lid in lead_ids[:BULK_DELETE_HARD_LIMIT]],
                 )
                 await session.commit()
+        elif action == "assign":
+            assigned_user_id = params.get("assigned_user_id")
+            assigned_team_id = params.get("assigned_team_id")
+            priority = params.get("priority")
+            now = datetime.now(timezone.utc)
+            values = {"updated_at": now, "last_activity_at": now}
+            if "assigned_user_id" in params:
+                values["assigned_user_id"] = assigned_user_id
+            if "assigned_team_id" in params:
+                values["assigned_team_id"] = assigned_team_id
+            if priority:
+                values["priority"] = priority.upper()
+            result = await session.execute(
+                update(Lead)
+                .where(Lead.id.in_(lead_ids), Lead.merged_into_id.is_(None))
+                .values(**values)
+            )
+            counts["affected"] = result.rowcount or 0
+            from app.models.enterprise import LeadAssignmentHistory
+            for lid in lead_ids:
+                if assigned_user_id is not None or assigned_team_id is not None:
+                    session.add(
+                        LeadAssignmentHistory(
+                            lead_id=lid,
+                            assigned_by=user_id,
+                            assigned_to_user_id=assigned_user_id,
+                            assigned_to_team_id=assigned_team_id,
+                            reason=params.get("reason"),
+                        )
+                    )
+            await self.activities.log_many(
+                session,
+                [{"lead_id": lid, "event_type": "lead_assigned",
+                  "message": f"Lead assigned (user={assigned_user_id}, team={assigned_team_id})",
+                  "user_id": user_id}
+                 for lid in lead_ids[:BULK_DELETE_HARD_LIMIT]],
+            )
+            await session.commit()
+        elif action == "set_priority":
+            priority = (params.get("priority") or "MEDIUM").upper()
+            now = datetime.now(timezone.utc)
+            result = await session.execute(
+                update(Lead)
+                .where(Lead.id.in_(lead_ids), Lead.merged_into_id.is_(None))
+                .values(priority=priority, updated_at=now, last_activity_at=now)
+            )
+            counts["affected"] = result.rowcount or 0
+            await self.activities.log_many(
+                session,
+                [{"lead_id": lid, "event_type": "lead_updated",
+                  "message": f"Priority set to {priority}", "user_id": user_id}
+                 for lid in lead_ids[:BULK_DELETE_HARD_LIMIT]],
+            )
+            await session.commit()
         else:
             raise _ValidationError(f"Unknown bulk action: {action}")
         return counts

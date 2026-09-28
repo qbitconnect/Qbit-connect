@@ -32,6 +32,12 @@ class Exporter(ABC):
         """Write `rows` to `out`; return row count."""
 
 
+def _sanitize_csv_cell(val: any) -> any:
+    if isinstance(val, str) and val and val[0] in ("=", "+", "-", "@", "\t", "\r"):
+        return f"'{val}"
+    return val
+
+
 class CSVExporter(Exporter):
     format_name = "csv"
     mime_type = "text/csv"
@@ -45,7 +51,7 @@ class CSVExporter(Exporter):
         writer.writeheader()
         count = 0
         for row in rows:
-            writer.writerow(row)
+            writer.writerow({k: _sanitize_csv_cell(v) for k, v in row.items()})
             count += 1
         out.write(text_buffer.getvalue().encode("utf-8"))
         return count

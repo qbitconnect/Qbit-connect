@@ -15,9 +15,11 @@ from app.services.marketing.providers.email.api import GenericEmailAPIProvider
 from app.services.marketing.providers.email.errors import EmailErrorNormalizer
 from app.services.marketing.providers.email.events import EmailEventNormalizer
 from app.services.marketing.providers.email.mock import EmailMockProvider
+from app.services.marketing.providers.email.ses import AmazonSESEmailProvider
 from app.services.marketing.providers.email.smtp import SMTPProvider, header_safe
 
 __all__ = [
+    "AmazonSESEmailProvider",
     "EmailErrorNormalizer",
     "EmailEventNormalizer",
     "EmailMockProvider",

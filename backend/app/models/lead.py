@@ -25,6 +25,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    Boolean,
     DateTime,
     ForeignKey,
     Index,
@@ -46,15 +47,43 @@ class LeadStatus(str, enum.Enum):
     beyond this default set."""
 
     NEW = "NEW"
+    ASSIGNED = "ASSIGNED"
+    CONTACTED = "CONTACTED"
+    FOLLOW_UP = "FOLLOW_UP"
     VERIFIED = "VERIFIED"
     QUALIFIED = "QUALIFIED"
-    CONTACTED = "CONTACTED"
     REPLIED = "REPLIED"
     INTERESTED = "INTERESTED"
     NOT_INTERESTED = "NOT_INTERESTED"
     CONVERTED = "CONVERTED"
     LOST = "LOST"
     ARCHIVED = "ARCHIVED"
+
+
+#: Standard CRM pipeline stages in logical progression order (Phase 5)
+PIPELINE_STAGES: tuple[str, ...] = (
+    "NEW",
+    "ASSIGNED",
+    "CONTACTED",
+    "FOLLOW_UP",
+    "QUALIFIED",
+    "CONVERTED",
+    "NOT_INTERESTED",
+    "LOST",
+)
+
+
+class FollowUpStatus(str, enum.Enum):
+    PENDING = "PENDING"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+
+
+class FollowUpPriority(str, enum.Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    URGENT = "URGENT"
 
 
 class ImportStatus(str, enum.Enum):
@@ -207,6 +236,130 @@ class LeadMergeHistory(Base):
             "conflicts": self.conflicts or {},
             "user_id": str(self.user_id) if self.user_id else None,
             "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
+
+
+class LeadStatusHistory(Base):
+    """Historical trail of pipeline stage and status transitions for a lead."""
+
+    __tablename__ = "lead_status_history"
+    __table_args__ = (
+        Index("ix_lead_status_hist_lead", "lead_id", "created_at"),
+        Index("ix_lead_status_hist_user", "changed_by"),
+        Index("ix_lead_status_hist_org", "organization_id"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    lead_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("leads.id", ondelete="CASCADE"), nullable=False
+    )
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    previous_status: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    new_status: Mapped[str] = mapped_column(String(50), nullable=False)
+    changed_by: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    reason: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+
+    def to_public_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "lead_id": str(self.lead_id),
+            "previous_status": self.previous_status,
+            "new_status": self.new_status,
+            "changed_by": str(self.changed_by) if self.changed_by else None,
+            "reason": self.reason,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
+
+
+class LeadFollowUp(Base):
+    """Follow-up tasks and reminders for authorized CRM leads."""
+
+    __tablename__ = "lead_follow_ups"
+    __table_args__ = (
+        Index("ix_lead_follow_ups_lead", "lead_id", "due_at"),
+        Index("ix_lead_follow_ups_assigned", "assigned_user_id", "status", "due_at"),
+        Index("ix_lead_follow_ups_org", "organization_id"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    lead_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("leads.id", ondelete="CASCADE"), nullable=False
+    )
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    assigned_user_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    due_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    cancelled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default=FollowUpStatus.PENDING.value)
+    priority: Mapped[str] = mapped_column(String(20), nullable=False, default=FollowUpPriority.MEDIUM.value)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+    updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    def to_public_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "lead_id": str(self.lead_id),
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "assigned_user_id": str(self.assigned_user_id) if self.assigned_user_id else None,
+            "created_by": str(self.created_by) if self.created_by else None,
+            "title": self.title,
+            "notes": self.notes,
+            "due_at": self.due_at.isoformat() if self.due_at else None,
+            "completed_at": self.completed_at.isoformat() if self.completed_at else None,
+            "cancelled_at": self.cancelled_at.isoformat() if self.cancelled_at else None,
+            "status": self.status,
+            "priority": self.priority,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class LeadContact(Base):
+    """Specific contact person records associated with a business lead."""
+
+    __tablename__ = "lead_contacts"
+    __table_args__ = (
+        Index("ix_lead_contacts_lead", "lead_id"),
+        Index("ix_lead_contacts_email", "email"),
+        Index("ix_lead_contacts_phone", "phone"),
+        Index("ix_lead_contacts_org", "organization_id"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    lead_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("leads.id", ondelete="CASCADE"), nullable=False
+    )
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    first_name: Mapped[str | None] = mapped_column(String(150), nullable=True)
+    last_name: Mapped[str | None] = mapped_column(String(150), nullable=True)
+    title: Mapped[str | None] = mapped_column(String(150), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(320), nullable=True)
+    phone: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    is_primary: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    is_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+    updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    def to_public_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "lead_id": str(self.lead_id),
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "title": self.title,
+            "email": self.email,
+            "phone": self.phone,
+            "is_primary": self.is_primary,
+            "is_verified": self.is_verified,
+            "created_by": str(self.created_by) if self.created_by else None,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
 
 

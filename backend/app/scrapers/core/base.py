@@ -43,6 +43,24 @@ class ActorCategory(str, enum.Enum):
     ECOMMERCE = "ecommerce"
 
 
+class SourceStatus(str, enum.Enum):
+    IMPLEMENTED = "IMPLEMENTED"
+    VERIFIED = "VERIFIED"
+    CONFIGURATION_REQUIRED = "CONFIGURATION REQUIRED"
+    RESTRICTED = "RESTRICTED"
+    NOT_IMPLEMENTED = "NOT IMPLEMENTED"
+
+
+class SourceType(str, enum.Enum):
+    COMPANY_WEBSITE = "company_website"
+    BUSINESS_DIRECTORY = "business_directory"
+    GOVERNMENT_OPEN_DATA = "government_open_data"
+    COMMERCIAL_PLATFORM = "commercial_platform"
+    SOCIAL_MEDIA = "social_media"
+    ADS = "ads"
+    UNIVERSAL = "universal"
+
+
 class ActorStatus(str, enum.Enum):
     DISCOVERED = "DISCOVERED"
     REGISTERED = "REGISTERED"
@@ -51,6 +69,12 @@ class ActorStatus(str, enum.Enum):
     DEGRADED = "DEGRADED"  # registered, but a dependency is unavailable (brief §49)
     FAILED = "FAILED"      # failed its own health/validation check
     DISABLED = "DISABLED"  # switched off via feature flags (brief §50)
+    # Phase 4 explicit status aliases
+    IMPLEMENTED = "IMPLEMENTED"
+    VERIFIED = "VERIFIED"
+    CONFIGURATION_REQUIRED = "CONFIGURATION REQUIRED"
+    RESTRICTED = "RESTRICTED"
+    NOT_IMPLEMENTED = "NOT IMPLEMENTED"
 
 
 class ActorHealth(BaseModel):
@@ -79,6 +103,18 @@ class ScraperActor(ABC):
     capabilities: ClassVar[tuple[str, ...]] = ()
     #: whether cooperative pause is technically safe for this actor
     supports_pause: ClassVar[bool] = True
+    #: credentials / external prerequisite metadata (truthful reporting)
+    required_credentials: ClassVar[tuple[str, ...]] = ()
+    rate_limit_per_minute: ClassVar[int] = 60
+    concurrency_limit: ClassVar[int] = 5
+    #: Phase 4 — capability-based source catalog
+    source_type: ClassVar[str] = SourceType.BUSINESS_DIRECTORY.value
+    implementation_status: ClassVar[str] = SourceStatus.IMPLEMENTED.value
+    access_method: ClassVar[str] = "documented_api"
+    terms_verified: ClassVar[bool] = True
+    permitted_use: ClassVar[str] = "Public business data under source terms"
+    retention_policy: ClassVar[str] = "Standard B2B CRM retention"
+    export_restrictions: ClassVar[tuple[str, ...]] = ()
     #: pydantic model defining the strict input schema (brief §8)
     input_schema: ClassVar[type[BaseModel]]
     #: human-readable output field list (brief §9) — normalized lead fields
@@ -153,6 +189,10 @@ class ScraperActor(ABC):
         """READY unless a subclass dependency check says otherwise (brief §49)."""
         return ActorHealth(status=ActorStatus.READY)
 
+    async def health(self) -> ActorHealth:
+        """Alias for health_check()."""
+        return await self.health_check()
+
     # ------------------------------------------------------------- metadata
     def metadata(self) -> dict[str, Any]:
         """Registry metadata exposed to the API/UI (brief §7)."""
@@ -166,6 +206,16 @@ class ScraperActor(ABC):
             "author": self.author,
             "capabilities": list(self.capabilities),
             "supports_pause": self.supports_pause,
+            "required_credentials": list(self.required_credentials),
+            "rate_limit_per_minute": self.rate_limit_per_minute,
+            "concurrency_limit": self.concurrency_limit,
+            "source_type": getattr(self, "source_type", self.category.value),
+            "implementation_status": getattr(self, "implementation_status", SourceStatus.IMPLEMENTED.value),
+            "access_method": getattr(self, "access_method", "documented_api"),
+            "terms_verified": getattr(self, "terms_verified", True),
+            "permitted_use": getattr(self, "permitted_use", "Public business data under source terms"),
+            "retention_policy": getattr(self, "retention_policy", "Standard B2B CRM retention"),
+            "export_restrictions": list(getattr(self, "export_restrictions", ())),
             "input_fields": self.input_schema.model_json_schema()["properties"],
             "input_schema": self.input_schema.model_json_schema(),
             "output_fields": list(self.output_fields),

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#080E1D]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QBIT GROWTH OS - Sign In</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Custom Colors & Fonts -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              400: '#38bdf8',
+              500: '#0066FF',
+              600: '#0052cc',
+              700: '#003d99',
+            },
+            cyber: {
+              base: '#080E1D',
+              surface: '#0D1322',
+              card: '#10182A',
+              border: '#1E293B',
+              borderLight: '#26334D',
+              muted: '#64748B',
+              text: '#94A3B8',
+              highlight: '#38BDF8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow': '0 0 35px -5px rgba(0, 102, 255, 0.25)',
+            'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-background">
+    /* Subtle ambient dark cyber background glow */
+    .cyber-bg-glow {
+      background: radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.12) 0%, rgba(8, 14, 29, 0) 65%),
+                  radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, rgba(8, 14, 29, 0) 50%);
+    }
+    /* Subtle grid pattern overlay */
+    .grid-overlay {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+  </style>
+<meta content="web_standard" name="shell-type"/></head>
+<body class="min-h-full flex flex-col font-sans text-slate-100 bg-[#080E1D] cyber-bg-glow grid-overlay antialiased selection:bg-brand-500 selection:text-white">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="w-full border-b border-cyber-border/70 backdrop-blur-md bg-cyber-base/70 sticky top-0 z-30" data-purpose="top-navigation">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand Logo & Name -->
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-brand-600 via-brand-500 to-sky-400 p-[1px] shadow-sm">
+<div class="h-full w-full bg-cyber-base rounded-[7px] flex items-center justify-center">
+<!-- Isometric QBIT Cube Icon -->
+<svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+<line x1="12" x2="12" y1="22.08" y2="12"></line>
+</svg>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold tracking-wider text-white uppercase">Qbit Growth OS</span>
+<span class="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/25">v2.4.0</span>
+</div>
+<span class="text-[11px] text-cyber-muted font-normal">AI Powered Business Intelligence &amp; Marketing Automation</span>
+</div>
+</div>
+<!-- Right Header Status & Badges -->
+<div class="flex items-center gap-3">
+<!-- Private Internal Tool Badge -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+<span>Private Internal Tool</span>
+</div>
+<!-- Environment Indicator -->
+<div class="hidden md:flex items-center gap-1.5 text-xs text-cyber-muted border-l border-cyber-border pl-3">
+<span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+<span>Prod-Asia-East</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- BEGIN: MainContentAuthArea -->
+<main class="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 relative z-10" data-purpose="auth-view-container"><div class="flex flex-col w-full items-center justify-center py-6 px-4">
+<!-- Subtle decorative ambient vector glow -->
+<div class="relative w-full max-w-[480px]">
+<div class="absolute -top-12 -left-12 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute -bottom-12 -right-12 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Main Card Container -->
+<div class="w-full bg-surface-container-low shadow-2xl rounded-xl p-6 sm:p-8 flex flex-col gap-6">
+<!-- Header Icon & Titles -->
+<div class="flex flex-col items-center text-center">
+<!-- Glowing Shield/Padlock Badge -->
+<div class="relative mb-4">
+<div class="w-14 h-14 rounded-xl bg-surface-container flex items-center justify-center text-secondary shadow-lg">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">lock_reset</span>
+</div>
+<span class="absolute -bottom-1 -right-1 flex h-4 w-4">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-4 w-4 bg-tertiary-container text-on-tertiary-container items-center justify-center text-[9px] font-bold">✓</span>
+</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Create a new password</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-sm">
+          Your password must be at least 8 characters and include mixed-case letters, numbers, and symbols.
+        </p>
+<!-- Target Account Verification Pill -->
+<div class="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container text-label-sm font-label-sm text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Resetting for: <strong class="text-on-surface font-semibold">sagar@qbit.os</strong></span>
+<span class="text-outline">•</span>
+<span class="text-tertiary font-medium">Verified ID</span>
+</div>
+</div>
+<!-- Password Creation Form -->
+<form class="flex flex-col gap-5" id="passwordResetForm" onsubmit="event.preventDefault();">
+<!-- Field 1: New Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="newPassword">
+              New Password
+            </label>
+<span class="font-code-xs text-code-xs text-secondary">AES-256 Armed</span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-outline pointer-events-none material-symbols-outlined text-[18px]">key</span>
+<input class="w-full bg-surface-container text-on-surface font-code-sm text-code-sm pl-10 pr-10 py-2.5 rounded-lg outline-none focus:bg-surface-container-high transition-colors" id="newPassword" placeholder="Enter new strong password" type="password" value="K9#vR2$mX9"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 p-1 text-outline hover:text-on-surface transition-colors" id="toggleNewPassBtn" type="button">
+<span class="material-symbols-outlined text-[18px]" id="newPassIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Password Strength Meter Module -->
+<div class="bg-surface-container/60 rounded-lg p-3.5 flex flex-col gap-2.5">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Security Strength</span>
+<span class="text-tertiary font-semibold flex items-center gap-1" id="strengthLabel">
+<span class="material-symbols-outlined text-[14px]">verified</span> Strong Password
+            </span>
+</div>
+<!-- 4-bar indicator -->
+<div class="grid grid-cols-4 gap-1.5 h-1.5 w-full">
+<div class="h-full rounded-full bg-tertiary"></div>
+<div class="h-full rounded-full bg-tertiary"></div>
+<div class="h-full rounded-full bg-tertiary"></div>
+<div class="h-full rounded-full bg-surface-variant"></div>
+</div>
+<!-- Real-time Validation Checklist -->
+<div class="flex flex-col gap-1.5 pt-1.5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>At least 8 characters (current: 10)</span>
+</div>
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>One uppercase letter &amp; one number</span>
+</div>
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>One special symbol (@, $, !, %, *, #)</span>
+</div>
+</div>
+</div>
+<!-- Field 2: Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="confirmPassword">
+              Confirm Password
+            </label>
+<span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[14px]">check</span> Passwords match
+            </span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-outline pointer-events-none material-symbols-outlined text-[18px]">lock</span>
+<input class="w-full bg-surface-container text-on-surface font-code-sm text-code-sm pl-10 pr-10 py-2.5 rounded-lg outline-none focus:bg-surface-container-high transition-colors" id="confirmPassword" placeholder="Re-enter new password" type="password" value="K9#vR2$mX9"/>
+<button aria-label="Toggle confirm password visibility" class="absolute right-2.5 p-1 text-outline hover:text-on-surface transition-colors" id="toggleConfirmPassBtn" type="button">
+<span class="material-symbols-outlined text-[18px]" id="confirmPassIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full py-3 px-4 bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md text-label-md rounded-lg shadow-md flex items-center justify-center gap-2 transition-colors cursor-pointer group mt-2" type="submit">
+<span>Reset &amp; Update Password</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Back to Login Navigation -->
+<div class="flex flex-col items-center gap-2 text-center pt-2">
+<a class="inline-flex items-center gap-1 text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors" href="#login">
+<span class="material-symbols-outlined text-[16px]">west</span>
+<span>Back to login</span>
+</a>
+<div class="font-body-sm text-body-sm text-outline">
+          Need assistance? 
+          <a class="text-secondary hover:underline" href="#security-desk">Contact Security Desk</a>
+</div>
+</div>
+<!-- SOC-2 Compliance Card Bottom Banner -->
+<div class="bg-surface-container-lowest/80 rounded-lg p-3 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">policy</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">SOC-2 Compliance Enforcement</span>
+<p class="font-code-xs text-code-xs text-on-surface-variant">
+            Password history check active: Automated policy prevents reusing any of your last 5 credentials.
+          </p>
+</div>
+</div>
+<!-- Reference Preview Anchor -->
+<div class="hidden">
+<img alt="Reference spec card 04" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSG_aHfVq8s8V6bB0I8zQE4ZX_tmT9T4_U10j41GZ_nVf0WF4uHSf6zug_AbokPGGyag4B8t1Xie58WHpUPGkDFz8EBkkN_aIHQN-5u8P8aL89e_dYftzTtBD5FZE14QD3_0wzxjj2ackpU0lFjE-947c7KCOgk2CtSrwnwJO0svYI1AIaiBKQ-aHGjtRPD5jEfH1NZdIDYJ21JQnfgk63XsOyuItVGtReHWqjJl2aQc96F5ej2N7q5LeJD0ZqZqj9aW8"/>
+</div>
+</div>
+<!-- Enclave Compliance Footer Badge -->
+<div class="mt-4 flex items-center justify-center gap-2 text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>SOC-2 Type II Certified Enclave • End-to-End Encrypted Session</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    function setupToggle(buttonId, inputId, iconId) {
+      const btn = document.getElementById(buttonId);
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!btn || !input || !icon) return;
+
+      btn.addEventListener('click', function() {
+        const isPassword = input.getAttribute('type') === 'password';
+        input.setAttribute('type', isPassword ? 'text' : 'password');
+        icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    }
+
+    setupToggle('toggleNewPassBtn', 'newPassword', 'newPassIcon');
+    setupToggle('toggleConfirmPassBtn', 'confirmPassword', 'confirmPassIcon');
+  })();
+</script></main>
+<!-- END: MainContentAuthArea -->
+<!-- BEGIN: BottomGlobalFooter -->
+<footer class="w-full border-t border-cyber-border/70 py-4 bg-cyber-base/80 text-xs text-cyber-muted" data-purpose="site-footer">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+<!-- System status indicator -->
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-slate-400">All systems operational</span>
+<span class="text-cyber-border">|</span>
+<span class="text-[11px] font-mono text-cyber-muted">Latency 24ms</span>
+</div>
+<!-- Legal and Compliance Links -->
+<nav aria-label="Footer Navigation" class="flex items-center gap-4 text-xs">
+<a class="hover:text-slate-300 transition-colors" href="#privacy">Privacy Policy</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#terms">Terms of Service</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#security">Security Whitepaper</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#support">Help Desk</a>
+</nav>
+<!-- Copyright note -->
+<div class="text-[11px] text-cyber-muted">
+        © 2026 QBIT Systems Inc. All rights reserved.
+      </div>
+</div>
+</footer>
+<!-- END: BottomGlobalFooter -->
+<!-- Interactive JavaScript for Password Visibility Toggle -->
+<script data-purpose="password-visibility-handler">
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', function() {
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          if (isPassword) {
+            passwordInput.setAttribute('type', 'text');
+            // Slash icon for visible password
+            eyeIcon.innerHTML = `
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            `;
+          } else {
+            passwordInput.setAttribute('type', 'password');
+            // Standard eye icon
+            eyeIcon.innerHTML = `
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            `;
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

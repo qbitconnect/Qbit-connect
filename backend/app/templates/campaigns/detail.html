@@ -1,138 +1,372 @@
 {% extends "base.html" %}
 {% block title %}{{ campaign.name }} — QBIT Connect{% endblock %}
 {% block nav_campaigns %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>{{ campaign.name | upper }}</h1>
-    <p class="muted">
-      {{ campaign.channel }} · <span class="badge badge-{{ campaign.status | lower }}">{{ campaign.status }}</span>
-      {% if campaign.schedule_type == 'SCHEDULED' and campaign.scheduled_at %} · scheduled {{ str(campaign.scheduled_at)[:16].replace('T',' ') }} UTC{% endif %}
-    </p>
-  </div>
-  <div class="head-actions">
-    {% if can_validate %}<form method="post" action="/campaigns/{{ campaign.id }}/validate" class="inline-form"><button class="btn btn-ghost">Validate</button></form>{% endif %}
-    {% if can_launch and campaign.status in ('DRAFT','SCHEDULED') %}
-      <form method="post" action="/campaigns/{{ campaign.id }}/launch" class="inline-form"><button class="btn btn-primary">Launch</button></form>
-    {% endif %}
-    {% if can_pause and campaign.status == 'RUNNING' %}
-      <form method="post" action="/campaigns/{{ campaign.id }}/pause" class="inline-form"><button class="btn btn-ghost">Pause</button></form>
-    {% endif %}
-    {% if can_resume and campaign.status == 'PAUSED' %}
-      <form method="post" action="/campaigns/{{ campaign.id }}/resume" class="inline-form"><button class="btn btn-primary">Resume</button></form>
-    {% endif %}
-    {% if can_cancel and campaign.status in ('SCHEDULED','QUEUED','RUNNING','PAUSED') %}
-      <form method="post" action="/campaigns/{{ campaign.id }}/cancel" class="inline-form"><button class="btn btn-sm btn-danger">Cancel</button></form>
-    {% endif %}
-    {% if can_edit and campaign.status in ('COMPLETED','CANCELLED','FAILED','DRAFT') %}
-      <form method="post" action="/campaigns/{{ campaign.id }}/archive" class="inline-form"><button class="btn btn-sm btn-ghost">Archive</button></form>
-    {% endif %}
-  </div>
-</div>
-
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-
-{% if campaign.validation_report and not campaign.validation_report.ok %}
-<div class="alert alert-error">Last validation failed — resolve the checks below before launch.</div>
-{% endif %}
-{% if account and not account_configured %}
-<div class="alert">Provider not configured for this sending account — launch is blocked until it is configured.</div>
-{% endif %}
-
-<div class="stat-grid">
-  <div class="stat"><span class="stat-label">AUDIENCE</span><span class="stat-value">{{ analytics.recipients.total }}</span></div>
-  <div class="stat"><span class="stat-label">ELIGIBLE</span><span class="stat-value" style="color:var(--ok)">{{ analytics.recipients.eligible }}</span></div>
-  <div class="stat"><span class="stat-label">SENT</span><span class="stat-value">{{ analytics.messages.sent }}</span></div>
-  <div class="stat"><span class="stat-label">DELIVERED</span><span class="stat-value">{{ analytics.messages.delivered }}</span></div>
-  <div class="stat"><span class="stat-label">REPLIES</span><span class="stat-value">{{ analytics.messages.replied }}</span></div>
-  <div class="stat"><span class="stat-label">FAILED</span><span class="stat-value">{{ analytics.messages.failed }}</span></div>
-</div>
-
-<div class="stat-grid">
-  <div class="stat"><span class="stat-label">DELIVERY RATE</span><span class="stat-value mono">{{ '%.1f'|format(analytics.rates.delivery_rate * 100) }}%</span></div>
-  <div class="stat"><span class="stat-label">READ RATE</span><span class="stat-value mono">{{ '%.1f'|format(analytics.rates.read_rate * 100) }}%</span></div>
-  <div class="stat"><span class="stat-label">REPLY RATE</span><span class="stat-value mono">{{ '%.1f'|format(analytics.rates.reply_rate * 100) }}%</span></div>
-  <div class="stat"><span class="stat-label">FAILURE RATE</span><span class="stat-value mono">{{ '%.1f'|format(analytics.rates.failure_rate * 100) }}%</span></div>
-</div>
-
-{% if campaign.channel == 'EMAIL' and analytics.email %}
-<div class="card" style="padding:16px;max-width:900px">
-  <h3 style="margin:0 0 8px">EMAIL DELIVERY (from actual events)</h3>
-  <div class="stat-grid">
-    <div class="stat"><span class="stat-label">BOUNCED</span><span class="stat-value">{{ analytics.email.events.bounced }}</span><span class="muted small">hard {{ analytics.email.events.hard_bounces }} / soft {{ analytics.email.events.soft_bounces }}</span></div>
-    <div class="stat"><span class="stat-label">COMPLAINTS</span><span class="stat-value">{{ analytics.email.events.complained }}</span></div>
-    <div class="stat"><span class="stat-label">OPENS</span><span class="stat-value">{{ analytics.email.events.opened }}</span></div>
-    <div class="stat"><span class="stat-label">CLICKS</span><span class="stat-value">{{ analytics.email.events.clicked }}</span></div>
-    <div class="stat"><span class="stat-label">REPLIES</span><span class="stat-value">{{ analytics.email.events.replied }}</span></div>
-    <div class="stat"><span class="stat-label">UNSUBSCRIBES</span><span class="stat-value">{{ analytics.email.events.unsubscribed }}</span></div>
-  </div>
-  <dl class="kv">
-    <dt>Delivery rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.delivery_rate * 100) }}%</dd>
-    <dt>Bounce rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.bounce_rate * 100) }}%</dd>
-    <dt>Complaint rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.complaint_rate * 100) }}%</dd>
-    <dt>Open rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.open_rate * 100) }}%</dd>
-    <dt>Click rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.click_rate * 100) }}%</dd>
-    <dt>Unsubscribe rate</dt><dd class="mono">{{ '%.1f'|format(analytics.email.rates.unsubscribe_rate * 100) }}%</dd>
-    {% if account and account.config_metadata.get('sender_email') %}<dt>Sender</dt><dd class="mono">{{ account.config_metadata.get('sender_name') or '' }} &lt;{{ account.config_metadata.get('sender_email') }}&gt;</dd>{% endif %}
-    {% if account and account.config_metadata.get('reply_to') %}<dt>Reply-To</dt><dd class="mono">{{ account.config_metadata.get('reply_to') }}</dd>{% endif %}
-  </dl>
-  <p class="muted small">{{ analytics.email.tracking_note }}</p>
-</div>
-{% endif %}
-
-<div class="card" style="padding:16px;max-width:900px">
-  <h3 style="margin:0 0 8px">OVERVIEW</h3>
-  <table>
-    <tbody>
-      <tr><td class="muted">Description</td><td>{{ campaign.description or '—' }}</td></tr>
-      <tr><td class="muted">Audience</td><td><code class="mono small">{{ campaign.audience_definition | tojson }}</code></td></tr>
-      <tr><td class="muted">Template</td><td>{% if template %}<a href="/campaigns/templates">{{ template.name }}</a> ({{ template.channel }}){% else %}<span class="alert-error" style="padding:2px 6px">No template selected</span>{% endif %}</td></tr>
-      <tr><td class="muted">Sending account</td><td>{% if account %}{{ account.name }} — {{ provider_label }} {% if not account_configured %}<span class="muted">(not configured)</span>{% endif %}{% else %}<span class="alert-error" style="padding:2px 6px">No sending account</span>{% endif %}</td></tr>
-      <tr><td class="muted">Started</td><td>{{ str(campaign.started_at)[:19].replace('T',' ') if campaign.started_at else '—' }}</td></tr>
-      <tr><td class="muted">Completed</td><td>{{ str(campaign.completed_at)[:19].replace('T',' ') if campaign.completed_at else '—' }}</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="card table-card" style="margin-top:14px">
-  <div class="page-head" style="padding:12px 12px 0">
-    <div><h3 style="margin:0">RECIPIENTS ({{ rec_total }})</h3></div>
-  </div>
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Address</th><th>Name</th><th>Status</th><th>Skip reason</th><th>Provider msg id</th></tr></thead>
-      <tbody>
-        {% for r in recipients %}
-        <tr>
-          <td class="mono">{{ r.recipient_address or '—' }}</td>
-          <td>{{ r.recipient_name or '—' }}</td>
-          <td><span class="badge badge-{{ r.status | lower }}">{{ r.status }}</span></td>
-          <td class="muted">{{ r.skip_reason or '' }}</td>
-          <td class="mono small">{{ r.provider_message_id or '' }}</td>
-        </tr>
+<div class="space-y-space-lg max-w-6xl mx-auto pb-16">
+  
+  <!-- Breadcrumb & Top Bar -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-md border-b border-outline-variant/30 pb-space-md">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <a href="/campaigns" class="text-outline hover:text-on-surface transition-colors flex items-center gap-1 font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Campaigns
+        </a>
+        <span class="text-outline/40">/</span>
+        <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+          {{ campaign.channel }}
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          {{ campaign.name }}
+        </h1>
+        <span class="badge badge-{{ campaign.status | lower }} text-xs">
+          {{ campaign.status }}
+        </span>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">
+        {% if campaign.schedule_type == 'SCHEDULED' and campaign.scheduled_at %}
+          Scheduled for dispatch at {{ str(campaign.scheduled_at)[:16].replace('T',' ') }} UTC
         {% else %}
-        <tr><td colspan="5" class="center muted" style="padding:24px">No recipients yet — launch creates the immutable audience snapshot.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+          Immediate dispatch lifecycle
+        {% endif %}
+      </p>
+    </div>
 
-<div class="card" style="padding:16px;margin-top:14px;max-width:900px">
-  <h3 style="margin:0 0 8px">EVENT TIMELINE</h3>
-  <table>
-    <tbody>
-      {% for e in events %}
-      <tr>
-        <td class="muted small mono">{{ str(e.created_at)[:19].replace('T',' ') }}</td>
-        <td><strong>{{ e.event_type }}</strong></td>
-        <td class="muted small">{% if e.recipient_id %}recipient {{ str(e.recipient_id)[:8] }}{% endif %} {{ e.payload_metadata.get('reason') or '' }} {{ e.payload_metadata.get('error') or '' }}</td>
-      </tr>
-      {% else %}
-      <tr><td class="muted" style="padding:16px">No events yet.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <!-- Lifecycle Actions Toolbar -->
+    <div class="flex flex-wrap items-center gap-2">
+      {% if can_validate %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/validate" class="inline-form">
+        <button class="btn btn-ghost" type="submit">
+          <span class="material-symbols-outlined text-[16px]">verified</span>
+          Validate
+        </button>
+      </form>
+      {% endif %}
+
+      {% if can_launch and campaign.status in ('DRAFT','SCHEDULED') %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/launch" class="inline-form">
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+          Launch
+        </button>
+      </form>
+      {% endif %}
+
+      {% if can_pause and campaign.status == 'RUNNING' %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/pause" class="inline-form">
+        <button class="btn btn-ghost text-warn" type="submit">
+          <span class="material-symbols-outlined text-[16px]">pause</span>
+          Pause
+        </button>
+      </form>
+      {% endif %}
+
+      {% if can_resume and campaign.status == 'PAUSED' %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/resume" class="inline-form">
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+          Resume
+        </button>
+      </form>
+      {% endif %}
+
+      {% if can_cancel and campaign.status in ('SCHEDULED','QUEUED','RUNNING','PAUSED') %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/cancel" class="inline-form">
+        <button class="btn btn-sm btn-ghost text-error hover:bg-error-container/20" type="submit">
+          <span class="material-symbols-outlined text-[16px]">cancel</span>
+          Cancel
+        </button>
+      </form>
+      {% endif %}
+
+      {% if can_edit and campaign.status in ('COMPLETED','CANCELLED','FAILED','DRAFT') %}
+      <form method="post" action="/campaigns/{{ campaign.id }}/archive" class="inline-form">
+        <button class="btn btn-sm btn-ghost text-outline" type="submit">
+          <span class="material-symbols-outlined text-[16px]">archive</span>
+          Archive
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Operational Flash Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
+  </div>
+  {% endif %}
+
+  {% if err %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
+
+  {% if campaign.validation_report and not campaign.validation_report.ok %}
+  <div class="rounded-xl p-space-md bg-error-container/20 border border-error/40 flex items-start gap-3 text-on-surface">
+    <span class="material-symbols-outlined text-error text-[20px] mt-0.5">warning</span>
+    <div class="space-y-1">
+      <span class="font-label-md text-label-md font-bold text-error">Validation Failed Prior to Launch</span>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">Resolve the checks below before dispatching outbound messages.</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if account and not account_configured %}
+  <div class="rounded-xl p-space-md bg-surface-container-high border border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div class="flex items-center gap-space-sm">
+      <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline">
+        <span class="material-symbols-outlined text-[20px]">link_off</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-md text-label-md text-on-surface font-semibold">Provider Unconfigured</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Provider is not configured for this sending account. Launch remains blocked.</span>
+      </div>
+    </div>
+    <a href="/campaigns/accounts" class="btn btn-ghost text-xs">Configure Sender</a>
+  </div>
+  {% endif %}
+
+  <!-- Primary Analytics Stat Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm">
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Audience Target</span>
+      <span class="font-headline-md text-headline-md font-bold text-on-surface mt-2">{{ analytics.recipients.total }}</span>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-tertiary-fixed font-semibold">Eligible</span>
+      <span class="font-headline-md text-headline-md font-bold text-tertiary mt-2">{{ analytics.recipients.eligible }}</span>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Sent</span>
+      <span class="font-headline-md text-headline-md font-bold text-on-surface mt-2">{{ analytics.messages.sent }}</span>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-primary font-semibold">Delivered</span>
+      <span class="font-headline-md text-headline-md font-bold text-primary mt-2">{{ analytics.messages.delivered }}</span>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-secondary-fixed font-semibold">Replies</span>
+      <span class="font-headline-md text-headline-md font-bold text-secondary-fixed mt-2">{{ analytics.messages.replied }}</span>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-error font-semibold">Failed</span>
+      <span class="font-headline-md text-headline-md font-bold text-error mt-2">{{ analytics.messages.failed }}</span>
+    </div>
+  </div>
+
+  <!-- Delivery Rates KPI Cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+    <div class="card p-space-md space-y-1">
+      <span class="font-label-sm text-label-sm text-outline">Delivery Rate</span>
+      <div class="flex items-baseline justify-between">
+        <span class="font-headline-sm text-headline-sm font-bold mono text-tertiary">
+          {{ '%.1f'|format(analytics.rates.delivery_rate * 100) }}%
+        </span>
+        <span class="font-code-xs text-code-xs text-outline">Delivered / Sent</span>
+      </div>
+      <div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+        <div class="bg-tertiary h-1.5 rounded-full" style="width: {{ '%.1f'|format(analytics.rates.delivery_rate * 100) }}%"></div>
+      </div>
+    </div>
+
+    <div class="card p-space-md space-y-1">
+      <span class="font-label-sm text-label-sm text-outline">Read Rate</span>
+      <div class="flex items-baseline justify-between">
+        <span class="font-headline-sm text-headline-sm font-bold mono text-primary">
+          {{ '%.1f'|format(analytics.rates.read_rate * 100) }}%
+        </span>
+        <span class="font-code-xs text-code-xs text-outline">Read / Delivered</span>
+      </div>
+      <div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+        <div class="bg-primary h-1.5 rounded-full" style="width: {{ '%.1f'|format(analytics.rates.read_rate * 100) }}%"></div>
+      </div>
+    </div>
+
+    <div class="card p-space-md space-y-1">
+      <span class="font-label-sm text-label-sm text-outline">Reply Rate</span>
+      <div class="flex items-baseline justify-between">
+        <span class="font-headline-sm text-headline-sm font-bold mono text-secondary-fixed">
+          {{ '%.1f'|format(analytics.rates.reply_rate * 100) }}%
+        </span>
+        <span class="font-code-xs text-code-xs text-outline">Replies / Sent</span>
+      </div>
+      <div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+        <div class="bg-secondary-fixed h-1.5 rounded-full" style="width: {{ '%.1f'|format(analytics.rates.reply_rate * 100) }}%"></div>
+      </div>
+    </div>
+
+    <div class="card p-space-md space-y-1">
+      <span class="font-label-sm text-label-sm text-outline">Failure Rate</span>
+      <div class="flex items-baseline justify-between">
+        <span class="font-headline-sm text-headline-sm font-bold mono text-error">
+          {{ '%.1f'|format(analytics.rates.failure_rate * 100) }}%
+        </span>
+        <span class="font-code-xs text-code-xs text-outline">Bounces & Errors</span>
+      </div>
+      <div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+        <div class="bg-error h-1.5 rounded-full" style="width: {{ '%.1f'|format(analytics.rates.failure_rate * 100) }}%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Delivery Telemetry (If Applicable) -->
+  {% if campaign.channel == 'EMAIL' and analytics.email %}
+  <div class="card p-space-lg space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm flex items-center justify-between">
+      <div class="space-y-0.5">
+        <span class="font-label-md text-label-md font-bold text-on-surface">Email Delivery Telemetry</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Real event logs from outbound email pipeline (SendGrid / SMTP).</p>
+      </div>
+      <span class="font-code-xs text-code-xs px-2 py-0.5 rounded bg-surface-container-high text-outline">Audit Validated</span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm">
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Bounced</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-on-surface block mt-1">{{ analytics.email.events.bounced }}</span>
+        <span class="text-[11px] text-outline block mt-0.5">Hard: {{ analytics.email.events.hard_bounces }} / Soft: {{ analytics.email.events.soft_bounces }}</span>
+      </div>
+
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Complaints</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-error block mt-1">{{ analytics.email.events.complained }}</span>
+      </div>
+
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Opens</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-primary block mt-1">{{ analytics.email.events.opened }}</span>
+      </div>
+
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Clicks</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-tertiary block mt-1">{{ analytics.email.events.clicked }}</span>
+      </div>
+
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Replies</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-secondary-fixed block mt-1">{{ analytics.email.events.replied }}</span>
+      </div>
+
+      <div class="p-space-sm rounded-lg bg-surface-container border border-outline-variant/30">
+        <span class="text-xs text-outline block">Unsubscribes</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-outline block mt-1">{{ analytics.email.events.unsubscribed }}</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Campaign Configuration Overview -->
+  <div class="card p-space-lg space-y-space-md">
+    <div class="border-b border-outline-variant/30 pb-space-sm">
+      <h3 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Campaign Parameters & Metadata</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md text-body-sm">
+      <div class="space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Description:</span>
+          <span class="text-on-surface font-medium">{{ campaign.description or '—' }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Audience Definition:</span>
+          <code class="font-mono text-xs text-primary bg-surface-container px-2 py-0.5 rounded max-w-xs truncate">
+            {{ campaign.audience_definition | tojson }}
+          </code>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Message Template:</span>
+          {% if template %}
+          <a href="/campaigns/templates" class="text-primary hover:underline font-semibold flex items-center gap-1">
+            {{ template.name }} ({{ template.channel }})
+            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+          {% else %}
+          <span class="text-error font-medium">No template assigned</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Sending Account:</span>
+          {% if account %}
+          <span class="text-on-surface font-medium">{{ account.name }} ({{ provider_label }})</span>
+          {% else %}
+          <span class="text-error font-medium">No sending account</span>
+          {% endif %}
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Dispatch Started:</span>
+          <span class="mono text-on-surface">{{ str(campaign.started_at)[:19].replace('T',' ') if campaign.started_at else '—' }}</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-outline-variant/20">
+          <span class="text-outline">Completed At:</span>
+          <span class="mono text-on-surface">{{ str(campaign.completed_at)[:19].replace('T',' ') if campaign.completed_at else '—' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recipients List Table -->
+  <div class="table-card">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low">
+      <div class="space-y-0.5">
+        <h3 class="font-label-md text-label-md font-bold text-on-surface">Recipient Audience ({{ rec_total }})</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Immutable recipient snapshot created when the campaign is launched.</p>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Recipient Address</th>
+            <th>Contact Name</th>
+            <th>Status</th>
+            <th>Skip Reason</th>
+            <th>Provider Message ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in recipients %}
+          <tr>
+            <td class="mono font-semibold">{{ r.recipient_address or '—' }}</td>
+            <td>{{ r.recipient_name or '—' }}</td>
+            <td>
+              <span class="badge badge-{{ r.status | lower }}">
+                {{ r.status }}
+              </span>
+            </td>
+            <td class="text-outline text-xs">{{ r.skip_reason or '' }}</td>
+            <td class="mono text-xs text-outline">{{ r.provider_message_id or '—' }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="py-12 px-4 text-center">
+              <span class="material-symbols-outlined text-[32px] text-outline block mb-2">contacts</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Recipients Yet</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Launch creates the immutable audience snapshot from your target criteria and populates this list.
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

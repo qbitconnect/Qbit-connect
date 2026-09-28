@@ -20,12 +20,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import NotFoundError, ValidationError
 from app.core.logging import get_logger
+from app.models.enterprise import LeadAssignmentHistory
 from app.models.lead import (
     DuplicateStatus,
     LeadActivity,
+    LeadContact,
     LeadDuplicateCandidate,
+    LeadFollowUp,
     LeadMergeHistory,
     LeadNote,
+    LeadStatusHistory,
 )
 from app.models.scrape import Lead
 from app.services.leads.activity import LeadActivityService, EVENT_MERGED
@@ -106,6 +110,20 @@ class MergeService:
         if primary.source_type in (None, "") and merged.source_type:
             primary.source_type = merged.source_type
 
+        # Protect verified status: if primary is verified, keep verified and last_verified_at
+        if getattr(primary, "is_verified", False):
+            pass
+        elif getattr(merged, "is_verified", False):
+            primary.is_verified = True
+            primary.last_verified_at = getattr(merged, "last_verified_at", None) or now
+
+        # Keep higher priority if set
+        prio_order = {"LOW": 1, "MEDIUM": 2, "HIGH": 3, "URGENT": 4}
+        p_prio = prio_order.get((primary.priority or "MEDIUM").upper(), 2)
+        m_prio = prio_order.get((merged.priority or "MEDIUM").upper(), 2)
+        if m_prio > p_prio:
+            primary.priority = (merged.priority or "MEDIUM").upper()
+
         merged_meta = dict(merged.metadata_json or {})
         merge_note = {
             "merged_from": str(merged.id),
@@ -115,8 +133,9 @@ class MergeService:
         primary.metadata_json = {**(primary.metadata_json or {}), **merged_meta, **merge_note}
         primary.quality_score = compute_quality_score(primary.to_public_dict())
         primary.updated_at = now
+        primary.last_activity_at = now
 
-        # --- re-home notes / activities (history preserved) ------------------
+        # --- re-home notes / activities / follow-ups / contacts / history ----
         await session.execute(
             update(LeadNote)
             .where(LeadNote.lead_id == merged.id)
@@ -126,6 +145,41 @@ class MergeService:
             update(LeadActivity)
             .where(LeadActivity.lead_id == merged.id)
             .values(lead_id=primary.id, metadata_json={"merged_from": str(merged.id)})
+        )
+        await session.execute(
+            update(LeadFollowUp)
+            .where(LeadFollowUp.lead_id == merged.id)
+            .values(lead_id=primary.id)
+        )
+        # Check if primary already has a primary contact before re-homing contacts
+        has_primary_contact = (
+            await session.scalar(
+                select(LeadContact.id)
+                .where(LeadContact.lead_id == primary.id, LeadContact.is_primary.is_(True))
+                .limit(1)
+            )
+        ) is not None
+        if has_primary_contact:
+            # Demote any primary contacts from merged lead so we don't have multiple primary contacts
+            await session.execute(
+                update(LeadContact)
+                .where(LeadContact.lead_id == merged.id, LeadContact.is_primary.is_(True))
+                .values(is_primary=False)
+            )
+        await session.execute(
+            update(LeadContact)
+            .where(LeadContact.lead_id == merged.id)
+            .values(lead_id=primary.id)
+        )
+        await session.execute(
+            update(LeadStatusHistory)
+            .where(LeadStatusHistory.lead_id == merged.id)
+            .values(lead_id=primary.id)
+        )
+        await session.execute(
+            update(LeadAssignmentHistory)
+            .where(LeadAssignmentHistory.lead_id == merged.id)
+            .values(lead_id=primary.id)
         )
 
         # --- tags: union ------------------------------------------------------

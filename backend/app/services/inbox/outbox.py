@@ -163,6 +163,13 @@ class OutboxService:
                 return
 
         idempotency_key = item.idempotency_key
+        recipient_addr = (
+            message.recipient
+            or (conversation.contact_phone if conversation.channel == "WHATSAPP" else conversation.contact_email)
+            or conversation.contact_phone
+            or conversation.contact_email
+            or ""
+        )
         try:
             if (
                 conversation.channel == "WHATSAPP"
@@ -171,7 +178,7 @@ class OutboxService:
             ):
                 result = await provider.send_session_text(
                     account_config=account_config,
-                    recipient_address=message.recipient or conversation.contact_phone or "",
+                    recipient_address=recipient_addr,
                     body=body,
                     idempotency_key=idempotency_key,
                     credentials=credentials,
@@ -179,7 +186,7 @@ class OutboxService:
             else:
                 result = await provider.send(
                     account_config=account_config,
-                    recipient_address=message.recipient or conversation.contact_email or "",
+                    recipient_address=recipient_addr,
                     subject=subject, body=body,
                     idempotency_key=idempotency_key,
                     credentials=credentials,

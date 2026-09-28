@@ -300,3 +300,56 @@ async def list_whatsapp_templates(
     account = await _get_account(session, account_id)
     rows = await _service(request).list_account_templates(session, account, status=status)
     return _page([t.to_public_dict() for t in rows], len(rows), 1, max(len(rows), 1))
+
+
+# ------------------------------------------------------------- maps provider
+@router.get("/maps")
+async def get_maps_connection(
+    request: Request,
+    _user=Depends(require_permission("connections.view")),
+):
+    """Retrieve Google Maps data provider connection and status."""
+    registry = getattr(request.app.state, "scraper_registry", None)
+    entry = registry.entry("google-maps") if registry else None
+    actor = entry.actor if entry else None
+    result = await actor.verify_connection() if (actor and hasattr(actor, "verify_connection")) else {
+        "connected": False,
+        "provider": _settings(request).QBIT_MAPS_PROVIDER or "none",
+        "status": "NOT CONNECTED",
+        "detail": "Maps actor not loaded",
+    }
+    return {
+        "success": True,
+        "data": {
+            "channel": "MAPS",
+            "provider": _settings(request).QBIT_MAPS_PROVIDER or "none",
+            "has_credentials": bool(_settings(request).QBIT_MAPS_PROVIDER_API_KEY),
+            "endpoint_configured": bool(_settings(request).QBIT_MAPS_PROVIDER_URL),
+            **result,
+        },
+    }
+
+
+@router.post("/maps/test")
+@router.get("/maps/test")
+async def test_maps_connection(
+    request: Request,
+    _user=Depends(require_permission("connections.validate")),
+):
+    """Perform a live verification test for Google Maps provider."""
+    registry = getattr(request.app.state, "scraper_registry", None)
+    entry = registry.entry("google-maps") if registry else None
+    actor = entry.actor if entry else None
+    if not actor or not hasattr(actor, "verify_connection"):
+        return {
+            "success": True,
+            "data": {
+                "connected": False,
+                "provider": _settings(request).QBIT_MAPS_PROVIDER or "none",
+                "status": "CONFIGURATION REQUIRED",
+                "detail": "Maps actor unavailable or unconfigured",
+                "metadata": {"configured": False},
+            },
+        }
+    result = await actor.verify_connection()
+    return {"success": True, "data": result}

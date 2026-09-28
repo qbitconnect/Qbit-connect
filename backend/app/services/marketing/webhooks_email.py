@@ -63,7 +63,12 @@ logger = get_logger("qbit.marketing.webhooks_email")
 
 SIGNATURE_HEADER = "x-qbit-signature"
 TIMESTAMP_HEADER = "x-qbit-timestamp"
-PROVIDER_IDS = {"email_api": "email_api", "email_mock": "email_mock", "smtp": "smtp"}
+PROVIDER_IDS = {
+    "email_api": "email_api",
+    "email_mock": "email_mock",
+    "smtp": "smtp",
+    "amazon_ses": "amazon_ses",
+}
 
 
 def _jsonable(value):

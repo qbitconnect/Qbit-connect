@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#0d1322","on-secondary-fixed":"#001f28","on-error-container":"#ffdad6","primary":"#b3c5ff","secondary":"#a5e7ff","tertiary-container":"#008259","inverse-on-surface":"#2a3040","outline-variant":"#424656","on-tertiary-container":"#e1ffec","on-primary-container":"#f8f7ff","error":"#ffb4ab","on-error":"#690005","on-background":"#dde2f7","on-primary-fixed":"#001849","on-secondary":"#003543","surface-bright":"#333949","on-primary":"#002b75","on-surface-variant":"#c2c6d8","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","inverse-primary":"#0054d6","tertiary-fixed":"#6ffbbe","tertiary":"#4edea3","surface":"#0d1322","on-primary-fixed-variant":"#003fa4","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-tertiary-fixed":"#002113","tertiary-fixed-dim":"#4edea3","on-surface":"#dde2f7","surface-container-high":"#242a3a","outline":"#8c90a1","on-tertiary":"#003824","secondary-fixed-dim":"#47d6ff","surface-container-low":"#151b2b","primary-container":"#0066ff","secondary-container":"#00d2ff","surface-container-highest":"#2f3445","on-tertiary-fixed-variant":"#005236","surface-container":"#191f2f","surface-dim":"#0d1322","error-container":"#93000a","surface-variant":"#2f3445","inverse-surface":"#dde2f7","primary-fixed-dim":"#b3c5ff","surface-tint":"#b3c5ff","primary-fixed":"#dae1ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-md":"0.75rem","space-lg":"1rem","margin":"1.5rem","gutter":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem","space-xl":"1.5rem"},"fontFamily":{"body-lg":["Inter"],"headline-xl":["Inter"],"code-xs":["JetBrains Mono"],"label-md":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"code-sm":["JetBrains Mono"],"headline-lg":["Inter"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="role-and-permissions" href="#">Role &amp; Permissions</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns, roles..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- Top Breadcrumb & Metadata Stream -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-high text-outline">
+<span class="font-code-xs text-code-xs tracking-wider uppercase text-secondary-fixed-dim">RUN DATA RESULTS</span>
+<span class="text-outline-variant font-code-xs text-code-xs">/</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">GM-20260926-001</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<a class="hover:text-primary transition-colors" href="#">Runs</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<a class="hover:text-primary transition-colors font-code-xs text-code-xs" href="#">Run #GM-20260926-001</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="text-on-surface font-semibold">Results Data Table</span>
+</div>
+</div>
+<!-- Real-time extraction status badge -->
+<div class="flex items-center gap-2 self-start sm:self-auto px-2.5 py-1 rounded-full bg-surface-container-low shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-code-xs text-code-xs text-tertiary font-medium">RUN COMPLETED • 687 RECORDS PARSED</span>
+</div>
+</div>
+<!-- Primary Page Header / Actions Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[28px]">table_chart_view</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Results (687 places)</h1>
+<span class="px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-label-sm text-label-sm font-semibold">Ready for Sync</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+          Extracted from Google Maps Scraper Actor • <span class="text-on-surface font-medium">Bareilly, Uttar Pradesh (5 km radius)</span> • Completed in 2m 18s
+        </p>
+</div>
+</div>
+<!-- Global Run Actions -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- Export Dropdown Trigger -->
+<div class="relative">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright transition-colors font-body-sm text-body-sm shadow-sm" id="exportDropdownBtn" onclick="toggleExportMenu()">
+<span class="material-symbols-outlined text-[16px] text-secondary">file_download</span>
+<span>Export</span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</button>
+<!-- Dropdown Menu -->
+<div class="hidden absolute right-0 mt-1.5 w-48 rounded-lg bg-surface-container-high shadow-xl p-1.5 z-30" id="exportMenu">
+<a class="flex items-center gap-2 px-3 py-2 rounded font-body-sm text-body-sm text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-tertiary">csv</span>
+            CSV Spreadsheet (.csv)
+          </a>
+<a class="flex items-center gap-2 px-3 py-2 rounded font-body-sm text-body-sm text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">table_view</span>
+            Excel Workbook (.xlsx)
+          </a>
+<a class="flex items-center gap-2 px-3 py-2 rounded font-body-sm text-body-sm text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-primary">data_object</span>
+            JSON Lines (.jsonl)
+          </a>
+<div class="h-px bg-surface-container my-1"></div>
+<a class="flex items-center gap-2 px-3 py-2 rounded font-body-sm text-body-sm text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-outline">webhook</span>
+            Send via Webhook
+          </a>
+</div>
+</div>
+<!-- Save as Lead List Primary Action -->
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold hover:bg-inverse-primary shadow-[0_0_14px_rgba(0,102,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-[18px]">playlist_add</span>
+<span>Save as Lead List</span>
+</button>
+<!-- More Actions Menu -->
+<button class="p-2 rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors shadow-sm" title="More run operations">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Segmented Tabs (Quick View Filters) -->
+<div class="flex items-center gap-1 overflow-x-auto p-1 rounded-xl bg-surface-container-lowest shadow-sm">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shadow-sm whitespace-nowrap">
+<span>All Results</span>
+<span class="px-1.5 py-0.2 rounded-full bg-on-primary-container/20 text-on-primary-container font-code-xs text-code-xs font-bold">687</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span>Contact Info</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">542</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>With Email</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">312</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span>Hotels</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">124</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span>Restaurants</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">196</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span>Cafes</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">83</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md whitespace-nowrap">
+<span>Other</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-outline font-code-xs text-code-xs">284</span>
+</button>
+</div>
+<!-- Toolbar Controls: Search, Schema Selector, Density & Quick Filters -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-sm">
+<div class="relative flex-1 max-w-lg">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-low rounded-lg pl-9 pr-20 py-2 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-high transition-colors" id="tableSearchInput" onkeyup="filterTableLive()" placeholder="Search businesses, phone, email, category..." type="text"/>
+<span class="absolute right-2.5 top-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">⌘ F</span>
+</div>
+<div class="flex items-center gap-2 self-end md:self-auto">
+<!-- Filter Button with active indicator -->
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+<span>Filters</span>
+<span class="w-4 h-4 rounded-full bg-primary-container text-on-primary-container text-[10px] flex items-center justify-center font-bold">2</span>
+</button>
+<!-- Columns Customizer -->
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">view_column</span>
+<span>Columns</span>
+<span class="font-code-xs text-code-xs text-outline">8/12</span>
+</button>
+<!-- Refresh / Sync status -->
+<button class="p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors shadow-sm" title="Refresh dataset">
+<span class="material-symbols-outlined text-[16px]">cached</span>
+</button>
+</div>
+</div>
+<!-- Main Table Section (Container Layer 1) -->
+<div class="w-full rounded-xl bg-surface-container-lowest shadow-md overflow-hidden flex flex-col">
+<!-- Responsive Table Container -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse" id="resultsDataTable">
+<thead>
+<tr class="bg-surface-container-low text-outline font-label-sm text-label-sm uppercase tracking-wider select-none">
+<th class="py-3 px-3 w-10 text-center">
+<input class="rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" id="selectAllCheckbox" onchange="toggleSelectAll(this)" type="checkbox"/>
+</th>
+<th class="py-3 px-2 w-8 text-center font-code-xs text-code-xs">#</th>
+<th class="py-3 px-4 font-semibold">
+<div class="flex items-center gap-1 cursor-pointer hover:text-on-surface transition-colors">
+<span>Business Name</span>
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+</th>
+<th class="py-3 px-3 font-semibold">Category</th>
+<th class="py-3 px-3 font-semibold">Location</th>
+<th class="py-3 px-3 font-semibold">Phone</th>
+<th class="py-3 px-4 font-semibold">Email</th>
+<th class="py-3 px-3 font-semibold">Website</th>
+<th class="py-3 px-3 font-semibold text-right">
+<div class="flex items-center justify-end gap-1 cursor-pointer hover:text-on-surface transition-colors">
+<span>Rating</span>
+<span class="material-symbols-outlined text-[14px]">unfold_more</span>
+</div>
+</th>
+<th class="py-3 px-3 w-16 text-center font-semibold">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container/40 font-body-sm text-body-sm text-on-surface" id="tableBody">
+<!-- Row 1: The Royal Palace Hotel -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">1</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('The Royal Palace Hotel', 'Hotel', 'Civil Lines, Bareilly, UP', '+91 98765 43210', 'info@royalpalace.com', 'https://royalpalace.com', '4.6', '2,843')">The Royal Palace Hotel</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">Hotel</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors" title="Click to copy">+91 98765 43210</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline flex items-center gap-1" href="mailto:info@royalpalace.com">
+<span>info@royalpalace.com</span>
+</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://royalpalace.com" target="_blank">
+<span>royalpalace.com</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.6</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(2,843)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('The Royal Palace Hotel', 'Hotel', 'Civil Lines, Bareilly, UP', '+91 98765 43210', 'info@royalpalace.com', 'https://royalpalace.com', '4.6', '2,843')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Hotel Surya International -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">2</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Hotel Surya International', 'Hotel', 'Station Road, Bareilly, UP', '+91 87656 32109', 'contact@suryahotel.com', 'https://suryahotel.com', '4.4', '1,290')">Hotel Surya International</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">Hotel</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 87656 32109</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:contact@suryahotel.com">contact@suryahotel.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://suryahotel.com" target="_blank">
+<span>suryahotel.com</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.4</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(1,290)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Hotel Surya International', 'Hotel', 'Station Road, Bareilly, UP', '+91 87656 32109', 'contact@suryahotel.com', 'https://suryahotel.com', '4.4', '1,290')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Hotel Comfort Inn -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">3</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" title="Standard Place">location_on</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Hotel Comfort Inn', 'Hotel', 'Pilibhit Bypass Road, Bareilly, UP', '+91 76543 21098', 'info@comfortinn.in', 'https://comfortinn.in', '4.2', '890')">Hotel Comfort Inn</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">Hotel</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 76543 21098</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:info@comfortinn.in">info@comfortinn.in</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://comfortinn.in" target="_blank">
+<span>comfortinn.in</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.2</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(890)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Hotel Comfort Inn', 'Hotel', 'Pilibhit Bypass Road, Bareilly, UP', '+91 76543 21098', 'info@comfortinn.in', 'https://comfortinn.in', '4.2', '890')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Spice Garden Restaurant -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">4</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Spice Garden Restaurant', 'Restaurant', 'Rampur Garden, Bareilly, UP', '+91 65432 10987', 'spicegarden@gmail.com', 'https://spicegarden.in', '4.4', '612')">Spice Garden Restaurant</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-xs text-code-xs">Restaurant</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 65432 10987</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:spicegarden@gmail.com">spicegarden@gmail.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://spicegarden.in" target="_blank">
+<span>spicegarden.in</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.4</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(612)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Spice Garden Restaurant', 'Restaurant', 'Rampur Garden, Bareilly, UP', '+91 65432 10987', 'spicegarden@gmail.com', 'https://spicegarden.in', '4.4', '612')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Zaika Family Restaurant -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">5</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" title="Standard Place">location_on</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Zaika Family Restaurant', 'Restaurant', 'Chopula Bridge, Bareilly, UP', '+91 54321 09876', 'contact@zaika.com', 'https://zaikarestaurant.in', '4.1', '530')">Zaika Family Restaurant</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-xs text-code-xs">Restaurant</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 54321 09876</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:contact@zaika.com">contact@zaika.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://zaikarestaurant.in" target="_blank">
+<span>zaikarestaurant.in</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.1</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(530)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Zaika Family Restaurant', 'Restaurant', 'Chopula Bridge, Bareilly, UP', '+91 54321 09876', 'contact@zaika.com', 'https://zaikarestaurant.in', '4.1', '530')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: The Urban Cafe -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">6</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('The Urban Cafe', 'Cafe', 'Model Town, Bareilly, UP', '+91 43210 98765', 'hello@urbancafe.in', 'https://urbancafe.in', '4.3', '1,120')">The Urban Cafe</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-code-xs text-code-xs">Cafe</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 43210 98765</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:hello@urbancafe.in">hello@urbancafe.in</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://urbancafe.in" target="_blank">
+<span>urbancafe.in</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.3</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(1,120)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('The Urban Cafe', 'Cafe', 'Model Town, Bareilly, UP', '+91 43210 98765', 'hello@urbancafe.in', 'https://urbancafe.in', '4.3', '1,120')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Hotel Grand Plaza -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">7</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Hotel Grand Plaza', 'Hotel', 'Civil Lines, Bareilly, UP', '+91 32109 87654', 'info@grandplaza.com', 'https://grandplaza.com', '4.5', '940')">Hotel Grand Plaza</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">Hotel</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 32109 87654</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:info@grandplaza.com">info@grandplaza.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://grandplaza.com" target="_blank">
+<span>grandplaza.com</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.5</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(940)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Hotel Grand Plaza', 'Hotel', 'Civil Lines, Bareilly, UP', '+91 32109 87654', 'info@grandplaza.com', 'https://grandplaza.com', '4.5', '940')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8: Mughal Darbar -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">8</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" title="Standard Place">location_on</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Mughal Darbar', 'Restaurant', 'Ayub Khan Crossing, Bareilly, UP', '+91 21098 76543', 'mughaldarbar@gmail.com', 'https://mughaldarbar.in', '4.2', '450')">Mughal Darbar</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-xs text-code-xs">Restaurant</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 21098 76543</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:mughaldarbar@gmail.com">mughaldarbar@gmail.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://mughaldarbar.in" target="_blank">
+<span>mughaldarbar.in</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.2</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(450)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Mughal Darbar', 'Restaurant', 'Ayub Khan Crossing, Bareilly, UP', '+91 21098 76543', 'mughaldarbar@gmail.com', 'https://mughaldarbar.in', '4.2', '450')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 9: Cafe Coffee Day -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">9</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Cafe Coffee Day', 'Cafe', 'Phoenix United Mall, Bareilly, UP', '+91 10987 65432', 'info@ccd.com', 'https://ccd.com', '4.0', '1,510')">Cafe Coffee Day</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-code-xs text-code-xs">Cafe</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 10987 65432</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:info@ccd.com">info@ccd.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://ccd.com" target="_blank">
+<span>ccd.com</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.0</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(1,510)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Cafe Coffee Day', 'Cafe', 'Phoenix United Mall, Bareilly, UP', '+91 10987 65432', 'info@ccd.com', 'https://ccd.com', '4.0', '1,510')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 10: Hotel Le Royale -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-2.5 px-3 text-center">
+<input class="row-checkbox rounded bg-surface-container-high text-primary-container focus:ring-0 w-3.5 h-3.5 cursor-pointer accent-primary-container" onchange="updateSelectedCount()" type="checkbox"/>
+</td>
+<td class="py-2.5 px-2 text-center font-code-xs text-code-xs text-outline">10</td>
+<td class="py-2.5 px-4 font-medium text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" title="Verified Place">verified</span>
+<span class="font-semibold text-on-surface group-hover:text-primary transition-colors cursor-pointer" onclick="openLeadModal('Hotel Le Royale', 'Hotel', 'Stadium Road, Bareilly, UP', '+91 99887 66554', 'contact@leroyale.com', 'https://leroyale.com', '4.4', '780')">Hotel Le Royale</span>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-code-xs text-code-xs">Hotel</span>
+</td>
+<td class="py-2.5 px-3 text-on-surface-variant font-code-xs text-code-xs">Bareilly, UP</td>
+<td class="py-2.5 px-3 font-code-xs text-code-xs">
+<span class="text-on-surface hover:text-primary cursor-pointer transition-colors">+91 99887 66554</span>
+</td>
+<td class="py-2.5 px-4 font-code-xs text-code-xs">
+<a class="text-primary hover:underline" href="mailto:contact@leroyale.com">contact@leroyale.com</a>
+</td>
+<td class="py-2.5 px-3">
+<a class="text-secondary hover:text-secondary-fixed transition-colors font-code-xs text-code-xs flex items-center gap-1" href="https://leroyale.com" target="_blank">
+<span>leroyale.com</span>
+<span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</td>
+<td class="py-2.5 px-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="font-bold text-on-surface font-code-xs text-code-xs">4.4</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-outline font-code-xs text-code-xs">(780)</span>
+</div>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors" onclick="openLeadModal('Hotel Le Royale', 'Hotel', 'Stadium Road, Bareilly, UP', '+91 99887 66554', 'contact@leroyale.com', 'https://leroyale.com', '4.4', '780')" title="Inspect Lead Details">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-outline hover:text-primary transition-colors" title="Quick Add">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Navigation -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md p-space-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+<!-- Records count and selection state -->
+<div class="flex items-center gap-space-md">
+<span>Showing <strong class="text-on-surface">1-10</strong> of <strong class="text-on-surface">687</strong> results</span>
+<span class="h-3 w-px bg-outline-variant"></span>
+<span class="text-primary font-code-xs text-code-xs" id="selectedCountDisplay">0 places selected</span>
+</div>
+<!-- Pagination Buttons -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary-container text-on-primary-container font-semibold font-code-xs text-code-xs">1</button>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-code-xs text-code-xs transition-colors">2</button>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-code-xs text-code-xs transition-colors">3</button>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-code-xs text-code-xs transition-colors">4</button>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-code-xs text-code-xs transition-colors">5</button>
+<span class="text-outline px-1 font-code-xs text-code-xs">...</span>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-code-xs text-code-xs transition-colors">69</button>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Page Size Selector -->
+<div class="relative ml-2">
+<select class="bg-surface-container text-on-surface font-code-xs text-code-xs rounded px-2.5 py-1.5 focus:outline-none focus:bg-surface-container-high cursor-pointer appearance-none pr-7">
+<option value="10">10 / page</option>
+<option value="25">25 / page</option>
+<option value="50">50 / page</option>
+<option value="100">100 / page</option>
+</select>
+<span class="material-symbols-outlined text-[14px] text-outline absolute right-1.5 top-2 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Run Overview Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<!-- Stat 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Scraped</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">explore</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">687</span>
+<span class="font-code-xs text-code-xs text-tertiary">100% extracted</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-full"></div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Email Coverage</span>
+<span class="material-symbols-outlined text-[18px] text-primary">mail</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">312</span>
+<span class="font-code-xs text-code-xs text-primary">45.4% verified</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full w-[45%]"></div>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Phone Coverage</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">call</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">672</span>
+<span class="font-code-xs text-code-xs text-tertiary">97.8% dialable</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full w-[97%]"></div>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Average Rating</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">stars</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">4.32</span>
+<span class="font-code-xs text-code-xs text-outline">Across 10,840 reviews</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full w-[86%]"></div>
+</div>
+</div>
+</div>
+<!-- Sliding Inspector Modal / Quick Detail Drawer for Lead Details (Screen 21 pairing) -->
+<div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 hidden flex justify-end" id="leadModalBackdrop" onclick="closeLeadModal(event)">
+<div class="w-full max-w-lg bg-surface-container-lowest h-full shadow-2xl overflow-y-auto flex flex-col p-space-lg gap-space-lg" id="leadModalDrawer" onclick="event.stopPropagation()">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">domain</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Business Lead Details</span>
+</div>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="closeLeadModalForce()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Lead Hero Image & Rating Banner -->
+<div class="relative w-full h-44 rounded-xl overflow-hidden bg-surface-container-high shadow-md">
+<img class="w-full h-full object-cover" data-alt="A grand luxury heritage palace hotel exterior in northern India at twilight with warm illuminations, landscaped gardens, ornate Mughal architectural arches and fountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcirr51m2aLCN2zbQG_fYa91X0NOp45pvZUosZazWmY14gik9CVTXQNnfFiLPtys-mJUrnIbU6ZdvqqTcoG52zknDYMaQTJ-rpIKwT1FN0cHM_R7Q0_T7NZeD3PD8P8gCaw7oDVc-SWt-p32hiS7SnchT_JevokA0cfUB6AMae204NRJ91xqPXg6ZumchtVL04mZ1If49GiwW_U0ThuRXVmqDVNUXvfgfwbE7mX2WLQVxtuFwVfmoWeA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold" id="modalCategoryBadge">Hotel</span>
+<div class="flex items-center gap-1 bg-surface-container-lowest/80 backdrop-blur-md px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-xs text-code-xs text-on-surface font-bold" id="modalRatingText">4.6</span>
+<span class="font-code-xs text-code-xs text-outline" id="modalReviewsCount">(2,843 reviews)</span>
+</div>
+</div>
+</div>
+<!-- Lead Title & Address -->
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold" id="modalLeadName">The Royal Palace Hotel</h2>
+<span class="material-symbols-outlined text-[18px] text-tertiary" title="Verified business profile">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1.5" id="modalLeadAddress">
+<span class="material-symbols-outlined text-[14px] text-outline">place</span>
+          Civil Lines, Bareilly, Uttar Pradesh, 243001
+        </p>
+</div>
+<!-- Action Buttons Row -->
+<div class="grid grid-cols-3 gap-2">
+<a class="flex items-center justify-center gap-1 py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors font-label-sm text-label-sm" href="tel:+919876543210" id="modalCallBtn">
+<span class="material-symbols-outlined text-[16px] text-tertiary">call</span>
+<span>Call</span>
+</a>
+<a class="flex items-center justify-center gap-1 py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors font-label-sm text-label-sm" href="https://royalpalace.com" id="modalWebBtn" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">language</span>
+<span>Website</span>
+</a>
+<a class="flex items-center justify-center gap-1 py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors font-label-sm text-label-sm" href="https://maps.google.com" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-primary">directions</span>
+<span>Directions</span>
+</a>
+</div>
+<!-- Lead Metadata Fields Well -->
+<div class="flex flex-col gap-space-sm p-space-md rounded-xl bg-surface-container-low">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container/60">
+<span class="text-outline font-label-sm text-label-sm">Phone Number</span>
+<span class="text-on-surface font-code-xs text-code-xs font-semibold" id="modalLeadPhone">+91 98765 43210</span>
+</div>
+<div class="flex items-center justify-between pb-2 border-b border-surface-container/60">
+<span class="text-outline font-label-sm text-label-sm">Direct Email</span>
+<span class="text-primary font-code-xs text-code-xs font-semibold" id="modalLeadEmail">info@royalpalace.com</span>
+</div>
+<div class="flex items-center justify-between pb-2 border-b border-surface-container/60">
+<span class="text-outline font-label-sm text-label-sm">Opening Hours</span>
+<span class="text-tertiary font-code-xs text-code-xs">Open 24 Hours</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline font-label-sm text-label-sm">Google Place ID</span>
+<span class="text-outline font-code-xs text-code-xs">ChIJbV0Z_9y9xjsR75-K9w</span>
+</div>
+</div>
+<!-- Add to Lead Campaign / Push Button -->
+<div class="mt-auto pt-space-md flex flex-col gap-2">
+<button class="w-full py-2.5 rounded-lg bg-primary-container text-on-primary-container font-semibold font-label-md text-label-md hover:bg-inverse-primary shadow-[0_0_12px_rgba(0,102,255,0.35)] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_box</span>
+<span>Add to Active Campaign</span>
+</button>
+<button class="w-full py-2 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors font-label-sm text-label-sm" onclick="closeLeadModalForce()">
+          Close Inspector
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleExportMenu() {
+    const menu = document.getElementById('exportMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  function toggleSelectAll(master) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    checkboxes.forEach(cb => cb.checked = master.checked);
+    updateSelectedCount();
+  }
+
+  function updateSelectedCount() {
+    const checked = document.querySelectorAll('.row-checkbox:checked').length;
+    const display = document.getElementById('selectedCountDisplay');
+    display.textContent = `${checked} places selected`;
+  }
+
+  function filterTableLive() {
+    const query = document.getElementById('tableSearchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#tableBody tr');
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(query) ? '' : 'none';
+    });
+  }
+
+  function openLeadModal(name, category, address, phone, email, website, rating, reviews) {
+    document.getElementById('modalLeadName').textContent = name;
+    document.getElementById('modalCategoryBadge').textContent = category;
+    document.getElementById('modalLeadAddress').innerHTML = `<span class="material-symbols-outlined text-[14px] text-outline">place</span> ${address}`;
+    document.getElementById('modalLeadPhone').textContent = phone;
+    document.getElementById('modalLeadEmail').textContent = email;
+    document.getElementById('modalRatingText').textContent = rating;
+    document.getElementById('modalReviewsCount').textContent = `(${reviews} reviews)`;
+    document.getElementById('modalCallBtn').href = `tel:${phone.replace(/\s+/g, '')}`;
+    document.getElementById('modalWebBtn').href = website;
+    
+    const backdrop = document.getElementById('leadModalBackdrop');
+    backdrop.classList.remove('hidden');
+  }
+
+  function closeLeadModalForce() {
+    document.getElementById('leadModalBackdrop').classList.add('hidden');
+  }
+
+  function closeLeadModal(e) {
+    if (e.target.id === 'leadModalBackdrop') {
+      closeLeadModalForce();
+    }
+  }
+
+  // Dismiss export menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const exportBtn = document.getElementById('exportDropdownBtn');
+    const exportMenu = document.getElementById('exportMenu');
+    if (exportBtn && exportMenu && !exportBtn.contains(e.target) && !exportMenu.contains(e.target)) {
+      exportMenu.classList.add('hidden');
+    }
+  });
+</script></main></div></body></html>

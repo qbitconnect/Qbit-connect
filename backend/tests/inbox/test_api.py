@@ -4,7 +4,7 @@ filters, search, pagination, read-state, workflow actions, bulk actions."""
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from sqlalchemy import select
@@ -122,10 +122,12 @@ async def test_messages_cursor_pagination(app, client, admin_headers, seeded_db)
     )
     seeded_db.add(conversation)
     await seeded_db.flush()
+    base = datetime.now(timezone.utc) - timedelta(hours=10)
     for i in range(75):
         seeded_db.add(Message(
             conversation_id=conversation.id, direction="INBOUND", status="RECEIVED",
             message_type="TEXT", body=f"msg {i}", provider_message_id=f"pm-{i}",
+            created_at=base + timedelta(seconds=i),
         ))
     await seeded_db.commit()
 

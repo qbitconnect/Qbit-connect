@@ -51,6 +51,28 @@ class JustDialActor(ScraperActor):
         "reviews/ratings capture",
     )
     supports_pause = True
+    source_type = "commercial_platform"
+    implementation_status = "RESTRICTED"
+    access_method = "partner_api"
+    terms_verified = True
+    permitted_use = "Enterprise partner data access under Justdial syndication agreement"
+    retention_policy = "Syndicated partner terms apply"
+    export_restrictions = ("Direct scraping prohibited without enterprise syndication agreement",)
+    required_credentials = ("QBIT_JUSTDIAL_API_KEY",)
+
+    def __init__(self, settings=None) -> None:
+        self._settings = settings
+
+    async def health_check(self) -> ActorHealth:
+        from app.scrapers.core.base import ActorStatus
+        api_key = getattr(self._settings, "QBIT_JUSTDIAL_API_KEY", None) if self._settings else None
+        if not api_key:
+            return ActorHealth(
+                status=ActorStatus.DEGRADED,
+                detail="RESTRICTED: Justdial Terms of Service explicitly prohibit automated crawling or data extraction without an enterprise data licensing agreement.",
+                dependencies={"justdial_partner_api": "missing"},
+            )
+        return ActorHealth(status=ActorStatus.READY, detail="Justdial partner API configured", dependencies={"justdial_partner_api": "configured"})
 
     def validate_policy(self, model) -> dict[str, str]:
         return model.validate_policy()
@@ -153,10 +175,3 @@ class JustDialActor(ScraperActor):
         record["metadata"]["enriched_from"] = str(resp.url)
         record["metadata"]["services"] = detail["metadata"].get("services")
         return record
-
-    async def health_check(self) -> ActorHealth:
-        return ActorHealth(
-            status="READY",
-            detail="Public listing pages only; walls are reported as blocked.",
-            dependencies={},
-        )

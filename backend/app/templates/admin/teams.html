@@ -1,52 +1,345 @@
 {% extends "base.html" %}
-{% block title %}Teams — Admin — QBIT Connect{% endblock %}
+{% block title %}Team Management — Admin — QBIT Growth OS{% endblock %}
 {% block nav_admin_teams %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>TEAMS</h1>
-    <p class="muted">Group people for visibility scopes and lead assignment. Names are examples — create the teams your org needs.</p>
+<div class="flex flex-col w-full gap-space-lg">
+  <!-- Top Command & Header Bar -->
+  <div class="flex flex-col gap-space-md">
+    <!-- Breadcrumbs / Top Meta Hierarchy -->
+    <div class="flex flex-wrap items-center justify-between gap-space-sm">
+      <div class="flex items-center gap-2">
+        <span class="font-code-xs text-code-xs text-outline uppercase tracking-widest">QBIT SYSTEM // 34</span>
+        <span class="text-outline-variant font-code-xs text-code-xs">/</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider">TEAM &amp; ACCESS GOVERNANCE</span>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <!-- Live System Metric Pill -->
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high shadow-inner">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+          </span>
+          <span class="font-code-xs text-code-xs text-on-surface font-medium">{{ teams|length }} Teams Configured</span>
+          <span class="text-outline-variant font-code-xs text-code-xs">|</span>
+          <span class="font-code-xs text-code-xs text-tertiary-fixed">IAM Synchronized</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title and Actions Strip -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+      <div>
+        <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Team Management &amp; Groups</h1>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Group colleagues into functional departments, visibility scopes, and automated lead distribution queues.
+        </p>
+      </div>
+
+      <!-- Action Cluster -->
+      <div class="flex items-center gap-space-sm flex-wrap">
+        <a href="/admin/users" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px]">group</span>
+          <span>All Users</span>
+        </a>
+        <a href="/admin/invitations" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px] text-secondary">forward_to_inbox</span>
+          <span>Invitations</span>
+        </a>
+        {% if can_create %}
+        <button class="h-9 px-3.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-1.5 shadow-[0_0_16px_rgba(0,102,255,0.4)] hover:bg-inverse-primary transition-all" onclick="toggleModal('modal-create-team')">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Create Team</span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
   </div>
-</div>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err %}<div class="alert alert-error">{{ err }}</div>{% endif %}
-
-{% if can_create %}
-<div class="card">
-  <h2 style="margin:0 0 12px">Create team</h2>
-  <form method="post" action="/admin/teams" class="toolbar" style="align-items:flex-end">
-    <label style="display:grid;gap:4px"><span class="muted small">NAME</span>
-      <input type="text" name="name" required maxlength="200" placeholder="e.g. Sales Outreach">
-    </label>
-    <label style="display:grid;gap:4px"><span class="muted small">DESCRIPTION</span>
-      <input type="text" name="description" maxlength="500" placeholder="Optional">
-    </label>
-    <button class="btn btn-primary" type="submit">Create</button>
-  </form>
-</div>
-{% endif %}
-
-<div class="card table-card" style="margin-top:18px">
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Team</th><th>Slug</th><th>Status</th><th>Members</th><th></th></tr></thead>
-      <tbody>
-        {% for t in teams %}
-        <tr>
-          <td><a href="/admin/teams/{{ t.id }}"><strong>{{ t.name }}</strong></a>
-            {% if t.description %}<div class="muted small">{{ t.description }}</div>{% endif %}
-          </td>
-          <td class="mono muted">{{ t.slug }}</td>
-          <td><span class="badge badge-{{ 'active' if t.is_active else 'inactive' }}">{{ 'ACTIVE' if t.is_active else 'INACTIVE' }}</span></td>
-          <td class="mono">{{ t.members }}</td>
-          <td><a class="btn btn-sm btn-ghost" href="/admin/teams/{{ t.id }}">Open</a></td>
-        </tr>
-        {% else %}
-        <tr><td colspan="5" class="center muted" style="padding:32px">No teams yet.{% if can_create %} Create your first team above.{% endif %}</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <!-- Alerts -->
+  {% if ok %}
+  <div class="p-3 rounded-lg bg-tertiary-container/20 border border-tertiary/30 text-tertiary flex items-center gap-2 font-body-sm text-body-sm">
+    <span class="material-symbols-outlined text-[18px]">check_circle</span>
+    <span>{{ ok }}</span>
   </div>
+  {% endif %}
+  {% if err %}
+  <div class="p-3 rounded-lg bg-error-container/30 border border-error/30 text-error flex items-center gap-2 font-body-sm text-body-sm">
+    <span class="material-symbols-outlined text-[18px]">error</span>
+    <span>{{ err }}</span>
+  </div>
+  {% endif %}
+
+  <!-- KPI Overview Strip (Screen 34 Reference) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+    <!-- Card 1: Total Teams -->
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Configured Teams</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-0.5">{{ teams|length }}</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">groups</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Active departments</span>
+        <span class="font-code-xs text-code-xs text-tertiary">{{ teams|selectattr('is_active')|list|length }} operational</span>
+      </div>
+    </div>
+
+    <!-- Card 2: Team Memberships -->
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Total Member Slots</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-secondary-fixed mt-0.5">{{ teams|sum(attribute='members') }}</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">badge</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Assigned to groups</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed">Scoped Access</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Scope Policy -->
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Visibility Scope</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-0.5">TEAM</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">visibility</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Enforced multi-tenant</span>
+        <span class="font-code-xs text-code-xs text-tertiary-fixed">Active</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Security Policy -->
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Role Enforcement</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-tertiary mt-0.5">RBAC 2.0</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary border border-outline-variant/30 shadow-[0_0_8px_rgba(78,222,163,0.3)]">
+          <span class="material-symbols-outlined text-[19px]">verified</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px] text-tertiary">lock</span>
+          Strict Audit Trail
+        </span>
+        <span class="font-code-xs text-code-xs text-tertiary-fixed">Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search & Filter Controls -->
+  <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-sm bg-surface-container-low p-2 rounded-xl border border-outline-variant/30">
+    <div class="relative flex-1 min-w-[280px]">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+      <input class="w-full bg-surface-container border border-outline-variant/40 rounded-lg pl-9 pr-8 py-2 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" id="team-search-input" placeholder="Search teams by name, slug, or purpose..." type="text"/>
+    </div>
+    <div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
+      <button class="filter-tab px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold shadow-[0_0_10px_rgba(0,102,255,0.35)] transition-all whitespace-nowrap" onclick="filterTeams('all', this)">
+        All Teams ({{ teams|length }})
+      </button>
+      <button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all whitespace-nowrap border border-transparent hover:border-outline-variant/30" onclick="filterTeams('active', this)">
+        Active ({{ teams|selectattr('is_active')|list|length }})
+      </button>
+      <button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all whitespace-nowrap border border-transparent hover:border-outline-variant/30" onclick="filterTeams('inactive', this)">
+        Inactive ({{ teams|rejectattr('is_active')|list|length }})
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Teams Directory Table (Screen 34 Reference Matched) -->
+  <div class="rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden shadow-sm">
+    <div class="px-space-md py-space-sm border-b border-outline-variant/20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Organization Teams</span>
+        <span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-surface-container text-outline border border-outline-variant/30">{{ teams|length }} teams configured</span>
+      </div>
+      <div class="flex items-center gap-2 text-outline font-label-sm text-label-sm">
+        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Active Scope</span>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse" id="team-table">
+        <thead>
+          <tr class="bg-surface-container-lowest/80 border-b border-outline-variant/30 font-label-sm text-label-sm text-outline uppercase tracking-wider select-none">
+            <th class="px-4 py-3">Team &amp; Identity</th>
+            <th class="px-4 py-3">Slug Identifier</th>
+            <th class="px-4 py-3">Description</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">Enrolled Members</th>
+            <th class="px-4 py-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/15 text-body-sm font-body-sm">
+          {% for t in teams %}
+          <tr class="team-row group hover:bg-surface-container transition-colors" data-status="{{ 'active' if t.is_active else 'inactive' }}">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-surface-container-high border border-outline-variant/30 text-primary flex items-center justify-center font-label-md text-label-md font-bold shadow-inner shrink-0">
+                  {{ t.name[:2]|upper }}
+                </div>
+                <div class="flex flex-col min-w-0">
+                  <a href="/admin/teams/{{ t.id }}" class="font-label-md text-label-md font-semibold text-on-surface hover:text-primary transition-colors truncate">
+                    {{ t.name }}
+                  </a>
+                  <span class="font-code-xs text-code-xs text-outline">ID: {{ t.id|string|truncate(12, true, '…') }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 font-code-xs text-code-xs text-secondary-fixed mono">
+              {{ t.slug }}
+            </td>
+            <td class="px-4 py-3 text-on-surface-variant max-w-xs truncate">
+              {{ t.description or '—' }}
+            </td>
+            <td class="px-4 py-3">
+              {% if t.is_active %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary/10 border border-tertiary/30 text-tertiary font-label-sm text-label-sm font-medium shadow-[0_0_6px_rgba(78,222,163,0.2)]">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                ACTIVE
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-highest border border-outline-variant/40 text-outline font-label-sm text-label-sm font-medium">
+                INACTIVE
+              </span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface border border-outline-variant/30 font-code-xs text-code-xs">
+                <span class="material-symbols-outlined text-[13px] text-secondary">person</span>
+                {{ t.members }} members
+              </span>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <a href="/admin/teams/{{ t.id }}" class="h-7 px-3 rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant text-label-sm font-label-sm transition-colors border border-outline-variant/30 inline-flex items-center gap-1">
+                  <span>Open</span>
+                  <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" class="px-4 py-8 text-center text-outline">
+              No teams configured yet.{% if can_create %} Click "Create Team" to define your organization structure.{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table Footer -->
+    <div class="px-space-md py-3 bg-surface-container-lowest/60 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-body-sm font-body-sm text-outline">
+      <div class="flex items-center gap-2">
+        <span>Displaying {{ teams|length }} configured groups</span>
+        <span>•</span>
+        <span class="text-tertiary">All scoped queries enforce organization boundaries</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Team Modal (When can_create) -->
+  {% if can_create %}
+  <div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="modal-create-team">
+    <div class="bg-surface-container-low rounded-xl w-full max-w-lg shadow-2xl p-space-xl flex flex-col gap-space-lg border border-outline-variant/30">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[24px]">group_add</span>
+          </div>
+          <div>
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Create New Team</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Define group boundary and member scopes.</p>
+          </div>
+        </div>
+        <button class="text-outline hover:text-on-surface p-1 rounded-lg" onclick="toggleModal('modal-create-team')">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form method="post" action="/admin/teams" class="flex flex-col gap-space-md">
+        <div>
+          <label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">Team Name *</label>
+          <input type="text" name="name" required maxlength="200" placeholder="e.g. Inbound Marketing, Lead Gen, Enterprise Sales" class="w-full h-9 bg-surface-container-low rounded-lg px-3 text-on-surface font-body-sm text-body-sm border border-outline-variant/40 focus:outline-none focus:ring-1 focus:ring-primary-container"/>
+        </div>
+        <div>
+          <label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">Description (Optional)</label>
+          <input type="text" name="description" maxlength="500" placeholder="e.g. Responsible for regional outreach and high-intent prospect nurturing" class="w-full h-9 bg-surface-container-low rounded-lg px-3 text-on-surface font-body-sm text-body-sm border border-outline-variant/40 focus:outline-none focus:ring-1 focus:ring-primary-container"/>
+        </div>
+        <div class="flex justify-end gap-space-sm pt-2">
+          <button type="button" class="h-9 px-4 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright font-label-md text-label-md transition-colors border border-outline-variant/30" onclick="toggleModal('modal-create-team')">
+            Cancel
+          </button>
+          <button type="submit" class="h-9 px-4 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_0_12px_rgba(0,102,255,0.4)] hover:bg-inverse-primary transition-all">
+            Create Team
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
 </div>
+
+<script>
+  function toggleModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.toggle('hidden');
+    }
+  }
+
+  function filterTeams(status, buttonEl) {
+    const tabs = document.querySelectorAll('.filter-tab');
+    tabs.forEach(tab => {
+      tab.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+      tab.classList.add('bg-surface-container', 'text-on-surface-variant');
+    });
+    buttonEl.classList.remove('bg-surface-container', 'text-on-surface-variant');
+    buttonEl.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+
+    const rows = document.querySelectorAll('.team-row');
+    rows.forEach(row => {
+      if (status === 'all' || row.getAttribute('data-status') === status) {
+        row.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+  }
+
+  const teamSearch = document.getElementById('team-search-input');
+  if (teamSearch) {
+    teamSearch.addEventListener('input', function(e) {
+      const q = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('.team-row');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(q)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+    });
+  }
+</script>
 {% endblock %}

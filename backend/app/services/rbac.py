@@ -15,17 +15,25 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.rbac import Permission, Role, role_permissions, user_roles
 from app.models.user import User
 
+ROLE_CEO = "CEO"
 ROLE_SUPER_ADMIN = "SUPER_ADMIN"
 ROLE_ADMIN = "ADMIN"
+ROLE_MARKETING_MANAGER = "MARKETING_MANAGER"
 ROLE_MANAGER = "MANAGER"
+ROLE_MARKETING_EXECUTIVE = "MARKETING_EXECUTIVE"
 ROLE_OPERATOR = "OPERATOR"
+ROLE_RESEARCHER = "RESEARCHER"
 ROLE_VIEWER = "VIEWER"
 
 ROLES: list[dict] = [
+    {"code": ROLE_CEO, "name": "CEO", "description": "Full platform control and company-wide visibility"},
     {"code": ROLE_SUPER_ADMIN, "name": "Super Admin", "description": "Full platform control"},
     {"code": ROLE_ADMIN, "name": "Admin", "description": "Platform administration"},
+    {"code": ROLE_MARKETING_MANAGER, "name": "Marketing Manager", "description": "Campaigns, templates, outbound approval"},
     {"code": ROLE_MANAGER, "name": "Manager", "description": "Campaigns, templates, exports"},
+    {"code": ROLE_MARKETING_EXECUTIVE, "name": "Marketing Executive", "description": "Runs scrapers, manages leads/files, messaging"},
     {"code": ROLE_OPERATOR, "name": "Operator", "description": "Runs scrapers, manages leads/files"},
+    {"code": ROLE_RESEARCHER, "name": "Researcher", "description": "Public intelligence, B2B/local business research, analytics"},
     {"code": ROLE_VIEWER, "name": "Viewer", "description": "Read-only dashboards and analytics"},
 ]
 
@@ -94,6 +102,14 @@ PERMISSIONS: list[tuple[str, str]] = [
     ("campaigns.email.analytics", "View email campaign analytics (Phase 7)"),
     ("suppression.email.view", "View EMAIL-channel suppressions (Phase 7)"),
     ("suppression.email.manage", "Manage EMAIL-channel suppressions (Phase 7)"),
+    # --- Phase 8: social media publishing & analytics -----------------------
+    ("social.view", "View social media accounts, calendar, and posts (Phase 8)"),
+    ("social.create", "Author and draft social media posts (Phase 8)"),
+    ("social.schedule", "Schedule social posts for publishing (Phase 8)"),
+    ("social.publish", "Publish posts directly to social platforms (Phase 8)"),
+    ("social.approve", "Approve or reject queued social posts (Phase 8)"),
+    ("social.manage_accounts", "Connect and disconnect social media accounts (Phase 8)"),
+    ("social.analytics", "View real provider social post analytics (Phase 8)"),
     # --- Phase 8: unified inbox (§49) -----------------------------------------
     ("inbox.view", "View the unified inbox (Phase 8)"),
     ("inbox.reply", "Send replies from the inbox (Phase 8)"),
@@ -163,6 +179,22 @@ PERMISSIONS: list[tuple[str, str]] = [
     ("security.view", "View security settings (Phase 11)"),
     ("security.manage", "Modify security settings (Phase 11)"),
     ("notifications.view", "View own in-app notifications (Phase 11)"),
+    # --- Phase 9: AI Agents & Lead Intelligence --------------------------------
+    ("ai.view", "View AI agents, runs, and usage dashboard (Phase 9)"),
+    ("ai.run_agents", "Queue and cancel AI agent runs (Phase 9)"),
+    ("ai.manage_agents", "Override scores and manage AI agent definitions (Phase 9)"),
+    ("ai.view_usage", "View AI token usage and cost records (Phase 9)"),
+    ("leads.enrich", "Trigger lead enrichment, scoring, and sales brief generation (Phase 9)"),
+    ("leads.view_intelligence", "View lead intelligence, proposals, and sales briefs (Phase 9)"),
+    ("leads.view_score", "View lead AI scores (Phase 9)"),
+    ("products.view", "View QBIT POS product catalog (Phase 9)"),
+    ("products.manage", "Create and modify QBIT POS products (Phase 9)"),
+    # --- Phase 10: Performance Targets, Executive Reporting & Deals -----------
+    ("executive.view", "View executive CEO/Admin dashboard (Phase 10)"),
+    ("targets.view", "View employee and team performance targets (Phase 10)"),
+    ("targets.manage", "Create and modify performance targets (Phase 10)"),
+    ("deals.view", "View CRM deals and sales pipeline values (Phase 10)"),
+    ("deals.manage", "Create and modify CRM deals (Phase 10)"),
 ]
 
 ROLE_PERMISSIONS: dict[str, list[str]] = {
@@ -191,6 +223,8 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         "email.templates.view", "email.templates.manage",
         "campaigns.email.launch", "campaigns.email.analytics",
         "suppression.email.view", "suppression.email.manage",
+        "social.view", "social.create", "social.schedule", "social.publish",
+        "social.approve", "social.manage_accounts", "social.analytics",
         "inbox.view", "inbox.reply", "inbox.assign", "inbox.manage",
         "inbox.add_notes", "inbox.change_status", "inbox.change_priority",
         "inbox.link_lead", "inbox.create_lead",
@@ -216,6 +250,12 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         "sessions.view", "sessions.revoke",
         "security.view", "security.manage",
         "notifications.view",
+        # Phase 9 additions
+        "ai.view", "ai.run_agents", "ai.manage_agents", "ai.view_usage",
+        "leads.enrich", "leads.view_intelligence", "leads.view_score",
+        "products.view", "products.manage",
+        # Phase 10 additions
+        "executive.view", "targets.view", "targets.manage", "deals.view", "deals.manage",
     ],
     ROLE_MANAGER: [
         "dashboard.view", "scraping.view",
@@ -237,6 +277,8 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         "email.templates.view", "email.templates.manage",
         "campaigns.email.launch", "campaigns.email.analytics",
         "suppression.email.view", "suppression.email.manage",
+        "social.view", "social.create", "social.schedule", "social.publish",
+        "social.approve", "social.manage_accounts", "social.analytics",
         "inbox.view", "inbox.reply", "inbox.assign",
         "inbox.add_notes", "inbox.change_status", "inbox.change_priority",
         "inbox.link_lead", "inbox.create_lead",
@@ -257,6 +299,12 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         "inbox.view", "inbox.reply", "inbox.assign",
         "leads.assign",
         "notifications.view",
+        # Phase 9 additions
+        "ai.view", "ai.run_agents", "ai.view_usage",
+        "leads.enrich", "leads.view_intelligence", "leads.view_score",
+        "products.view",
+        # Phase 10 additions
+        "executive.view", "targets.view", "targets.manage", "deals.view", "deals.manage",
     ],
     ROLE_OPERATOR: [
         "dashboard.view", "scraping.view", "scraping.run",
@@ -283,6 +331,8 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         # Phase 11 additions
         "inbox.view", "inbox.reply",
         "notifications.view",
+        # Phase 10 additions
+        "targets.view", "deals.view",
     ],
     ROLE_VIEWER: [
         "dashboard.view", "scraping.view", "leads.view",
@@ -303,8 +353,22 @@ ROLE_PERMISSIONS: dict[str, list[str]] = {
         # Phase 11 additions
         "inbox.view",
         "notifications.view",
+        # Phase 10 additions
+        "executive.view", "targets.view", "deals.view",
+    ],
+    ROLE_CEO: [code for code, _ in PERMISSIONS],
+    ROLE_RESEARCHER: [
+        "dashboard.view", "scraping.view", "scraping.run", "scraping.pause", "scraping.cancel", "scraping.export",
+        "leads.view", "leads.create", "leads.edit", "leads.archive", "leads.import", "leads.export", "leads.merge",
+        "leads.manage_tags", "leads.manage_views", "leads.manage_quality",
+        "analytics.view", "analytics.view_leads", "analytics.view_scraping",
+        "reports.view", "reports.run", "reports.export",
+        "exports.view", "exports.download", "files.view", "files.create",
+        "inbox.view", "notifications.view",
     ],
 }
+ROLE_PERMISSIONS[ROLE_MARKETING_MANAGER] = list(ROLE_PERMISSIONS[ROLE_MANAGER])
+ROLE_PERMISSIONS[ROLE_MARKETING_EXECUTIVE] = list(ROLE_PERMISSIONS[ROLE_OPERATOR])
 
 
 async def seed_rbac(session: AsyncSession) -> dict:

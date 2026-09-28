@@ -54,13 +54,15 @@ def builtin_actor_classes() -> list[type[ScraperActor]]:
 def register_builtin_actors(registry: ActorRegistry, settings=None) -> ActorRegistry:
     """Register all built-in actors, honoring feature flags."""
     from app.scrapers.actors.google_maps import GoogleMapsActor
+    from app.scrapers.actors.indiamart import IndiaMartActor
+    from app.scrapers.actors.justdial import JustDialActor
 
     disabled = settings.scraper_disabled_actors() if settings else set()
     global_enabled = getattr(settings, "QBIT_SCRAPER_ENABLED", True) if settings else True
 
     for actor_cls in builtin_actor_classes():
         kwargs = {}
-        if actor_cls is GoogleMapsActor:
+        if actor_cls in (GoogleMapsActor, IndiaMartActor, JustDialActor):
             kwargs["settings"] = settings
         actor = actor_cls(**kwargs)
         enabled = global_enabled and actor.id not in disabled

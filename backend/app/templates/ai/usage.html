@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}AI Usage — QBIT Growth OS{% endblock %}
+{% block nav_ai %}bg-surface-container-high text-on-surface{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-6">
+
+  <div class="mb-6">
+    <h1 class="text-display-sm font-bold text-on-surface">AI Usage &amp; Cost</h1>
+    <p class="text-body-md text-on-surface-variant mt-1">Token consumption and cost estimates by provider and model</p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-primary text-lg">toll</span>
+        <span class="text-label-sm text-on-surface-variant">Total Tokens</span>
+      </div>
+      <div class="text-display-sm font-bold text-on-surface">{{ "{:,}".format(total_tokens) }}</div>
+    </div>
+    <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-tertiary text-lg">payments</span>
+        <span class="text-label-sm text-on-surface-variant">Estimated Cost</span>
+      </div>
+      <div class="text-display-sm font-bold text-on-surface">${{ "%.4f" | format(total_cost) }}</div>
+    </div>
+    <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-secondary text-lg">call_made</span>
+        <span class="text-label-sm text-on-surface-variant">API Calls</span>
+      </div>
+      <div class="text-display-sm font-bold text-on-surface">{{ records | length }}</div>
+    </div>
+  </div>
+
+  <!-- By Model Breakdown -->
+  {% if by_model %}
+  <div class="bg-surface-container rounded-xl border border-outline-variant p-5 mb-6">
+    <h2 class="text-title-sm font-semibold text-on-surface mb-4">By Model</h2>
+    <div class="space-y-3">
+      {% for m in by_model %}
+      <div class="flex items-center gap-4 py-2 border-b border-outline-variant last:border-0">
+        <div class="flex-1">
+          <span class="text-body-md font-medium text-on-surface">{{ m.model }}</span>
+          <span class="ml-2 text-label-xs text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">{{ m.provider }}</span>
+        </div>
+        <div class="text-body-sm text-on-surface-variant">{{ "{:,}".format(m.tokens) }} tokens</div>
+        <div class="text-body-sm font-medium text-on-surface w-24 text-right">${{ "%.4f" | format(m.cost) }}</div>
+        <div class="text-body-sm text-on-surface-variant w-16 text-right">{{ m.calls }} calls</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Recent Records -->
+  <div class="bg-surface-container rounded-xl border border-outline-variant">
+    <div class="px-5 py-4 border-b border-outline-variant">
+      <h2 class="text-title-sm font-semibold text-on-surface">Recent Usage Records</h2>
+    </div>
+    {% if records %}
+    <div class="overflow-x-auto">
+      <table class="w-full text-body-sm">
+        <thead>
+          <tr class="border-b border-outline-variant">
+            <th class="text-left px-5 py-3 text-label-sm text-on-surface-variant font-medium">Provider / Model</th>
+            <th class="text-right px-4 py-3 text-label-sm text-on-surface-variant font-medium">Prompt</th>
+            <th class="text-right px-4 py-3 text-label-sm text-on-surface-variant font-medium">Completion</th>
+            <th class="text-right px-4 py-3 text-label-sm text-on-surface-variant font-medium">Total</th>
+            <th class="text-right px-4 py-3 text-label-sm text-on-surface-variant font-medium">Cost</th>
+            <th class="text-right px-4 py-3 text-label-sm text-on-surface-variant font-medium">Time</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant">
+          {% for r in records %}
+          <tr class="hover:bg-surface-container-low transition-colors">
+            <td class="px-5 py-3">
+              <span class="font-medium text-on-surface">{{ r.model }}</span>
+              <span class="ml-2 text-label-xs text-on-surface-variant">{{ r.provider }}</span>
+            </td>
+            <td class="px-4 py-3 text-right text-on-surface-variant font-mono">{{ "{:,}".format(r.prompt_tokens) }}</td>
+            <td class="px-4 py-3 text-right text-on-surface-variant font-mono">{{ "{:,}".format(r.completion_tokens) }}</td>
+            <td class="px-4 py-3 text-right text-on-surface font-mono font-medium">{{ "{:,}".format(r.total_tokens) }}</td>
+            <td class="px-4 py-3 text-right text-tertiary font-mono">${{ "%.4f" | format(r.estimated_cost) }}</td>
+            <td class="px-4 py-3 text-right text-on-surface-variant">{{ r.created_at.strftime('%d %b %H:%M') if r.created_at else '' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="py-12 text-center text-on-surface-variant">
+      <span class="material-symbols-outlined text-4xl opacity-40 mb-3 block">bar_chart</span>
+      <p>No usage records yet. Run an AI agent to see token consumption.</p>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

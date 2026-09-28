@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#080E1D]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QBIT GROWTH OS - Sign In</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Custom Colors & Fonts -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              400: '#38bdf8',
+              500: '#0066FF',
+              600: '#0052cc',
+              700: '#003d99',
+            },
+            cyber: {
+              base: '#080E1D',
+              surface: '#0D1322',
+              card: '#10182A',
+              border: '#1E293B',
+              borderLight: '#26334D',
+              muted: '#64748B',
+              text: '#94A3B8',
+              highlight: '#38BDF8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow': '0 0 35px -5px rgba(0, 102, 255, 0.25)',
+            'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-background">
+    /* Subtle ambient dark cyber background glow */
+    .cyber-bg-glow {
+      background: radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.12) 0%, rgba(8, 14, 29, 0) 65%),
+                  radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, rgba(8, 14, 29, 0) 50%);
+    }
+    /* Subtle grid pattern overlay */
+    .grid-overlay {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+  </style>
+<meta content="web_standard" name="shell-type"/></head>
+<body class="min-h-full flex flex-col font-sans text-slate-100 bg-[#080E1D] cyber-bg-glow grid-overlay antialiased selection:bg-brand-500 selection:text-white">
+<!-- BEGIN: TopGlobalHeader -->
+<header class="w-full border-b border-cyber-border/70 backdrop-blur-md bg-cyber-base/70 sticky top-0 z-30" data-purpose="top-navigation">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand Logo & Name -->
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-brand-600 via-brand-500 to-sky-400 p-[1px] shadow-sm">
+<div class="h-full w-full bg-cyber-base rounded-[7px] flex items-center justify-center">
+<!-- Isometric QBIT Cube Icon -->
+<svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+<line x1="12" x2="12" y1="22.08" y2="12"></line>
+</svg>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold tracking-wider text-white uppercase">Qbit Growth OS</span>
+<span class="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/25">v2.4.0</span>
+</div>
+<span class="text-[11px] text-cyber-muted font-normal">AI Powered Business Intelligence &amp; Marketing Automation</span>
+</div>
+</div>
+<!-- Right Header Status & Badges -->
+<div class="flex items-center gap-3">
+<!-- Private Internal Tool Badge -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+<span>Private Internal Tool</span>
+</div>
+<!-- Environment Indicator -->
+<div class="hidden md:flex items-center gap-1.5 text-xs text-cyber-muted border-l border-cyber-border pl-3">
+<span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+<span>Prod-Asia-East</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopGlobalHeader -->
+<!-- BEGIN: MainContentAuthArea -->
+<main class="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 relative z-10" data-purpose="auth-view-container"><div class="flex flex-col w-full">
+<div class="w-full max-w-xl mx-auto my-auto relative">
+<div class="absolute -top-16 left-1/2 -translate-x-1/2 w-80 h-36 bg-gradient-to-b from-primary-container/20 to-transparent blur-3xl pointer-events-none rounded-full"></div>
+<div class="relative bg-surface-container-low/90 backdrop-blur-xl rounded-xl p-space-xl sm:p-space-2xl shadow-xl flex flex-col gap-space-xl">
+<div class="flex flex-col items-center text-center gap-space-md">
+<div class="relative flex items-center justify-center w-14 h-14 rounded-xl bg-surface-container-high shadow-inner">
+<div class="absolute inset-0 rounded-xl bg-gradient-to-tr from-primary-container/30 to-secondary-container/20 blur-sm pointer-events-none"></div>
+<span class="material-symbols-outlined text-secondary text-2xl relative z-10" style="font-variation-settings: 'FILL' 1;">domain_add</span>
+<div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-surface-container-low flex items-center justify-center p-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Choose a workspace</h2>
+<p class="font-body-md text-body-md text-outline">Select the company workspace to initialize your growth engine session</p>
+</div>
+<div class="inline-flex items-center gap-space-sm bg-surface-container px-space-md py-space-xs rounded-full">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">
+            Logged in as <span class="text-on-surface font-semibold">sagar@qbit.os</span>
+</span>
+<span class="font-code-xs text-code-xs text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim bg-tertiary-container/30 px-space-xs py-0.5 rounded">Verified SSO</span>
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-fixed underline transition-colors" href="#switch-account">Switch</a>
+</div>
+</div>
+<div aria-label="Available Workspaces" class="flex flex-col gap-space-md" id="workspaceList" role="radiogroup">
+<!-- Workspace 1: Selected / Primary -->
+<label class="group relative flex flex-col gap-space-sm p-space-md rounded-lg cursor-pointer bg-surface-container-high shadow-md transition-all duration-200" for="ws-india">
+<input checked="" class="sr-only" id="ws-india" name="workspace_selection" type="radio" value="qbitpro-india"/>
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-xl">corporate_fare</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">QbitPro India Pvt Ltd</span>
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded bg-primary-container/20 text-secondary font-medium tracking-wide">ACTIVE</span>
+</div>
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-outline">
+<span>5 members</span>
+<span>•</span>
+<span>Enterprise Plan</span>
+<span>•</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">Asia-South1</span>
+</div>
+</div>
+</div>
+<div class="ws-radio flex items-center justify-center w-5 h-5 rounded-full bg-primary-container shrink-0 shadow-sm mt-1">
+<div class="w-2 h-2 rounded-full bg-on-primary-container"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-space-2xs bg-surface-container/60 -mx-space-md -mb-space-md px-space-md py-space-xs rounded-b-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-sm">database</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quota utilization:</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-24 h-1.5 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-secondary-container rounded-full" style="width: 85%;"></div>
+</div>
+<span class="font-code-xs text-code-xs text-on-surface font-semibold">85.2k / 100k Credits</span>
+</div>
+</div>
+</label>
+<!-- Workspace 2 -->
+<label class="group relative flex flex-col gap-space-sm p-space-md rounded-lg cursor-pointer bg-surface-container shadow-sm hover:bg-surface-container-high transition-all duration-200" for="ws-marketing">
+<input class="sr-only" id="ws-marketing" name="workspace_selection" type="radio" value="qbitpro-marketing"/>
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">campaign</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">QbitPro Marketing</span>
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded bg-surface-variant text-on-surface-variant">Secondary</span>
+</div>
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-outline">
+<span>3 members</span>
+<span>•</span>
+<span>Growth Tier</span>
+<span>•</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">US-East</span>
+</div>
+</div>
+</div>
+<div class="ws-radio flex items-center justify-center w-5 h-5 rounded-full bg-surface-variant shrink-0 mt-1">
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-space-2xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs rounded-b-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-sm">database</span>
+<span class="font-label-sm text-label-sm text-outline">Quota utilization:</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-24 h-1.5 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 42%;"></div>
+</div>
+<span class="font-code-xs text-code-xs text-outline font-medium">21.0k / 50k Credits</span>
+</div>
+</div>
+</label>
+<!-- Workspace 3 -->
+<label class="group relative flex flex-col gap-space-sm p-space-md rounded-lg cursor-pointer bg-surface-container shadow-sm hover:bg-surface-container-high transition-all duration-200" for="ws-ops">
+<input class="sr-only" id="ws-ops" name="workspace_selection" type="radio" value="qbitpro-operations"/>
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">hub</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">QbitPro Operations</span>
+</div>
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-outline">
+<span>2 members</span>
+<span>•</span>
+<span>Starter Tier</span>
+<span>•</span>
+<span class="font-code-xs text-code-xs text-on-surface-variant">EU-Central</span>
+</div>
+</div>
+</div>
+<div class="ws-radio flex items-center justify-center w-5 h-5 rounded-full bg-surface-variant shrink-0 mt-1">
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt-space-2xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs rounded-b-lg">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-sm">database</span>
+<span class="font-label-sm text-label-sm text-outline">Quota utilization:</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-24 h-1.5 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 14%;"></div>
+</div>
+<span class="font-code-xs text-code-xs text-outline font-medium">1.4k / 10k Credits</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex flex-col gap-space-md pt-space-xs">
+<button class="w-full flex items-center justify-center gap-space-sm py-space-md px-space-lg rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-inverse-primary shadow-glow transition-all active:scale-[0.99]" id="continueBtn" type="button">
+<span>Continue to Workspace</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+<div class="flex items-center justify-between px-space-xs">
+<a class="inline-flex items-center gap-space-xs font-label-sm text-label-sm text-primary hover:text-primary-fixed transition-colors" href="#create-workspace">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+<span>Create new workspace</span>
+</a>
+<span class="font-code-xs text-code-xs text-outline-variant">•</span>
+<a class="inline-flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#join-workspace">
+<span class="material-symbols-outlined text-sm">vpn_key</span>
+<span>Join with invitation code</span>
+</a>
+</div>
+</div>
+<div class="pt-space-md bg-surface-container-lowest/60 -mx-space-xl -mb-space-xl sm:-mx-space-2xl sm:-mb-space-2xl p-space-md rounded-b-xl flex items-center justify-center text-center">
+<div class="flex items-center gap-space-xs text-outline">
+<span class="material-symbols-outlined text-sm text-tertiary-fixed-dim">verified_user</span>
+<span class="font-code-xs text-code-xs">
+            Access governed by Corporate SSO (SAML/Okta) • SOC-2 Type II Enclave Protected
+          </span>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function () {
+      const labels = document.querySelectorAll('#workspaceList label');
+      labels.forEach(label => {
+        label.addEventListener('click', function () {
+          labels.forEach(l => {
+            l.classList.remove('bg-surface-container-high', 'shadow-md');
+            l.classList.add('bg-surface-container');
+            const radioIndicator = l.querySelector('.ws-radio');
+            const radioInner = radioIndicator?.querySelector('div');
+            if (radioIndicator && radioInner) {
+              radioIndicator.classList.remove('bg-primary-container', 'shadow-sm');
+              radioIndicator.classList.add('bg-surface-variant');
+              radioInner.classList.remove('bg-on-primary-container');
+              radioInner.classList.add('bg-transparent');
+            }
+          });
+
+          this.classList.remove('bg-surface-container');
+          this.classList.add('bg-surface-container-high', 'shadow-md');
+          const activeRadio = this.querySelector('.ws-radio');
+          const activeInner = activeRadio?.querySelector('div');
+          if (activeRadio && activeInner) {
+            activeRadio.classList.remove('bg-surface-variant');
+            activeRadio.classList.add('bg-primary-container', 'shadow-sm');
+            activeInner.classList.remove('bg-transparent');
+            activeInner.classList.add('bg-on-primary-container');
+          }
+        });
+      });
+
+      const continueBtn = document.getElementById('continueBtn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', function () {
+          const selected = document.querySelector('input[name="workspace_selection"]:checked');
+          const wsName = selected ? selected.value : 'selected-workspace';
+          continueBtn.innerHTML = `
+            <span class="material-symbols-outlined text-base animate-spin">progress_activity</span>
+            <span>Initializing session...</span>
+          `;
+          setTimeout(() => {
+            window.location.hash = '#' + wsName;
+          }, 600);
+        });
+      }
+    })();
+  </script>
+</div></main>
+<!-- END: MainContentAuthArea -->
+<!-- BEGIN: BottomGlobalFooter -->
+<footer class="w-full border-t border-cyber-border/70 py-4 bg-cyber-base/80 text-xs text-cyber-muted" data-purpose="site-footer">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+<!-- System status indicator -->
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-slate-400">All systems operational</span>
+<span class="text-cyber-border">|</span>
+<span class="text-[11px] font-mono text-cyber-muted">Latency 24ms</span>
+</div>
+<!-- Legal and Compliance Links -->
+<nav aria-label="Footer Navigation" class="flex items-center gap-4 text-xs">
+<a class="hover:text-slate-300 transition-colors" href="#privacy">Privacy Policy</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#terms">Terms of Service</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#security">Security Whitepaper</a>
+<span class="text-cyber-border">•</span>
+<a class="hover:text-slate-300 transition-colors" href="#support">Help Desk</a>
+</nav>
+<!-- Copyright note -->
+<div class="text-[11px] text-cyber-muted">
+        © 2026 QBIT Systems Inc. All rights reserved.
+      </div>
+</div>
+</footer>
+<!-- END: BottomGlobalFooter -->
+<!-- Interactive JavaScript for Password Visibility Toggle -->
+<script data-purpose="password-visibility-handler">
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', function() {
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          if (isPassword) {
+            passwordInput.setAttribute('type', 'text');
+            // Slash icon for visible password
+            eyeIcon.innerHTML = `
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            `;
+          } else {
+            passwordInput.setAttribute('type', 'password');
+            // Standard eye icon
+            eyeIcon.innerHTML = `
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            `;
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

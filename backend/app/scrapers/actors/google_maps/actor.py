@@ -36,11 +36,29 @@ class GoogleMapsActor(ScraperActor):
         "compliant access only",
     )
     supports_pause = True
+    required_credentials = ("QBIT_MAPS_PROVIDER_API_KEY",)
+    rate_limit_per_minute = 120
+    concurrency_limit = 5
     input_schema = GoogleMapsInput
     output_fields = OUTPUT_FIELDS
 
     def __init__(self, settings=None) -> None:
         self._settings = settings
+
+    def validate_policy(self, model) -> dict[str, str]:
+        errors: dict[str, str] = {}
+        inp: GoogleMapsInput = model  # type: ignore
+        q = (inp.query or "").strip()
+        cat = (inp.category or "").strip()
+        if not q and not cat:
+            errors["query"] = "Either query or category must be specified"
+        if inp.radius_meters is not None and not (100 <= inp.radius_meters <= 100000):
+            errors["radius_meters"] = "Radius must be between 100 and 100,000 meters"
+        for field_name in ("query", "category", "city", "state", "country", "region"):
+            val = getattr(inp, field_name, None)
+            if val and ("<script" in val.lower() or "</script" in val.lower()):
+                errors[field_name] = f"Invalid script markup detected in {field_name}"
+        return errors
 
     async def health_check(self) -> ActorHealth:
         if self._settings is None:
@@ -52,8 +70,8 @@ class GoogleMapsActor(ScraperActor):
         if provider is None:
             return ActorHealth(
                 status=ActorStatus.DEGRADED,
-                detail="No maps provider configured (QBIT_MAPS_PROVIDER=none); "
-                       "configure a compliant provider to enable this actor.",
+                detail="CONFIGURATION REQUIRED: No maps provider configured (QBIT_MAPS_PROVIDER=none); "
+                       "configure a compliant provider (outscraper / http) to enable this actor.",
                 dependencies={"maps_provider": "missing"},
             )
         return ActorHealth(
@@ -61,6 +79,46 @@ class GoogleMapsActor(ScraperActor):
             detail=f"provider={provider.name}",
             dependencies={"maps_provider": provider.name},
         )
+
+    async def verify_connection(self, http=None) -> dict:
+        """Lightweight live verification of provider credentials and connectivity."""
+        if self._settings is None:
+            return {
+                "connected": False,
+                "provider": "none",
+                "status": "CONFIGURATION REQUIRED",
+                "detail": "No settings wired",
+                "metadata": {"configured": False},
+            }
+        try:
+            provider = build_maps_provider(self._settings)
+        except Exception as exc:
+            return {
+                "connected": False,
+                "provider": "error",
+                "status": "CONFIGURATION ERROR",
+                "detail": str(exc),
+                "metadata": {"configured": False, "error": str(exc)},
+            }
+        if provider is None:
+            return {
+                "connected": False,
+                "provider": "none",
+                "status": "CONFIGURATION REQUIRED",
+                "detail": "No maps provider configured. Set QBIT_MAPS_PROVIDER and QBIT_MAPS_PROVIDER_API_KEY in .env",
+                "metadata": {"configured": False},
+            }
+
+        # If http client not provided, use an ephemeral client for verification
+        if http is None:
+            from app.scrapers.core.http import HttpPolicy, PolicyHttpClient
+            from app.scrapers.core.netguard import UrlPolicy
+            policy = HttpPolicy(request_timeout=8.0, max_retries=1, respect_robots=False)
+            url_policy = UrlPolicy(allow_private_targets=True)
+            async with PolicyHttpClient(policy, url_policy) as client:
+                return await provider.verify_connection(client)
+
+        return await provider.verify_connection(http)
 
     async def run(self, ctx):
         inp = GoogleMapsInput.model_validate(ctx.input)
@@ -90,9 +148,13 @@ class GoogleMapsActor(ScraperActor):
             ctx.progress.set_stage(f"fetching provider page (token={page_token})")
             raw_items, next_token = await provider.search(
                 query=inp.query,
+                category=inp.category,
                 city=inp.city,
                 state=inp.state,
                 country=inp.country,
+                region=inp.region,
+                radius_meters=inp.radius_meters,
+                drop_duplicates=inp.drop_duplicates,
                 language=inp.language,
                 page_token=page_token,
                 max_results=inp.max_results - yielded,

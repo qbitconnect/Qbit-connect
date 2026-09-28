@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Context Navigation / Breadcrumb Bar -->
+<div class="flex items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-2">
+<a class="flex items-center gap-1 font-code-xs text-code-xs text-outline hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">terminal</span>
+<span>Runs</span>
+</a>
+<span class="text-outline-variant font-code-xs text-code-xs">/</span>
+<span class="font-code-xs text-code-xs text-outline">Run #GM-20260926-001</span>
+<span class="text-outline-variant font-code-xs text-code-xs">/</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high border-none">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.7)] animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed font-semibold tracking-wide">RESULTS STREAM</span>
+</div>
+</div>
+<!-- Right Global Actions on Dataset -->
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface text-label-md font-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">file_download</span>
+<span>Export (JSON/CSV)</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md hover:opacity-95 shadow-[0_0_14px_rgba(0,102,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+<span>Save as Lead List</span>
+</button>
+<button class="p-1.5 rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Main Viewport Dual-Pane Container -->
+<div class="grid grid-cols-12 gap-space-md w-full items-start">
+<!-- Left & Center Workspace: Data Results Table (Takes 7 cols when drawer is open) -->
+<div class="col-span-12 xl:col-span-7 flex flex-col gap-space-md">
+<!-- Dataset Header & Metrics Ribbon -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.25)]">
+<span class="material-symbols-outlined text-[22px]">pin_drop</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Bareilly Hospitality &amp; Luxury Hotels</h1>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest font-code-xs text-code-xs text-secondary-fixed">687 places</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Google Maps Scraper · Run completed 2 mins ago · Extracted phone, direct executive email, verified ratings</p>
+</div>
+</div>
+<!-- Quality indicators mini spark pill -->
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-lg shadow-inner">
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-outline">Enrichment Rate</span>
+<span class="font-code-sm text-code-sm text-tertiary font-medium">96.4%</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+</div>
+</div>
+<!-- Filter Segment Chips & Search Row -->
+<div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+<button class="px-3 py-1 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold whitespace-nowrap shadow-[0_0_10px_rgba(0,102,255,0.35)]">
+              All Results (687)
+            </button>
+<button class="px-3 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors">
+              Contact Info (542)
+            </button>
+<button class="px-3 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors">
+              With Email (312)
+            </button>
+<button class="px-3 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors">
+              Hotels (424)
+            </button>
+<button class="px-3 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm font-medium whitespace-nowrap transition-colors">
+              Restaurants (198)
+            </button>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-outline text-[16px]">filter_list</span>
+<input class="bg-surface-container rounded-lg pl-8 pr-3 py-1 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none w-44" placeholder="Filter current view..." type="text"/>
+</div>
+<button class="p-1 rounded bg-surface-container text-outline hover:text-on-surface transition-colors" title="Column settings">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+</button>
+</div>
+</div>
+</div>
+<!-- High-Density Data Grid -->
+<div class="bg-surface-container-low rounded-xl shadow-md overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<th class="p-2.5 pl-3 w-8">
+<input checked="" class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</th>
+<th class="p-2.5 font-semibold">Business Name</th>
+<th class="p-2.5 font-semibold">Category</th>
+<th class="p-2.5 font-semibold">Phone</th>
+<th class="p-2.5 font-semibold">Verified Email</th>
+<th class="p-2.5 font-semibold">Rating</th>
+<th class="p-2.5 pr-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y-0">
+<!-- Row 1: SELECTED / ACTIVE ROW (The Royal Palace Hotel) -->
+<tr class="bg-surface-container-high/90 text-on-surface relative shadow-[inset_3px_0_0_0_#0066ff] cursor-pointer transition-colors group">
+<td class="p-2.5 pl-3">
+<input checked="" class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">hotel</span>
+<span class="font-label-md text-label-md font-semibold text-on-primary-container">The Royal Palace Hotel</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Hotel &amp; Resort</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface">+91 98765 43210</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1.5">
+<span class="font-code-xs text-code-xs text-secondary-fixed">info@royalpalace.com</span>
+<span class="material-symbols-outlined text-tertiary text-[14px]" title="MX Verified">verified</span>
+</div>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs font-semibold">★ 4.6</span>
+<span class="text-outline font-code-xs text-code-xs">(8.4k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold">Viewing</span>
+</td>
+</tr>
+<!-- Row 2: Hotel Surya International -->
+<tr class="hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">apartment</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">Hotel Surya International</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Hotel</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 87656 32109</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">contact@suryahotel.com</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.4</span>
+<span class="text-outline font-code-xs text-code-xs">(3.1k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Hotel Comfort Inn -->
+<tr class="bg-surface-container-lowest/40 hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">apartment</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">Hotel Comfort Inn</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Boutique Hotel</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 76543 21098</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">stay@comfortinn-bareilly.in</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.2</span>
+<span class="text-outline font-code-xs text-code-xs">(1.8k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Spice Garden Restaurant -->
+<tr class="hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">restaurant</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">Spice Garden Fine Dine</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Restaurant</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 65432 10987</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">reservations@spicegarden.co</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.5</span>
+<span class="text-outline font-code-xs text-code-xs">(4.2k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Zaika Family Restaurant -->
+<tr class="bg-surface-container-lowest/40 hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">restaurant</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">Zaika Family Restaurant</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Casual Dining</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 54321 09876</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">support@zaikabareilly.com</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.1</span>
+<span class="text-outline font-code-xs text-code-xs">(940)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: The Urban Cafe -->
+<tr class="hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">local_cafe</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">The Urban Cafe &amp; Lounge</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Cafe</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 43210 98765</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">manager@urbancafe.in</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.3</span>
+<span class="text-outline font-code-xs text-code-xs">(2.3k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 7: Hotel Grand Plaza -->
+<tr class="bg-surface-container-lowest/40 hover:bg-surface-container transition-colors text-on-surface cursor-pointer group">
+<td class="p-2.5 pl-3">
+<input class="rounded bg-surface-container-highest text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">hotel</span>
+<span class="font-label-md text-label-md font-medium text-on-surface group-hover:text-primary transition-colors">Hotel Grand Plaza</span>
+</div>
+</td>
+<td class="p-2.5 text-on-surface-variant font-label-sm text-label-sm">Hotel</td>
+<td class="p-2.5 font-code-xs text-code-xs text-on-surface-variant">+91 32109 87654</td>
+<td class="p-2.5">
+<span class="font-code-xs text-code-xs text-outline">info@grandplazabareilly.com</span>
+</td>
+<td class="p-2.5">
+<div class="flex items-center gap-1">
+<span class="text-tertiary font-code-xs text-code-xs">★ 4.5</span>
+<span class="text-outline font-code-xs text-code-xs">(1.1k)</span>
+</div>
+</td>
+<td class="p-2.5 pr-3 text-right">
+<button class="p-1 rounded hover:bg-surface-container-highest text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Bar -->
+<div class="px-space-md py-2.5 bg-surface-container flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-outline">Showing rows 1–7 of 687 scraped records</span>
+<div class="flex items-center gap-1">
+<button class="w-6 h-6 rounded bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[14px]">chevron_left</span>
+</button>
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-code-xs text-code-xs font-semibold">1</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-outline hover:text-on-surface font-code-xs text-code-xs">2</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-outline hover:text-on-surface font-code-xs text-code-xs">3</button>
+<span class="text-outline font-code-xs text-code-xs px-1">...</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-outline hover:text-on-surface font-code-xs text-code-xs">69</button>
+<button class="w-6 h-6 rounded bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Intelligence Stats Under Table -->
+<div class="grid grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">mark_email_read</span>
+</div>
+<div>
+<div class="font-code-xs text-code-xs text-outline">AI Validated Emails</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">312 <span class="text-tertiary font-code-xs text-code-xs">45%</span></div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+</div>
+<div>
+<div class="font-code-xs text-code-xs text-outline">Direct Phone Lines</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">648 <span class="text-secondary font-code-xs text-code-xs">94%</span></div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">stars</span>
+</div>
+<div>
+<div class="font-code-xs text-code-xs text-outline">Avg Google Rating</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold">4.42 <span class="text-secondary-fixed-dim font-code-xs text-code-xs">★ High</span></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Workspace: LEAD DETAIL DRAWER (Screens 13 & 21 Reference) -->
+<div class="col-span-12 xl:col-span-5 bg-surface-container-low rounded-xl shadow-xl flex flex-col overflow-hidden">
+<!-- Drawer Control Header -->
+<div class="px-space-md py-2.5 bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-secondary-container">Lead Inspector · Entity #8921</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Bookmark Lead">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Full screen">
+<span class="material-symbols-outlined text-[18px]">open_in_full</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-error hover:bg-surface-container-high transition-colors" title="Close Drawer">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Hero Visual Representation -->
+<div class="relative w-full h-44 bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A grand luxury heritage palace hotel with illuminated warm architectural facade at twilight, lush courtyard palm trees, opulent grand entrance arches, cinematic lighting, ultra-detailed architectural rendering" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVfTEtrQJ68FV522eECloXekULCA1ZsUGj-5eYzLoiE2Im6SJucSwTZVTudgC7GHKZp8TuIqNUNEW1lLVTnrl4XUanq4znGWcXjjYRhngEAHFYVRzP7GyYNaOpwnkLCu4Uvu2nl_GC6Sj_oqG3o9F85_tSz3uHfafM_75OitV57liKFhS2ubIYQEs4eYDFqIUoqg9t4AvZ-n9uzcNoNG8GckJXnoCr3-O6FO7xmdyLjLUFwblPrqgexQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<!-- Overlay Badges on Cover -->
+<div class="absolute top-3 left-3 flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-tertiary font-label-sm text-label-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified Business
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-medium">
+            $$$ Luxury
+          </span>
+</div>
+<div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight leading-tight drop-shadow-sm">The Royal Palace Hotel</h2>
+<div class="flex items-center gap-2 mt-0.5">
+<div class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-code-sm text-code-sm font-bold ml-1">4.6</span>
+</div>
+<span class="text-outline font-body-sm text-body-sm">(8,432 Google reviews)</span>
+<span class="text-outline font-body-sm text-body-sm">·</span>
+<span class="text-secondary-fixed font-label-sm text-label-sm">Hotel &amp; Banquet</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Tactical Contact Action Bar -->
+<div class="px-space-md py-space-sm bg-surface-container grid grid-cols-4 gap-2">
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-tertiary">call</span>
+<span class="font-label-sm text-label-sm mt-1">Call</span>
+</button>
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-secondary">language</span>
+<span class="font-label-sm text-label-sm mt-1">Website</span>
+</button>
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">directions</span>
+<span class="font-label-sm text-label-sm mt-1">Directions</span>
+</button>
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-primary-container text-on-primary-container hover:opacity-95 transition-opacity font-semibold shadow-[0_0_10px_rgba(0,102,255,0.3)]">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Save Lead</span>
+</button>
+</div>
+<!-- Navigation Tabs inside Drawer -->
+<div class="flex items-center px-space-md bg-surface-container-low overflow-x-auto gap-1">
+<button class="py-2.5 px-3 font-label-md text-label-md font-semibold text-secondary-container shadow-[inset_0_-2px_0_0_#00d2ff] whitespace-nowrap">
+          Overview
+        </button>
+<button class="py-2.5 px-3 font-label-md text-label-md text-outline hover:text-on-surface font-medium whitespace-nowrap transition-colors">
+          Contacts (4)
+        </button>
+<button class="py-2.5 px-3 font-label-md text-label-md text-outline hover:text-on-surface font-medium whitespace-nowrap transition-colors">
+          Branches (3)
+        </button>
+<button class="py-2.5 px-3 font-label-md text-label-md text-outline hover:text-on-surface font-medium whitespace-nowrap transition-colors">
+          Reviews
+        </button>
+<button class="py-2.5 px-3 font-label-md text-label-md text-outline hover:text-on-surface font-medium whitespace-nowrap transition-colors">
+          Social Signals
+        </button>
+</div>
+<!-- Drawer Tab Content (Overview) -->
+<div class="p-space-md flex flex-col gap-space-md overflow-y-auto max-h-[480px]">
+<!-- Core Data Fields High-Density Card -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-2.5 shadow-sm">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-outline">Verified Contact Data</span>
+<span class="font-code-xs text-code-xs text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 100% Validated
+            </span>
+</div>
+<!-- Business Category & Amenities Tags -->
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">Category &amp; Niches</span>
+<div class="flex flex-wrap gap-1.5 mt-0.5">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-body-sm text-body-sm">Hotel / Hospitality</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-body-sm text-body-sm">Banquet Hall</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-body-sm text-body-sm">Fine Dining</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary-fixed font-body-sm text-body-sm">Rooftop Pool</span>
+</div>
+</div>
+<!-- Phone Line with Quick Dial -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Direct Phone</span>
+<span class="font-code-sm text-code-sm text-on-surface font-medium select-all">+91 98765 43210</span>
+</div>
+<div class="flex items-center gap-1.5">
+<a class="p-1.5 rounded bg-surface-container-high text-tertiary hover:bg-surface-container-highest transition-colors" href="#" title="Message on WhatsApp">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</a>
+<a class="p-1.5 rounded bg-surface-container-high text-secondary hover:bg-surface-container-highest transition-colors" href="tel:+919876543210" title="Call directly">
+<span class="material-symbols-outlined text-[16px]">phone_in_talk</span>
+</a>
+</div>
+</div>
+<!-- Email with Verification Badge -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Executive Contact Email</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-code-sm text-code-sm text-secondary-fixed font-medium select-all">info@royalpalace.com</span>
+<span class="material-symbols-outlined text-[15px] text-tertiary" title="MX Validated">check_circle</span>
+</div>
+</div>
+<button class="px-2 py-1 rounded bg-surface-container-high text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors">
+              Copy
+            </button>
+</div>
+<!-- Official Website -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Official Domain</span>
+<a class="font-code-sm text-code-sm text-primary hover:underline flex items-center gap-1 mt-0.5" href="#">
+                https://royalpalace.com
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary/10 text-tertiary font-code-xs text-code-xs">SSL Active</span>
+</div>
+<!-- Physical Address & Operating Status -->
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Physical Location</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span> Open 24 Hours
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Civil Lines, Opposite Head Post Office, Bareilly, Uttar Pradesh 243001, India</p>
+</div>
+<!-- Mini Map / Coordinates Preview -->
+<div class="mt-1">
+<div class="w-full h-24 bg-cover bg-center rounded-lg relative overflow-hidden flex items-end p-2" data-location="Civil Lines, Bareilly, Uttar Pradesh 243001" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4BKIAOUEs2zZFV6CbxXhHr0jtmEQOV2FuiHI1o-Qn37LVvRF7Ask07PS3mKLvPuysKEkQ4RdD1v7L2JcLZsMKEsrinDz7vecPgZer1WTDSxBvk6QAeWxJyr1DJq_aXDp1TA0KC4jnvgnc2nakXdObrlAhy21vnybh7v4dFAGvIZV89jmDAV_Zwfzuc4HxFLNU4IkBX2Ol8mvPGBD52DWsVZTOwWzYCGXdYvayDdcKlIHsvKux1MzKew')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 via-transparent to-transparent"></div>
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="font-code-xs text-code-xs text-on-surface bg-surface-container-lowest/80 px-2 py-0.5 rounded">28.3670° N, 79.4304° E</span>
+<a class="font-label-sm text-label-sm text-secondary-container hover:underline bg-surface-container-lowest/80 px-2 py-0.5 rounded flex items-center gap-1" href="#">
+                  Google Maps <span class="material-symbols-outlined text-[12px]">launch</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Enrichment & Decision Makers Module -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-sm shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">psychology</span>
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-on-surface">AI Lead Intelligence</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Qbit Graph Engine</span>
+</div>
+<!-- Estimated Revenue & Team Size -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-high p-2 rounded-lg">
+<span class="font-label-sm text-label-sm text-outline">Est. Annual Revenue</span>
+<div class="font-headline-sm text-headline-sm font-semibold text-secondary-container mt-0.5">$1.2M – $2.5M</div>
+</div>
+<div class="bg-surface-container-high p-2 rounded-lg">
+<span class="font-label-sm text-label-sm text-outline">Estimated Staff</span>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface mt-0.5">85–120 Employees</div>
+</div>
+</div>
+<!-- Discovered Key Executives -->
+<div class="flex flex-col gap-1.5 mt-1">
+<span class="font-label-sm text-label-sm text-outline">Identified Decision Makers (2)</span>
+<!-- Executive 1 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-code-xs text-code-xs">
+                  RS
+                </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Rajesh Singhania</span>
+<span class="font-code-xs text-code-xs text-outline">Managing Director &amp; Owner</span>
+</div>
+</div>
+<a class="p-1 rounded text-secondary hover:text-on-surface transition-colors" href="#" title="View LinkedIn Profile">
+<span class="material-symbols-outlined text-[16px]">account_box</span>
+</a>
+</div>
+<!-- Executive 2 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold font-code-xs text-code-xs">
+                  PV
+                </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Pooja Verma</span>
+<span class="font-code-xs text-code-xs text-outline">General Manager – Hospitality Operations</span>
+</div>
+</div>
+<a class="p-1 rounded text-secondary hover:text-on-surface transition-colors" href="#" title="View LinkedIn Profile">
+<span class="material-symbols-outlined text-[16px]">account_box</span>
+</a>
+</div>
+</div>
+<!-- Peak Operating Rhythm Sparkline -->
+<div class="bg-surface-container-high p-2 rounded-lg flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Customer Traffic Peak</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Fridays &amp; Weekends @ 8:00 PM</span>
+</div>
+<div class="flex items-end gap-1 h-6">
+<div class="w-1.5 h-2 rounded bg-surface-variant"></div>
+<div class="w-1.5 h-3 rounded bg-surface-variant"></div>
+<div class="w-1.5 h-4 rounded bg-primary"></div>
+<div class="w-1.5 h-6 rounded bg-primary-container shadow-[0_0_6px_rgba(0,102,255,0.6)]"></div>
+<div class="w-1.5 h-5 rounded bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Sticky Bottom Action Toolbar in Drawer -->
+<div class="p-space-md bg-surface-container flex flex-col gap-2 mt-auto">
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(0,102,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Push to Outreach Campaign</span>
+</button>
+<!-- Dropdown Trigger for CRM Sync -->
+<div class="relative group">
+<button class="px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">sync_alt</span>
+<span>CRM</span>
+<span class="material-symbols-outlined text-[16px] text-outline">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between px-1 text-outline font-code-xs text-code-xs">
+<span>QBIT Lead ID: <strong class="text-on-surface">LEAD-IND-8921-UP</strong></span>
+<span class="text-tertiary">Ready for Sequence</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

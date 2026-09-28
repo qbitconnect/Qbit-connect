@@ -1,0 +1,107 @@
+# Phase 12 — QBIT Connect Production Deployment Architecture
+
+## 1. Executive Summary & Topology Overview
+
+QBIT Connect is deployed as a hardened, multi-tier containerized platform designed for high-throughput B2B lead generation, omnichannel outbound marketing (WhatsApp, Email, Social Media), AI-driven lead scoring and sales copilot intelligence, and executive reporting.
+
+The system enforces strict operational separation between latency-sensitive HTTP/WebSocket request handling and long-running background tasks.
+
+```mermaid
+flowchart TD
+    Client["HTTPS Clients / Web Browsers / Mobile"] --> |Port 443 TLS 1.3| Nginx["Nginx Reverse Proxy & WAF (deploy/nginx-qbit.conf)"]
+    
+    subgraph Isolated_VPC ["Isolated Docker / Kubernetes Network (qbit-internal)"]
+        Nginx --> |Port 8000 (Loopback/Internal)| API["qbit-api (FastAPI / Uvicorn ASGI)"]
+        
+        API --> |Read/Write (AsyncPG Pool)| Postgres[("qbit-db (PostgreSQL 16)")]
+        API --> |PubSub / Cache / Rate Limits| Redis[("qbit-redis (Redis 7 AOF)")]
+        API --> |Persistent Volume (/qbit-data)| Storage["Persistent Disk Volume (Exports/Logs/Data)"]
+        
+        Worker["qbit-worker (Python background daemon)"] --> |Claim Jobs / Update State| Postgres
+        Worker --> |Job Queues & Leases| Redis
+        Worker --> |Raw Scrape & Export JSONL| Storage
+    end
+
+    subgraph External_Services ["External Boundary & Third-Party APIs"]
+        Worker --> |Outbound HTTPS Only| ScraperTargets["Web Targets & Public Directories"]
+        Worker --> |REST HTTPS| MapsVendor["Google Maps / Licensed Provider"]
+        Worker --> |Meta Graph v21.0 HTTPS| WhatsAppAPI["WhatsApp Cloud API"]
+        Worker --> |SMTP TLS / REST HTTPS| EmailAPI["Email Delivery Provider"]
+        Worker --> |OAuth2 / Graph HTTPS| SocialAPIs["LinkedIn / Meta / Telegram"]
+        Worker --> |OpenAI-Compatible HTTPS| AIProvider["OpenAI / Anthropic / Local LLM"]
+    end
+```
+
+---
+
+## 2. Core Service Components
+
+### 2.1 Web Application & REST API (`qbit-api`)
+- **Runtime:** Python 3.12-slim executing Uvicorn with `app.main:create_app`.
+- **Concurrency & Scaling:** ASGI event loop capable of handling high concurrent connection volumes with non-blocking I/O.
+- **Network Isolation:** Binds strictly to `127.0.0.1:8000` (or Docker bridge internal network). Never exposed directly to the public internet without the reverse proxy.
+- **Health Probes:**
+  - Liveness probe at `/health/live`: Fast, zero-dependency check returning `{"status": "alive"}` for Kubernetes/Docker container restart policy.
+  - Readiness probe at `/health/ready`: Deep health check verifying PostgreSQL pool connectivity, Redis latency, and writable persistent storage directories before routing ingress traffic.
+
+### 2.2 Dedicated Background Worker (`qbit-worker`)
+- **Runtime:** `python -m app.worker` (`ScrapeWorker` orchestrator).
+- **Process Isolation:** Decoupled from the web API. Scraper engine crashes, memory spikes, or external API timeouts never impact the customer-facing web interface.
+- **Concurrent Subsystems Orchestrated:**
+  1. `JobRunner`: Scraper task execution (concurrency bounded by `QBIT_SCRAPER_CONCURRENCY`).
+  2. `CampaignWorker`: Omnichannel drip campaigns with rate limiting per sending account.
+  3. `OutboxService`: Unified inbox asynchronous dispatch for WhatsApp and Email.
+  4. `AutomationWorker`: Directed acyclic graph (DAG) workflow execution engine.
+  5. `AggregationService`: Scheduled hourly/daily metric aggregations for executive reporting.
+  6. `AIOrchestrationWorker`: Lead enrichment, rule-based scoring, and sales brief generation.
+  7. `ActorHealthMonitor`: Periodic automated health and canary testing for scraper modules.
+  8. `ScheduledBackupEngine`: Automated GFS (Grandfather-Father-Son) database dumps and archive rotation.
+  9. `WorkerHeartbeat`: Liveness file written to `/qbit-data/cache/worker-heartbeat.json` every ≤30s.
+
+### 2.3 Relational Database (`qbit-db`)
+- **Engine:** PostgreSQL 16 Alpine.
+- **Persistence:** Dedicated Docker volume `qbit-pgdata` mapped to `/var/lib/postgresql/data`.
+- **Connection Management:** AsyncPG connection pool (default pool size: 20 connections, max overflow: 10).
+- **Schema Management:** 18 Alembic migration revisions (`0001` through `0018`), strictly non-destructive with explicit up/down rollbacks.
+
+### 2.4 Cache & Distributed Queue (`qbit-redis`)
+- **Engine:** Redis 7 Alpine.
+- **Persistence:** Append-Only File (AOF) enabled for durability.
+- **Security:** Strict password authentication enforced via `requirepass`.
+- **Role:** Distributed queue leases, session token invalidation cache, rate-limiting sliding windows, and real-time pub/sub metrics.
+
+---
+
+## 3. Storage Architecture & Path Traversal Guards
+
+### 3.1 Persistent Volume Topography
+All stateful filesystem assets reside within the root directory `QBIT_DATA_DIR` (`/qbit-data` in containers):
+- `/qbit-data/exports/`: Downloadable CSV, XLSX, and JSON export bundles generated by user requests.
+- `/qbit-data/logs/`: Structured JSON log streams rotated daily.
+- `/qbit-data/backups/`: Encrypted daily, weekly, and monthly PostgreSQL dumps and configuration manifests.
+- `/qbit-data/scrapes/`: Raw JSONL scrape result checkpoints.
+- `/qbit-data/cache/`: Worker heartbeat files and temporary ephemeral locks.
+
+### 3.2 Security Hardening Against Path Traversal
+- The application implements strict path verification in `app.services.storage.StorageService`.
+- Any file retrieval or write operation outside the canonicalized root `QBIT_DATA_DIR` is aborted with `SecurityException`.
+- Null-byte injections, double-dot sequences (`../`), and symbolic link attacks are rejected at the service layer.
+
+---
+
+## 4. Ingress, Networking & Web Application Firewall (WAF)
+
+- **Reverse Proxy:** Nginx 1.25+ configured via `deploy/nginx-qbit.conf`.
+- **TLS Configuration:**
+  - Protocols: TLSv1.2, TLSv1.3 only. Deprecated SSLv3, TLS 1.0, and TLS 1.1 disabled.
+  - Ciphers: High-strength AEAD suites (ECDHE-ECDSA-AES128-GCM-SHA256, ECDHE-RSA-AES256-GCM-SHA384).
+  - Session resumption: Shared SSL cache with 1-day timeout.
+- **Security Headers Injected at Edge:**
+  - `Content-Security-Policy`: Restricts scripts, styles, objects, and framing to authorized origins.
+  - `X-Frame-Options: DENY`: Prevents UI clickjacking attacks.
+  - `X-Content-Type-Options: nosniff`: Eliminates MIME-type confusion attacks.
+  - `Strict-Transport-Security (HSTS)`: `max-age=31536000; includeSubDomains; preload`.
+  - `Referrer-Policy: strict-origin-when-cross-origin`.
+- **Rate Limiting at Reverse Proxy:**
+  - Login / Auth endpoints: Max 10 requests per minute per IP.
+  - Public API: Max 60 requests per minute per IP with burst buffer of 20.

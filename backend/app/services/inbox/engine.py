@@ -374,6 +374,23 @@ class ConversationEngine:
         await session.commit()
         return True
 
+    async def record_delivery_status(
+        self,
+        session: AsyncSession,
+        *,
+        provider_message_id: str | None,
+        status: str,
+        occurred_at: datetime | None = None,
+    ) -> bool:
+        """Alias / convenience wrapper for apply_delivery_to_message."""
+        event_type = status if status.startswith("MESSAGE_") else f"MESSAGE_{status.upper()}"
+        return await self.apply_delivery_to_message(
+            session,
+            provider_message_id=provider_message_id,
+            event_type=event_type,
+            occurred_at=occurred_at,
+        )
+
     # ---------------------------------------------------------- threading
     async def get_or_create_conversation(
         self, session: AsyncSession, *, channel: str,
@@ -546,6 +563,8 @@ class ConversationEngine:
             )
         await session.commit()
         return conversation
+
+    assign = assign_user
 
     async def link_lead(
         self, session: AsyncSession, conversation: Conversation, lead_id: uuid.UUID,

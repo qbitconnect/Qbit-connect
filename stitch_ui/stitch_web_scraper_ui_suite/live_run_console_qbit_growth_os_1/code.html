@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- Breadcrumb Navigation -->
+<div class="flex items-center gap-2 text-outline font-body-sm">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">storefront</span>
+<span>Google Maps Scraper</span>
+</a>
+<span class="text-outline-variant">/</span>
+<a class="hover:text-primary transition-colors" href="#">Runs</a>
+<span class="text-outline-variant">/</span>
+<span class="font-code-xs text-secondary-fixed bg-surface-container-high px-2 py-0.5 rounded">#GM-20260926-001</span>
+</div>
+<!-- Task Control Banner & Operational State -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start md:items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary-container shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-md text-headline-md text-on-surface">Running: Google Maps Business Scraper</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary-container/20 text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse shadow-[0_0_8px_rgba(78,222,163,0.8)]"></span>
+            Live Extracting
+          </span>
+<span class="bg-surface-container-high text-on-surface-variant font-code-xs text-code-xs px-2 py-0.5 rounded">v2.3.4-prod</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline">travel_explore</span>
+          Extracting verified business entities from Bareilly, Uttar Pradesh, India (Radius: 5.0km grid matrix)
+        </p>
+</div>
+</div>
+<!-- Live Execution Controls -->
+<div class="flex items-center gap-space-sm self-end md:self-auto shrink-0">
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface transition-colors shadow-sm font-label-md text-label-md" id="pauseBtn">
+<span class="material-symbols-outlined text-[17px]">pause</span>
+<span>Pause Run</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-error-container/30 hover:bg-error-container text-error transition-colors shadow-sm font-label-md text-label-md" id="stopBtn">
+<span class="material-symbols-outlined text-[17px]">stop</span>
+<span>Abort Task</span>
+</button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-colors" title="Export Stream">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Progress Bar & High-Density Telemetry Ticker -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-2">
+<span class="text-on-surface uppercase tracking-wider font-semibold">Polygon Grid Sweep</span>
+<span class="text-outline">·</span>
+<span class="text-secondary-fixed font-code-xs">Cluster Sector: Civil Lines / Station Road (Quadrant 3/4)</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-code-sm text-code-sm text-on-surface font-semibold">68.7%</span>
+<span class="text-outline font-label-sm text-[10px]">COMPLETED</span>
+</div>
+</div>
+<!-- Dual-tone Gradient Progress Track -->
+<div class="w-full h-2.5 rounded-full bg-surface-container-highest overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-gradient-to-r from-primary-container via-secondary-container to-tertiary transition-all duration-500 shadow-[0_0_12px_rgba(0,102,255,0.4)]" style="width: 68.7%;"></div>
+</div>
+</div>
+<!-- Metric Cards Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-space-sm pt-1">
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Places Found</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">store</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">687</span>
+<span class="font-code-xs text-code-xs text-outline">/ 1,000 max</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 68.7%;"></div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">HTTP Requests</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">sync_alt</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">2,134</span>
+<span class="font-code-xs text-code-xs text-tertiary">31 req/s</span>
+</div>
+<div class="flex items-center gap-1.5 mt-2 font-code-xs text-code-xs text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>0 rate-limit bans</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Elapsed Runtime</span>
+<span class="material-symbols-outlined text-[18px] text-primary">timer</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface font-code-sm" id="elapsedCounter">00:01:42</span>
+<span class="font-code-xs text-code-xs text-outline">~1m 15s left</span>
+</div>
+<div class="flex items-center gap-1 mt-2 text-outline font-body-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px] text-tertiary">bolt</span>
+<span>Execution speed: Fast (Tier 1)</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Engine Status</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">memory</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-headline-sm text-headline-sm text-secondary truncate">Hydrating Profiles</span>
+</div>
+<div class="flex items-center justify-between mt-2 font-code-xs text-code-xs text-outline">
+<span>Concurrency: 12 nodes</span>
+<span class="text-tertiary">100% OK</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Console Split View: Left Terminal (2/3) + Right Inspector (1/3) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT PANEL: Terminal & Raw Data Engine (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-sm bg-surface-container-low rounded-xl p-space-md shadow-sm">
+<!-- Tabs & Utility Bar -->
+<div class="flex items-center justify-between flex-wrap gap-2 pb-1">
+<div class="flex items-center gap-1 bg-surface-container-lowest p-1 rounded-lg">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_0_10px_rgba(0,102,255,0.3)]">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>Live Logs</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">table_view</span>
+<span>Results Preview</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container-high text-outline text-[10px]">687</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+<span>Telemetry</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span>Errors</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container-high text-tertiary text-[10px]">0</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<!-- Mini Filter Input -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline text-[14px]">filter_alt</span>
+<input class="bg-surface-container-lowest text-on-surface placeholder:text-outline font-code-xs text-code-xs pl-7 pr-2 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-container w-36 transition-all focus:w-48" placeholder="Filter logs..." type="text"/>
+</div>
+<!-- Auto-scroll Pill Toggle -->
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-surface-container-highest text-tertiary font-code-xs text-code-xs transition-colors" id="toggleScroll">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Auto-scroll: ON</span>
+</button>
+<!-- Clear Console -->
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface bg-surface-container-lowest hover:bg-surface-container transition-colors" title="Clear buffer">
+<span class="material-symbols-outlined text-[16px]">delete_sweep</span>
+</button>
+</div>
+</div>
+<!-- Linux Style Terminal Box -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md flex flex-col font-code-xs text-code-xs leading-relaxed overflow-hidden shadow-inner">
+<!-- Terminal Title Bar -->
+<div class="flex items-center justify-between pb-2 mb-2 bg-surface-container-lowest text-outline font-code-xs text-[10px] uppercase tracking-wider">
+<div class="flex items-center gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-error-container"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-surface-container-highest"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary-container"></div>
+<span class="ml-2 font-mono text-outline">worker-node-india-blr-04.qbit.internal [PID 90812]</span>
+</div>
+<div class="flex items-center gap-3">
+<span>Encoding: UTF-8</span>
+<span class="text-tertiary">STREAMING ACTIVE</span>
+</div>
+</div>
+<!-- Terminal Stream Output Area -->
+<div class="h-[430px] overflow-y-auto space-y-1.5 pr-2 select-text font-code-xs" id="logTerminal">
+<div class="text-outline"><span class="text-outline-variant font-mono">[12:42:11]</span> <span class="text-primary-container font-semibold">[SYSTEM]</span> Starting Google Maps Spider engine v2.3.4 runtime under worker session 0x9AF8...</div>
+<div class="text-outline"><span class="text-outline-variant font-mono">[12:42:13]</span> <span class="text-secondary-fixed">[RESOLVE]</span> Searching viewport: Hotels in Bareilly, Uttar Pradesh, India (Lat: 28.3670, Lng: 79.4304, Radius: 5km)...</div>
+<div class="text-outline"><span class="text-outline-variant font-mono">[12:42:15]</span> <span class="text-secondary-container">[DISCOVERY]</span> Grid Matrix Sweep #1: Identified 20 root places on page 1 of search canvas.</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:18]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">The Royal Palace Hotel</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">The Royal Palace Hotel</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.6 (1,420)</span>
+<span>+91 98765 43210</span>
+<span class="text-primary">info@royalpalace.hotel</span>
+</div>
+</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:21]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">Hotel Surya International</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">Hotel Surya International</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.4 (890)</span>
+<span>+91 87656 32109</span>
+<span class="text-outline">hotelsurya.in</span>
+</div>
+</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:24]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">Hotel Comfort Inn Executive</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">Hotel Comfort Inn Executive</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.2 (412)</span>
+<span>+91 76543 21098</span>
+<span class="text-primary">stay@comfortbareilly.com</span>
+</div>
+</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:26]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">Zaika Family Restaurant &amp; Banquet</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">Spice Garden &amp; Zaika Banquet</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.4 (3.1k)</span>
+<span>+91 99120 44810</span>
+<span class="text-outline">zaikafoods.in</span>
+</div>
+</div>
+<!-- Network Proxy Rotation Alert -->
+<div class="bg-surface-container p-2 rounded flex items-start gap-2 text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[16px] text-secondary-container mt-0.5">security_update_good</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-outline-variant font-mono">[12:42:33]</span>
+<span class="font-semibold text-secondary-container">ANTI-BOT CHALLENGE BYPASSED</span>
+<span class="text-[10px] text-tertiary">140ms</span>
+</div>
+<span class="text-outline text-[10px]">Rotated Residential Proxy node: 103.24.5.12 → 103.24.5.44 (AirTel Broadband India Pool, TLS Fingerprint Chrome 128 verified)</span>
+</div>
+</div>
+<div class="text-outline"><span class="text-outline-variant font-mono">[12:42:34]</span> <span class="text-secondary-fixed">[SECTOR]</span> Advancing to polygon sub-quadrant #3 (Civil Lines / Railway Station Road)...</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:35]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">The Urban Cafe &amp; Roastery</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">The Urban Cafe &amp; Roastery</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.3 (654)</span>
+<span>+91 43210 98765</span>
+<span class="text-primary">hello@urbancafe.co</span>
+</div>
+</div>
+<div class="text-on-surface-variant"><span class="text-outline-variant font-mono">[12:42:38]</span> Extracting detailed profile for: <span class="text-on-surface font-semibold">Hotel Grand Nirvana</span></div>
+<div class="text-on-surface bg-surface-container/60 p-1.5 rounded flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-medium">Extracted:</span>
+<span class="text-on-surface">Hotel Grand Nirvana Executive</span>
+</div>
+<div class="flex items-center gap-2 text-outline-variant text-[10px]">
+<span class="bg-surface-container-high px-1 rounded text-secondary-fixed">★ 4.5 (1,180)</span>
+<span>+91 58124 20091</span>
+<span class="text-primary">reservations@grandnirvana.com</span>
+</div>
+</div>
+<div class="text-outline flex items-center gap-2 pt-1 animate-pulse">
+<span class="text-outline-variant font-mono">[12:42:42]</span>
+<span class="text-secondary-fixed">⠋</span>
+<span>Parsing 8 additional place records from dynamic map feed DOM payload...</span>
+</div>
+</div>
+<!-- Terminal Footer Quick Metric -->
+<div class="flex items-center justify-between pt-2 mt-2 bg-surface-container-lowest text-outline font-code-xs text-[10px]">
+<div class="flex items-center gap-4">
+<span>Buffer size: 48.2 KB</span>
+<span>Lines: 124</span>
+<span class="text-tertiary">No dropouts detected</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span>Press</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface font-code-xs text-[10px]">Ctrl + C</kbd>
+<span>to interrupt</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: Live Telemetry, Resource Diagnostics & Latest Record (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Execution Parameters & Cost Estimation -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-2 bg-surface-container-low">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">calculate</span>
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Usage &amp; Quotas</h2>
+</div>
+<span class="text-tertiary font-code-xs text-code-xs bg-tertiary-container/20 px-2 py-0.5 rounded">Tier 1 Workspace</span>
+</div>
+<div class="space-y-2.5 text-body-sm font-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-outline">Target Target Yield:</span>
+<span class="text-on-surface font-code-xs font-semibold">1,000 Verified Entities</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline">Estimated Total Cost:</span>
+<span class="text-on-surface font-code-xs font-semibold">$0.06 USD</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline">Credits Spent So Far:</span>
+<span class="text-secondary-fixed font-code-xs font-semibold">687 credits ($0.041)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline">Estimated Remaining:</span>
+<span class="text-on-surface font-code-xs">01 min 15 sec</span>
+</div>
+</div>
+</div>
+<!-- Live Resource Diagnostics Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-2 bg-surface-container-low">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">developer_board</span>
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Engine Diagnostics</h2>
+</div>
+<span class="font-code-xs text-[10px] text-outline">PULL INTERVAL: 1s</span>
+</div>
+<!-- Metric Item 1: Memory Load -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-outline">Headless Memory</span>
+<span class="font-code-xs text-on-surface">412 MB / 2,048 MB</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 20.1%;"></div>
+</div>
+</div>
+<!-- Metric Item 2: Concurrency Slots -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-outline">Active Chrome Workers</span>
+<span class="font-code-xs text-tertiary">12/12 Slots In Use</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Metric Item 3: Proxy Pipeline -->
+<div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1 text-label-sm font-label-sm">
+<div class="flex items-center justify-between">
+<span class="text-outline">Proxy Health Matrix</span>
+<span class="text-tertiary font-semibold">99.8% Perfect</span>
+</div>
+<p class="text-outline text-[11px] leading-tight">
+            Indian Residential IP Pool (Jio/AirTel dynamic egress). Autonomous TLS 1.3 rotation.
+          </p>
+</div>
+<!-- Metric Item 4: Extraction Success Rate -->
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="text-outline">Extraction Precision:</span>
+<div class="flex items-center gap-1 font-code-xs font-semibold text-tertiary">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+<span>98.8% (672 ok, 15 retried)</span>
+</div>
+</div>
+</div>
+<!-- Latest Extracted Place Preview Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Latest Place Captured</span>
+</div>
+<span class="font-code-xs text-[10px] text-outline">12:42:37</span>
+</div>
+<!-- Visual Lead Snapshot Mini Card -->
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col gap-2 relative">
+<div class="flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Modern aesthetic cafe facade in Bareilly with wooden interiors and warm glowing ambient pendant lights captured in sharp architectural photography with deep navy night tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFMHSY71spfoShw9pGxq-tB_x_zsD_NfHz0KdZS1m-2ul6GLowZ0FMiZ0v3TbdaHzINcTrLYH4ZIfWHO1NQ9lwVIpin9CuG5eMzZOsFtqGvE_ucKDopjC_2HKDk6vV290JSOGLbxGJPBGNzQRMwgN9yUpDXypKaXAfjSy6byXW8wpwFezXOkCqqRUkbxPCTaSFuetJ2Ch8r5M8oyebLfWh8MsEOhB7vb1T0wEuOB6L-ux02Za768ls4g"/>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">The Urban Cafe &amp; Roastery</h3>
+<div class="flex items-center gap-1.5 text-outline font-body-sm text-[11px] mt-0.5">
+<span class="text-secondary-fixed flex items-center font-semibold">★ 4.3</span>
+<span>·</span>
+<span class="truncate">Civil Lines, Bareilly</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-1 text-[11px] font-code-xs pt-1 bg-surface-container-low p-2 rounded">
+<div class="flex items-center gap-1 text-on-surface-variant truncate">
+<span class="material-symbols-outlined text-[14px] text-outline">call</span>
+<span>+91 43210 98765</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant truncate">
+<span class="material-symbols-outlined text-[14px] text-outline">mail</span>
+<span class="text-primary truncate">hello@urbancafe.co</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant truncate">
+<span class="material-symbols-outlined text-[14px] text-outline">language</span>
+<span class="text-outline truncate">https://urbancafebareilly.in</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] text-tertiary font-code-xs">✓ Enriched with direct email</span>
+<a class="text-primary hover:text-secondary-fixed font-label-sm text-label-sm flex items-center gap-0.5" href="#">
+<span>Inspect Lead</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Action Footer Links -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-2.5">
+<a class="w-full py-2 px-3 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px]">dataset</span>
+<span>View Full Results in Interactive Table</span>
+</a>
+<div class="flex items-center justify-between px-1 py-1 text-label-sm font-label-sm">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-[16px]">notifications_active</span>
+<span>Notify on job completion</span>
+</div>
+<!-- Custom Checkbox Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-8 h-4.5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interactions for runtime console
+  (function() {
+    // Timer counter incrementation
+    let totalSeconds = 102;
+    const counterEl = document.getElementById('elapsedCounter');
+    
+    if (counterEl) {
+      setInterval(() => {
+        totalSeconds++;
+        const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const secs = String(totalSeconds % 60).padStart(2, '0');
+        counterEl.textContent = `00:${mins}:${secs}`;
+      }, 1000);
+    }
+
+    // Auto-scroll toggle indicator
+    const scrollBtn = document.getElementById('toggleScroll');
+    const logTerminal = document.getElementById('logTerminal');
+    let autoScrollActive = true;
+
+    if (scrollBtn && logTerminal) {
+      scrollBtn.addEventListener('click', () => {
+        autoScrollActive = !autoScrollActive;
+        if (autoScrollActive) {
+          scrollBtn.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span><span>Auto-scroll: ON</span>`;
+          scrollBtn.className = "flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-surface-container-highest text-tertiary font-code-xs text-code-xs transition-colors";
+          logTerminal.scrollTop = logTerminal.scrollHeight;
+        } else {
+          scrollBtn.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-outline"></span><span>Auto-scroll: OFF</span>`;
+          scrollBtn.className = "flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-surface-container-highest text-outline font-code-xs text-code-xs transition-colors";
+        }
+      });
+    }
+
+    // Pause button state toggle
+    const pauseBtn = document.getElementById('pauseBtn');
+    if (pauseBtn) {
+      pauseBtn.addEventListener('click', () => {
+        const isPaused = pauseBtn.getAttribute('data-paused') === 'true';
+        if (!isPaused) {
+          pauseBtn.setAttribute('data-paused', 'true');
+          pauseBtn.innerHTML = `<span class="material-symbols-outlined text-[17px]">play_arrow</span><span>Resume</span>`;
+          pauseBtn.classList.add('bg-primary-container', 'text-on-primary-container');
+        } else {
+          pauseBtn.setAttribute('data-paused', 'false');
+          pauseBtn.innerHTML = `<span class="material-symbols-outlined text-[17px]">pause</span><span>Pause Run</span>`;
+          pauseBtn.classList.remove('bg-primary-container', 'text-on-primary-container');
+        }
+      });
+    }
+  })();
+</script></main></div></body></html>

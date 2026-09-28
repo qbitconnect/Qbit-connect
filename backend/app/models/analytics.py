@@ -28,8 +28,10 @@ import uuid
 from datetime import date, datetime
 
 from sqlalchemy import (
+    Boolean,
     Date,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -324,3 +326,116 @@ class AnalyticsDailyAutomation(_DailyAggregateBase):
         Index("ix_analytics_daily_automation_day", "day"),
     )
     workflow_id: Mapped[str] = mapped_column(String(64), nullable=False, default="")
+
+
+class PerformanceTarget(Base):
+    """Configurable employee & team targets (Phase 10 §3).
+    
+    Explicitly set by authorized managers/admins. Stored with full audit trail:
+    who set/updated it, effective period, and target metric.
+    """
+
+    __tablename__ = "performance_targets"
+    __table_args__ = (
+        Index("ix_targets_org_user", "organization_id", "user_id"),
+        Index("ix_targets_org_team", "organization_id", "team_id"),
+        Index("ix_targets_metric_period", "metric", "start_date", "end_date"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=True
+    )
+    team_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("teams.id", ondelete="SET NULL"), nullable=True
+    )
+    #: leads_assigned | leads_contacted | leads_qualified | conversions | follow_ups_completed | calls_logged | deals_won
+    metric: Mapped[str] = mapped_column(String(64), nullable=False)
+    target_value: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+    #: daily | weekly | monthly | quarterly | custom
+    period_type: Mapped[str] = mapped_column(String(20), nullable=False, default="monthly")
+    start_date: Mapped[date] = mapped_column(Date, nullable=False)
+    end_date: Mapped[date] = mapped_column(Date, nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    set_by: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+    updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    def to_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "user_id": str(self.user_id) if self.user_id else None,
+            "team_id": str(self.team_id) if self.team_id else None,
+            "metric": self.metric,
+            "target_value": self.target_value,
+            "period_type": self.period_type,
+            "start_date": self.start_date.isoformat() if self.start_date else None,
+            "end_date": self.end_date.isoformat() if self.end_date else None,
+            "notes": self.notes,
+            "set_by": str(self.set_by) if self.set_by else None,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class CrmDeal(Base):
+    """Reliable CRM deal record for genuine pipeline and closed-won value (Phase 10 §2).
+    
+    Never fabricated or simulated. Values exist only when an actual commercial deal
+    is created by an operator or synced from a lead.
+    """
+
+    __tablename__ = "crm_deals"
+    __table_args__ = (
+        Index("ix_crm_deals_org", "organization_id"),
+        Index("ix_crm_deals_lead", "lead_id"),
+        Index("ix_crm_deals_stage", "stage"),
+        Index("ix_crm_deals_owner", "owner_id"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    lead_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("leads.id", ondelete="CASCADE"), nullable=True
+    )
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    amount: Mapped[float | None] = mapped_column(Float, nullable=True)
+    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="INR")
+    #: PROPOSAL | NEGOTIATION | CLOSED_WON | CLOSED_LOST
+    stage: Mapped[str] = mapped_column(String(50), nullable=False, default="PROPOSAL")
+    probability: Mapped[float] = mapped_column(Float, nullable=False, default=0.5)
+    expected_close_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    owner_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    created_by: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+    updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    def to_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "lead_id": str(self.lead_id) if self.lead_id else None,
+            "title": self.title,
+            "amount": self.amount,
+            "currency": self.currency,
+            "stage": self.stage,
+            "probability": self.probability,
+            "expected_close_date": self.expected_close_date.isoformat() if self.expected_close_date else None,
+            "closed_at": self.closed_at.isoformat() if self.closed_at else None,
+            "owner_id": str(self.owner_id) if self.owner_id else None,
+            "created_by": str(self.created_by) if self.created_by else None,
+            "notes": self.notes,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
+

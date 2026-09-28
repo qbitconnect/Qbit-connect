@@ -1,189 +1,1077 @@
 {% extends "base.html" %}
-{% block title %}{{ "Edit workflow" if workflow else "New workflow" }} — QBIT Connect{% endblock %}
+{% block title %}{{ "Edit Workflow" if workflow else "New Workflow Builder" }} — QBIT Connect{% endblock %}
 {% block nav_automation %}active{% endblock %}
 
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>{{ "EDIT WORKFLOW" if workflow else "NEW WORKFLOW" }}</h1>
-    <p class="muted">Trigger → Condition → Action → Wait → End — declarative nodes only (no code)</p>
-  </div>
-  <div class="page-actions">
-    <a class="btn btn-ghost" href="{{ '/automation/' ~ workflow.id if workflow else '/automation' }}">Cancel</a>
-  </div>
-</div>
+<div class="workflow-builder-wrapper max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-{% if error %}<div class="alert alert-error"><strong>Cannot save:</strong> {{ error }}</div>{% endif %}
+  <!-- ========================================================================= -->
+  <!-- 1. WORKFLOW HEADER & STICKY ACTION BAR                                    -->
+  <!-- ========================================================================= -->
+  <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-cyber-border mb-6">
+    <div class="flex items-start md:items-center gap-4">
+      <a href="{{ '/automation/' ~ workflow.id if workflow else '/automation' }}"
+         class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-surface-container-low border border-cyber-border hover:border-brand-500 text-on-surface-variant hover:text-white transition-all shadow-sm flex-shrink-0"
+         title="Back to Workflows">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+        </svg>
+      </a>
 
-<form method="post"
-      action="{{ '/automation/' ~ workflow.id ~ '/edit' if workflow else '/automation/new' }}"
-      id="builder-form">
-  <div class="card" style="margin-bottom:16px">
-    <div class="grid-3">
-      <label class="field">Name
-        <input class="input" name="name" required maxlength="200" value="{{ name }}">
-      </label>
-      <label class="field">Trigger
-        <select class="input" name="trigger_type" id="trigger-type">
+      <div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="relative group">
+            <input type="text"
+                   id="wf-header-name"
+                   class="text-xl md:text-2xl font-bold text-white bg-transparent border-b border-transparent hover:border-cyber-border focus:border-brand-500 focus:outline-none px-1 py-0.5 rounded transition-all tracking-tight min-w-[200px]"
+                   value="{{ name if name else 'Untitled Lead Nurture Workflow' }}"
+                   placeholder="Enter workflow name..."
+                   required>
+            <span class="absolute right-1 top-1.5 opacity-0 group-hover:opacity-40 pointer-events-none text-xs text-on-surface-variant">✏️</span>
+          </div>
+
+          <!-- Status Badge -->
+          {% if workflow and workflow.status %}
+            {% set s = workflow.status|upper %}
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
+              {% if s == 'ACTIVE' %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/25
+              {% elif s == 'PAUSED' %}bg-amber-500/10 text-amber-400 border border-amber-500/25
+              {% elif s == 'ARCHIVED' %}bg-slate-500/10 text-slate-400 border border-slate-500/25
+              {% else %}bg-brand-500/10 text-brand-400 border border-brand-500/25{% endif %}">
+              <span class="w-1.5 h-1.5 rounded-full mr-1.5 {% if s == 'ACTIVE' %}bg-emerald-400 animate-pulse{% elif s == 'PAUSED' %}bg-amber-400{% else %}bg-brand-400{% endif %}"></span>
+              {{ s }}
+            </span>
+          {% else %}
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/25">
+              <span class="w-1.5 h-1.5 rounded-full mr-1.5 bg-brand-400"></span>
+              DRAFT
+            </span>
+          {% endif %}
+
+          <!-- Unsaved changes indicator -->
+          <span id="unsaved-badge" class="hidden inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-amber-500/10 text-amber-300 border border-amber-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            Unsaved changes
+          </span>
+        </div>
+
+        <p class="text-xs text-on-surface-variant mt-1">
+          Declarative event graph: Trigger &rarr; Condition &rarr; YES/NO Branching &rarr; Actions &rarr; End
+        </p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-2.5 flex-wrap">
+      <!-- Canvas / List Toggle -->
+      <div class="inline-flex rounded-lg bg-surface-container-low p-1 border border-cyber-border">
+        <button type="button" id="toggle-canvas-btn" onclick="setViewMode('canvas')" class="px-3 py-1.5 text-xs font-medium rounded-md transition-all bg-brand-600 text-white shadow-sm flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+          Visual Flow
+        </button>
+        <button type="button" id="toggle-list-btn" onclick="setViewMode('list')" class="px-3 py-1.5 text-xs font-medium rounded-md transition-all text-on-surface-variant hover:text-white flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          List Config
+        </button>
+      </div>
+
+      <!-- Test Workflow -->
+      <button type="button" onclick="openTestModal()" class="px-3.5 py-2 text-xs font-medium rounded-lg border border-cyber-border bg-surface-container hover:bg-surface-container-high text-white transition-all shadow-sm flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Test &amp; Validate
+      </button>
+
+      <!-- Save Draft Button -->
+      <button type="button" onclick="submitWorkflowForm()" id="save-btn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-brand-500 hover:bg-brand-600 text-white transition-all shadow-glow flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        Save Draft
+      </button>
+
+      <!-- Publish Action (if existing workflow and permissions) -->
+      {% if workflow and 'automation.publish' in perms %}
+        <form method="post" action="/automation/{{ workflow.id }}/publish" class="inline" onsubmit="return confirmPublish()">
+          <button type="submit" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-sm flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>
+            Publish Live
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Error Alert Banner -->
+  {% if error %}
+    <div class="mb-6 p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-200 text-sm flex items-center gap-3">
+      <svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+      <div><strong>Validation issue:</strong> {{ error }}</div>
+    </div>
+  {% endif %}
+
+  <!-- ========================================================================= -->
+  <!-- 2. WORKFLOW METADATA & TRIGGER SELECTOR CARD                             -->
+  <!-- ========================================================================= -->
+  <div class="bg-surface-container-low border border-cyber-border rounded-xl p-5 mb-8 shadow-sm">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <!-- Trigger Selection -->
+      <div>
+        <label class="block text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+          Starting Event Trigger <span class="text-red-400">*</span>
+        </label>
+        <select id="trigger-type" class="w-full bg-surface-container border border-cyber-border focus:border-brand-500 rounded-lg px-3 py-2 text-sm text-white focus:outline-none" onchange="markUnsaved(); render();">
           {% for tt in trigger_types %}
             <option value="{{ tt }}" {{ 'selected' if tt == trigger_type }}>{{ trigger_labels[tt] }} ({{ tt }})</option>
           {% endfor %}
         </select>
-      </label>
-      <label class="field">Description
-        <input class="input" name="description" maxlength="2000" value="{{ description }}">
-      </label>
+        <p class="text-[11px] text-on-surface-variant mt-1">Select the CRM event that starts this automated sequence.</p>
+      </div>
+
+      <!-- Description -->
+      <div class="md:col-span-2">
+        <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+          Workflow Description &amp; Purpose
+        </label>
+        <input type="text"
+               id="wf-header-description"
+               class="w-full bg-surface-container border border-cyber-border focus:border-brand-500 rounded-lg px-3 py-2 text-sm text-white focus:outline-none"
+               value="{{ description }}"
+               placeholder="e.g. Automatically qualify inbound POS hardware leads, enrich location data, and notify regional sales execs."
+               maxlength="2000"
+               oninput="markUnsaved()">
+        <p class="text-[11px] text-on-surface-variant mt-1">Brief note describing goal and target audience for team visibility.</p>
+      </div>
     </div>
   </div>
 
-  <div id="node-list" class="node-list"></div>
+  <!-- ========================================================================= -->
+  <!-- 3. MAIN WORKFLOW VISUAL CANVAS CONTAINER                                  -->
+  <!-- ========================================================================= -->
+  <div id="visual-canvas-view" class="relative pb-16">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-on-surface-variant flex items-center gap-2">
+        <span>Execution Canvas</span>
+        <span class="text-xs font-normal normal-case text-cyber-muted">(Interactive DAG Flowchart)</span>
+      </h2>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="openAddStepModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-cyber-border hover:border-brand-400 text-xs font-medium text-white transition-all shadow-sm">
+          <svg class="w-3.5 h-3.5 text-brand-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Add Step
+        </button>
+      </div>
+    </div>
 
-  <div class="builder-actions">
-    <button type="button" class="btn btn-ghost" onclick="addNode()">+ Add node</button>
-    <button type="submit" class="btn btn-primary">Save draft</button>
+    <!-- The interactive visual nodes tree will render here -->
+    <div id="canvas-tree-container" class="space-y-6 flex flex-col items-center"></div>
   </div>
-  <input type="hidden" name="definition_json" id="definition-json" value='{{ definition|tojson }}'>
-</form>
+
+  <!-- ========================================================================= -->
+  <!-- 4. LINEAR CONFIGURATION LIST VIEW (Alternative accessible view)           -->
+  <!-- ========================================================================= -->
+  <div id="linear-list-view" class="hidden space-y-4 pb-16">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-on-surface-variant">Step Configuration Table</h2>
+      <button type="button" onclick="openAddStepModal()" class="px-3 py-1.5 rounded-lg bg-surface-container border border-cyber-border hover:border-brand-400 text-xs font-medium text-white">
+        + Add Node
+      </button>
+    </div>
+    <div id="node-list" class="space-y-3"></div>
+  </div>
+
+  <!-- Real Form Submission (Preserves exact backend payload contract) -->
+  <form method="post"
+        action="{{ '/automation/' ~ workflow.id ~ '/edit' if workflow else '/automation/new' }}"
+        id="builder-form"
+        class="hidden">
+    <input type="text" name="name" id="hidden-name">
+    <input type="text" name="description" id="hidden-description">
+    <input type="text" name="trigger_type" id="hidden-trigger-type">
+    <input type="hidden" name="definition_json" id="definition-json" value='{{ definition|tojson }}'>
+  </form>
+
+</div>
+
+<!-- =========================================================================== -->
+<!-- 5. ADD STEP DIALOG MODAL                                                    -->
+<!-- =========================================================================== -->
+<div id="add-step-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-low border border-cyber-border rounded-2xl max-w-xl w-full p-6 shadow-2xl animate-fade-in">
+    <div class="flex items-center justify-between pb-4 border-b border-cyber-border mb-5">
+      <div>
+        <h3 class="text-lg font-bold text-white">Add Workflow Step</h3>
+        <p class="text-xs text-on-surface-variant mt-0.5">Select the type of logic or action to insert into your sequence.</p>
+      </div>
+      <button type="button" onclick="closeAddStepModal()" class="text-on-surface-variant hover:text-white p-1 rounded-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+      <!-- 1. Condition Card -->
+      <button type="button" onclick="insertNode('CONDITION')" class="flex flex-col text-left p-4 rounded-xl border border-cyber-border bg-surface-container hover:border-amber-400 hover:bg-amber-950/20 transition-all group">
+        <div class="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3m14-5l-5-5-5 5m10 10l-5 5-5-5"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-white group-hover:text-amber-300">Condition Branch</span>
+        <span class="text-xs text-on-surface-variant mt-1 leading-relaxed">Branch into YES &amp; NO paths based on lead quality, category, city, or status.</span>
+      </button>
+
+      <!-- 2. Action Card -->
+      <button type="button" onclick="insertNode('ACTION')" class="flex flex-col text-left p-4 rounded-xl border border-cyber-border bg-surface-container hover:border-sky-400 hover:bg-sky-950/20 transition-all group">
+        <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-white group-hover:text-sky-300">Execute Action</span>
+        <span class="text-xs text-on-surface-variant mt-1 leading-relaxed">Add tag, change lead status, assign team member, or send WhatsApp/email.</span>
+      </button>
+
+      <!-- 3. Wait Card -->
+      <button type="button" onclick="insertNode('WAIT')" class="flex flex-col text-left p-4 rounded-xl border border-cyber-border bg-surface-container hover:border-purple-400 hover:bg-purple-950/20 transition-all group">
+        <div class="w-9 h-9 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-white group-hover:text-purple-300">Wait / Delay</span>
+        <span class="text-xs text-on-surface-variant mt-1 leading-relaxed">Pause the execution for a configurable duration (hours/days) before proceeding.</span>
+      </button>
+
+      <!-- 4. End Node Card -->
+      <button type="button" onclick="insertNode('END')" class="flex flex-col text-left p-4 rounded-xl border border-cyber-border bg-surface-container hover:border-emerald-400 hover:bg-emerald-950/20 transition-all group">
+        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-white group-hover:text-emerald-300">End Step</span>
+        <span class="text-xs text-on-surface-variant mt-1 leading-relaxed">Explicitly terminate a branch sequence and complete execution successfully.</span>
+      </button>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="button" onclick="closeAddStepModal()" class="px-4 py-2 text-xs font-medium rounded-lg text-on-surface-variant hover:text-white">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================== -->
+<!-- 6. TEST & VALIDATE DIAGNOSTIC DRAWER/MODAL                                  -->
+<!-- =========================================================================== -->
+<div id="test-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-low border border-cyber-border rounded-2xl max-w-2xl w-full p-6 shadow-2xl">
+    <div class="flex items-center justify-between pb-4 border-b border-cyber-border mb-4">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Workflow Structure &amp; Logic Diagnostics</h3>
+          <p class="text-xs text-on-surface-variant">Dry-run validation checks cycles, terminal nodes, and branch logic.</p>
+        </div>
+      </div>
+      <button type="button" onclick="closeTestModal()" class="text-on-surface-variant hover:text-white p-1 rounded-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="test-results-body" class="space-y-4 my-4 max-h-[60vh] overflow-y-auto pr-2">
+      <!-- Injected dynamically by JS -->
+    </div>
+
+    <div class="flex justify-end pt-4 border-t border-cyber-border">
+      <button type="button" onclick="closeTestModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-surface-container hover:bg-surface-container-high text-white">
+        Close Diagnostics
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
-/* Lightweight, dependency-free builder (§43/§44): nodes are a vertical list;
-   each node targets its successor by id. Full branch graphs stay available
-   through the REST API — this builder covers the common linear flows. */
-let NODES = JSON.parse(document.getElementById('definition-json').value).nodes;
+// =============================================================================
+// STATE & CATALOG REGISTRIES
+// =============================================================================
+let NODES = JSON.parse(document.getElementById('definition-json').value).nodes || [];
 const FIELDS = {{ fields|tojson }};
 const OPERATORS = {{ operators|tojson }};
 const ACTIONS = {{ action_keys|tojson }};
+let isDirty = false;
+let currentViewMode = 'canvas';
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+// Employee-friendly Field Dictionary
+const FIELD_FRIENDLY_NAMES = {
+  "lead.status": "Lead Status (e.g. NEW, QUALIFIED)",
+  "lead.quality_score": "Lead Quality Score (0 - 100)",
+  "lead.source": "Source (e.g. google-maps, business-directory)",
+  "lead.category": "Business Category / Industry",
+  "lead.city": "City / Location",
+  "lead.state": "State / Province",
+  "lead.country": "Country Code",
+  "lead.email": "Email Address",
+  "lead.phone": "Phone Number",
+  "lead.website": "Website URL",
+  "lead.business_name": "Business / Company Name",
+  "lead.has_email": "Has Email Address (Boolean)",
+  "lead.has_phone": "Has Phone Number (Boolean)",
+  "lead.tags": "Tags List",
+  "lead.has_tag": "Has Specific Tag",
+  "lead.does_not_have_tag": "Does Not Have Tag",
+  "conversation.status": "Conversation Status",
+  "conversation.priority": "Conversation Priority (HIGH, MEDIUM, LOW)",
+  "campaign.status": "Campaign Status",
+  "recipient.replied": "Prospect Replied (Boolean)"
+};
 
+// Employee-friendly Operator Dictionary
+const OPERATOR_FRIENDLY_NAMES = {
+  "equals": "is exactly equal to (=)",
+  "not_equals": "is NOT equal to (≠)",
+  "contains": "contains text",
+  "not_contains": "does NOT contain text",
+  "starts_with": "starts with",
+  "ends_with": "ends with",
+  "greater_than": "is greater than (>)",
+  "less_than": "is less than (<)",
+  "greater_or_equal": "is greater than or equal to (≥)",
+  "less_or_equal": "is less than or equal to (≤)",
+  "is_empty": "is empty / missing",
+  "is_not_empty": "has a value / not empty",
+  "between": "is between range",
+  "in": "matches any in list",
+  "not_in": "matches none in list"
+};
+
+// Employee-friendly Action Dictionary
+const ACTION_FRIENDLY_NAMES = {
+  "add_tag": "Add Lead Tag",
+  "remove_tag": "Remove Lead Tag",
+  "change_status": "Change Lead Status",
+  "update_lead": "Update Lead Field",
+  "add_note": "Add Internal Note",
+  "assign_user": "Assign to Team Member",
+  "assign_conversation": "Assign Conversation",
+  "unassign_conversation": "Unassign Conversation",
+  "assign_team": "Assign to Department / Team",
+  "change_conversation_status": "Change Conversation Status",
+  "change_priority": "Set Priority Level",
+  "add_internal_note": "Add Inbox Note",
+  "send_whatsapp": "Send WhatsApp Message",
+  "send_email": "Send Email",
+  "start_campaign": "Enroll in Drip Campaign"
+};
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+function markUnsaved() {
+  isDirty = true;
+  const badge = document.getElementById('unsaved-badge');
+  if (badge) badge.classList.remove('hidden');
+}
+
+window.addEventListener('beforeunload', function(e) {
+  if (isDirty) {
+    e.preventDefault();
+    e.returnValue = 'You have unsaved changes in your workflow. Are you sure you want to leave?';
+  }
+});
+
+function setViewMode(mode) {
+  currentViewMode = mode;
+  const canvasView = document.getElementById('visual-canvas-view');
+  const listView = document.getElementById('linear-list-view');
+  const canvasBtn = document.getElementById('toggle-canvas-btn');
+  const listBtn = document.getElementById('toggle-list-btn');
+
+  if (mode === 'canvas') {
+    canvasView.classList.remove('hidden');
+    listView.classList.add('hidden');
+    canvasBtn.className = 'px-3 py-1.5 text-xs font-medium rounded-md transition-all bg-brand-600 text-white shadow-sm flex items-center gap-1.5';
+    listBtn.className = 'px-3 py-1.5 text-xs font-medium rounded-md transition-all text-on-surface-variant hover:text-white flex items-center gap-1.5';
+  } else {
+    canvasView.classList.add('hidden');
+    listView.classList.remove('hidden');
+    listBtn.className = 'px-3 py-1.5 text-xs font-medium rounded-md transition-all bg-brand-600 text-white shadow-sm flex items-center gap-1.5';
+    canvasBtn.className = 'px-3 py-1.5 text-xs font-medium rounded-md transition-all text-on-surface-variant hover:text-white flex items-center gap-1.5';
+  }
+}
+
+// Generate Target Node Options for Dropdowns
 function nodeOptions(selected) {
-  let html = '<option value="">(end without END node — invalid)</option>'
-           + '<option value="end" ' + (selected === 'end' ? 'selected' : '') + '>END node</option>';
+  let html = '<option value="end" ' + (selected === 'end' ? 'selected' : '') + '>🏁 End Workflow (Complete)</option>';
   NODES.forEach(function (n, i) {
     if (n.type === 'TRIGGER') return;
+    const title = n.type === 'CONDITION' ? 'Condition #' + i :
+                  n.type === 'ACTION' ? (ACTION_FRIENDLY_NAMES[n.action] || n.action) :
+                  n.type === 'WAIT' ? 'Wait Delay' : 'Step #' + i;
     html += '<option value="' + esc(n.id) + '" ' + (selected === n.id ? 'selected' : '') + '>'
-         +  esc((i + 1) + '. ' + n.id + ' [' + n.type + ']') + '</option>';
+         +  esc('Step ' + i + ': ' + title + ' [' + n.type + ']') + '</option>';
   });
   return html;
 }
 
+// =============================================================================
+// RENDERING ENGINES (VISUAL CANVAS & LIST)
+// =============================================================================
 function render() {
-  const list = document.getElementById('node-list');
-  list.innerHTML = '';
-  NODES.forEach(function (n, i) {
-    const card = document.createElement('div');
-    card.className = 'card node-card';
-    let body = '<div class="node-head"><strong>' + (i + 1) + '. ' + esc(n.type) + '</strong>'
-             + '<span class="muted small">id: ' + esc(n.id) + '</span>';
-    if (n.type !== 'TRIGGER' && n.type !== 'END') {
-      body += '<button type="button" class="btn btn-sm btn-ghost" onclick="removeNode(' + i + ')">Remove</button>';
+  renderVisualCanvas();
+  renderLinearList();
+  serializeAndStore();
+}
+
+function renderVisualCanvas() {
+  const container = document.getElementById('canvas-tree-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const triggerType = document.getElementById('trigger-type').value;
+  const triggerLabel = document.querySelector('#trigger-type option:checked')?.text || triggerType;
+
+  // 1. TRIGGER NODE (Root)
+  const triggerCard = document.createElement('div');
+  triggerCard.className = 'w-full max-w-xl bg-surface-container border-2 border-indigo-500/40 rounded-2xl p-5 shadow-glow relative';
+  triggerCard.innerHTML = `
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold">
+          ⚡
+        </div>
+        <div>
+          <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold tracking-wider bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 uppercase mb-1">Trigger Event</span>
+          <h3 class="text-sm font-bold text-white">${esc(triggerLabel)}</h3>
+        </div>
+      </div>
+      <span class="text-xs text-cyber-muted font-mono">id: trigger</span>
+    </div>
+    <p class="text-xs text-on-surface-variant mt-2">Listening for incoming trigger events from the CRM and lead scraper pipelines.</p>
+  `;
+  container.appendChild(triggerCard);
+
+  // Render nodes in sequence with visual connectors
+  NODES.forEach((n, idx) => {
+    if (n.type === 'TRIGGER') return;
+
+    // Connector Line
+    const connector = document.createElement('div');
+    connector.className = 'flex flex-col items-center my-1';
+    connector.innerHTML = `
+      <div class="w-0.5 h-6 bg-gradient-to-b from-cyber-border to-brand-500/60"></div>
+      <div class="w-2 h-2 rounded-full bg-brand-400 ring-4 ring-brand-500/20"></div>
+      <div class="w-0.5 h-6 bg-gradient-to-b from-brand-500/60 to-cyber-border"></div>
+    `;
+    container.appendChild(connector);
+
+    // Node Card
+    const nodeEl = document.createElement('div');
+    nodeEl.className = 'w-full max-w-xl bg-surface-container-low border rounded-2xl p-5 shadow-lg transition-all ' + getNodeBorderClass(n.type);
+
+    let contentHtml = `
+      <div class="flex items-start justify-between gap-3 pb-3 border-b border-cyber-border mb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${getNodeIconClass(n.type)}">
+            ${getNodeIcon(n.type)}
+          </span>
+          <div>
+            <span class="text-[10px] uppercase font-bold tracking-wider ${getNodeBadgeTextClass(n.type)}">Step ${idx} &middot; ${n.type}</span>
+            <h4 class="text-sm font-semibold text-white">${getNodeHeading(n)}</h4>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="duplicateNode(${idx})" class="p-1.5 rounded-lg text-on-surface-variant hover:text-white hover:bg-surface-container" title="Duplicate Step">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
+          </button>
+          <button type="button" onclick="removeNode(${idx})" class="p-1.5 rounded-lg text-red-400/70 hover:text-red-300 hover:bg-red-500/10" title="Delete Step">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Specific Node Type Forms & Logic
+    if (n.type === 'CONDITION') {
+      const c = n.condition || {};
+      contentHtml += `
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Field to Inspect</label>
+              <select class="w-full bg-surface-container border border-cyber-border focus:border-amber-400 rounded-lg px-2.5 py-1.5 text-xs text-white" data-i="${idx}" data-k="cond_field">
+                ${FIELDS.map(f => `<option value="${f}" ${c.field === f ? 'selected' : ''}>${FIELD_FRIENDLY_NAMES[f] || f}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Comparison Rule</label>
+              <select class="w-full bg-surface-container border border-cyber-border focus:border-amber-400 rounded-lg px-2.5 py-1.5 text-xs text-white" data-i="${idx}" data-k="cond_op">
+                ${OPERATORS.map(o => `<option value="${o}" ${c.operator === o ? 'selected' : ''}>${OPERATOR_FRIENDLY_NAMES[o] || o}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Threshold / Expected Value</label>
+            <input class="w-full bg-surface-container border border-cyber-border focus:border-amber-400 rounded-lg px-3 py-1.5 text-xs text-white"
+                   data-i="${idx}" data-k="cond_value"
+                   value="${esc(c.value !== undefined ? (typeof c.value === 'object' ? JSON.stringify(c.value) : c.value) : '')}"
+                   placeholder="e.g. 70 or 'Retail'">
+          </div>
+
+          <!-- Bifurcated YES / NO Visual Branches -->
+          <div class="mt-4 pt-3 border-t border-cyber-border/70 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-400 mb-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                IF YES (Rule Matches)
+              </div>
+              <label class="block text-[10px] text-on-surface-variant mb-1">Destination Step:</label>
+              <select class="w-full bg-surface-container-low border border-emerald-500/40 rounded-lg px-2 py-1 text-xs text-white" data-i="${idx}" data-k="next_node_id">
+                ${nodeOptions(n.next_node_id)}
+              </select>
+            </div>
+
+            <div class="p-3 rounded-xl bg-rose-950/20 border border-rose-500/30">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-rose-400 mb-1.5">
+                <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                IF NO (Does Not Match)
+              </div>
+              <label class="block text-[10px] text-on-surface-variant mb-1">Destination Step:</label>
+              <select class="w-full bg-surface-container-low border border-rose-500/40 rounded-lg px-2 py-1 text-xs text-white" data-i="${idx}" data-k="next_node_id_no">
+                ${nodeOptions(n.next_node_id_no)}
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (n.type === 'ACTION') {
+      const cfg = n.config || {};
+      contentHtml += `
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Action to Execute</label>
+              <select class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1.5 text-xs text-white" data-i="${idx}" data-k="action">
+                ${ACTIONS.map(a => `<option value="${a}" ${n.action === a ? 'selected' : ''}>${ACTION_FRIENDLY_NAMES[a] || a}</option>`).join('')}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">After Completion &rarr;</label>
+              <select class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1.5 text-xs text-white" data-i="${idx}" data-k="next_node_id">
+                ${nodeOptions(n.next_node_id)}
+              </select>
+            </div>
+          </div>
+
+          <!-- Structured Action Inputs -->
+          <div>
+            ${renderActionConfigInputs(n.action, cfg, idx)}
+          </div>
+        </div>
+      `;
+    } else if (n.type === 'WAIT') {
+      const d = n.duration || { hours: 1 };
+      contentHtml += `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Pause Duration (Hours)</label>
+            <input type="number" min="1" max="720" class="w-full bg-surface-container border border-cyber-border focus:border-purple-400 rounded-lg px-3 py-1.5 text-xs text-white"
+                   data-i="${idx}" data-k="wait_hours" value="${d.hours || 1}">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Resume At Step &rarr;</label>
+            <select class="w-full bg-surface-container border border-cyber-border focus:border-purple-400 rounded-lg px-2.5 py-1.5 text-xs text-white" data-i="${idx}" data-k="next_node_id">
+              ${nodeOptions(n.next_node_id)}
+            </select>
+          </div>
+        </div>
+      `;
+    } else if (n.type === 'END') {
+      contentHtml += `
+        <div class="flex items-center gap-2 text-xs text-emerald-400 py-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Workflow branch successfully terminates and closes.</span>
+        </div>
+      `;
     }
-    body += '</div>';
+
+    nodeEl.innerHTML = contentHtml;
+    container.appendChild(nodeEl);
+  });
+
+  // End of Flow Insertion Control
+  const addEndBox = document.createElement('div');
+  addEndBox.className = 'pt-4 flex flex-col items-center';
+  addEndBox.innerHTML = `
+    <button type="button" onclick="openAddStepModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-low border border-dashed border-cyber-border hover:border-brand-500 hover:text-white text-xs text-on-surface-variant transition-all shadow-sm">
+      <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+      Add Another Workflow Step
+    </button>
+  `;
+  container.appendChild(addEndBox);
+}
+
+function getNodeBorderClass(type) {
+  if (type === 'CONDITION') return 'border-amber-500/40 hover:border-amber-500/70 bg-amber-950/10';
+  if (type === 'ACTION') return 'border-sky-500/40 hover:border-sky-500/70 bg-sky-950/10';
+  if (type === 'WAIT') return 'border-purple-500/40 hover:border-purple-500/70 bg-purple-950/10';
+  if (type === 'END') return 'border-emerald-500/40 hover:border-emerald-500/70 bg-emerald-950/10';
+  return 'border-cyber-border';
+}
+
+function getNodeIconClass(type) {
+  if (type === 'CONDITION') return 'bg-amber-500/20 text-amber-300 border border-amber-500/30';
+  if (type === 'ACTION') return 'bg-sky-500/20 text-sky-300 border border-sky-500/30';
+  if (type === 'WAIT') return 'bg-purple-500/20 text-purple-300 border border-purple-500/30';
+  if (type === 'END') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+  return 'bg-cyber-base text-white';
+}
+
+function getNodeBadgeTextClass(type) {
+  if (type === 'CONDITION') return 'text-amber-400';
+  if (type === 'ACTION') return 'text-sky-400';
+  if (type === 'WAIT') return 'text-purple-400';
+  if (type === 'END') return 'text-emerald-400';
+  return 'text-white';
+}
+
+function getNodeIcon(type) {
+  if (type === 'CONDITION') return '🔀';
+  if (type === 'ACTION') return '⚙️';
+  if (type === 'WAIT') return '⏱️';
+  if (type === 'END') return '🏁';
+  return '•';
+}
+
+function getNodeHeading(node) {
+  if (node.type === 'CONDITION') {
+    const f = node.condition?.field;
+    const op = node.condition?.operator;
+    const val = node.condition?.value;
+    if (f) return `${FIELD_FRIENDLY_NAMES[f] || f} ${OPERATOR_FRIENDLY_NAMES[op] || op || 'is'} ${val !== undefined ? JSON.stringify(val) : '...'}`;
+    return 'Evaluate Condition Rule';
+  }
+  if (node.type === 'ACTION') {
+    return ACTION_FRIENDLY_NAMES[node.action] || node.action || 'Execute Action';
+  }
+  if (node.type === 'WAIT') {
+    return `Pause for ${node.duration?.hours || 1} Hours`;
+  }
+  if (node.type === 'END') {
+    return 'End Workflow';
+  }
+  return node.type;
+}
+
+function renderActionConfigInputs(action, cfg, idx) {
+  if (action === 'add_tag' || action === 'remove_tag') {
+    return `
+      <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Tag Name</label>
+      <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-3 py-1.5 text-xs text-white"
+             data-i="${idx}" data-k="cfg_tag" value="${esc(cfg.tag || '')}" placeholder="e.g. VIP-Lead, High-Potential">
+    `;
+  }
+  if (action === 'change_status') {
+    const statuses = ['NEW', 'CONTACTED', 'QUALIFIED', 'PROPOSAL_SENT', 'CONVERTED', 'LOST', 'ARCHIVED'];
+    return `
+      <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Target Lead Status</label>
+      <select class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+              data-i="${idx}" data-k="cfg_status">
+        ${statuses.map(s => `<option value="${s}" ${cfg.status === s ? 'selected' : ''}>${s}</option>`).join('')}
+      </select>
+    `;
+  }
+  if (action === 'add_note' || action === 'add_internal_note') {
+    return `
+      <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Note Content</label>
+      <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-3 py-1.5 text-xs text-white"
+             data-i="${idx}" data-k="cfg_note" value="${esc(cfg.note || '')}" placeholder="e.g. Qualified via automated scoring pipeline">
+    `;
+  }
+  if (action === 'assign_user' || action === 'assign_conversation') {
+    return `
+      <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Assignee User ID</label>
+      <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-3 py-1.5 text-xs text-white"
+             data-i="${idx}" data-k="cfg_user_id" value="${esc(cfg.user_id || '')}" placeholder="User UUID or leave empty for auto-round-robin">
+    `;
+  }
+  if (action === 'send_whatsapp') {
+    return `
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div>
+          <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Template Name</label>
+          <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1 text-xs text-white"
+                 data-i="${idx}" data-k="cfg_template" value="${esc(cfg.template_name || '')}" placeholder="e.g. welcome_intro">
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Custom Body Text</label>
+          <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1 text-xs text-white"
+                 data-i="${idx}" data-k="cfg_body" value="${esc(cfg.body || '')}" placeholder="Optional custom message">
+        </div>
+      </div>
+    `;
+  }
+  if (action === 'send_email') {
+    return `
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div>
+          <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Email Subject</label>
+          <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1 text-xs text-white"
+                 data-i="${idx}" data-k="cfg_subject" value="${esc(cfg.subject || '')}" placeholder="e.g. Follow-up regarding QBIT POS">
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Template or Body</label>
+          <input type="text" class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-2.5 py-1 text-xs text-white"
+                 data-i="${idx}" data-k="cfg_body" value="${esc(cfg.body || '')}" placeholder="Email body or {{template}}">
+        </div>
+      </div>
+    `;
+  }
+  // Generic Fallback
+  return `
+    <label class="block text-[11px] font-semibold text-on-surface-variant uppercase mb-1">Parameters (JSON)</label>
+    <textarea class="w-full bg-surface-container border border-cyber-border focus:border-sky-400 rounded-lg px-3 py-1.5 text-xs text-white font-mono" rows="2"
+              data-i="${idx}" data-k="config">${esc(JSON.stringify(cfg, null, 1))}</textarea>
+  `;
+}
+
+// -----------------------------------------------------------------------------
+// LINEAR CONFIGURATION LIST RENDERER
+// -----------------------------------------------------------------------------
+function renderLinearList() {
+  const list = document.getElementById('node-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  NODES.forEach((n, i) => {
+    const card = document.createElement('div');
+    card.className = 'bg-surface-container-low border border-cyber-border rounded-xl p-4 shadow-sm';
+    let body = `
+      <div class="flex items-center justify-between pb-3 border-b border-cyber-border/70 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-white">${i + 1}. [${n.type}]</span>
+          <span class="text-[11px] text-cyber-muted font-mono">id: ${esc(n.id)}</span>
+        </div>
+        ${(n.type !== 'TRIGGER' && n.type !== 'END') ? `<button type="button" class="text-xs text-red-400 hover:text-red-300" onclick="removeNode(${i})">Remove Step</button>` : ''}
+      </div>
+    `;
 
     if (n.type === 'TRIGGER') {
-      body += '<label class="field">Trigger type (set above)</label>';
+      body += `<p class="text-xs text-on-surface-variant">Starts the sequence when trigger fires.</p>`;
     } else if (n.type === 'ACTION') {
-      body += '<label class="field">Action</label><select class="input" data-i="' + i + '" data-k="action">'
-           +  ACTIONS.map(function (a) { return '<option ' + (n.action === a ? 'selected' : '') + '>' + a + '</option>'; }).join('')
-           +  '</select>'
-           + '<label class="field">Config (JSON)</label><textarea class="input" rows="3" data-i="' + i + '" data-k="config">'
-           + esc(JSON.stringify(n.config || {}, null, 1)) + '</textarea>'
-           + '<label class="field">Then go to</label><select class="input" data-i="' + i + '" data-k="next_node_id">'
-           + nodeOptions(n.next_node_id) + '</select>';
+      body += `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div><label class="text-on-surface-variant block mb-1">Action</label>
+            <select class="w-full bg-surface-container border border-cyber-border rounded p-1.5 text-white" data-i="${i}" data-k="action">
+              ${ACTIONS.map(a => `<option value="${a}" ${n.action === a ? 'selected' : ''}>${ACTION_FRIENDLY_NAMES[a] || a}</option>`).join('')}
+            </select>
+          </div>
+          <div><label class="text-on-surface-variant block mb-1">Next Step</label>
+            <select class="w-full bg-surface-container border border-cyber-border rounded p-1.5 text-white" data-i="${i}" data-k="next_node_id">
+              ${nodeOptions(n.next_node_id)}
+            </select>
+          </div>
+        </div>
+      `;
     } else if (n.type === 'CONDITION') {
       const c = n.condition || {};
-      body += '<label class="field">Field</label><select class="input" data-i="' + i + '" data-k="cond_field">'
-           +  FIELDS.map(function (f) { return '<option ' + (c.field === f ? 'selected' : '') + '>' + f + '</option>'; }).join('')
-           +  '</select>'
-           + '<label class="field">Operator</label><select class="input" data-i="' + i + '" data-k="cond_op">'
-           +  OPERATORS.map(function (o) { return '<option ' + (c.operator === o ? 'selected' : '') + '>' + o + '</option>'; }).join('')
-           +  '</select>'
-           + '<label class="field">Value (JSON)</label><input class="input" data-i="' + i + '" data-k="cond_value" value=\''
-           +  esc(JSON.stringify(c.value === undefined ? "" : c.value)) + '\'>'
-           + '<label class="field">YES →</label><select class="input" data-i="' + i + '" data-k="next_node_id">'
-           + nodeOptions(n.next_node_id) + '</select>'
-           + '<label class="field">NO →</label><select class="input" data-i="' + i + '" data-k="next_node_id_no">'
-           + nodeOptions(n.next_node_id_no) + '</select>';
+      body += `
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div><label class="text-on-surface-variant block mb-1">Field</label>
+            <select class="w-full bg-surface-container border border-cyber-border rounded p-1.5 text-white" data-i="${i}" data-k="cond_field">
+              ${FIELDS.map(f => `<option value="${f}" ${c.field === f ? 'selected' : ''}>${f}</option>`).join('')}
+            </select>
+          </div>
+          <div><label class="text-on-surface-variant block mb-1">Operator</label>
+            <select class="w-full bg-surface-container border border-cyber-border rounded p-1.5 text-white" data-i="${i}" data-k="cond_op">
+              ${OPERATORS.map(o => `<option value="${o}" ${c.operator === o ? 'selected' : ''}>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div><label class="text-on-surface-variant block mb-1">Value</label>
+            <input class="w-full bg-surface-container border border-cyber-border rounded p-1.5 text-white" data-i="${i}" data-k="cond_value" value="${esc(c.value !== undefined ? (typeof c.value === 'object' ? JSON.stringify(c.value) : c.value) : '')}">
+          </div>
+        </div>
+      `;
     } else if (n.type === 'WAIT') {
-      const d = (n.duration || {});
-      body += '<label class="field">Wait duration (JSON, e.g. {"hours": 1})</label>'
-           + '<input class="input" data-i="' + i + '" data-k="duration" value=\''
-           + esc(JSON.stringify(d)) + '\'>'
-           + '<label class="field">Then go to</label><select class="input" data-i="' + i + '" data-k="next_node_id">'
-           + nodeOptions(n.next_node_id) + '</select>';
+      body += `<p class="text-xs text-on-surface-variant">Pause for ${n.duration?.hours || 1} hour(s).</p>`;
     } else if (n.type === 'END') {
-      body += '<p class="muted small">Execution completes here.</p>';
+      body += `<p class="text-xs text-emerald-400">Execution ends here.</p>`;
     }
+
     card.innerHTML = body;
     list.appendChild(card);
   });
-  document.getElementById('definition-json').value = JSON.stringify(serialize());
+}
+
+// =============================================================================
+// EVENT BINDINGS & SERIALIZATION
+// =============================================================================
+function bindEdits() {
+  document.addEventListener('change', function (e) {
+    const t = e.target;
+    const i = t.getAttribute('data-i');
+    const k = t.getAttribute('data-k');
+    if (i === null || !k) return;
+
+    markUnsaved();
+    const node = NODES[parseInt(i, 10)];
+    if (!node) return;
+
+    if (k === 'action') {
+      node.action = t.value;
+      node.config = node.config || {};
+    } else if (k === 'config') {
+      try { node.config = JSON.parse(t.value); } catch (err) { node.config = {}; }
+    } else if (k === 'cfg_tag') {
+      node.config = node.config || {};
+      node.config.tag = t.value.trim();
+    } else if (k === 'cfg_status') {
+      node.config = node.config || {};
+      node.config.status = t.value;
+    } else if (k === 'cfg_note') {
+      node.config = node.config || {};
+      node.config.note = t.value.trim();
+    } else if (k === 'cfg_user_id') {
+      node.config = node.config || {};
+      node.config.user_id = t.value.trim();
+    } else if (k === 'cfg_template') {
+      node.config = node.config || {};
+      node.config.template_name = t.value.trim();
+    } else if (k === 'cfg_subject') {
+      node.config = node.config || {};
+      node.config.subject = t.value.trim();
+    } else if (k === 'cfg_body') {
+      node.config = node.config || {};
+      node.config.body = t.value.trim();
+    } else if (k === 'cond_field' || k === 'cond_op' || k === 'cond_value') {
+      node.condition = node.condition || {};
+      if (k === 'cond_field') node.condition.field = t.value;
+      if (k === 'cond_op') node.condition.operator = t.value;
+      if (k === 'cond_value') {
+        const val = t.value.trim();
+        const num = Number(val);
+        if (!isNaN(num) && val !== '') {
+          node.condition.value = num;
+        } else if (val.toLowerCase() === 'true') {
+          node.condition.value = true;
+        } else if (val.toLowerCase() === 'false') {
+          node.condition.value = false;
+        } else {
+          node.condition.value = val;
+        }
+      }
+    } else if (k === 'wait_hours') {
+      node.duration = { hours: Math.max(1, parseInt(t.value, 10) || 1) };
+    } else if (k === 'next_node_id') {
+      node.next_node_id = t.value;
+    } else if (k === 'next_node_id_no') {
+      node.next_node_id_no = t.value;
+    }
+
+    render();
+  });
 }
 
 function serialize() {
   const tt = document.getElementById('trigger-type').value;
-  const nodes = [{ id: 'trigger', type: 'TRIGGER',
-                   trigger_config: { type: tt }, next_node_id: NODES[1] ? NODES[1].id : 'end' }];
-  NODES.forEach(function (n, i) {
+  const nodes = [
+    {
+      id: 'trigger',
+      type: 'TRIGGER',
+      trigger_config: { type: tt },
+      next_node_id: NODES[1] ? NODES[1].id : 'end'
+    }
+  ];
+
+  NODES.forEach(function (n) {
     if (n.type === 'TRIGGER') return;
     const out = { id: n.id, type: n.type };
-    if (n.type === 'ACTION') { out.action = n.action; out.config = n.config || {}; out.next_node_id = n.next_node_id; }
+    if (n.type === 'ACTION') {
+      out.action = n.action || 'add_tag';
+      out.config = n.config || {};
+      out.next_node_id = n.next_node_id || 'end';
+    }
     if (n.type === 'CONDITION') {
-      out.condition = { field: n.condition && n.condition.field || FIELDS[0],
-                        operator: n.condition && n.condition.operator || OPERATORS[0],
-                        value: n.condition ? n.condition.value : "" };
+      out.condition = {
+        field: n.condition && n.condition.field || FIELDS[0],
+        operator: n.condition && n.condition.operator || OPERATORS[0],
+        value: n.condition ? n.condition.value : ""
+      };
       out.next_node_id = n.next_node_id || 'end';
       out.next_node_id_no = n.next_node_id_no || 'end';
     }
-    if (n.type === 'WAIT') { out.duration = n.duration || { hours: 1 }; out.next_node_id = n.next_node_id || 'end'; }
+    if (n.type === 'WAIT') {
+      out.duration = n.duration || { hours: 1 };
+      out.next_node_id = n.next_node_id || 'end';
+    }
+    if (n.type === 'END') {
+      // Terminal node has no successor
+    }
     nodes.push(out);
   });
   return { nodes: nodes };
 }
 
-function bindEdits() {
-  document.getElementById('node-list').addEventListener('change', function (e) {
-    const t = e.target, i = t.getAttribute('data-i'), k = t.getAttribute('data-k');
-    if (i === null || !k) return;
-    const node = NODES[parseInt(i, 10)];
-    if (k === 'action') node.action = t.value;
-    else if (k === 'config') { try { node.config = JSON.parse(t.value); } catch (err) { /* saved as {} on error */ node.config = {}; } }
-    else if (k === 'cond_field' || k === 'cond_op' || k === 'cond_value') {
-      node.condition = node.condition || {};
-      if (k === 'cond_field') node.condition.field = t.value;
-      if (k === 'cond_op') node.condition.operator = t.value;
-      if (k === 'cond_value') { try { node.condition.value = JSON.parse(t.value); } catch (err) { node.condition.value = t.value; } }
-    } else if (k === 'duration') { try { node.duration = JSON.parse(t.value); } catch (err) { /* ignore */ } }
-    else if (k === 'next_node_id') node.next_node_id = t.value === 'end' ? 'end' : t.value;
-    else if (k === 'next_node_id_no') node.next_node_id_no = t.value === 'end' ? 'end' : t.value;
-    render();
-  });
+function serializeAndStore() {
+  const jsonStr = JSON.stringify(serialize());
+  document.getElementById('definition-json').value = jsonStr;
 }
 
-function addNode() {
-  NODES.splice(NODES.length - 1, 0,
-    { id: 'step' + (Date.now() % 100000), type: 'ACTION', action: 'add_tag',
-      config: { tag: 'New tag' }, next_node_id: 'end' });
+// Step Insertion Helpers
+function openAddStepModal() {
+  document.getElementById('add-step-modal').classList.remove('hidden');
+}
+
+function closeAddStepModal() {
+  document.getElementById('add-step-modal').classList.add('hidden');
+}
+
+function insertNode(type) {
+  closeAddStepModal();
+  markUnsaved();
+  const newId = 'step_' + (Date.now() % 100000);
+
+  if (type === 'CONDITION') {
+    NODES.splice(NODES.length - 1, 0, {
+      id: newId,
+      type: 'CONDITION',
+      condition: { field: 'lead.quality_score', operator: 'greater_than', value: 70 },
+      next_node_id: 'end',
+      next_node_id_no: 'end'
+    });
+  } else if (type === 'ACTION') {
+    NODES.splice(NODES.length - 1, 0, {
+      id: newId,
+      type: 'ACTION',
+      action: 'add_tag',
+      config: { tag: 'Qualified' },
+      next_node_id: 'end'
+    });
+  } else if (type === 'WAIT') {
+    NODES.splice(NODES.length - 1, 0, {
+      id: newId,
+      type: 'WAIT',
+      duration: { hours: 2 },
+      next_node_id: 'end'
+    });
+  } else if (type === 'END') {
+    NODES.push({ id: newId, type: 'END' });
+  }
+
   render();
 }
-function removeNode(i) { NODES.splice(i, 1); render(); }
 
+function duplicateNode(i) {
+  markUnsaved();
+  const original = NODES[i];
+  const clone = JSON.parse(JSON.stringify(original));
+  clone.id = 'step_' + (Date.now() % 100000);
+  NODES.splice(i + 1, 0, clone);
+  render();
+}
+
+function removeNode(i) {
+  if (confirm('Are you sure you want to remove this workflow step?')) {
+    markUnsaved();
+    NODES.splice(i, 1);
+    render();
+  }
+}
+
+// =============================================================================
+// VALIDATION & TESTING DIAGNOSTIC LOGIC
+// =============================================================================
+function openTestModal() {
+  const modal = document.getElementById('test-modal');
+  const body = document.getElementById('test-results-body');
+  modal.classList.remove('hidden');
+
+  const serialized = serialize();
+  const nodes = serialized.nodes;
+  let issues = [];
+  let checks = [];
+
+  // Check 1: Trigger Node Existence
+  if (nodes.length > 0 && nodes[0].type === 'TRIGGER') {
+    checks.push({ ok: true, msg: 'Starting Trigger configured: ' + nodes[0].trigger_config.type });
+  } else {
+    issues.push('Missing or invalid root TRIGGER node.');
+  }
+
+  // Check 2: Terminal Node Existence
+  const hasEnd = nodes.some(n => n.type === 'END' || n.next_node_id === 'end');
+  if (hasEnd) {
+    checks.push({ ok: true, msg: 'Terminal END boundary exists.' });
+  } else {
+    issues.push('Workflow has no terminal END destination.');
+  }
+
+  // Check 3: Broken References
+  const nodeIds = new Set(nodes.map(n => n.id));
+  nodeIds.add('end');
+  nodes.forEach(n => {
+    if (n.next_node_id && !nodeIds.has(n.next_node_id)) {
+      issues.push(`Step '${n.id}' targets nonexistent next step '${n.next_node_id}'`);
+    }
+    if (n.type === 'CONDITION' && n.next_node_id_no && !nodeIds.has(n.next_node_id_no)) {
+      issues.push(`Condition '${n.id}' targets nonexistent NO step '${n.next_node_id_no}'`);
+    }
+  });
+
+  // Render Diagnostics
+  let html = `
+    <div class="p-3.5 rounded-xl border ${issues.length === 0 ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}">
+      <div class="flex items-center gap-2 font-bold ${issues.length === 0 ? 'text-emerald-400' : 'text-red-400'} text-sm">
+        <span>${issues.length === 0 ? '✅ All Structural Checks Passed' : '⚠️ Validation Issues Found'}</span>
+      </div>
+      <p class="text-xs text-on-surface-variant mt-1">
+        ${issues.length === 0 ? 'Workflow graph is verified acyclic, properly connected, and compliant with execution standards.' : 'Resolve the following issues before activating:'}
+      </p>
+    </div>
+  `;
+
+  if (issues.length > 0) {
+    html += '<ul class="space-y-1.5 text-xs text-red-300 font-mono">';
+    issues.forEach(err => html += `<li class="flex items-center gap-1.5"><span class="text-red-400">&bull;</span> ${esc(err)}</li>`);
+    html += '</ul>';
+  }
+
+  html += `
+    <div class="pt-3">
+      <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider block mb-2">Simulated Execution Path:</span>
+      <div class="p-3 rounded-lg bg-surface-container border border-cyber-border font-mono text-xs text-brand-300 space-y-1">
+        ${nodes.map((n, i) => `<div>${i + 1}. [${n.type}] ${esc(n.id)} ${n.action ? `&rarr; ${n.action}` : ''} ${n.condition ? `&rarr; if ${n.condition.field} ${n.condition.operator}` : ''}</div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  body.innerHTML = html;
+}
+
+function closeTestModal() {
+  document.getElementById('test-modal').classList.add('hidden');
+}
+
+function confirmPublish() {
+  return confirm('Are you sure you want to publish this workflow live? Active workflows immediately evaluate inbound triggers.');
+}
+
+function submitWorkflowForm() {
+  const nameInput = document.getElementById('wf-header-name');
+  if (!nameInput.value.trim()) {
+    alert('Please provide a name for this workflow before saving.');
+    nameInput.focus();
+    return;
+  }
+
+  document.getElementById('hidden-name').value = nameInput.value.trim();
+  document.getElementById('hidden-description').value = document.getElementById('wf-header-description').value.trim();
+  document.getElementById('hidden-trigger-type').value = document.getElementById('trigger-type').value;
+
+  serializeAndStore();
+  isDirty = false;
+  document.getElementById('builder-form').submit();
+}
+
+// Initial Bootstrap
 bindEdits();
 render();
 </script>
-<style>
-.node-list { display: flex; flex-direction: column; gap: 10px; }
-.node-card { padding: 14px 16px; }
-.node-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-.node-head strong { min-width: 90px; }
-.node-head .btn { margin-left: auto; }
-.builder-actions { display: flex; gap: 10px; margin: 14px 0 40px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); margin-top: 8px; }
-.alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; border: 1px solid; }
-.alert-ok { color: var(--ok); border-color: var(--ok); background: rgba(46,168,111,.08); }
-.alert-error { color: var(--bad); border-color: var(--bad); background: rgba(224,82,82,.08); }
-.template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-.template-card { border: 1px solid var(--edge-2); border-radius: 10px; padding: 14px; }
-</style>
 {% endblock %}

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed-variant":"#005236","tertiary-fixed-dim":"#4edea3","tertiary-fixed":"#6ffbbe","surface-bright":"#333949","tertiary":"#4edea3","on-primary-fixed":"#001849","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","on-surface":"#dde2f7","on-secondary":"#003543","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-error":"#690005","on-surface-variant":"#c2c6d8","tertiary-container":"#008259","inverse-primary":"#0054d6","inverse-on-surface":"#2a3040","surface-container-low":"#151b2b","primary":"#b3c5ff","on-tertiary-container":"#e1ffec","surface":"#0d1322","secondary-container":"#00d2ff","on-primary-container":"#f8f7ff","on-tertiary":"#003824","inverse-surface":"#dde2f7","on-primary-fixed-variant":"#003fa4","outline-variant":"#424656","primary-fixed-dim":"#b3c5ff","error-container":"#93000a","surface-variant":"#2f3445","surface-tint":"#b3c5ff","surface-container-high":"#242a3a","on-background":"#dde2f7","on-secondary-fixed":"#001f28","on-primary":"#002b75","secondary":"#a5e7ff","background":"#0d1322","surface-dim":"#0d1322","primary-container":"#0066ff","surface-container-highest":"#2f3445","primary-fixed":"#dae1ff","surface-container":"#191f2f","secondary-fixed-dim":"#47d6ff","on-error-container":"#ffdad6","error":"#ffb4ab","on-tertiary-fixed":"#002113","outline":"#8c90a1"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-lg":"1rem","space-md":"0.75rem","margin":"1.5rem","gutter":"1rem","space-xl":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem"},"fontFamily":{"body-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"label-md":["Inter"],"code-xs":["JetBrains Mono"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-y-space-lg">
+<!-- Top Context Header & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span>Management</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Team</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary-fixed-dim font-medium">Role &amp; Permissions</span>
+</div>
+<div class="flex items-baseline gap-space-sm mt-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Role &amp; Permissions</h1>
+<span class="font-code-xs text-code-xs text-tertiary-fixed bg-tertiary-container/30 px-space-xs py-0.5 rounded">RBAC v3.4 ENFORCED</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+        Configure granular access control, actor capabilities, and data exports per organization role.
+      </p>
+</div>
+<!-- Header Actions -->
+<div class="flex items-center gap-space-sm self-start lg:self-auto">
+<button class="flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">add_moderator</span>
+<span>Create New Role</span>
+</button>
+<button class="flex items-center gap-space-xs px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 font-label-md text-label-md transition-all shadow-[0_0_16px_rgba(0,102,255,0.4)] active:scale-[0.98]" id="save-btn">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Save Role Permissions</span>
+</button>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Left Navigation / Roles Rail -->
+<div class="xl:col-span-4 2xl:col-span-3 flex flex-col gap-space-md">
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<!-- Sub-search for roles -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Organization Roles</span>
+<span class="font-code-xs text-code-xs px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant">6</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline cursor-pointer hover:text-on-surface transition-colors">tune</span>
+</div>
+<!-- Role List Selection -->
+<div class="flex flex-col gap-1.5" id="roles-rail">
+<!-- Role Item: Admin -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface cursor-pointer transition-all group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Admin (Owner)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">3 members • Root</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Role Item: Marketing Manager -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface cursor-pointer transition-all group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Marketing Manager</span>
+<span class="font-code-xs text-code-xs text-outline">6 members • Lead Ops</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Role Item: Digital Marketer (ACTIVE) -->
+<div class="relative flex items-center justify-between p-2.5 rounded-lg bg-surface-container-high text-on-surface cursor-pointer shadow-[0_0_14px_rgba(0,102,255,0.2)]">
+<div class="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r bg-primary-container"></div>
+<div class="flex items-center gap-space-sm min-w-0 pl-1">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Digital Marketer</span>
+<span class="px-1.5 py-0.2 bg-primary-container/30 text-primary-fixed font-code-xs text-[10px] rounded">CURRENT</span>
+</div>
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim">12 members • Growth</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">check_circle</span>
+</div>
+<!-- Role Item: Campaign Executive -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface cursor-pointer transition-all group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Campaign Executive</span>
+<span class="font-code-xs text-code-xs text-outline">8 members • Dispatch</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Role Item: Data Researcher -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface cursor-pointer transition-all group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]">dataset</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Data Researcher</span>
+<span class="font-code-xs text-code-xs text-outline">5 members • Mining</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<!-- Role Item: Read-Only Auditor -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface cursor-pointer transition-all group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Read-Only Auditor</span>
+<span class="font-code-xs text-code-xs text-outline">2 members • Compliance</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Quick Role Info Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Role Utilization</span>
+<span class="font-code-xs text-code-xs text-tertiary">33.3% Allocated</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 33.3%;"></div>
+</div>
+<p class="font-code-xs text-code-xs text-on-surface-variant mt-1 leading-relaxed">
+          Assigned to 12 active accounts. Modifications propagate immediately across active worker sessions.
+        </p>
+</div>
+<!-- Mini Audit Widget -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-col gap-2">
+<div class="flex items-center gap-space-xs text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed-dim">history</span>
+<span>Last Policy Mutation</span>
+</div>
+<div class="font-code-xs text-code-xs text-on-surface">Updated by <span class="text-primary font-medium">sagar@qbit.os</span></div>
+<div class="font-code-xs text-code-xs text-outline">24 mins ago • SHA-256: 7f81a...d90</div>
+</div>
+</div>
+<!-- Center/Right Permission Matrix Configuration Panel -->
+<div class="xl:col-span-8 2xl:col-span-9 flex flex-col gap-space-lg">
+<!-- Edit Role Header Card -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-11 h-11 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-fixed shadow-[0_0_12px_rgba(0,102,255,0.25)]">
+<span class="material-symbols-outlined text-[24px]">manage_accounts</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Edit Role - Digital Marketer</h2>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary-fixed font-code-xs text-code-xs flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Active Role
+                </span>
+</div>
+<span class="font-code-xs text-code-xs text-outline mt-0.5">ROLE_ID: ROLE_GROWTH_MKT_09 • Inheritance: STANDARD_USER</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-xs text-code-xs text-outline">Policy Scope:</span>
+<span class="px-2.5 py-1 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm">Workspace Wide</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-start gap-space-md">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">info</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Responsible for managing scrapers, reviewing extracted contacts, launching outbound campaigns, and analyzing funnel conversions. Has unrestricted access to public lead engines with controlled administrative capabilities.
+          </p>
+</div>
+</div>
+<!-- Section 1: Scraper Permissions -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">1. Scraper Permissions</h3>
+<p class="font-body-sm text-body-sm text-outline">Extraction capabilities, actor lifecycle, and company run visibility</p>
+</div>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary-fixed bg-tertiary-container/20 px-2 py-1 rounded">5 OF 6 ENABLED</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs">
+<!-- Toggle 1: View Scraper Marketplace -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">View Scraper Marketplace</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Browse actor library, Google Maps scrapers, and schema specs.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 2: Run Scrapers -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">Run Scrapers</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Google Maps, LinkedIn, Twitter/X, and custom Web extractors.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 3: View All Runs -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">View All Runs (Company)</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Inspect global team scrape status, logs, and cost monitors.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 4: View Own Runs -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">View Own Runs</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Access user-specific queue, active batches, and execution history.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 5: Export Scraped Data -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">Export Scraped Data</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">One-click downloads formatted as CSV, Excel, NDJSON, or Parquet.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 6: Configure Custom Proxies & API Keys (LOCKED/ADMIN) -->
+<div class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low/60 opacity-60 cursor-not-allowed">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-surface-container-highest text-outline flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-outline font-medium">Configure Custom Proxies &amp; API Keys</span>
+<span class="font-code-xs text-[10px] uppercase bg-error-container/30 text-error px-1.5 py-0.2 rounded">Admin Only</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Requires organizational superuser privileges to protect billing secrets.</span>
+</div>
+</div>
+<div class="w-9 h-5 bg-surface-variant rounded-full relative shrink-0">
+<div class="w-4 h-4 bg-outline rounded-full absolute top-0.5 left-0.5"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Lead Management Permissions -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">contacts</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">2. Lead Management Permissions</h3>
+<p class="font-body-sm text-body-sm text-outline">Database enrichment, pipeline manipulation, CRM synching, and deletion guardrails</p>
+</div>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary-fixed bg-tertiary-container/20 px-2 py-1 rounded">5 OF 6 ENABLED</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs">
+<!-- Toggle 1: View Own Leads -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">View Own Leads</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Examine enriched contact cards captured via user's private runs.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 2: View All Leads -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">View All Leads (Company)</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Search and query across the collective organizational repository.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 3: Edit & Enrich Leads -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">Edit &amp; Enrich Leads</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Trigger AI email finder, social handle verification, and waterfall lookups.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 4: Delete Leads (DISABLED) -->
+<div class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low/60 opacity-60 cursor-not-allowed">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-surface-container-highest text-outline flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-outline font-medium">Delete Leads</span>
+<span class="font-code-xs text-[10px] uppercase bg-surface-container-highest text-outline px-1.5 py-0.2 rounded">Disabled</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Hard deletion disabled to prevent accidental corporate data losses.</span>
+</div>
+</div>
+<div class="w-9 h-5 bg-surface-variant rounded-full relative shrink-0">
+<div class="w-4 h-4 bg-outline rounded-full absolute top-0.5 left-0.5"></div>
+</div>
+</div>
+<!-- Toggle 5: Run Deduplication & Merging -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">Run Deduplication &amp; Merging</span>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Execute fuzzy matching algorithms across phones, domains, and VATs.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+<!-- Toggle 6: Push Leads to External CRM -->
+<label class="flex items-start justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start gap-3 min-w-0 pr-2">
+<div class="w-5 h-5 rounded bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface font-medium group-hover:text-primary transition-colors">Push Leads to External CRM</span>
+<span class="font-code-xs text-[10px] bg-secondary-container/20 text-secondary-fixed-dim px-1.5 py-0.2 rounded font-medium">Sync Active</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline leading-tight mt-0.5">Direct integration sync with HubSpot, Salesforce, Pipedrive &amp; Webhooks.</span>
+</div>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-9 h-5 bg-primary-container rounded-full relative transition-colors shrink-0">
+<div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 3: Campaign & Automation Permissions -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">3. Campaign &amp; Automation Permissions</h3>
+<p class="font-body-sm text-body-sm text-outline">Dispatch channels, node automations, triggers, and analytics introspection</p>
+</div>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary-fixed bg-tertiary-container/20 px-2 py-1 rounded">ALL 3 ENABLED</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm pt-space-xs">
+<!-- Toggle 1: Create & Dispatch -->
+<label class="flex flex-col justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start justify-between mb-3">
+<div class="w-7 h-7 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-8 h-4.5 bg-primary-container rounded-full relative transition-colors">
+<div class="w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">Create &amp; Dispatch Outbound</span>
+<span class="font-body-sm text-body-sm text-outline mt-1 leading-snug">Email drips, WhatsApp Business API blasts, and verified SMS channels.</span>
+</div>
+</label>
+<!-- Toggle 2: Edit Automation Workflows -->
+<label class="flex flex-col justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start justify-between mb-3">
+<div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-8 h-4.5 bg-primary-container rounded-full relative transition-colors">
+<div class="w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">Edit Automation Workflows</span>
+<span class="font-body-sm text-body-sm text-outline mt-1 leading-snug">Visual canvas orchestrations, branch conditioning, and webhook triggers.</span>
+</div>
+</label>
+<!-- Toggle 3: View Conversion Analytics -->
+<label class="flex flex-col justify-between p-3.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex items-start justify-between mb-3">
+<div class="w-7 h-7 rounded bg-tertiary-container/30 flex items-center justify-center text-tertiary-fixed">
+<span class="material-symbols-outlined text-[16px]">analytics</span>
+</div>
+<input checked="" class="hidden" type="checkbox"/>
+<div class="w-8 h-4.5 bg-primary-container rounded-full relative transition-colors">
+<div class="w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 right-0.5 transition-transform"></div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold group-hover:text-primary transition-colors">View Conversion Analytics</span>
+<span class="font-body-sm text-body-sm text-outline mt-1 leading-snug">Open rates, replies, CTR heatmaps, and funnel velocity dashboards.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 4: Rate Limiting & Safety Guardrails -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">speed</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">4. Rate Limiting &amp; Safety Guardrails</h3>
+<p class="font-body-sm text-body-sm text-outline">Enforce quota thresholds to prevent proxy throttling and domain reputational penalties</p>
+</div>
+</div>
+<span class="font-code-xs text-code-xs text-outline bg-surface-container-high px-2 py-1 rounded">RESTRICTED METRICS</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-xs">
+<!-- Limit 1: Max Scrape Limit / Day -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Max Scrape Limit / Day</span>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">Places, social profiles, and records mined per 24-hour cycle</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">cloud_sync</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-highest rounded-lg p-2 px-space-md">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface" id="scrape-limit-val">10,000</span>
+<span class="font-code-xs text-code-xs text-outline">places</span>
+</div>
+<!-- Stepper Controls -->
+<div class="flex items-center gap-1 bg-surface-container rounded p-1">
+<button class="w-7 h-7 rounded hover:bg-surface-variant flex items-center justify-center text-on-surface transition-colors" onclick="decrementVal('scrape-limit-val', 1000, 1000)">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<div class="w-px h-3 bg-outline-variant/40"></div>
+<button class="w-7 h-7 rounded hover:bg-surface-variant flex items-center justify-center text-on-surface transition-colors" onclick="incrementVal('scrape-limit-val', 1000, 100000)">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+<!-- Visual Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-code-xs text-code-xs text-outline">
+<span>Default: 5k</span>
+<span class="text-secondary-container">Hard Ceiling: 50,000</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+</div>
+</div>
+</div>
+<!-- Limit 2: Daily Outreach Limit -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Daily Outreach Limit</span>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">Combined outbound queue across SMTP, Twilio, and Meta API</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">mark_email_read</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-highest rounded-lg p-2 px-space-md">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface" id="outreach-limit-val">2,500</span>
+<span class="font-code-xs text-code-xs text-outline">messages</span>
+</div>
+<!-- Stepper Controls -->
+<div class="flex items-center gap-1 bg-surface-container rounded p-1">
+<button class="w-7 h-7 rounded hover:bg-surface-variant flex items-center justify-center text-on-surface transition-colors" onclick="decrementVal('outreach-limit-val', 250, 250)">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<div class="w-px h-3 bg-outline-variant/40"></div>
+<button class="w-7 h-7 rounded hover:bg-surface-variant flex items-center justify-center text-on-surface transition-colors" onclick="incrementVal('outreach-limit-val', 250, 10000)">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+<!-- Visual Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-code-xs text-code-xs text-outline">
+<span>Safe Spam Score Window</span>
+<span class="text-tertiary">Max Cap: 10,000</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full transition-all duration-300" style="width: 25%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Confirmation Bar (Bottom Sticky/Footer within Content) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+            Unsaved changes: <strong class="text-on-surface font-semibold">0 permissions pending commit</strong>
+</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-3.5 py-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+            Discard Changes
+          </button>
+<button class="px-5 py-2 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 font-label-md text-label-md transition-all shadow-[0_0_14px_rgba(0,102,255,0.35)] active:scale-[0.98]" onclick="simulateSave()">
+            Apply Role Policy
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function incrementVal(elementId, step, max) {
+    const el = document.getElementById(elementId);
+    let val = parseInt(el.textContent.replace(/,/g, ''), 10);
+    if (val + step <= max) {
+      val += step;
+      el.textContent = val.toLocaleString();
+    }
+  }
+
+  function decrementVal(elementId, step, min) {
+    const el = document.getElementById(elementId);
+    let val = parseInt(el.textContent.replace(/,/g, ''), 10);
+    if (val - step >= min) {
+      val -= step;
+      el.textContent = val.toLocaleString();
+    }
+  }
+
+  function simulateSave() {
+    const btn = document.getElementById('save-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Saving Matrix...</span>';
+    btn.classList.add('opacity-80');
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-tertiary">check_circle</span><span>Policies Deployed!</span>';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('opacity-80');
+      }, 2000);
+    }, 800);
+  }
+</script></main></div></body></html>

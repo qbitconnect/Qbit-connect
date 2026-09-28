@@ -39,6 +39,7 @@ from app.models.automation import (
     WorkflowExecution,
     WorkflowExecutionStep,
 )
+from app.models.enterprise import utc_aware
 from app.models.user import User
 from app.services.audit import AuditService
 from app.ui import _ctx, templates
@@ -368,7 +369,9 @@ async def automation_executions(
     for e in rows:
         data = e.to_public_dict()
         if e.started_at and e.completed_at:
-            data["duration_s"] = round((e.completed_at - e.started_at).total_seconds(), 1)
+            data["duration_s"] = round(
+                (utc_aware(e.completed_at) - utc_aware(e.started_at)).total_seconds(), 1
+            )
         else:
             data["duration_s"] = None
         items.append((e, data))

@@ -85,13 +85,14 @@ class MockMapsProvider:
         self,
         *,
         query: str,
-        city: str | None,
-        state: str | None,
-        country: str | None,
-        language: str | None,
-        page_token: str | None,
-        max_results: int,
-        http,  # noqa: ARG002 — mock never touches the network
+        city: str | None = None,
+        state: str | None = None,
+        country: str | None = None,
+        language: str | None = None,
+        page_token: str | None = None,
+        max_results: int = 20,
+        http = None,  # noqa: ARG002 — mock never touches the network
+        **kwargs,
     ) -> tuple[list[dict], str | None]:
         page_size = 2  # fixed page size; `max_results` caps the JOB, not the page
         start = int(page_token or 0)
@@ -99,3 +100,12 @@ class MockMapsProvider:
         items = [dict(item) for item in _FIXTURES[start:end]]
         next_token = str(end) if end < len(_FIXTURES) else None
         return items, next_token
+
+    async def verify_connection(self, http=None) -> dict:
+        return {
+            "connected": True,
+            "provider": self.name,
+            "status": "CONNECTED",
+            "detail": "Mock provider active (testing only)",
+            "metadata": {"fixture_count": len(_FIXTURES)},
+        }

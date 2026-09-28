@@ -45,15 +45,23 @@ class MapsProvider(Protocol):
         self,
         *,
         query: str,
-        city: str | None,
-        state: str | None,
-        country: str | None,
-        language: str | None,
-        page_token: str | None,
-        max_results: int,
-        http,  # PolicyHttpClient
+        category: str | None = None,
+        city: str | None = None,
+        state: str | None = None,
+        country: str | None = None,
+        region: str | None = None,
+        radius_meters: int | None = None,
+        drop_duplicates: bool = True,
+        language: str | None = None,
+        page_token: str | None = None,
+        max_results: int = PROVIDER_PAGE_SIZE,
+        http = None,
     ) -> tuple[list[dict], str | None]:
         """One provider page: (raw_items, next_page_token)."""
+        ...
+
+    async def verify_connection(self, http) -> dict:
+        """Lightweight live verification of provider credentials and health."""
         ...
 
 
@@ -102,13 +110,17 @@ class OutscraperMapsProvider:
         self,
         *,
         query: str,
-        city: str | None,
-        state: str | None,
-        country: str | None,
-        language: str | None,
-        page_token: str | None,
-        max_results: int,
-        http,
+        category: str | None = None,
+        city: str | None = None,
+        state: str | None = None,
+        country: str | None = None,
+        region: str | None = None,
+        radius_meters: int | None = None,
+        drop_duplicates: bool = True,
+        language: str | None = None,
+        page_token: str | None = None,
+        max_results: int = PROVIDER_PAGE_SIZE,
+        http = None,
     ) -> tuple[list[dict], str | None]:
         # Outscraper pagination uses skip offset
         skip = 0
@@ -118,9 +130,15 @@ class OutscraperMapsProvider:
             except (ValueError, TypeError):
                 skip = 0
 
-        # Construct full query string if location components provided
-        loc_parts = [p.strip() for p in (city, state, country) if p and p.strip()]
+        # Construct full query string
         full_query = query.strip()
+        if category and category.strip() and category.strip().lower() not in full_query.lower():
+            if full_query:
+                full_query = f"{category.strip()} in {full_query}"
+            else:
+                full_query = category.strip()
+
+        loc_parts = [p.strip() for p in (city, state, country) if p and p.strip()]
         if loc_parts and not any(p.lower() in full_query.lower() for p in loc_parts):
             full_query = f"{full_query}, {', '.join(loc_parts)}"
 
@@ -135,10 +153,15 @@ class OutscraperMapsProvider:
             "skip": str(skip),
             "async": "false",
         }
+        if drop_duplicates:
+            params["dropDuplicates"] = "true"
         if language:
             params["language"] = language
-        if country:
-            params["region"] = country
+        reg = region or country
+        if reg:
+            params["region"] = reg
+        if radius_meters:
+            params["radius"] = str(radius_meters)
 
         url = f"{self.base_url}?{urlencode(params)}"
         try:
@@ -209,6 +232,67 @@ class OutscraperMapsProvider:
 
         return results, next_page_token
 
+    async def verify_connection(self, http) -> dict:
+        """Lightweight live verification of Outscraper credentials and quota."""
+        endpoint = "https://api.app.outscraper.com/profile/balance"
+        headers = {
+            "X-API-KEY": self.api_key,
+            "Authorization": f"Bearer {self.api_key}",
+        }
+        try:
+            resp = await http.get(endpoint, headers=headers)
+        except Exception as exc:
+            return {
+                "connected": False,
+                "provider": self.name,
+                "status": "NOT CONNECTED",
+                "detail": f"Outscraper connection failed: {exc}",
+                "metadata": {"error": str(exc)},
+            }
+
+        if resp.status_code == 401:
+            return {
+                "connected": False,
+                "provider": self.name,
+                "status": "NOT CONNECTED",
+                "detail": "Outscraper API key authentication failed (HTTP 401)",
+                "metadata": {"http_status": 401},
+            }
+        if resp.status_code == 402:
+            return {
+                "connected": False,
+                "provider": self.name,
+                "status": "QUOTA EXHAUSTED",
+                "detail": "Outscraper account quota exhausted or payment required (HTTP 402)",
+                "metadata": {"http_status": 402},
+            }
+        if resp.status_code >= 400:
+            return {
+                "connected": False,
+                "provider": self.name,
+                "status": "ERROR",
+                "detail": f"Outscraper responded with HTTP {resp.status_code}",
+                "metadata": {"http_status": resp.status_code},
+            }
+
+        data = {}
+        try:
+            data = resp.json()
+        except Exception:
+            pass
+
+        return {
+            "connected": True,
+            "provider": self.name,
+            "status": "CONNECTED",
+            "detail": "Outscraper API credentials verified successfully",
+            "metadata": {
+                "balance": data.get("balance"),
+                "credits": data.get("credits"),
+                "email": data.get("email"),
+            },
+        }
+
 
 class HttpMapsProvider:
     """Operator-configured compliant HTTP provider (licensed vendor/API)."""
@@ -223,13 +307,17 @@ class HttpMapsProvider:
         self,
         *,
         query: str,
-        city: str | None,
-        state: str | None,
-        country: str | None,
-        language: str | None,
-        page_token: str | None,
-        max_results: int,
-        http,
+        category: str | None = None,
+        city: str | None = None,
+        state: str | None = None,
+        country: str | None = None,
+        region: str | None = None,
+        radius_meters: int | None = None,
+        drop_duplicates: bool = True,
+        language: str | None = None,
+        page_token: str | None = None,
+        max_results: int = PROVIDER_PAGE_SIZE,
+        http = None,
     ) -> tuple[list[dict], str | None]:
         headers: dict[str, str] = {}
         if self.api_key:
@@ -239,7 +327,9 @@ class HttpMapsProvider:
             "page_size": str(min(max_results, PROVIDER_PAGE_SIZE)),
         }
         for key, value in (
-            ("city", city), ("state", state), ("country", country),
+            ("category", category), ("city", city), ("state", state),
+            ("country", country), ("region", region),
+            ("radius", str(radius_meters) if radius_meters else None),
             ("language", language), ("page_token", page_token),
         ):
             if value:
@@ -260,6 +350,36 @@ class HttpMapsProvider:
                 retryable=False,
             )
         return payload["results"], payload.get("next_page_token")
+
+    async def verify_connection(self, http) -> dict:
+        headers = {}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        try:
+            resp = await http.get(f"{self.base_url}?q=ping&page_size=1", headers=headers)
+        except Exception as exc:
+            return {
+                "connected": False,
+                "provider": self.name,
+                "status": "NOT CONNECTED",
+                "detail": f"HTTP provider connection failed: {exc}",
+                "metadata": {"error": str(exc)},
+            }
+        if resp.status_code < 400:
+            return {
+                "connected": True,
+                "provider": self.name,
+                "status": "CONNECTED",
+                "detail": f"HTTP maps provider reachable (HTTP {resp.status_code})",
+                "metadata": {"http_status": resp.status_code},
+            }
+        return {
+            "connected": False,
+            "provider": self.name,
+            "status": "NOT CONNECTED",
+            "detail": f"HTTP maps provider returned HTTP {resp.status_code}",
+            "metadata": {"http_status": resp.status_code},
+        }
 
 
 # NOTE: MockMapsProvider lives in mock_provider.py and is importable ONLY for

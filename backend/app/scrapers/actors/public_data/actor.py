@@ -43,8 +43,16 @@ class PublicDataActor(ScraperActor):
         "public CSV datasets",
         "declarative field mapping",
         "streaming row processing",
+        "official government registers",
     )
     supports_pause = True
+    source_type = "government_open_data"
+    implementation_status = "VERIFIED"
+    access_method = "open_dataset_feed"
+    terms_verified = True
+    permitted_use = "Government and open data public registers released under open data licenses (Public Domain, OGL, CC-BY)"
+    retention_policy = "Retained in alignment with official public register revisions"
+    export_restrictions = ()
     input_schema = PublicDataInput
     output_fields = OUTPUT_FIELDS
 
@@ -95,7 +103,7 @@ class PublicDataActor(ScraperActor):
 
 def _map_row(row: dict, field_map: dict[str, str]) -> dict | None:
     item: dict = {}
-    metadata: dict = {}
+    metadata: dict = {"data_license": "Open Government / Public Domain"}
     for key, value in row.items():
         mapped = field_map.get(key, key if key in _CANONICAL else None)
         if value is None or value == "":
@@ -114,6 +122,8 @@ def _iter_json(payload, records_key: str | None):
         for part in records_key.split("."):
             payload = payload[part]  # KeyError → clear validation error upstream
     if isinstance(payload, dict):
+        if all(isinstance(v, dict) for v in payload.values()):
+            return iter(payload.values())
         raise ValueError("JSON payload is an object; provide records_key pointing to an array")
     if not isinstance(payload, list):
         raise ValueError("JSON payload must be an array of records")

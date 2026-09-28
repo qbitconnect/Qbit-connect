@@ -59,6 +59,16 @@ def _actor_out(registry, actor_id: str) -> ActorOut:
         status=entry.public_status.value if entry else "REGISTERED",
         status_detail=entry.detail if entry else None,
         dependencies=entry.dependencies if entry else {},
+        required_credentials=meta.get("required_credentials", []),
+        rate_limit_per_minute=meta.get("rate_limit_per_minute", 60),
+        concurrency_limit=meta.get("concurrency_limit", 5),
+        source_type=meta.get("source_type", meta["category"]),
+        implementation_status=meta.get("implementation_status", "IMPLEMENTED"),
+        access_method=meta.get("access_method", "documented_api"),
+        terms_verified=meta.get("terms_verified", True),
+        permitted_use=meta.get("permitted_use"),
+        retention_policy=meta.get("retention_policy"),
+        export_restrictions=meta.get("export_restrictions", []),
         input_schema=meta["input_schema"],
         output_fields=meta["output_fields"],
     )
@@ -79,8 +89,9 @@ async def list_scrapers(
     _: Annotated[User, Depends(require_permission("scraping.view"))],
 ) -> ActorListOut:
     registry = _registry(request)
+    await registry.health_check()
     actors = [_actor_out(registry, actor_id) for actor_id in registry.discover()]
-    return ActorListOut(data=actors, meta={"total": len(actors)})
+    return ActorListOut(data=actors, meta={"total": len(actors), **registry.summary()})
 
 
 @router.get("/health")
@@ -175,3 +186,33 @@ async def create_job(
         metadata={"actor": actor_id, "version": actor.version},
     )
     return ScrapeJobActionOut(data=job.to_public_dict())
+
+
+@router.get("/{actor_id}/connection-test")
+@router.post("/{actor_id}/connection-test")
+async def test_scraper_connection(
+    actor_id: str,
+    request: Request,
+    _: Annotated[User, Depends(require_permission("scraping.view"))],
+):
+    """Test connectivity and configuration for a scraper's external provider."""
+    registry = _registry(request)
+    entry = registry.entry(actor_id)
+    if entry is None:
+        raise NotFoundError(f"Scraper not found: {actor_id}")
+    actor = entry.actor
+    if hasattr(actor, "verify_connection"):
+        result = await actor.verify_connection()
+        return {"success": True, "data": result}
+
+    health = await actor.health_check()
+    return {
+        "success": True,
+        "data": {
+            "connected": health.status.value == "READY",
+            "provider": "builtin",
+            "status": health.status.value,
+            "detail": health.detail,
+            "dependencies": health.dependencies,
+        },
+    }

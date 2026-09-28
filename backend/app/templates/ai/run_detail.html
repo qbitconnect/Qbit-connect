@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Run Detail — AI — QBIT Growth OS{% endblock %}
+{% block nav_ai %}bg-surface-container-high text-on-surface{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-6">
+
+  <!-- Breadcrumb -->
+  <div class="flex items-center gap-2 text-body-sm text-on-surface-variant mb-4">
+    <a href="/ai-assistant" class="hover:text-on-surface transition-colors">AI Assistant</a>
+    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+    <span class="text-on-surface">Run Detail</span>
+  </div>
+
+  <!-- Header -->
+  <div class="flex items-start justify-between mb-6">
+    <div>
+      <h1 class="text-display-sm font-bold text-on-surface">
+        {{ run.task_name.replace('ai_agent:', '') | replace('-', ' ') | title }}
+      </h1>
+      <p class="text-body-sm text-on-surface-variant mt-1 font-mono">{{ run.id }}</p>
+    </div>
+    <span class="px-3 py-1.5 rounded-full text-label-md font-medium
+      {% if run.status == 'COMPLETED' %}bg-tertiary-container text-on-tertiary-container
+      {% elif run.status == 'FAILED' %}bg-error-container text-on-error-container
+      {% elif run.status == 'RUNNING' %}bg-primary-container text-on-primary-container
+      {% else %}bg-surface-container-high text-on-surface-variant{% endif %}">
+      {{ run.status }}
+    </span>
+  </div>
+
+  <!-- Meta Grid -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-surface-container rounded-xl p-4">
+      <div class="text-label-sm text-on-surface-variant mb-1">Provider</div>
+      <div class="text-body-md font-medium text-on-surface">{{ run.provider_used or 'N/A' }}</div>
+    </div>
+    <div class="bg-surface-container rounded-xl p-4">
+      <div class="text-label-sm text-on-surface-variant mb-1">Model</div>
+      <div class="text-body-md font-medium text-on-surface truncate">{{ run.model_used or 'N/A' }}</div>
+    </div>
+    <div class="bg-surface-container rounded-xl p-4">
+      <div class="text-label-sm text-on-surface-variant mb-1">Tokens</div>
+      <div class="text-body-md font-medium text-on-surface">{{ run.token_usage.get('total_tokens', 0) if run.token_usage else 0 }}</div>
+    </div>
+    <div class="bg-surface-container rounded-xl p-4">
+      <div class="text-label-sm text-on-surface-variant mb-1">Est. Cost</div>
+      <div class="text-body-md font-medium text-on-surface">${{ "%.4f" | format(run.cost_estimate) }}</div>
+    </div>
+  </div>
+
+  {% if run.error_message %}
+  <div class="mb-6 p-4 rounded-xl bg-error-container border border-error text-on-error-container">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-[18px]">error</span>
+      <span class="font-semibold text-label-md">Error</span>
+    </div>
+    <p class="text-body-sm">{{ run.error_message }}</p>
+  </div>
+  {% endif %}
+
+  <!-- Step Timeline -->
+  <div class="bg-surface-container rounded-xl border border-outline-variant p-5 mb-6">
+    <h2 class="text-title-sm font-semibold text-on-surface mb-4">Execution Steps</h2>
+    {% if steps %}
+    <div class="space-y-3">
+      {% for step in steps %}
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+        <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5
+          {% if step.status == 'SUCCESS' %}bg-tertiary-container{% elif step.status == 'FAILED' %}bg-error-container{% else %}bg-surface-container-high{% endif %}">
+          <span class="material-symbols-outlined text-[14px]
+            {% if step.status == 'SUCCESS' %}text-tertiary{% elif step.status == 'FAILED' %}text-error{% else %}text-on-surface-variant{% endif %}">
+            {% if step.status == 'SUCCESS' %}check{% elif step.status == 'FAILED' %}close{% else %}pending{% endif %}
+          </span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-label-md font-medium text-on-surface">{{ step.step_name }}</span>
+            <div class="flex items-center gap-2 text-label-xs text-on-surface-variant">
+              {% if step.tool_name %}<span class="bg-surface-container-high px-1.5 py-0.5 rounded">{{ step.tool_name }}</span>{% endif %}
+              {% if step.duration_ms %}<span>{{ step.duration_ms }}ms</span>{% endif %}
+            </div>
+          </div>
+          {% if step.error %}
+          <p class="text-body-xs text-error mt-1">{{ step.error }}</p>
+          {% endif %}
+          {% if step.tool_output %}
+          <details class="mt-2">
+            <summary class="text-body-xs text-on-surface-variant cursor-pointer hover:text-on-surface">View output</summary>
+            <pre class="mt-1 text-body-xs bg-surface-container-lowest rounded p-2 overflow-x-auto whitespace-pre-wrap">{{ step.tool_output | tojson(indent=2) }}</pre>
+          </details>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-body-sm text-on-surface-variant text-center py-4">No steps recorded</p>
+    {% endif %}
+  </div>
+
+  <!-- Output Data -->
+  {% if run.output_data %}
+  <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+    <h2 class="text-title-sm font-semibold text-on-surface mb-3">Output</h2>
+    <pre class="text-body-xs text-on-surface-variant bg-surface-container-lowest rounded-lg p-4 overflow-x-auto whitespace-pre-wrap">{{ run.output_data | tojson(indent=2) }}</pre>
+  </div>
+  {% endif %}
+
+  {% if run.lead_id %}
+  <div class="mt-4">
+    <a href="/leads/{{ run.lead_id }}/intelligence"
+       class="flex items-center gap-2 text-label-md text-primary hover:underline">
+      <span class="material-symbols-outlined text-[16px]">manage_search</span>
+      View Lead Intelligence
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

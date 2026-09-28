@@ -58,6 +58,13 @@ class WebsiteActor(ScraperActor):
         "depth and page limits",
     )
     supports_pause = True
+    source_type = "company_website"
+    implementation_status = "VERIFIED"
+    access_method = "authorized_crawler"
+    terms_verified = True
+    permitted_use = "Public business contact details published on public contact/about pages for B2B communication"
+    retention_policy = "Retain while public contact remains valid; honors opt-out and erasure requests"
+    export_restrictions = ("Respect suppression and opt-out lists",)
     input_schema = WebsiteInput
     output_fields = OUTPUT_FIELDS
 

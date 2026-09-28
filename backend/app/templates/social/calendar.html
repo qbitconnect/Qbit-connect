@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Content Calendar — QBIT Growth OS{% endblock %}
+{% block nav_social %}active bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+  <!-- Top Bar -->
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-lg">
+    <div>
+      <div class="flex items-center gap-2 text-outline font-code-xs text-code-xs mb-1">
+        <a href="/social" class="hover:underline">Social Media</a>
+        <span>/</span>
+        <span class="text-secondary-fixed">Calendar</span>
+      </div>
+      <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface">Content Calendar</h1>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+        Visual timeline of scheduled, pending review, and published social media broadcasts.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-space-sm">
+      <a href="/social" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+        <span class="material-symbols-outlined text-[18px]">view_list</span>
+        <span>Queue View</span>
+      </a>
+      <a href="/social/composer" class="h-9 px-3.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-1.5 shadow-[0_0_16px_rgba(0,102,255,0.4)] hover:bg-inverse-primary transition-all">
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        <span>Schedule Post</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Calendar Items Grid / Stream -->
+  <div class="bg-surface-container-low rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm">
+    <div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px] text-secondary">calendar_today</span>
+        <h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Upcoming Scheduled &amp; Published Posts</h3>
+      </div>
+      <span class="font-code-xs text-code-xs text-outline">{{ calendar_items|length }} Posts in Window</span>
+    </div>
+
+    {% if not calendar_items %}
+    <div class="p-space-2xl text-center flex flex-col items-center justify-center">
+      <span class="material-symbols-outlined text-[48px] text-outline mb-2">event_busy</span>
+      <h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">No scheduled posts found</h4>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mt-1">
+        Your content calendar is currently clear. Schedule upcoming social broadcasts in the composer.
+      </p>
+      <a href="/social/composer" class="mt-4 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md">
+        Schedule First Post
+      </a>
+    </div>
+    {% else %}
+    <div class="p-space-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+      {% for item in calendar_items %}
+      <div class="bg-surface-container rounded-xl p-space-md border border-outline-variant/20 flex flex-col justify-between hover:border-outline-variant/50 transition-colors">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-code-xs text-code-xs text-secondary-fixed font-bold">{{ item.date }} {{ item.time if item.time else '' }}</span>
+            {% if item.status == 'PUBLISHED' %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-code-xs bg-tertiary-container/30 text-tertiary font-bold">PUBLISHED</span>
+            {% elif item.status == 'SCHEDULED' %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-code-xs bg-secondary-container/20 text-secondary-fixed font-bold">SCHEDULED</span>
+            {% else %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-code-xs bg-surface-container-high text-outline font-bold">{{ item.status }}</span>
+            {% endif %}
+          </div>
+
+          <h4 class="font-headline-sm text-headline-sm font-semibold text-on-surface">{{ item.title }}</h4>
+          <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3 mt-1 leading-relaxed">
+            {{ item.caption }}
+          </p>
+        </div>
+
+        <div class="mt-3 pt-3 border-t border-outline-variant/20 flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            {% for plat in item.platforms %}
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-code-xs bg-surface-container-highest text-outline font-medium">
+              {{ plat }}
+            </span>
+            {% endfor %}
+          </div>
+          {% if item.media_count %}
+          <div class="flex items-center gap-1 font-code-xs text-code-xs text-outline">
+            <span class="material-symbols-outlined text-[14px]">attachment</span>
+            <span>{{ item.media_count }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

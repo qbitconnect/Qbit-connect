@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}AI Agents — QBIT Growth OS{% endblock %}
+{% block nav_ai %}bg-surface-container-high text-on-surface{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 py-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-display-sm font-bold text-on-surface">AI Agent Registry</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">Specialized agents for lead intelligence, scoring &amp; sales</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-body-sm text-on-surface-variant">Provider: <strong class="text-on-surface">{{ ai_provider | upper }}</strong></span>
+      {% if ai_configured %}
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-label-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>Connected
+      </span>
+      {% else %}
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container text-label-sm">
+        Not Configured
+      </span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Agent Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    {% set agent_icons = {
+      'lead-enrichment': 'manage_search',
+      'lead-scoring': 'grade',
+      'sales-intelligence': 'handshake',
+    } %}
+    {% set agent_descriptions = {
+      'lead-enrichment': 'Extracts structured intelligence from existing CRM data using AI analysis. Creates enrichment proposals requiring human approval before applying to lead records.',
+      'lead-scoring': 'Calculates a transparent, deterministic 0–100 lead score across 6 weighted factors. Fully auditable — no AI hallucination risk.',
+      'sales-intelligence': 'Generates personalized sales briefs connecting prospect characteristics to QBIT POS hardware recommendations.',
+    } %}
+
+    {% for agent in agents %}
+    <div class="bg-surface-container rounded-xl border border-outline-variant p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-on-primary-container text-xl">{{ agent_icons.get(agent.slug, 'smart_toy') }}</span>
+        </div>
+        <div>
+          <h3 class="text-title-sm font-semibold text-on-surface">{{ agent.slug.replace('-', ' ') | title }}</h3>
+          <span class="text-label-xs text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">{{ agent.routing_key }}</span>
+        </div>
+      </div>
+      <p class="text-body-sm text-on-surface-variant flex-1">{{ agent_descriptions.get(agent.slug, 'Specialized AI agent for QBIT Connect.') }}</p>
+      <a href="/ai-assistant"
+         class="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-primary text-on-primary text-label-md font-medium hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+        Run in Co-Pilot
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Quick Reference -->
+  <div class="bg-surface-container rounded-xl border border-outline-variant p-5">
+    <h2 class="text-title-sm font-semibold text-on-surface mb-3">Scoring Factor Reference</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-body-sm">
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">Category Fit</span>
+        <span class="font-mono text-on-surface">0–25 pts</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">Contact Completeness</span>
+        <span class="font-mono text-on-surface">0–20 pts</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">Rating &amp; Reviews</span>
+        <span class="font-mono text-on-surface">0–20 pts</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">Location Data</span>
+        <span class="font-mono text-on-surface">0–15 pts</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">POS Hardware Fit</span>
+        <span class="font-mono text-on-surface">0–10 pts</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-on-surface-variant">Engagement History</span>
+        <span class="font-mono text-on-surface">0–10 pts</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

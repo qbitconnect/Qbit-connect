@@ -1,37 +1,251 @@
 {% extends "analytics/base_analytics.html" %}
+
+{% block head_actions %}
+<div style="display:flex; gap:8px;">
+  <a href="/api/v1/analytics/export?report_type=employees&format=csv{{ querystring }}" class="btn btn-ghost btn-sm" title="Export employee performance as CSV">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Export CSV
+  </a>
+</div>
+{% endblock %}
+
 {% block analytics_content %}
 
 {{ filter_bar(False) }}
 
-<h2>TEAM PERFORMANCE</h2>
-<p class="chart-note">Activity attributed through real audit trails (lead activities, conversation events). Visibility rules apply — you only see data you are authorized to view. A team model does not exist yet; assignment is per-user.</p>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+  <div>
+    <h2>EMPLOYEE PERFORMANCE DIRECTORY</h2>
+    <p class="chart-note" style="margin:0;">Database-backed performance indicators derived from real CRM leads, activities, and commercial deals.</p>
+  </div>
+  <div>
+    <form method="get" style="display:flex; gap:8px; align-items:center;">
+      <label class="muted small" style="margin:0;">FILTER TEAM:</label>
+      <select name="team_id" onchange="this.form.submit()" style="padding:4px 8px; border-radius:6px; background:var(--bg-card); color:var(--text); border:1px solid var(--edge-2);">
+        <option value="">All Teams</option>
+        {% for t in all_teams %}
+        <option value="{{ t.id }}" {{ 'selected' if selected_team_id == t.id|string else '' }}>{{ t.name }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+</div>
 
+<!-- Employee Directory Table -->
 <div class="chart-card">
-  {% if data.members %}
+  {% if emp_perf.employees %}
   <div class="table-scroll">
     <table>
-      <thead><tr>
-        <th>Member</th><th>Leads created</th><th>Leads updated</th><th>Replies sent</th>
-        <th>Conversations assigned</th><th>Conversations resolved</th><th>Notes added</th>
-      </tr></thead>
-      <tbody>
-        {% for m in data.members %}
+      <thead>
         <tr>
-          <td>{{ m.name }} <span class="muted small">{{ m.email }}</span></td>
-          <td>{{ m.leads_created }}</td>
-          <td>{{ m.leads_updated }}</td>
-          <td>{{ m.replies_sent }}</td>
-          <td>{{ m.conversations_assigned }}</td>
-          <td>{{ m.conversations_resolved }}</td>
-          <td>{{ m.notes_added }}</td>
+          <th>Employee</th>
+          <th>Role / Team</th>
+          <th>Assigned</th>
+          <th>Contacted</th>
+          <th>Qualified</th>
+          <th>Converted</th>
+          <th>Conversion Rate</th>
+          <th>Follow-ups</th>
+          <th>Active Deals</th>
+          <th>Closed Won (INR)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for emp in emp_perf.employees %}
+        <tr>
+          <td>
+            <a href="/analytics/team/{{ emp.user_id }}{{ querystring }}" style="font-weight:600; text-decoration:none; color:var(--accent);">
+              {{ emp.name }}
+            </a>
+            <div class="muted small">{{ emp.email }}</div>
+          </td>
+          <td>
+            <div>{{ emp.role }}</div>
+            <span class="muted small">{{ emp.team_name or 'No Team' }}</span>
+          </td>
+          <td>{{ emp.assigned_leads }}</td>
+          <td>{{ emp.contacted_leads }}</td>
+          <td>{{ emp.qualified_leads }}</td>
+          <td>{{ emp.converted_leads }}</td>
+          <td>
+            <b>{{ (emp.conversion_rate * 100)|round(1) ~ '%' if emp.conversion_rate is not none else '—' }}</b>
+          </td>
+          <td>{{ emp.follow_ups_completed }}</td>
+          <td>{{ emp.active_deals_count }}</td>
+          <td>
+            {% if emp.closed_won_value_inr is not none %}
+              ₹{{ emp.closed_won_value_inr|round(2) }}
+            {% else %}
+              <span class="muted">—</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/analytics/team/{{ emp.user_id }}{{ querystring }}" class="btn btn-ghost btn-sm" style="padding:2px 8px; font-size:12px;">
+              Drilldown →
+            </a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   {% else %}
-  <p class="muted small">No data available.</p>
+  <p class="muted small">No employee performance data found for the current period.</p>
   {% endif %}
+</div>
+
+<!-- Team Workload Distribution -->
+<div style="margin-top:28px;">
+  <h2>TEAM WORKLOAD & ASSIGNMENT DISTRIBUTION</h2>
+  <p class="chart-note">Lead assignment balance and active conversation volume across teams and operators.</p>
+
+  <div class="kpi-grid" style="margin-bottom:16px;">
+    {% for team in team_perf.teams %}
+    <div class="kpi">
+      <div class="kpi-label">{{ team.team_name|upper }}</div>
+      <div class="kpi-value">{{ team.lead_count }} <span class="muted small" style="font-size:14px; font-weight:normal;">leads</span></div>
+      <div class="kpi-delta">
+        {{ team.members_count }} members · {{ team.active_conversations }} active convs
+      </div>
+    </div>
+    {% endfor %}
+    <div class="kpi">
+      <div class="kpi-label">UNASSIGNED LEADS</div>
+      <div class="kpi-value">{{ team_perf.unassigned_leads }}</div>
+      <div class="kpi-delta">Leads awaiting operator assignment</div>
+    </div>
+  </div>
+</div>
+
+<!-- Performance Targets Management -->
+<div style="margin-top:28px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h2>PERFORMANCE TARGETS & GOALS</h2>
+    {% if 'targets.manage' in perms %}
+    <button class="btn btn-primary btn-sm" onclick="document.getElementById('target-form-card').style.display = document.getElementById('target-form-card').style.display === 'none' ? 'block' : 'none';">
+      + Set New Target
+    </button>
+    {% endif %}
+  </div>
+
+  {% if 'targets.manage' in perms %}
+  <div id="target-form-card" class="chart-card" style="display:none; margin-bottom:20px; border:1px solid var(--accent);">
+    <h3 style="margin-top:0;">Configure Performance Target</h3>
+    <form method="post" action="/analytics/targets" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+      <div class="filter-field">
+        <label>TARGET FOR EMPLOYEE</label>
+        <select name="user_id">
+          <option value="">-- Entire Team / Global --</option>
+          {% for u in all_users %}
+          <option value="{{ u.id }}">{{ u.full_name or u.email }} ({{ u.role }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>TARGET FOR TEAM</label>
+        <select name="team_id">
+          <option value="">-- Individual / All --</option>
+          {% for t in all_teams %}
+          <option value="{{ t.id }}">{{ t.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>METRIC</label>
+        <select name="metric" required>
+          <option value="conversions">Conversions</option>
+          <option value="leads_contacted">Leads Contacted</option>
+          <option value="leads_qualified">Leads Qualified</option>
+          <option value="leads_assigned">Leads Assigned</option>
+          <option value="follow_ups_completed">Follow-ups Completed</option>
+          <option value="calls_logged">Calls Logged</option>
+          <option value="deals_won">Deals Won</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>TARGET VALUE</label>
+        <input type="number" step="1" min="1" name="target_value" placeholder="e.g. 50" required>
+      </div>
+      <div class="filter-field">
+        <label>PERIOD TYPE</label>
+        <select name="period_type">
+          <option value="monthly">Monthly</option>
+          <option value="weekly">Weekly</option>
+          <option value="daily">Daily</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label>START DATE</label>
+        <input type="date" name="start_date" required>
+      </div>
+      <div class="filter-field">
+        <label>END DATE</label>
+        <input type="date" name="end_date" required>
+      </div>
+      <div class="filter-field" style="grid-column: 1 / -1;">
+        <label>NOTES / RATIONALE</label>
+        <input type="text" name="notes" placeholder="Monthly conversion target for Q3 sales incentive" maxlength="500">
+      </div>
+      <div style="grid-column: 1 / -1; display:flex; gap:8px;">
+        <button type="submit" class="btn btn-primary btn-sm">Save Target</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('target-form-card').style.display='none'">Cancel</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  <!-- Active Targets List -->
+  <div class="chart-card">
+    {% if active_targets %}
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Target</th>
+            <th>Metric</th>
+            <th>Goal</th>
+            <th>Period Type</th>
+            <th>Validity Window</th>
+            <th>Notes</th>
+            {% if 'targets.manage' in perms %}<th>Action</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in active_targets %}
+          <tr>
+            <td>
+              {% if t.user_id %}
+                <span class="badge" style="background:var(--bg-card); border:1px solid var(--edge-2);">User Target</span>
+              {% elif t.team_id %}
+                <span class="badge" style="background:var(--bg-card); border:1px solid var(--edge-2);">Team Target</span>
+              {% else %}
+                <span class="badge" style="background:var(--bg-card); border:1px solid var(--edge-2);">Global Target</span>
+              {% endif %}
+            </td>
+            <td><b>{{ t.metric.replace('_', ' ')|title }}</b></td>
+            <td><b style="color:var(--accent);">{{ t.target_value|round(0)|int }}</b></td>
+            <td>{{ t.period_type|title }}</td>
+            <td class="muted small">{{ t.start_date }} → {{ t.end_date }}</td>
+            <td class="muted small">{{ t.notes or '—' }}</td>
+            {% if 'targets.manage' in perms %}
+            <td>
+              <form method="post" action="/analytics/targets/{{ t.id }}/delete" onsubmit="return confirm('Remove this target?');" style="margin:0;">
+                <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--danger); padding:2px 6px; font-size:12px;">Delete</button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="muted small">No performance targets configured yet.</p>
+    {% endif %}
+  </div>
 </div>
 
 {% endblock %}

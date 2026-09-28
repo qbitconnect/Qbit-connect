@@ -43,6 +43,8 @@ htmlcov/
 .vscode/
 .DS_Store
 Thumbs.db
+*.bak
+cookies.txt
 
 # Node (not part of the stack; guard anyway)
 node_modules/

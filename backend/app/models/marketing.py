@@ -613,3 +613,70 @@ class CampaignQueueItem(Base):
             "last_error": self.last_error,
             "created_at": self.created_at.isoformat() if self.created_at else None,
         }
+
+
+class ContactList(Base):
+    """Mailing / Contact List (Phase 6 / Brief §15). Groups permitted CRM contacts into targetable campaign audiences."""
+
+    __tablename__ = "contact_lists"
+    __table_args__ = (
+        Index("ix_contact_lists_org", "organization_id"),
+        Index("ix_contact_lists_name", "name"),
+        Index("ix_contact_lists_created", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+    updated_at: Mapped[datetime] = timestamp_columns()[1]
+
+    def to_public_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "description": self.description,
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "created_by": str(self.created_by) if self.created_by else None,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class ContactListMember(Base):
+    """Membership mapping of a CRM lead or contact person to a ContactList."""
+
+    __tablename__ = "contact_list_members"
+    __table_args__ = (
+        UniqueConstraint("list_id", "lead_id", name="uq_contact_list_member_lead"),
+        Index("ix_contact_list_members_list", "list_id"),
+        Index("ix_contact_list_members_lead", "lead_id"),
+        Index("ix_contact_list_members_contact", "contact_id"),
+    )
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    list_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("contact_lists.id", ondelete="CASCADE"), nullable=False
+    )
+    lead_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("leads.id", ondelete="CASCADE"), nullable=False
+    )
+    contact_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("lead_contacts.id", ondelete="SET NULL"), nullable=True
+    )
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    added_by: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    created_at: Mapped[datetime] = timestamp_columns()[0]
+
+    def to_public_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "list_id": str(self.list_id),
+            "lead_id": str(self.lead_id),
+            "contact_id": str(self.contact_id) if self.contact_id else None,
+            "organization_id": str(self.organization_id) if self.organization_id else None,
+            "added_by": str(self.added_by) if self.added_by else None,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }

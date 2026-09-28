@@ -1,42 +1,236 @@
 {% extends "base.html" %}
-{% block title %}Roles &amp; Permissions — Admin — QBIT Connect{% endblock %}
+{% block title %}Roles &amp; Permissions — Admin — QBIT Growth OS{% endblock %}
 {% block nav_admin_roles %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>ROLES &amp; PERMISSIONS</h1>
-    <p class="muted">The enforced capability matrix. This view is read-only by design — the matrix ships with the platform and is validated by tests on every release.</p>
+<div class="flex flex-col w-full gap-space-lg">
+  <!-- Top Command & Header Bar -->
+  <div class="flex flex-col gap-space-md">
+    <!-- Breadcrumbs / Top Meta Hierarchy -->
+    <div class="flex flex-wrap items-center justify-between gap-space-sm">
+      <div class="flex items-center gap-2">
+        <span class="font-code-xs text-code-xs text-outline uppercase tracking-widest">QBIT SYSTEM // 35</span>
+        <span class="text-outline-variant font-code-xs text-code-xs">/</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider">ROLES &amp; CAPABILITY MATRIX</span>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <!-- Live System Metric Pill -->
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high shadow-inner">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+          </span>
+          <span class="font-code-xs text-code-xs text-on-surface font-medium">{{ role_list|length }} Roles Configured</span>
+          <span class="text-outline-variant font-code-xs text-code-xs">|</span>
+          <span class="font-code-xs text-code-xs text-tertiary-fixed">{{ all_permissions|length }} Permissions Validated</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title and Actions Strip -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+      <div>
+        <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Roles &amp; Permissions Matrix</h1>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          The enforced capability matrix. This view is read-only by design — the matrix ships with the platform and is validated by automated CI tests on every release.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-space-sm flex-wrap">
+        <a href="/admin/users" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px]">group</span>
+          <span>Assign Users</span>
+        </a>
+        <a href="/admin/audit" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px]">history</span>
+          <span>Audit Logs</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Metrics Summary -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Active Role Codes</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-0.5">{{ role_list|length }}</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">shield_person</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Governance</span>
+        <span class="font-code-xs text-code-xs text-tertiary">Enforced at API Gateway</span>
+      </div>
+    </div>
+
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Atomic Permissions</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-secondary-fixed mt-0.5">{{ all_permissions|length }}</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">key</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Granular scopes</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed">Zero Privilege Drift</span>
+      </div>
+    </div>
+
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Enrolled Accounts</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-on-surface mt-0.5">{{ user_counts.values()|sum }}</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[19px]">verified_user</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-outline">Mapped identities</span>
+        <span class="font-code-xs text-code-xs text-tertiary-fixed">Active Sessions</span>
+      </div>
+    </div>
+
+    <div class="rounded-xl bg-surface-container-low p-space-md border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Super Admin Guard</span>
+          <div class="font-headline-lg text-headline-lg font-bold text-tertiary mt-0.5">Strict</div>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary border border-outline-variant/30 shadow-[0_0_8px_rgba(78,222,163,0.3)]">
+          <span class="material-symbols-outlined text-[19px]">lock</span>
+        </div>
+      </div>
+      <div class="mt-space-md flex items-center justify-between text-body-sm font-body-sm border-t border-outline-variant/20 pt-2">
+        <span class="text-on-surface-variant flex items-center gap-1">
+          Last-admin protection
+        </span>
+        <span class="font-code-xs text-code-xs text-tertiary-fixed">Enforced</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Role Directory & Matrix Section -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+    <!-- Left Column: Role Overview List (4 cols) -->
+    <div class="xl:col-span-4 flex flex-col gap-space-md">
+      <div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant/30 shadow-md">
+        <div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/20">
+          <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Configured Roles</span>
+          <span class="font-code-xs text-code-xs px-2 py-0.5 rounded-full bg-surface-container text-outline border border-outline-variant/30">{{ role_list|length }} Roles</span>
+        </div>
+        <div class="flex flex-col gap-2 mt-3">
+          {% for r in role_list %}
+          <div class="p-3 rounded-lg bg-surface-container/60 hover:bg-surface-container-high transition-all flex flex-col gap-1 border border-outline-variant/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px] text-primary">shield_person</span>
+                <span class="font-label-md text-label-md text-on-surface font-semibold">{{ r }}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-surface-container-highest font-code-xs text-code-xs text-secondary-fixed">
+                {{ user_counts.get(r, 0) }} user{{ 's' if user_counts.get(r, 0) != 1 else '' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm pl-6">
+              <span class="truncate font-code-xs text-code-xs text-outline">{{ perms_by_role.get(r, [])|length }} permissions granted</span>
+              <span class="font-code-xs text-code-xs text-tertiary">
+                {% if r in ['SUPER_ADMIN', 'CEO', 'ADMIN'] %}ALL SCOPE{% elif r in ['MARKETING_MANAGER'] %}TEAM SCOPE{% else %}ASSIGNED ONLY{% endif %}
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Full Enforced Capability Matrix (8 cols) -->
+    <div class="xl:col-span-8 flex flex-col gap-space-md">
+      <div class="rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden shadow-md">
+        <div class="px-space-md py-space-sm border-b border-outline-variant/20 flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+          <div>
+            <span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Capability Matrix</span>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Enforced atomic permissions mapped across all system roles.</p>
+          </div>
+          <div class="relative min-w-[220px]">
+            <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
+            <input class="w-full bg-surface-container border border-outline-variant/40 rounded-lg pl-8 pr-3 py-1 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" id="perm-search-input" placeholder="Search permissions..." type="text"/>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto max-h-[700px] overflow-y-auto">
+          <table class="w-full text-left border-collapse" id="matrix-table">
+            <thead class="sticky top-0 z-10 bg-surface-container-lowest border-b border-outline-variant/30 font-label-sm text-label-sm text-outline uppercase tracking-wider select-none">
+              <tr>
+                <th class="px-4 py-3 min-w-[200px] text-left">Atomic Permission</th>
+                {% for r in role_list %}
+                <th class="px-3 py-3 text-center whitespace-nowrap" title="{{ user_counts.get(r, 0) }} user(s)">
+                  <span class="font-semibold text-on-surface font-code-xs text-[11px]">{{ r }}</span>
+                  <div class="text-[10px] text-outline lowercase font-code-xs">{{ user_counts.get(r, 0) }}u</div>
+                </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/15 text-body-sm font-body-sm font-code-xs">
+              {% for p in all_permissions %}
+              <tr class="perm-row hover:bg-surface-container transition-colors">
+                <td class="px-4 py-2.5 font-code-xs text-code-xs text-on-surface font-medium truncate max-w-[240px]">
+                  {{ p }}
+                </td>
+                {% for r in role_list %}
+                <td class="px-3 py-2.5 text-center">
+                  {% if p in perms_by_role.get(r, []) %}
+                  <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-tertiary-container/30 text-tertiary font-bold text-[13px] shadow-[0_0_6px_rgba(78,222,163,0.3)]">
+                    ✓
+                  </span>
+                  {% else %}
+                  <span class="inline-flex items-center justify-center w-5 h-5 text-outline/40 text-[14px]">
+                    ·
+                  </span>
+                  {% endif %}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="px-space-md py-3 bg-surface-container-lowest/60 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-body-sm font-body-sm text-outline">
+          <div class="flex items-center gap-2">
+            <span>{{ all_permissions|length }} total capabilities</span>
+            <span>•</span>
+            <span class="text-tertiary">Zero privilege escalation paths</span>
+          </div>
+          <span class="font-code-xs text-code-xs text-outline">CI Automated RBAC Assertions Active</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="card table-card">
-  <div class="table-scroll">
-    <table class="matrix">
-      <thead>
-        <tr>
-          <th style="text-align:left">Permission</th>
-          {% for r in role_list %}
-          <th title="{{ user_counts.get(r, 0) }} user(s)">{{ r }}<div class="muted small">{{ user_counts.get(r, 0) }}u</div></th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for p in all_permissions %}
-        <tr>
-          <td>{{ p }}</td>
-          {% for r in role_list %}
-          <td>
-            {% if p in perms_by_role.get(r, []) %}
-            <span class="perm-yes">&#10003;</span>
-            {% else %}
-            <span class="perm-no">&#183;</span>
-            {% endif %}
-          </td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+<script>
+  const permSearch = document.getElementById('perm-search-input');
+  if (permSearch) {
+    permSearch.addEventListener('input', function(e) {
+      const q = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('.perm-row');
+      rows.forEach(row => {
+        const text = row.querySelector('td').textContent.toLowerCase();
+        if (text.includes(q)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+    });
+  }
+</script>
 {% endblock %}

@@ -21,7 +21,7 @@
       },
       "backend/app/services/orchestration/planner.py": {
         "exists": true,
-        "size_bytes": 13174
+        "size_bytes": 16320
       },
       "backend/app/services/orchestration/orchestrator.py": {
         "exists": true,
@@ -328,7 +328,7 @@
     "scrapers_live_test": {
       "indiamart": {
         "actor_id": "indiamart",
-        "job_id": "2af82aaf-82a8-4017-9a58-20bf69017790",
+        "job_id": "2624e517-27a5-4423-87e2-6406b58770f0",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
@@ -343,7 +343,7 @@
       },
       "justdial": {
         "actor_id": "justdial",
-        "job_id": "84827eec-bb91-4006-b61a-539789597a41",
+        "job_id": "4960c723-0274-4e9b-8f22-4b8f60ef9de8",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
@@ -358,22 +358,22 @@
       },
       "google-maps": {
         "actor_id": "google-maps",
-        "job_id": "c52b50b7-b016-4b25-a84d-8aad0dc29420",
+        "job_id": "9d7732a3-22a4-4751-b7d4-b675cfb19082",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
         "records_failed": 0,
         "leads_persisted": 0,
-        "error": "No maps provider configured. Set QBIT_MAPS_PROVIDER=http plus QBIT_MAPS_PROVIDER_URL (a compliant data endpoint). Direct scraping/evasion of Google is not supported by design.",
+        "error": "No maps provider configured. Set QBIT_MAPS_PROVIDER=outscraper (with QBIT_MAPS_PROVIDER_API_KEY) or QBIT_MAPS_PROVIDER=http (with QBIT_MAPS_PROVIDER_URL). Direct scraping/evasion of Google is not supported by design.",
         "error_code": "SCRAPER_CONFIGURATION_ERROR",
         "diagnostic_category": "CONFIGURATION_ERROR",
         "deterministic_status": "FAILED",
         "certified_status": "PASS",
-        "detail": "Honest reporting verified: No maps provider configured. Set QBIT_MAPS_PROVIDER=http plus QBIT_MAPS_PROVIDER_URL (a compliant da"
+        "detail": "Honest reporting verified: No maps provider configured. Set QBIT_MAPS_PROVIDER=outscraper (with QBIT_MAPS_PROVIDER_API_KEY) or "
       },
       "instagram": {
         "actor_id": "instagram",
-        "job_id": "fbe2929a-42de-4fc2-af74-dc82b5a84ca0",
+        "job_id": "5594bb6f-d841-44d8-a7c6-a8ee2b365bf8",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
@@ -388,7 +388,7 @@
       },
       "linkedin-public": {
         "actor_id": "linkedin-public",
-        "job_id": "9308e3a4-309d-40c0-a648-eeb287db63fa",
+        "job_id": "43ec28c9-6493-48b1-a6cb-cc8fc4ab07c9",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
@@ -403,7 +403,7 @@
       },
       "meta-ads-library": {
         "actor_id": "meta-ads-library",
-        "job_id": "44d6e76c-6a93-4d07-8361-cae5a2a1bd78",
+        "job_id": "03428529-6afc-4ded-b5cb-17b82b9f4fa4",
         "terminal_status": "FAILED",
         "records_found": 0,
         "records_saved": 0,
@@ -418,7 +418,7 @@
       },
       "email-finder": {
         "actor_id": "email-finder",
-        "job_id": "58713683-c2a5-469b-bdff-05c628ecf624",
+        "job_id": "bdf4744b-4718-463e-9819-487e5716c3d5",
         "terminal_status": "COMPLETED",
         "records_found": 0,
         "records_saved": 0,
@@ -433,7 +433,7 @@
       },
       "business-directory": {
         "actor_id": "business-directory",
-        "job_id": "cbcb15a7-4bcb-46cb-a9d1-817624df8b14",
+        "job_id": "69c0e4cd-b1b4-4564-b631-effb1e26f6e5",
         "terminal_status": "COMPLETED",
         "records_found": 1,
         "records_saved": 1,
@@ -448,7 +448,7 @@
       },
       "public-data": {
         "actor_id": "public-data",
-        "job_id": "9d838690-64cf-42f3-95f6-ee888f8c9026",
+        "job_id": "91c1ee35-6f75-4ae2-a8a0-d7fde89f0620",
         "terminal_status": "COMPLETED",
         "records_found": 5,
         "records_saved": 0,
@@ -463,7 +463,7 @@
       },
       "sitemap-intelligence": {
         "actor_id": "sitemap-intelligence",
-        "job_id": "30bf74ea-cb9d-49ed-8a53-abf960503eba",
+        "job_id": "203a5f92-06cb-4af3-b523-2279d799ea89",
         "terminal_status": "COMPLETED",
         "records_found": 1,
         "records_saved": 1,
@@ -478,7 +478,7 @@
       },
       "website": {
         "actor_id": "website",
-        "job_id": "48e02155-cfab-4ff3-adc7-12d0d85b4819",
+        "job_id": "2fab5835-ccbb-40aa-8be8-fce7e3935cfa",
         "terminal_status": "COMPLETED",
         "records_found": 0,
         "records_saved": 0,
@@ -493,7 +493,7 @@
       },
       "universal-web": {
         "actor_id": "universal-web",
-        "job_id": "5da19954-2aee-4f6f-b090-94c79ab2b100",
+        "job_id": "d786bb86-478d-4e97-9d80-08f1b4423ab3",
         "terminal_status": "COMPLETED",
         "records_found": 1,
         "records_saved": 1,

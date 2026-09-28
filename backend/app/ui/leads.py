@@ -23,21 +23,29 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
-from sqlalchemy import select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_db
 from app.models.lead import (
     DuplicateStatus,
+    FollowUpPriority,
+    FollowUpStatus,
     ImportBatch,
     ImportStatus,
+    LeadContact,
     LeadDuplicateCandidate,
     LeadExportRecord,
+    LeadFollowUp,
     LeadStatus,
+    LeadStatusHistory,
     LeadTag,
     LeadTagAssignment,
+    PIPELINE_STAGES,
     SavedView,
 )
+from app.models.scrape import Lead
+from app.models.user import User
 from app.services.leads import (
     DuplicateDetectionService,
     LeadWorkspaceService,
@@ -46,8 +54,11 @@ from app.services.leads import (
     TagService,
 )
 from app.services.leads.activity import LeadActivityService
+from app.services.leads.contacts import ContactService
 from app.services.leads.exporter import LeadExportService
+from app.services.leads.followups import FollowUpService
 from app.services.leads.importer import LeadImportService
+from app.services.leads.pipeline import PipelineService
 from app.ui import (
     _ctx,
     require_ui_permission,
@@ -57,6 +68,7 @@ from app.ui import (
 
 leads_view = ui_user_for("leads.view")
 require_leads_edit = require_ui_permission("leads.edit")
+require_leads_assign = require_ui_permission("leads.assign")
 require_leads_archive = require_ui_permission("leads.archive")
 require_leads_import = require_ui_permission("leads.import")
 require_leads_export = require_ui_permission("leads.export")
@@ -73,19 +85,22 @@ view_service = SavedViewService()
 duplicates_service = DuplicateDetectionService()
 merge_service = MergeService()
 activities = LeadActivityService()
+pipeline_service = PipelineService(activities=activities)
+followup_service = FollowUpService(activities=activities)
+contact_service = ContactService(activities=activities)
 
 DEFAULT_COLUMNS = (
     "business_name", "contact_name", "phone", "email", "website",
-    "city", "state", "source", "status", "quality_score", "tags", "updated_at",
+    "city", "state", "source", "status", "priority", "quality_score", "tags", "updated_at",
 )
 COLUMN_LABELS = {
     "business_name": "Business", "contact_name": "Contact", "first_name": "First",
     "last_name": "Last", "phone": "Phone", "email": "Email", "website": "Website",
     "city": "City", "state": "State", "country": "Country", "category": "Category",
     "industry": "Industry", "source": "Source", "source_type": "Source Type",
-    "status": "Status", "quality_score": "Quality", "tags": "Tags",
-    "created_at": "Created", "updated_at": "Updated", "scraped_at": "Scraped",
-    "postal_code": "Postal Code",
+    "status": "Status", "priority": "Priority", "quality_score": "Quality", "tags": "Tags",
+    "created_at": "Created", "updated_at": "Updated", "last_activity_at": "Last Activity",
+    "scraped_at": "Scraped", "postal_code": "Postal Code",
 }
 
 
@@ -104,7 +119,7 @@ async def _authz_resolve(session, user):
 
 
 def _filters_from_query(
-    *, status: str, city: str, state: str, country: str, tag: str,
+    *, status: str, priority: str = "", city: str, state: str, country: str, tag: str,
     has_email: str, has_phone: str, has_website: str,
     source: str, min_quality: int, advanced: str,
 ) -> tuple[dict | None, str | None]:
@@ -113,6 +128,8 @@ def _filters_from_query(
     conditions: list[dict] = []
     if status:
         conditions.append({"field": "status", "op": "eq", "value": status.upper()})
+    if priority:
+        conditions.append({"field": "priority", "op": "eq", "value": priority.upper()})
     for field, value in (("city", city), ("state", state), ("country", country), ("source", source)):
         if value:
             conditions.append({"field": field, "op": "contains", "value": value})
@@ -154,6 +171,9 @@ async def leads_home(
     page: int = Query(default=1, ge=1),
     search: str = Query(default="", max_length=200),
     status: str = Query(default="", max_length=30),
+    priority: str = Query(default="", max_length=20),
+    assigned_to_me: bool = Query(default=False),
+    assigned_user_id: str = Query(default="", max_length=50),
     city: str = Query(default="", max_length=100),
     state: str = Query(default="", max_length=100),
     country: str = Query(default="", max_length=100),
@@ -172,7 +192,7 @@ async def leads_home(
     err: str = Query(default=""),
 ):
     filter_spec, advanced_error = _filters_from_query(
-        status=status, city=city, state=state, country=country, tag=tag,
+        status=status, priority=priority, city=city, state=state, country=country, tag=tag,
         has_email=has_email, has_phone=has_phone, has_website=has_website,
         source=source, min_quality=min_quality, advanced=advanced,
     )
@@ -183,26 +203,45 @@ async def leads_home(
         except Exception:  # noqa: BLE001 — unknown view just resets filters
             view_id = None
 
+    # Server-side employee lead isolation
+    from app.services import authorization as _authz
+    ctx = await _authz_resolve(session, user)
+    extra = _authz.visibility_clause(Lead, ctx)
+
+    if assigned_to_me:
+        mine = Lead.assigned_user_id == user.id
+        extra = mine if extra is None else extra.__and__(mine)
+    if assigned_user_id:
+        try:
+            assignee_uuid = uuid.UUID(assigned_user_id)
+            cond = Lead.assigned_user_id == assignee_uuid
+            extra = cond if extra is None else extra.__and__(cond)
+        except ValueError:
+            pass
+
     page_size = 50
     rows, total = await workspace.search(
         session,
         page=page, page_size=page_size, search=search or None,
         filters=filter_spec, sort=sort,
         include_archived=include_archived or (status == "ARCHIVED"),
+        extra_filter=extra,
     )
     visible_cols = [c for c in (cols.split(",") if cols else DEFAULT_COLUMNS) if c in COLUMN_LABELS]
-    from sqlalchemy import func
-
-    from app.models.scrape import Lead
 
     async def _status_count(value: str) -> int:
-        return int(await session.scalar(
-            select(func.count()).select_from(Lead)
-            .where(Lead.status == value, Lead.merged_into_id.is_(None))
-        ) or 0)
+        q = select(func.count()).select_from(Lead).where(Lead.status == value, Lead.merged_into_id.is_(None))
+        if extra is not None:
+            q = q.where(extra)
+        return int(await session.scalar(q) or 0)
+
+    q_total = select(func.count()).select_from(Lead).where(Lead.merged_into_id.is_(None))
+    if extra is not None:
+        q_total = q_total.where(extra)
+    total_stat = int(await session.scalar(q_total) or 0)
 
     stats = {
-        "total": await workspace.count_all(session),
+        "total": total_stat,
         "new": await _status_count("NEW"),
         "verified": await _status_count("VERIFIED"),
         "qualified": await _status_count("QUALIFIED"),
@@ -215,9 +254,15 @@ async def leads_home(
     views, _vt = await view_service.list_visible(session, user_id=user.id)
     perms = _perms(request)
 
+    users_res = await session.execute(select(User).order_by(User.email).limit(100))
+    users_list = [{"id": str(u.id), "name": u.full_name or u.email, "email": u.email} for u in users_res.scalars().all()]
+
     query_string = "&".join(
         f"{k}={v}" for k, v in {
-            "search": search, "status": status, "city": city, "state": state,
+            "search": search, "status": status, "priority": priority,
+            "assigned_to_me": "1" if assigned_to_me else "",
+            "assigned_user_id": assigned_user_id,
+            "city": city, "state": state,
             "country": country, "tag": tag, "has_email": has_email,
             "has_phone": has_phone, "has_website": has_website, "source": source,
             "min_quality": min_quality or "", "advanced": advanced, "sort": sort,
@@ -232,18 +277,24 @@ async def leads_home(
             leads=[lead.to_public_dict() for lead in rows],
             total=total, page=page, pages=pages, page_size=page_size,
             stats=stats, tags=tags, views=[v.to_public_dict() for v in views],
+            users=users_list,
             visible_cols=visible_cols, column_labels=COLUMN_LABELS,
             all_columns=list(COLUMN_LABELS.keys()),
-            f={"search": search, "status": status, "city": city, "state": state,
+            f={"search": search, "status": status, "priority": priority,
+               "assigned_to_me": assigned_to_me, "assigned_user_id": assigned_user_id,
+               "city": city, "state": state,
                "country": country, "tag": tag, "has_email": has_email,
                "has_phone": has_phone, "has_website": has_website,
                "source": source, "min_quality": min_quality,
                "advanced": advanced, "sort": sort, "cols": cols},
             view_id=view_id, query_string=query_string,
             statuses=[s.value for s in LeadStatus],
+            priorities=[p.value for p in FollowUpPriority],
+            pipeline_stages=PIPELINE_STAGES,
             can_edit="leads.edit" in perms,
             can_archive="leads.archive" in perms,
             can_delete="leads.delete" in perms,
+            can_assign="leads.assign" in perms,
             can_import="leads.import" in perms,
             can_export="leads.export" in perms,
             can_merge="leads.merge" in perms,
@@ -263,6 +314,8 @@ async def leads_bulk(
     ids: list[str] = Form(default=[]),
     tag: str = Form(default=""),
     new_status: str = Form(default=""),
+    assigned_user_id: str = Form(default=""),
+    priority: str = Form(default=""),
     confirm: str = Form(default=""),
     hard: str = Form(default=""),
     back: str = Form(default="/leads"),
@@ -289,6 +342,13 @@ async def leads_bulk(
         required = "leads.edit"
     elif action in ("set_status",):
         params = {"status": new_status.upper()}
+        required = "leads.edit"
+    elif action == "assign":
+        new_uid = uuid.UUID(assigned_user_id.strip()) if assigned_user_id.strip() else None
+        params = {"assigned_user_id": new_uid}
+        required = "leads.assign"
+    elif action == "set_priority":
+        params = {"priority": priority.strip().upper() if priority else "MEDIUM"}
         required = "leads.edit"
     elif action == "delete" and hard == "1":
         params = {"hard": True, "confirm": confirm}
@@ -320,7 +380,11 @@ async def leads_bulk(
 
 
 # ================================================================== lead detail
-async def _load_lead(session: AsyncSession, lead_id: uuid.UUID):
+async def _load_lead(session: AsyncSession, lead_id: uuid.UUID, user=None):
+    if user is not None:
+        from app.services import authorization as authz
+        ctx = await _authz_resolve(session, user)
+        return await authz.get_visible_or_404(session, Lead, lead_id, ctx)
     return await workspace.get(session, lead_id)
 
 
@@ -822,11 +886,23 @@ async def lead_detail(
     err: str = Query(default=""),
 ):
     try:
-        lead = await _load_lead(session, lead_id)
+        lead = await _load_lead(session, lead_id, user=user)
     except Exception:
-        return RedirectResponse(url="/leads", status_code=303)
+        return RedirectResponse(url="/leads?err=Lead+not+found+or+access+denied", status_code=303)
     notes, notes_total = await workspace.list_notes(session, lead_id)
     activity, _at = await activities.list_for_lead(session, lead_id, page_size=100)
+    followups = await followup_service.list_for_lead(session, lead_id)
+    contacts = await contact_service.list_contacts(session, lead_id)
+    stage_history = (
+        await session.execute(
+            select(LeadStatusHistory)
+            .where(LeadStatusHistory.lead_id == lead_id)
+            .order_by(LeadStatusHistory.created_at.desc())
+            .limit(50)
+        )
+    ).scalars().all()
+    assignees_res = await session.execute(select(User).order_by(User.email).limit(100))
+    assignees = [{"id": str(u.id), "name": u.full_name or u.email, "email": u.email} for u in assignees_res.scalars().all()]
     tags = [
         {"id": str(row[0]), "name": row[1]}
         for row in (await session.execute(
@@ -844,15 +920,251 @@ async def lead_detail(
             lead=lead, lead_data=lead.to_public_dict(),
             tags=tags, notes=[n.to_public_dict() for n in notes],
             activity=[a.to_public_dict() for a in activity],
+            followups=[f.to_public_dict() for f in followups],
+            contacts=[c.to_public_dict() for c in contacts],
+            stage_history=[h.to_public_dict() for h in stage_history],
+            assignees=assignees,
             metadata_json=json.dumps(lead.metadata_json or {}, indent=2, default=str)[:20000],
             statuses=[s.value for s in LeadStatus],
+            priorities=[p.value for p in FollowUpPriority],
+            pipeline_stages=PIPELINE_STAGES,
             can_edit="leads.edit" in perms,
+            can_assign="leads.assign" in perms,
             can_archive="leads.archive" in perms,
             can_export="leads.export" in perms,
             can_manage_tags="leads.manage_tags" in perms,
             ok=ok, err=err,
         ),
     )
+
+
+# ----------------------------------------------------------- Phase 5 UI Actions
+@router.post("/leads/{lead_id}/stage")
+async def lead_change_stage_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    stage: str = Form(...),
+    reason: str = Form(default=""),
+):
+    from urllib.parse import quote
+    from app.core.errors import QBITError
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        ctx = await _authz_resolve(session, user)
+        is_admin = getattr(user, "is_superuser", False) or "org.admin" in ctx.permissions or "leads.manage" in ctx.permissions
+        await pipeline_service.change_stage(
+            session, lead, stage.strip().upper(), user_id=user.id,
+            is_admin_or_manager=is_admin, reason=reason.strip() or None,
+        )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Stage+updated+to+{quote(stage.strip().upper())}", status_code=303)
+    except QBITError as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(exc.message)}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/priority")
+async def lead_change_priority_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    priority: str = Form(...),
+):
+    from urllib.parse import quote
+    from app.core.errors import QBITError
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        prio_norm = priority.strip().upper()
+        if prio_norm in ("LOW", "MEDIUM", "HIGH", "URGENT"):
+            lead.priority = prio_norm
+            now = datetime.now(timezone.utc)
+            lead.updated_at = now
+            lead.last_activity_at = now
+            await activities.log(
+                session, lead.id, "lead_updated",
+                message=f"Priority updated to {prio_norm}", user_id=user.id, commit=True,
+            )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Priority+updated", status_code=303)
+    except QBITError as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(exc.message)}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/assign")
+async def lead_assign_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    assigned_user_id: str = Form(default=""),
+    reason: str = Form(default=""),
+):
+    from urllib.parse import quote
+    from app.core.errors import QBITError
+    from app.models.enterprise import LeadAssignmentHistory
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        ctx = await _authz_resolve(session, user)
+        new_uid = uuid.UUID(assigned_user_id.strip()) if assigned_user_id.strip() else None
+        prev_uid = lead.assigned_user_id
+        lead.assigned_user_id = new_uid
+        now = datetime.now(timezone.utc)
+        lead.updated_at = now
+        lead.last_activity_at = now
+        session.add(
+            LeadAssignmentHistory(
+                lead_id=lead.id,
+                organization_id=lead.organization_id or ctx.organization_id,
+                previous_user_id=prev_uid,
+                assigned_user_id=new_uid,
+                changed_by=user.id,
+                reason=reason.strip() or "Manual assignment via UI",
+            )
+        )
+        await activities.log(
+            session, lead.id, "lead_assigned",
+            message=f"Assigned to {new_uid or 'Unassigned'}", user_id=user.id, commit=True,
+        )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Assignment+updated", status_code=303)
+    except QBITError as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(exc.message)}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/followups")
+async def lead_create_followup_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    title: str = Form(...),
+    due_date: str = Form(...),
+    due_time: str = Form(default="10:00"),
+    priority: str = Form(default="MEDIUM"),
+    notes: str = Form(default=""),
+    assigned_user_id: str = Form(default=""),
+):
+    from urllib.parse import quote
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        ctx = await _authz_resolve(session, user)
+        due_str = f"{due_date.strip()}T{due_time.strip()}:00+00:00"
+        due_at = datetime.fromisoformat(due_str)
+        assignee = uuid.UUID(assigned_user_id.strip()) if assigned_user_id.strip() else lead.assigned_user_id
+        await followup_service.create(
+            session,
+            lead.id,
+            title=title,
+            due_at=due_at,
+            notes=notes,
+            priority=priority,
+            assigned_user_id=assignee,
+            created_by=user.id,
+            organization_id=ctx.organization_id or lead.organization_id,
+        )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Follow-up+task+scheduled", status_code=303)
+    except Exception as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(str(exc))}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/followups/{followup_id}/complete")
+async def lead_complete_followup_ui(
+    lead_id: uuid.UUID,
+    followup_id: uuid.UUID,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+):
+    from urllib.parse import quote
+
+    try:
+        await _load_lead(session, lead_id, user=user)
+        await followup_service.complete(session, followup_id, user_id=user.id)
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Task+marked+completed", status_code=303)
+    except Exception as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(str(exc))}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/followups/{followup_id}/cancel")
+async def lead_cancel_followup_ui(
+    lead_id: uuid.UUID,
+    followup_id: uuid.UUID,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+):
+    from urllib.parse import quote
+
+    try:
+        await _load_lead(session, lead_id, user=user)
+        await followup_service.cancel(session, followup_id, user_id=user.id)
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Task+cancelled", status_code=303)
+    except Exception as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(str(exc))}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/contacts")
+async def lead_add_contact_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    first_name: str = Form(...),
+    last_name: str = Form(default=""),
+    title: str = Form(default=""),
+    email: str = Form(default=""),
+    phone: str = Form(default=""),
+    is_primary: bool = Form(default=False),
+):
+    from urllib.parse import quote
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        ctx = await _authz_resolve(session, user)
+        await contact_service.add_contact(
+            session,
+            lead.id,
+            first_name=first_name,
+            last_name=last_name or None,
+            title=title or None,
+            email=email or None,
+            phone=phone or None,
+            is_primary=is_primary,
+            created_by=user.id,
+            organization_id=ctx.organization_id or lead.organization_id,
+        )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Contact+person+added", status_code=303)
+    except Exception as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(str(exc))}", status_code=303)
+
+
+@router.post("/leads/{lead_id}/interactions")
+async def lead_log_interaction_ui(
+    lead_id: uuid.UUID,
+    request: Request,
+    user: Annotated[object, Depends(require_leads_edit)],
+    session: Annotated[AsyncSession, Depends(get_db)],
+    interaction_type: str = Form(default="NOTE"),
+    notes: str = Form(...),
+    contact_id: str = Form(default=""),
+):
+    from urllib.parse import quote
+
+    try:
+        lead = await _load_lead(session, lead_id, user=user)
+        contact_uuid = uuid.UUID(contact_id.strip()) if contact_id.strip() else None
+        await contact_service.log_interaction(
+            session,
+            lead.id,
+            interaction_type=interaction_type,
+            notes=notes,
+            user_id=user.id,
+            contact_id=contact_uuid,
+        )
+        return RedirectResponse(url=f"/leads/{lead_id}?ok=Interaction+logged", status_code=303)
+    except Exception as exc:
+        return RedirectResponse(url=f"/leads/{lead_id}?err={quote(str(exc))}", status_code=303)
 
 
 @router.post("/leads/export")

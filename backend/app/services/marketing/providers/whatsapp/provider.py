@@ -463,6 +463,145 @@ class WhatsAppProvider(BaseMarketingProvider):
             "metadata": dict(payload.get("metadata") or {}),
         }
 
+    async def send_media_message(
+        self, *, account_config: dict, recipient_address: str,
+        media_type: str, media_id: str | None = None, media_link: str | None = None,
+        caption: str | None = None, filename: str | None = None,
+        idempotency_key: str | None = None, credentials: dict | None = None,
+    ) -> SendResult:
+        """Send media message (image, document, audio, video) via official WhatsApp Cloud API."""
+        config = account_config if isinstance(account_config, dict) else {}
+        try:
+            client = self._client(config, credentials)
+        except ProviderError as exc:
+            return SendResult.failure(str(exc), code=exc.code, error_class=exc.error_class)
+
+        ok, e164, reason = normalize_recipient_phone(recipient_address)
+        if not ok:
+            return SendResult.failure(
+                f"Recipient phone is invalid ({reason})",
+                code="INVALID_RECIPIENT", error_class=ErrorClass.PERMANENT,
+            )
+
+        status_code, payload = await client.send_media_message(
+            phone_number_id=str(config.get("phone_number_id")),
+            to=e164, media_type=media_type, media_id=media_id,
+            media_link=media_link, caption=caption, filename=filename,
+        )
+        if status_code == 200:
+            messages = payload.get("messages") or []
+            first = messages[0] if isinstance(messages, list) and messages else {}
+            provider_message_id = str(first.get("id") or "").strip() or None
+            return SendResult.success(
+                provider_message_id, status="SENT",
+                metadata={"provider_message_id": provider_message_id, "media": True},
+            )
+        normalized = self.errors.normalize(status_code=status_code, payload=payload)
+        return SendResult(
+            ok=False, error=normalized.message[:500], error_code=normalized.code,
+            error_class=normalized.error_class, status="FAILED",
+            metadata={
+                "provider_code": normalized.provider_code,
+                "provider_subcode": normalized.provider_subcode,
+                "detail": normalized.detail,
+                "retry_after_seconds": normalized.retry_after_seconds,
+            },
+        )
+
+    async def mark_message_as_read(
+        self, *, account_config: dict, message_id: str,
+        credentials: dict | None = None,
+    ) -> bool:
+        """Mark incoming message as read on official WhatsApp Cloud API."""
+        config = account_config if isinstance(account_config, dict) else {}
+        try:
+            client = self._client(config, credentials)
+        except ProviderError:
+            return False
+        status_code, _ = await client.mark_as_read(
+            phone_number_id=str(config.get("phone_number_id")),
+            message_id=message_id,
+        )
+        return status_code == 200
+
+    def validate_webhook(
+        self, *, raw_body: bytes, signature_header: str | None, app_secret: str,
+    ) -> bool:
+        """Validate Meta X-Hub-Signature-256 HMAC-SHA256."""
+        import hmac
+        import hashlib
+
+        if not signature_header or not signature_header.startswith("sha256="):
+            return False
+        expected = hmac.new(
+            app_secret.encode("utf-8"), raw_body, hashlib.sha256
+        ).hexdigest()
+        provided = signature_header[7:].strip()
+        return hmac.compare_digest(expected, provided)
+
+    def parse_webhook_event(self, payload: dict) -> list[dict]:
+        """Parse raw Meta webhook payload into normalized event list."""
+        from app.services.marketing.webhooks import WhatsAppEventNormalizer
+        normalizer = WhatsAppEventNormalizer()
+        return normalizer.normalize_payload(payload)
+
+    # ------------------------------------------------ Section 3 canonical aliases
+    async def verifyConnection(self, account_config: dict, credentials: dict | None = None) -> dict:
+        return await self.validate_account(account_config, credentials)
+
+    async def verify_connection(self, account_config: dict, credentials: dict | None = None) -> dict:
+        return await self.validate_account(account_config, credentials)
+
+    async def getBusinessAccounts(self, account_config: dict, credentials: dict | None = None) -> dict:
+        config = account_config if isinstance(account_config, dict) else {}
+        client = self._client(config, credentials)
+        waba_id = str(config.get("business_account_id") or "")
+        status, data = await client.get_business_account(waba_id)
+        return data if status == 200 else {}
+
+    async def get_business_accounts(self, account_config: dict, credentials: dict | None = None) -> dict:
+        return await self.getBusinessAccounts(account_config, credentials)
+
+    async def getPhoneNumbers(self, account_config: dict, credentials: dict | None = None) -> dict:
+        config = account_config if isinstance(account_config, dict) else {}
+        client = self._client(config, credentials)
+        phone_id = str(config.get("phone_number_id") or "")
+        status, data = await client.get_phone_number(phone_id)
+        return data if status == 200 else {}
+
+    async def get_phone_numbers(self, account_config: dict, credentials: dict | None = None) -> dict:
+        return await self.getPhoneNumbers(account_config, credentials)
+
+    async def getTemplates(self, account_config: dict, credentials: dict | None = None) -> list[dict]:
+        return await self.fetch_templates(account_config, credentials)
+
+    async def get_templates(self, account_config: dict, credentials: dict | None = None) -> list[dict]:
+        return await self.fetch_templates(account_config, credentials)
+
+    async def sendTextMessage(self, **kwargs) -> SendResult:
+        return await self.send_session_text(**kwargs)
+
+    async def send_text_message(self, **kwargs) -> SendResult:
+        return await self.send_session_text(**kwargs)
+
+    async def sendTemplateMessage(self, **kwargs) -> SendResult:
+        return await self.send(**kwargs)
+
+    async def send_template_message(self, **kwargs) -> SendResult:
+        return await self.send(**kwargs)
+
+    async def sendMediaMessage(self, **kwargs) -> SendResult:
+        return await self.send_media_message(**kwargs)
+
+    async def markMessageAsRead(self, **kwargs) -> bool:
+        return await self.mark_message_as_read(**kwargs)
+
+    def validateWebhook(self, **kwargs) -> bool:
+        return self.validate_webhook(**kwargs)
+
+    def parseWebhookEvent(self, payload: dict) -> list[dict]:
+        return self.parse_webhook_event(payload)
+
     # ---------------------------------------------------------------- helpers
     def _client(self, config: dict, credentials: dict | None) -> WhatsAppCloudClient:
         token = str((credentials or {}).get("access_token") or "").strip()

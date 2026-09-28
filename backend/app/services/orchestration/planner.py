@@ -11,6 +11,7 @@ import math
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from app.core.errors import ValidationError
 from app.services.orchestration.interpreter import InterpretedTask
 from app.services.orchestration.tool_registry import ToolCapabilityDefinition, ToolRegistry
 
@@ -76,17 +77,23 @@ class ExecutionPlanner:
     ) -> tuple[str, str | None, bool, str]:
         """Returns (primary_actor_id, fallback_actor_id, source_locked, rationale)."""
         # --- MODE B: SOURCE LOCK ---
-        if task.source_lock and task.requested_source:
+        if task.source_lock:
+            if not task.requested_source:
+                raise ValidationError("Source lock requested but no specific source was specified.")
             canonical = self.tool_registry.resolve_source(task.requested_source)
-            if canonical and self.tool_registry.get_tool(canonical):
-                tool = self.tool_registry.get_tool(canonical)
-                return (
-                    canonical,
-                    None,
-                    True,
-                    f"SOURCE LOCKED by operator request to '{tool.source_name}' ({canonical}). "
-                    f"Silent fallback is disabled. Unrecoverable failures will halt with diagnostics.",
+            if not canonical or not self.tool_registry.get_tool(canonical):
+                raise ValidationError(
+                    f"SOURCE LOCKED requested for '{task.requested_source}', but source is not registered "
+                    f"or available in the tool registry. Silent fallback is prohibited."
                 )
+            tool = self.tool_registry.get_tool(canonical)
+            return (
+                canonical,
+                None,
+                True,
+                f"SOURCE LOCKED by operator request to '{tool.source_name}' ({canonical}). "
+                f"Silent fallback is disabled. Unrecoverable failures will halt with diagnostics.",
+            )
 
         # --- MODE A: AUTO SELECTION ---
         scored_tools: list[tuple[float, str, str]] = []

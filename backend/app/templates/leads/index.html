@@ -1,190 +1,399 @@
 {% extends "base.html" %}
-{% block title %}Leads — QBIT Connect{% endblock %}
+{% block title %}Leads Intelligence — QBIT Connect{% endblock %}
 {% block nav_leads %}active{% endblock %}
+
 {% block content %}
-<section class="hero" style="padding:32px 34px 30px">
-  <svg class="hero-orbs" viewBox="0 0 380 380" fill="none" aria-hidden="true">
-    <circle cx="190" cy="190" r="186" stroke="rgba(61,123,255,.14)" stroke-dasharray="2 7"/>
-    <circle cx="190" cy="190" r="132" stroke="rgba(61,123,255,.24)"/>
-    <circle cx="190" cy="190" r="3.5" fill="#3d7bff"/>
-    <circle cx="308" cy="140" r="4" fill="#6495ff"/>
-    <circle cx="96" cy="240" r="3" fill="#a78bfa"/>
-  </svg>
-  <span class="hero-eyebrow">Lead intelligence · {{ stats.total }} records</span>
-  <h1>Every lead. One workspace.</h1>
-  <p class="hero-sub">Your company's unified lead intelligence — scraped, imported and enriched
-    records with full source provenance, dedup and quality scoring.</p>
-  <div class="head-actions" style="position:relative;z-index:1">
-    {% if can_import %}<a class="btn btn-primary" href="/leads/import">Import</a>{% endif %}
-    {% if can_export %}
-    <form method="post" action="/leads/export" class="inline-form">
-      <input type="hidden" name="format" value="csv">
-      <input type="hidden" name="scope" value="filtered">
-      <input type="hidden" name="search" value="{{ f.search }}">
-      <input type="hidden" name="status" value="{{ f.status }}">
-      <input type="hidden" name="city" value="{{ f.city }}">
-      <input type="hidden" name="state" value="{{ f.state }}">
-      <input type="hidden" name="tag" value="{{ f.tag }}">
-      <input type="hidden" name="has_email" value="{{ f.has_email }}">
-      <input type="hidden" name="has_phone" value="{{ f.has_phone }}">
-      <input type="hidden" name="advanced" value="{{ f.advanced }}">
-      <button class="btn btn-ghost" type="submit">Export filtered</button>
-    </form>
-    {% endif %}
+<div class="space-y-space-lg pb-16">
+  
+  <!-- Hero Banner -->
+  <div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-xl border border-outline-variant/30">
+    <div class="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-space-md">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
+            CRM & Intelligence · {{ stats.total }} Records
+          </span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Unified Lead Database
+        </h1>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Harvested, imported, and AI-enriched business leads with full source provenance, deduplication, and quality scoring.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-space-sm">
+        <a class="btn btn-ghost" href="/leads/duplicates">
+          <span class="material-symbols-outlined text-[16px]">content_copy</span>
+          Duplicates ({{ stats.duplicates }})
+        </a>
+        <a class="btn btn-ghost" href="/leads/quality">
+          <span class="material-symbols-outlined text-[16px]">grade</span>
+          Quality Scores
+        </a>
+        {% if can_import %}
+        <a class="btn btn-ghost" href="/leads/import">
+          <span class="material-symbols-outlined text-[16px]">upload_file</span>
+          Import Leads
+        </a>
+        {% endif %}
+        {% if can_export %}
+        <form method="post" action="/leads/export" class="inline-form">
+          <input type="hidden" name="format" value="csv">
+          <input type="hidden" name="scope" value="filtered">
+          <input type="hidden" name="search" value="{{ f.search }}">
+          <input type="hidden" name="status" value="{{ f.status }}">
+          <input type="hidden" name="city" value="{{ f.city }}">
+          <input type="hidden" name="state" value="{{ f.state }}">
+          <input type="hidden" name="tag" value="{{ f.tag }}">
+          <input type="hidden" name="has_email" value="{{ f.has_email }}">
+          <input type="hidden" name="has_phone" value="{{ f.has_phone }}">
+          <input type="hidden" name="advanced" value="{{ f.advanced }}">
+          <button class="btn btn-primary" type="submit">
+            <span class="material-symbols-outlined text-[16px]">download</span>
+            Export CSV
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
   </div>
-</section>
 
-{% if ok %}<div class="alert alert-ok">{{ ok }}</div>{% endif %}
-{% if err or advanced_error %}<div class="alert alert-error">{{ err }} {{ advanced_error }}</div>{% endif %}
-
-<div class="stat-grid">
-  <div class="stat"><span class="stat-label">Total leads</span><span class="stat-value">{{ stats.total }}</span></div>
-  <div class="stat"><span class="stat-label">New</span><span class="stat-value">{{ stats.new }}</span></div>
-  <div class="stat"><span class="stat-label">Verified</span><span class="stat-value">{{ stats.verified }}</span></div>
-  <div class="stat"><span class="stat-label">Qualified</span><span class="stat-value">{{ stats.qualified }}</span></div>
-  <div class="stat"><span class="stat-label">Duplicate candidates</span><span class="stat-value"><a href="/leads/duplicates">{{ stats.duplicates }}</a></span></div>
-</div>
-
-<form method="get" action="/leads" class="toolbar">
-  <div class="search">
-    <input type="text" name="search" value="{{ f.search }}" placeholder="Search leads… (business, contact, phone, email, city)" maxlength="200">
+  <!-- Global Alerts -->
+  {% if ok %}
+  <div class="alert alert-ok flex items-center gap-2 rounded-lg p-space-md bg-tertiary-container/20 border border-tertiary/40 text-on-surface">
+    <span class="material-symbols-outlined text-tertiary">check_circle</span>
+    <span>{{ ok }}</span>
   </div>
-  <select name="status">
-    <option value="">Status: any</option>
-    {% for s in statuses %}<option value="{{ s }}" {% if f.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
-  </select>
-  <input type="text" name="city" value="{{ f.city }}" placeholder="City" size="8" maxlength="100">
-  <input type="text" name="state" value="{{ f.state }}" placeholder="State" size="8" maxlength="100">
-  <select name="tag">
-    <option value="">Tag: any</option>
-    {% for t in tags %}<option value="{{ t.name }}" {% if f.tag == t.name %}selected{% endif %}>{{ t.name }}</option>{% endfor %}
-  </select>
-  <label class="checkbox"><input type="checkbox" name="has_email" value="1" {% if f.has_email in ('1','true','True','on') %}checked{% endif %}> Email</label>
-  <label class="checkbox"><input type="checkbox" name="has_phone" value="1" {% if f.has_phone in ('1','true','True','on') %}checked{% endif %}> Phone</label>
-  <input type="number" name="min_quality" value="{{ f.min_quality if f.min_quality else '' }}" placeholder="Min Q" min="0" max="100" size="4">
-  <button class="btn btn-primary" type="submit">Apply</button>
-  <a class="btn btn-ghost" href="/leads">Reset</a>
-</form>
-
-<details class="adv-panel" {% if f.advanced %}open{% endif %}>
-  <summary>Advanced filters (JSON, AND/OR groups — validated server-side)</summary>
-  <form method="get" action="/leads" class="form-actions">
-    <textarea name="advanced" rows="4" style="width:100%;font-family:ui-monospace,monospace;font-size:12px" placeholder='{"and":[{"field":"state","op":"eq","value":"Gujarat"},{"field":"has_email","op":"eq","value":true}]}'>{{ f.advanced }}</textarea>
-    <input type="hidden" name="search" value="{{ f.search }}">
-    <button class="btn btn-sm btn-primary" type="submit">Apply advanced</button>
-  </form>
-  <div class="cols-menu">
-    <span class="muted small">Saved views:</span>
-    {% for v in views %}
-      <a class="chip {% if view_id and str(view_id) == v.id %}active{% endif %}" href="/leads?view_id={{ v.id }}">{{ v.name }}</a>
-    {% endfor %}
-  </div>
-  {% if can_manage_tags %}
-  <details>
-    <summary class="muted small">Save current filters as a view</summary>
-    <form method="post" action="/leads/views/save" class="form-actions">
-      <input type="hidden" name="spec" value="{{ f.advanced }}">
-      <input type="text" name="name" placeholder="View name (e.g. My Ahmedabad Leads)" maxlength="150" required>
-      <button class="btn btn-sm btn-ghost" type="submit">Save view</button>
-    </form>
-  </details>
   {% endif %}
-</details>
 
-<details class="adv-panel">
-  <summary>Columns</summary>
-  <div class="cols-menu">
-    {% for c in all_columns %}
-      {% set on = c in visible_cols %}
-      {% set next_cols = visible_cols | reject('equalto', c) | list if on else visible_cols + [c] %}
-      <a class="chip {% if on %}active{% endif %}" href="/leads?{% for k,v in f.items() if v %}{{ k }}={{ v }}&{% endfor %}cols={{ next_cols | join(',') }}">{{ column_labels[c] }}</a>
+  {% if err or advanced_error %}
+  <div class="alert alert-error flex items-center gap-2 rounded-lg p-space-md bg-error-container/20 border border-error/40 text-error">
+    <span class="material-symbols-outlined text-error">error</span>
+    <span>{{ err }} {{ advanced_error }}</span>
+  </div>
+  {% endif %}
+
+  <!-- Stat Summary Cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-space-sm">
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Total Leads</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-on-surface">{{ stats.total }}</span>
+        <span class="font-code-xs text-code-xs text-outline">Active</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">New Prospects</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-primary">{{ stats.new }}</span>
+        <span class="font-code-xs text-code-xs text-primary">Uncontacted</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Verified</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-tertiary">{{ stats.verified }}</span>
+        <span class="font-code-xs text-code-xs text-tertiary">Enriched</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Qualified Pipeline</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-secondary-fixed">{{ stats.qualified }}</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed">Sales Ready</span>
+      </div>
+    </div>
+
+    <div class="card p-space-md flex flex-col justify-between">
+      <span class="font-label-sm text-label-sm text-outline">Duplicates</span>
+      <div class="flex items-baseline justify-between mt-2">
+        <span class="font-headline-md text-headline-md font-bold text-warn">{{ stats.duplicates }}</span>
+        <a href="/leads/duplicates" class="font-code-xs text-code-xs text-primary hover:underline">Merge</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Structured Multi-Tier Filter Bar -->
+  <div class="card p-space-md space-y-space-md">
+    <form method="get" action="/leads" class="space-y-space-md">
+      <!-- Tier 1: Search & Primary Filters -->
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-space-sm items-center">
+        <div class="sm:col-span-5 relative">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+          <input 
+            type="text" 
+            name="search" 
+            value="{{ f.search }}" 
+            placeholder="Search leads… (business name, contact, phone, email, city)" 
+            class="qbit-input pl-10" 
+            maxlength="200"
+          >
+        </div>
+
+        <div class="sm:col-span-2">
+          <select name="status" class="qbit-input">
+            <option value="">Status: All</option>
+            {% for s in statuses %}<option value="{{ s }}" {% if f.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div class="sm:col-span-2">
+          <select name="priority" class="qbit-input">
+            <option value="">Priority: All</option>
+            {% for pr in priorities %}<option value="{{ pr }}" {% if f.priority == pr %}selected{% endif %}>{{ pr }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div class="sm:col-span-3 flex items-center gap-2">
+          <button class="btn btn-primary flex-1" type="submit">
+            <span class="material-symbols-outlined text-[16px]">filter_alt</span>
+            Apply
+          </button>
+          <a class="btn btn-ghost" href="/leads">Reset</a>
+          <button type="button" onclick="document.getElementById('moreFilters').classList.toggle('hidden')" class="btn btn-ghost p-2" title="Toggle extra criteria">
+            <span class="material-symbols-outlined text-[18px]">tune</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tier 2: Secondary Filters (Collapsible / Responsive Grid) -->
+      <div id="moreFilters" class="pt-space-sm border-t border-outline-variant/30 grid grid-cols-2 sm:grid-cols-6 gap-space-sm items-center">
+        <div>
+          <input type="text" name="city" value="{{ f.city }}" placeholder="Filter City" class="qbit-input" maxlength="100">
+        </div>
+
+        <div>
+          <input type="text" name="state" value="{{ f.state }}" placeholder="Filter State" class="qbit-input" maxlength="100">
+        </div>
+
+        <div>
+          <select name="tag" class="qbit-input">
+            <option value="">Tag: Any</option>
+            {% for t in tags %}<option value="{{ t.name }}" {% if f.tag == t.name %}selected{% endif %}>{{ t.name }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <input type="number" name="min_quality" value="{{ f.min_quality if f.min_quality else '' }}" placeholder="Min Quality Score (0-100)" class="qbit-input" min="0" max="100">
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-1.5 text-xs text-on-surface cursor-pointer select-none">
+            <input type="checkbox" name="has_phone" value="1" {% if f.has_phone in ('1','true','True','on') %}checked{% endif %} class="accent-primary">
+            <span>Has Phone</span>
+          </label>
+          <label class="flex items-center gap-1.5 text-xs text-on-surface cursor-pointer select-none">
+            <input type="checkbox" name="has_email" value="1" {% if f.has_email in ('1','true','True','on') %}checked{% endif %} class="accent-primary">
+            <span>Has Email</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="flex items-center gap-1.5 text-xs text-on-surface cursor-pointer select-none">
+            <input type="checkbox" name="assigned_to_me" value="1" {% if f.assigned_to_me %}checked{% endif %} class="accent-primary">
+            <span class="font-semibold text-primary">Assigned to Me</span>
+          </label>
+        </div>
+      </div>
+    </form>
+
+    <!-- Saved Views & Columns Toolbar -->
+    <div class="pt-space-xs border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-space-sm text-xs">
+      <!-- Saved Views Chips -->
+      <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="text-outline font-semibold">Saved Views:</span>
+        {% for v in views %}
+        <a class="chip {% if view_id and str(view_id) == v.id %}active{% endif %}" href="/leads?view_id={{ v.id }}">{{ v.name }}</a>
+        {% else %}
+        <span class="text-outline italic">No saved views</span>
+        {% endfor %}
+      </div>
+
+      <!-- Column Selector -->
+      <details class="relative">
+        <summary class="cursor-pointer text-primary hover:underline flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">view_column</span>
+          Columns ({{ visible_cols | length }})
+        </summary>
+        <div class="absolute right-0 mt-2 p-space-sm rounded-xl bg-surface-container-high border border-outline-variant/40 shadow-xl z-30 min-w-[200px] flex flex-col gap-1">
+          {% for c in all_columns %}
+            {% set on = c in visible_cols %}
+            {% set next_cols = visible_cols | reject('equalto', c) | list if on else visible_cols + [c] %}
+            <a class="flex items-center justify-between px-2 py-1 rounded hover:bg-surface-container text-on-surface {% if on %}text-primary font-semibold{% endif %}" href="/leads?{% for k,v in f.items() if v %}{{ k }}={{ v }}&{% endfor %}cols={{ next_cols | join(',') }}">
+              <span>{{ column_labels[c] }}</span>
+              {% if on %}<span class="material-symbols-outlined text-[14px]">check</span>{% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Bulk Actions Form -->
+  {% if can_edit or can_archive %}
+  <form method="post" action="/leads/bulk" class="p-space-sm rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-wrap items-center gap-space-sm text-xs">
+    <span class="text-outline font-semibold flex items-center gap-1">
+      <span class="material-symbols-outlined text-[16px]">select_all</span>
+      Bulk Actions:
+    </span>
+
+    <div class="w-44">
+      <select name="action" required class="qbit-input text-xs" style="height:32px;min-height:32px;">
+        <option value="set_status">Change Status</option>
+        <option value="add_tag">Add Tag</option>
+        <option value="remove_tag">Remove Tag</option>
+        {% if can_assign %}<option value="assign">Assign to Employee</option>{% endif %}
+        <option value="set_priority">Set Priority</option>
+        <option value="archive">Archive</option>
+        <option value="restore">Restore</option>
+        <option value="delete">Soft Delete</option>
+      </select>
+    </div>
+
+    <div class="w-36">
+      <select name="new_status" class="qbit-input text-xs" style="height:32px;min-height:32px;">
+        <option value="">(New Status)</option>
+        {% for s in statuses %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <div class="w-32">
+      <input type="text" name="tag" placeholder="Tag name" class="qbit-input text-xs" style="height:32px;min-height:32px;">
+    </div>
+
+    {% if can_assign %}
+    <div class="w-40">
+      <select name="assigned_user_id" class="qbit-input text-xs" style="height:32px;min-height:32px;">
+        <option value="">(Assign Employee)</option>
+        {% for u in users %}<option value="{{ u.id }}">{{ u.name }}</option>{% endfor %}
+      </select>
+    </div>
+    {% endif %}
+
+    <button class="btn btn-sm btn-ghost text-primary border-primary/40 hover:bg-primary/10" type="submit">
+      Run on Selected
+    </button>
+    <input type="hidden" name="back" value="/leads">
+  {% endif %}
+
+  <!-- Leads Data Grid -->
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32px">
+              <input type="checkbox" onclick="var c=document.querySelectorAll('input[name=ids]');for(var i=0;i<c.length;i++){c[i].checked=this.checked}">
+            </th>
+            {% for c in visible_cols %}
+            <th>{{ column_labels[c] }}</th>
+            {% endfor %}
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lead in leads %}
+          <tr class="lead-row">
+            <td>
+              <input type="checkbox" name="ids" value="{{ lead.id }}">
+            </td>
+            {% for c in visible_cols %}
+              {% if c == 'business_name' %}
+                <td>
+                  <a href="/leads/{{ lead.id }}" class="hover:text-primary transition-colors flex flex-col">
+                    <strong class="text-on-surface font-semibold">{{ lead.business_name or 'Untitled Lead' }}</strong>
+                    {% if lead.website %}
+                    <span class="text-xs text-outline truncate max-w-xs">{{ lead.website }}</span>
+                    {% endif %}
+                  </a>
+                </td>
+              {% elif c == 'status' %}
+                <td>
+                  <span class="badge badge-{{ (lead.status or 'new') | lower }}">
+                    {{ lead.status or 'NEW' }}
+                  </span>
+                </td>
+              {% elif c == 'quality_score' %}
+                <td>
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-code-xs text-code-xs font-bold {% if lead.quality_score and lead.quality_score >= 70 %}text-tertiary{% elif lead.quality_score and lead.quality_score >= 40 %}text-secondary-fixed{% else %}text-outline{% endif %}">
+                      {{ lead.quality_score or 0 }}
+                    </span>
+                    <div class="w-12 bg-surface-container-highest rounded-full h-1 overflow-hidden">
+                      <div class="{% if lead.quality_score and lead.quality_score >= 70 %}bg-tertiary{% elif lead.quality_score and lead.quality_score >= 40 %}bg-secondary-fixed{% else %}bg-outline{% endif %} h-1 rounded-full" style="width: {{ lead.quality_score or 0 }}%"></div>
+                    </div>
+                  </div>
+                </td>
+              {% elif c == 'phone' %}
+                <td class="mono text-xs text-on-surface">{{ lead.phone or '—' }}</td>
+              {% elif c == 'email' %}
+                <td class="mono text-xs text-outline">{{ lead.email or '—' }}</td>
+              {% elif c == 'city' %}
+                <td class="text-on-surface">{{ lead.city or '—' }}</td>
+              {% elif c == 'rating' %}
+                <td>
+                  {% if lead.rating %}
+                  <span class="flex items-center text-xs text-warn font-semibold">
+                    <span class="material-symbols-outlined text-[14px] mr-0.5">star</span>
+                    {{ lead.rating }}
+                    {% if lead.review_count %}<span class="text-outline text-[11px] ml-1">({{ lead.review_count }})</span>{% endif %}
+                  </span>
+                  {% else %}
+                  <span class="text-outline text-xs">—</span>
+                  {% endif %}
+                </td>
+              {% else %}
+                <td class="text-on-surface-variant text-xs">{{ lead[c] if lead[c] is not none else '—' }}</td>
+              {% endif %}
+            {% endfor %}
+            <td class="text-right">
+              <a class="btn btn-sm btn-ghost" href="/leads/{{ lead.id }}">
+                <span>Open</span>
+                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="{{ visible_cols | length + 2 }}" class="py-16 px-4 text-center">
+              <span class="material-symbols-outlined text-[36px] text-outline block mb-2">person_search</span>
+              <span class="font-label-md text-label-md text-on-surface font-semibold block">No Leads Match Criteria</span>
+              <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto mt-1">
+                Try clearing active filters, or launch a Business Directory scraper run to harvest new leads.
+              </p>
+              <div class="pt-3">
+                <a class="btn btn-primary" href="/scraping">
+                  <span class="material-symbols-outlined text-[16px]">travel_explore</span>
+                  Harvest Leads
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if can_edit or can_archive %}
+  </form>
+  {% endif %}
+
+  <!-- Pagination -->
+  {% if total > page_size %}
+  <div class="flex items-center justify-center gap-2 pt-space-sm">
+    {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
+      {% if p <= page + 2 and p >= page - 2 %}
+        <a class="pager-item {% if p == page %}active{% endif %}" href="/leads?{% for k,v in f.items() if v and k != 'page' %}{{ k }}={{ v }}&{% endfor %}page={{ p }}">{{ p }}</a>
+      {% endif %}
     {% endfor %}
   </div>
-</details>
+  {% endif %}
 
-{% if can_edit or can_archive %}
-<form method="post" action="/leads/bulk">
-  <div class="bulk-bar">
-    <span class="muted small">Bulk action:</span>
-    <select name="action" required>
-      <option value="add_tag">Add tag</option>
-      <option value="remove_tag">Remove tag</option>
-      <option value="set_status">Change status</option>
-      <option value="archive">Archive</option>
-      <option value="restore">Restore</option>
-      <option value="delete">Delete (soft → archived)</option>
-      {% if can_delete %}<option value="delete">HARD DELETE (admin)</option>{% endif %}
-    </select>
-    <input type="text" name="tag" placeholder="Tag name" size="14" maxlength="100">
-    <select name="new_status">
-      {% for s in statuses %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
-    </select>
-    <input type="text" name="confirm" placeholder="type DELETE to confirm" size="18" maxlength="10">
-    <label class="checkbox"><input type="checkbox" name="hard" value="1"> hard</label>
-    <button class="btn btn-sm btn-danger" type="submit">Run on selected</button>
-  </div>
-  <input type="hidden" name="back" value="/leads">
-{% endif %}
-
-<div class="card table-card">
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th style="width:28px"><input type="checkbox" onclick="var c=document.querySelectorAll('input[name=ids]');for(var i=0;i<c.length;i++){c[i].checked=this.checked}"></th>
-          {% for c in visible_cols %}<th>{{ column_labels[c] }}</th>{% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for lead in leads %}
-        <tr class="lead-row">
-          <td><input type="checkbox" name="ids" value="{{ lead.id }}"></td>
-          {% for c in visible_cols %}
-          <td>
-            {% if c == 'business_name' %}
-              <a href="/leads/{{ lead.id }}"><strong>{{ lead.business_name or '(no name)' }}</strong></a>
-            {% elif c == 'status' %}
-              <span class="badge badge-{{ lead.status | lower }}">{{ lead.status }}</span>
-            {% elif c == 'quality_score' %}
-              <span class="score-bar"><span style="width: {{ lead.quality_score or 0 }}%"></span></span><span class="score-num mono">{{ lead.quality_score if lead.quality_score is not none else '—' }}</span>
-            {% elif c == 'tags' %}
-              {% for t in lead.tags %}<span class="tag-pill">{{ t }}</span>{% endfor %}
-            {% elif c == 'updated_at' %}
-              <span class="mono small muted">{{ (lead.updated_at or '')[:16].replace('T',' ') }}</span>
-            {% else %}
-              {{ lead[c] if lead[c] is not none else '' }}
-            {% endif %}
-          </td>
-          {% endfor %}
-        </tr>
-        {% else %}
-        <tr><td colspan="{{ visible_cols | length + 1 }}">
-          <div class="empty-state">
-            <svg viewBox="0 0 130 130" fill="none" aria-hidden="true">
-              <circle cx="65" cy="65" r="58" stroke="rgba(61,123,255,.3)" stroke-dasharray="2 7"/>
-              <circle cx="65" cy="65" r="36" stroke="rgba(61,123,255,.45)"/>
-              <circle cx="52" cy="60" r="3" fill="#6495ff"/><circle cx="76" cy="72" r="3" fill="#a78bfa"/>
-              <circle cx="65" cy="65" r="4" fill="#3d7bff"/>
-            </svg>
-            <h3>No leads match the current filters</h3>
-            <p>Run a scraper or import your first dataset to populate the workspace.</p>
-            <a class="btn btn-primary" href="/scraping">Run a scraper</a>
-            <a class="btn btn-ghost" href="/leads/import">Import data</a>
-          </div>
-        </td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
-{% if can_edit or can_archive %}</form>{% endif %}
-
-<div class="pager">
-  <span class="muted small" style="align-self:center">Showing {{ (page-1)*50 + 1 if total else 0 }}–{{ [page*50, total] | min }} of {{ total }}</span>
-  {% for p in range(1, pages + 1) %}
-    {% if p <= 3 or p > pages - 2 or (p >= page - 1 and p <= page + 1) %}
-      <a class="pager-item {% if p == page %}active{% endif %}" href="/leads?{% for k,v in f.items() if v %}{{ k }}={{ v }}&{% endfor %}page={{ p }}{% if view_id %}&view_id={{ view_id }}{% endif %}">{{ p }}</a>
-    {% endif %}
-  {% endfor %}
 </div>
 {% endblock %}

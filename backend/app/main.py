@@ -79,11 +79,11 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
         "Content-Security-Policy": (
             "default-src 'self'; "
-            "img-src 'self' data:; "
-            "style-src 'self' 'unsafe-inline'; "
-            "script-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: https:; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; "
             "connect-src 'self'; "
-            "font-src 'self' data:; "
+            "font-src 'self' data: https://fonts.gstatic.com; "
             "object-src 'none'; "
             "base-uri 'self'; "
             "form-action 'self'; "
@@ -140,6 +140,9 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        import asyncio
+        from app.worker import ScrapeWorker
+
         ensure_storage_dirs(settings)
         app.state.started_at = datetime.now(timezone.utc)
         # Initial actor health snapshot (non-fatal; /scrapers/health refreshes)
@@ -147,6 +150,26 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
             await app.state.scraper_registry.health_check()
         except Exception:  # noqa: BLE001 — registry problems must not block boot
             logger.exception("Scraper registry health check failed")
+        
+        # Embedded scrape worker for single-process / PaaS environments (e.g. Render Web Service)
+        worker_task = None
+        worker_instance = None
+        if settings.QBIT_EMBEDDED_WORKER_ENABLED and settings.QBIT_ENV != "test":
+            try:
+                worker_instance = ScrapeWorker(
+                    settings=settings,
+                    db=app.state.db,
+                    redis=app.state.redis,
+                    queue=app.state.queue,
+                    registry=app.state.scraper_registry,
+                    owner=f"embedded-{uuid.uuid4().hex[:8]}",
+                )
+                worker_instance._is_embedded = True
+                worker_task = asyncio.create_task(worker_instance.run())
+                log_with(logger, 20, "Embedded scrape worker started in API process")
+            except Exception:
+                logger.exception("Failed to launch embedded scrape worker")
+
         log_with(
             logger, 20, "QBIT API started",
             env=settings.QBIT_ENV, data_dir=str(settings.data_dir),
@@ -154,6 +177,13 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
         try:
             yield
         finally:
+            if worker_instance is not None:
+                worker_instance.stop()
+            if worker_task is not None:
+                try:
+                    await asyncio.wait_for(worker_task, timeout=10.0)
+                except (asyncio.TimeoutError, asyncio.CancelledError):
+                    worker_task.cancel()
             await app.state.db.close()
             await app.state.redis.close()
             log_with(logger, 20, "QBIT API stopped")
@@ -199,7 +229,9 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     from app.services.scraping.registry import ActorRegistry
 
     app.state.scraper_registry = register_builtin_actors(ActorRegistry(), settings)
-    app.state.queue = build_queue_backend(settings, app.state.redis)
+    app.state.queue = build_queue_backend(
+        settings, app.state.redis, session_factory=app.state.db.session
+    )
     # Phase 5: marketing provider registry (mock provider gated to test envs)
     app.state.marketing_providers = build_provider_registry(settings)
 
@@ -229,6 +261,7 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     from app.api.v1 import api_keys as api_keys_routes
     from app.api.v1 import automation as automation_routes
     from app.api.v1 import campaigns as campaigns_routes
+    from app.api.v1 import contact_lists as contact_lists_routes
     from app.api.v1 import connections as connections_routes
     from app.api.v1 import connections_email as connections_email_routes
     from app.api.v1 import conversations as conversations_routes
@@ -250,6 +283,8 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     from app.api.v1 import webhooks_email as webhooks_email_routes
     from app.api.v1 import actor_platform as actor_platform_routes
     from app.api.v1 import orchestration as orchestration_routes
+    from app.api.v1 import social as social_routes
+    from app.api.v1 import ai as ai_routes
 
     api_v1_prefix = "/api/v1"
     app.include_router(health_routes.router)  # /health, /health/database, ...
@@ -269,6 +304,7 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     app.include_router(scrape_schedules_routes.router, prefix=api_v1_prefix)
     app.include_router(leads.router, prefix=api_v1_prefix)
     app.include_router(campaigns_routes.router, prefix=api_v1_prefix)
+    app.include_router(contact_lists_routes.router, prefix=api_v1_prefix)
     app.include_router(templates_routes.router, prefix=api_v1_prefix)
     app.include_router(sending_accounts_routes.router, prefix=api_v1_prefix)
     app.include_router(suppression_routes.router, prefix=api_v1_prefix)
@@ -276,6 +312,9 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     app.include_router(connections_email_routes.router, prefix=api_v1_prefix)
     app.include_router(webhooks_routes.router, prefix=api_v1_prefix)
     app.include_router(webhooks_email_routes.router, prefix=api_v1_prefix)
+    app.include_router(social_routes.router, prefix=api_v1_prefix)
+    # Phase 9: AI agents, lead intelligence & sales copilot API
+    app.include_router(ai_routes.router, prefix=api_v1_prefix)
     # Phase 8: unified inbox API
     app.include_router(inbox_routes.router, prefix=api_v1_prefix)
     # Phase 9: workflow automation API
@@ -310,6 +349,8 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     from app.ui.inbox import router as inbox_ui_router
     from app.ui.leads import router as leads_ui_router
     from app.ui.actor_platform import router as actor_platform_ui_router
+    from app.ui.social import router as social_ui_router
+    from app.ui.ai import router as ai_ui_router
 
     app.include_router(ui_router)
     app.include_router(leads_ui_router)
@@ -318,6 +359,9 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     app.include_router(campaigns_ui_router)
     app.include_router(connections_ui_router)
     app.include_router(connections_email_ui_router)
+    app.include_router(social_ui_router)
+    # Phase 9: AI assistant workspace
+    app.include_router(ai_ui_router)
     # Phase 8: unified inbox workspace
     app.include_router(inbox_ui_router)
     # Phase 9: automation workspace

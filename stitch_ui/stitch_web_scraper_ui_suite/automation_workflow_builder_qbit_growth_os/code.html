@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed-variant":"#005236","tertiary-fixed-dim":"#4edea3","tertiary-fixed":"#6ffbbe","surface-bright":"#333949","tertiary":"#4edea3","on-primary-fixed":"#001849","secondary-fixed":"#b6ebff","surface-container-lowest":"#080e1d","on-surface":"#dde2f7","on-secondary":"#003543","on-secondary-fixed-variant":"#004e60","on-secondary-container":"#00566a","on-error":"#690005","on-surface-variant":"#c2c6d8","tertiary-container":"#008259","inverse-primary":"#0054d6","inverse-on-surface":"#2a3040","surface-container-low":"#151b2b","primary":"#b3c5ff","on-tertiary-container":"#e1ffec","surface":"#0d1322","secondary-container":"#00d2ff","on-primary-container":"#f8f7ff","on-tertiary":"#003824","inverse-surface":"#dde2f7","on-primary-fixed-variant":"#003fa4","outline-variant":"#424656","primary-fixed-dim":"#b3c5ff","error-container":"#93000a","surface-variant":"#2f3445","surface-tint":"#b3c5ff","surface-container-high":"#242a3a","on-background":"#dde2f7","on-secondary-fixed":"#001f28","on-primary":"#002b75","secondary":"#a5e7ff","background":"#0d1322","surface-dim":"#0d1322","primary-container":"#0066ff","surface-container-highest":"#2f3445","primary-fixed":"#dae1ff","surface-container":"#191f2f","secondary-fixed-dim":"#47d6ff","on-error-container":"#ffdad6","error":"#ffb4ab","on-tertiary-fixed":"#002113","outline":"#8c90a1"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-2xl":"2rem","space-lg":"1rem","space-md":"0.75rem","margin":"1.5rem","gutter":"1rem","space-xl":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xs":"0.125rem"},"fontFamily":{"body-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"label-md":["Inter"],"code-xs":["JetBrains Mono"]},"fontSize":{"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="scraper-marketplace" href="#">Scraper Marketplace</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-runs" href="#">My Runs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="leads" href="#">Leads</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="campaigns" href="#">Campaigns</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="automation" href="#">Automation</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ai-assistant" href="#">AI Assistant</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="email-marketing" href="#">Email</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="whatsapp-campaigns" href="#">WhatsApp</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="social-media" href="#">Social Media</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sms-marketing" href="#">SMS</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="telegram-channels" href="#">Telegram</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="unified-inbox" href="#">Unified Inbox</a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="team-management" href="#">Team</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="analytics-intelligence" href="#">Analytics</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-logs" href="#">Audit Logs</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#">Settings</a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full text-on-surface">
+<!-- Top Workflow Context & Action Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-md mb-space-lg bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span>Automations</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span>Workflow Builder</span>
+<span class="material-symbols-outlined text-[13px]">chevron_right</span>
+<span class="text-secondary-fixed-dim">Lead Nurturing Automation</span>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Lead Nurturing Automation</h1>
+<div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary-fixed font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+<span>Active &amp; Live</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline px-2 py-0.5 rounded bg-surface-container-high">WF-REV-9021</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+        Automatically scrape, enrich and trigger campaigns across multi-channel nodes.
+      </p>
+</div>
+<!-- Actions & Canvas Controls -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- Mini execution health pill -->
+<div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<span>Cluster: <strong class="text-on-surface">99.9% Up</strong></span>
+<span class="text-outline">|</span>
+<span class="text-secondary-fixed">0 Queued Errors</span>
+</div>
+<!-- Zoom Bar -->
+<div class="flex items-center bg-surface-container-low rounded-lg p-0.5">
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" id="zoom-out" title="Zoom Out">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-2 font-code-xs text-code-xs text-on-surface font-medium select-none" id="zoom-level">100%</span>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" id="zoom-in" title="Zoom In">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" id="zoom-reset" title="Fit to Screen">
+<span class="material-symbols-outlined text-[18px]">center_focus_strong</span>
+</button>
+</div>
+<!-- Action Buttons -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">play_arrow</span>
+<span>Test Run</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">save</span>
+<span>Save Draft</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-all shadow-[0_0_16px_rgba(0,102,255,0.4)]">
+<span class="material-symbols-outlined text-[16px]">rocket_launch</span>
+<span>Publish Workflow</span>
+</button>
+</div>
+</div>
+<!-- Main 3-Column Studio Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md w-full items-start">
+<!-- LEFT RAIL: Node Palette (3 Cols) -->
+<div class="lg:col-span-3 flex flex-col gap-space-md bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">account_tree</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Node Library</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-high">14 Steps</span>
+</div>
+<!-- Search node blocks -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[16px]">search</span>
+<input class="w-full bg-surface-container-low rounded-lg pl-8 pr-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary-container transition-all" placeholder="Search steps &amp; triggers..." type="text"/>
+</div>
+<!-- Triggers Group -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Triggers</span>
+<span class="font-code-xs text-code-xs text-outline">Source</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">travel_explore</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">New Scraper Run</span>
+<span class="font-code-xs text-code-xs text-outline">G-Maps, LinkedIn, Web</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-primary transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">New Leads Added</span>
+<span class="font-code-xs text-code-xs text-outline">Manual list import</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-primary transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Time Based / Cron</span>
+<span class="font-code-xs text-code-xs text-outline">Recurrence clock</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-primary transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">webhook</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Inbound Webhook</span>
+<span class="font-code-xs text-code-xs text-outline">REST payload trigger</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-primary transition-colors">drag_indicator</span>
+</div>
+</div>
+<!-- Actions Group -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-semibold">Actions</span>
+<span class="font-code-xs text-code-xs text-outline">Execute</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Send Email</span>
+<span class="font-code-xs text-code-xs text-outline">SendGrid / SMTP API</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-secondary-container transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Send WhatsApp</span>
+<span class="font-code-xs text-code-xs text-outline">Meta Cloud API</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-secondary-container transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">dataset</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Enrich Contact</span>
+<span class="font-code-xs text-code-xs text-outline">Hunter / ZeroBounce</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-secondary-container transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Notify Slack / Team</span>
+<span class="font-code-xs text-code-xs text-outline">Alert internal webhook</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-secondary-container transition-colors">drag_indicator</span>
+</div>
+</div>
+<!-- Logic & Conditions Group -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-semibold">Conditions &amp; Logic</span>
+<span class="font-code-xs text-code-xs text-outline">Routing</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-tertiary/20 flex items-center justify-center text-tertiary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">If / Else Branch</span>
+<span class="font-code-xs text-code-xs text-outline">Boolean conditions</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-tertiary transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-tertiary/20 flex items-center justify-center text-tertiary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Delay / Cooldown</span>
+<span class="font-code-xs text-code-xs text-outline">Wait hours or days</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-tertiary transition-colors">drag_indicator</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container-high cursor-grab active:cursor-grabbing transition-colors shadow-sm group">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-tertiary/20 flex items-center justify-center text-tertiary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[16px]">neurology</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">AI Qualifier Filter</span>
+<span class="font-code-xs text-code-xs text-outline">ICP relevance score</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px] group-hover:text-tertiary transition-colors">drag_indicator</span>
+</div>
+</div>
+</div>
+<!-- CENTER CANVAS: Visual Flow Graph (6 Cols) -->
+<div class="lg:col-span-6 flex flex-col bg-surface-container-lowest rounded-xl p-space-lg relative min-h-[740px] overflow-hidden shadow-sm">
+<!-- Ambient Canvas Background Grid -->
+<div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, #8c90a1 1px, transparent 0); background-size: 20px 20px;"></div>
+<!-- Subtle top floating status overlay -->
+<div class="relative z-10 flex items-center justify-between mb-space-lg bg-surface-container-low/90 backdrop-blur px-3 py-2 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Automation Graph Engine: Active State</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs text-outline">
+<span class="material-symbols-outlined text-[14px] text-tertiary">speed</span>
+<span>Avg Execution: 284ms</span>
+</div>
+</div>
+<!-- Graph Canvas Body with SVG Connectors -->
+<div class="relative z-10 flex flex-col items-center w-full my-auto pb-space-lg">
+<!-- NODE 1: Trigger -->
+<div class="w-full max-w-sm bg-surface-container rounded-xl p-space-md shadow-md transition-all hover:shadow-primary/10">
+<div class="flex items-center justify-between pb-space-xs mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">travel_explore</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Trigger • On Demand</span>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary bg-tertiary-container/20 px-1.5 py-0.5 rounded">Live</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">New Leads from Scraper</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Source: Google Maps Scraper (Actor #act_gmaps_9421)</p>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-code-xs text-code-xs text-outline">
+<span>Threshold: &gt; 50 new leads</span>
+<span class="text-secondary-fixed">Payload: 2,431 records</span>
+</div>
+<!-- Bottom Output Connector Node -->
+<div class="flex justify-center -mb-5 mt-2">
+<div class="w-3.5 h-3.5 rounded-full bg-primary-container ring-4 ring-surface shadow-[0_0_8px_rgba(0,102,255,0.8)]"></div>
+</div>
+</div>
+<!-- Wire: Trigger to Enrich -->
+<div class="flex flex-col items-center h-12 w-full">
+<svg class="w-full h-full text-primary" preserveaspectratio="none" viewbox="0 0 100 48">
+<line stroke="currentColor" stroke-dasharray="3 3" stroke-width="2" x1="50" x2="50" y1="0" y2="48"></line>
+<circle cx="50" cy="24" fill="#00d2ff" r="3"></circle>
+</svg>
+</div>
+<!-- NODE 2: Enrichment Action -->
+<div class="w-full max-w-sm bg-surface-container rounded-xl p-space-md shadow-md transition-all">
+<div class="flex items-center justify-between pb-space-xs mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">dataset</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-bold">Action • Enrichment</span>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary-fixed bg-surface-container-high px-1.5 py-0.5 rounded">94% Match</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">Enrich Leads &amp; Contacts</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Find corporate email, LinkedIn profile, verified WhatsApp number.</p>
+<div class="mt-space-sm flex items-center gap-2 font-code-xs text-code-xs text-outline">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest">ZeroBounce</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest">Hunter.io</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest">Apollo DB</span>
+</div>
+<!-- Bottom Connector -->
+<div class="flex justify-center -mb-5 mt-2">
+<div class="w-3.5 h-3.5 rounded-full bg-secondary-container ring-4 ring-surface shadow-[0_0_8px_rgba(0,210,255,0.8)]"></div>
+</div>
+</div>
+<!-- Wire: Enrich to Condition Branch -->
+<div class="flex flex-col items-center h-12 w-full">
+<svg class="w-full h-full text-secondary-container" preserveaspectratio="none" viewbox="0 0 100 48">
+<line stroke="currentColor" stroke-width="2" x1="50" x2="50" y1="0" y2="48"></line>
+<circle cx="50" cy="24" fill="#6ffbbe" r="3"></circle>
+</svg>
+</div>
+<!-- NODE 3: Decision / If-Else -->
+<div class="w-full max-w-sm bg-surface-container-high rounded-xl p-space-md shadow-md transition-all">
+<div class="flex items-center justify-between pb-space-xs mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-tertiary text-on-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">alt_route</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-bold">Logic Condition</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Rule #01</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">Verify Lead Deliverability</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-code-xs">
+            IF Leads Count &gt; 100 <br/>AND Email Status == "VERIFIED"
+          </p>
+<!-- Branch Indicator Ports -->
+<div class="mt-space-md pt-space-xs flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Branch YES</span>
+</div>
+<div class="flex items-center gap-1.5 text-error font-label-sm text-label-sm font-semibold">
+<span>Branch NO</span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+</div>
+</div>
+<!-- Bottom Dual Split Connectors -->
+<div class="flex justify-between -mb-5 px-6 mt-1">
+<div class="w-3.5 h-3.5 rounded-full bg-tertiary ring-4 ring-surface shadow-[0_0_8px_rgba(78,222,163,0.8)]"></div>
+<div class="w-3.5 h-3.5 rounded-full bg-error ring-4 ring-surface shadow-[0_0_8px_rgba(255,180,171,0.8)]"></div>
+</div>
+</div>
+<!-- Wire: Dual Split Paths -->
+<div class="w-full h-16 relative">
+<svg class="w-full h-full" fill="none" viewbox="0 0 400 64">
+<!-- Left path to Yes Node -->
+<path d="M 130 0 C 130 35, 100 45, 100 64" fill="none" stroke="#4edea3" stroke-width="2"></path>
+<!-- Right path to No Node -->
+<path d="M 270 0 C 270 35, 300 45, 300 64" fill="none" stroke="#ffb4ab" stroke-dasharray="4 3" stroke-width="2"></path>
+</svg>
+</div>
+<!-- NODE 4A & 4B: Split Branches (Grid layout) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md w-full">
+<!-- NODE 4A: Send Email Campaign (SELECTED NODE) -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-lg transition-all ring-2 ring-primary-container relative cursor-pointer group" id="selected-node-card">
+<div class="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-code-xs text-code-xs font-semibold shadow-sm">
+              Selected Step
+            </div>
+<div class="flex items-center justify-between pb-space-xs mb-1.5 pt-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]">outgoing_mail</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Email Dispatch</span>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary bg-tertiary-container/20 px-1 rounded">Primary</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">Send Email Campaign</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Template: Hotel Outreach V2</p>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-code-xs text-code-xs text-outline">
+<span class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[12px]">done_all</span>
+                Zero Delay
+              </span>
+<span class="text-on-surface-variant">SendGrid Corp</span>
+</div>
+</div>
+<!-- NODE 4B: Fallback Alert Slack -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md transition-all hover:bg-surface-container-high cursor-pointer group">
+<div class="flex items-center justify-between pb-space-xs mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error text-[16px]">notification_important</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error font-bold">Slack Alert</span>
+</div>
+<span class="font-code-xs text-code-xs text-outline">Manual Review</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">Notify Sales Team</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">#lead-review-alerts channel</p>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-code-xs text-code-xs text-outline">
+<span>Channel ID: C90214</span>
+<span class="text-error">Flagged &lt; 100</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Canvas Action Bar Bottom Right -->
+<div class="relative z-10 mt-auto flex items-center justify-between pt-space-sm">
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-code-xs text-code-xs flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Version: v3.2.0</span>
+</button>
+<span class="font-code-xs text-code-xs text-outline">Autosaved 12s ago</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Export as JSON Schema">
+<span class="material-symbols-outlined text-[16px]">data_object</span>
+</button>
+<button class="p-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Full Canvas Mode">
+<span class="material-symbols-outlined text-[16px]">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<!-- RIGHT DRAWER: Node Configuration Inspector (3 Cols) -->
+<div class="lg:col-span-3 flex flex-col gap-space-md bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Step Inspector</span>
+</div>
+<span class="font-code-xs text-code-xs text-primary bg-primary-container/20 px-2 py-0.5 rounded font-semibold">Step #4A</span>
+</div>
+<!-- Selected Step Title -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Active Node</span>
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Send Email Campaign</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+</div>
+<span class="font-code-xs text-code-xs text-secondary-fixed">qbit.actions.email.dispatcher</span>
+</div>
+<!-- Config Form Fields -->
+<div class="flex flex-col gap-space-sm">
+<!-- Account / Integration Provider -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-medium">Provider &amp; Account</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container appearance-none cursor-pointer">
+<option selected="">SendGrid Corporate (prod_api_key_****)</option>
+<option>AWS SES Dedicated (us-east-1)</option>
+<option>Resend Pro (team_token_****)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Template Selector -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-medium">Email Template</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">Edit Template</a>
+</div>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container appearance-none cursor-pointer">
+<option selected="">Hotel Outreach V2 (Personalized Lead Pitch)</option>
+<option>Restaurant Growth Pitch V1</option>
+<option>SaaS Partnership Introduction</option>
+<option>Default Cold Inbound Sequence</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Sender Address -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-medium">From Address</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container" type="text" value="outreach@qbitpro.io"/>
+</div>
+<!-- Subject Line -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-medium">Subject Line</label>
+<span class="font-code-xs text-code-xs text-secondary-container">{var} support</span>
+</div>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container" type="text" value="Special Partnership Proposal for {{business_name}}"/>
+</div>
+<!-- Fallback Policy -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-medium">Retry &amp; Fallback Policy</label>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Retry attempts</span>
+<span class="font-code-xs text-code-xs text-on-surface px-1.5 py-0.5 rounded bg-surface-container-high">3 Retries</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Backoff interval</span>
+<span class="font-code-xs text-code-xs text-on-surface px-1.5 py-0.5 rounded bg-surface-container-high">15 min</span>
+</div>
+</div>
+</div>
+<!-- Tracking Toggles -->
+<div class="flex flex-col gap-2 pt-1">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Track Email Opens</span>
+<span class="font-code-xs text-code-xs text-outline">1x1 tracking pixel injected</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Click-Through Tracking</span>
+<span class="font-code-xs text-code-xs text-outline">Rewrite links via custom CNAME</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Unsubscribe Header</span>
+<span class="font-code-xs text-code-xs text-outline">List-Unsubscribe one-click</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Action Panel Buttons -->
+<div class="flex flex-col gap-2 pt-space-xs mt-auto">
+<button class="w-full py-2 px-3 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-[0_0_12px_rgba(0,102,255,0.3)]" id="save-step-btn">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Apply Step Configuration</span>
+</button>
+<div class="flex items-center justify-between pt-1">
+<button class="font-label-sm text-label-sm text-error hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+<span>Remove Node</span>
+</button>
+<button class="font-label-sm text-label-sm text-outline hover:text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Clone</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Real-Time Node Execution Metrics Card Strip -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md mt-space-lg">
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Total Ingested Leads</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">2,431</span>
+<span class="font-code-xs text-code-xs text-tertiary">100% Captured from scraper</span>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/15 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[20px]">mark_email_read</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Enrichment Success</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">2,285</span>
+<span class="font-code-xs text-code-xs text-secondary-fixed">94.0% Deliverable contacts</span>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary/15 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Emails Dispatched</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">1,980</span>
+<span class="font-code-xs text-code-xs text-tertiary">81.5% Open rate sequence</span>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[20px]">hourglass_empty</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Manual Review Queue</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">146</span>
+<span class="font-code-xs text-code-xs text-error">Sent to #lead-review Slack</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    let currentZoom = 100;
+    const zoomLevelEl = document.getElementById('zoom-level');
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const zoomResetBtn = document.getElementById('zoom-reset');
+    const saveBtn = document.getElementById('save-step-btn');
+
+    if (zoomInBtn && zoomOutBtn && zoomResetBtn && zoomLevelEl) {
+      zoomInBtn.addEventListener('click', function () {
+        if (currentZoom < 150) {
+          currentZoom += 10;
+          zoomLevelEl.textContent = currentZoom + '%';
+        }
+      });
+
+      zoomOutBtn.addEventListener('click', function () {
+        if (currentZoom > 60) {
+          currentZoom -= 10;
+          zoomLevelEl.textContent = currentZoom + '%';
+        }
+      });
+
+      zoomResetBtn.addEventListener('click', function () {
+        currentZoom = 100;
+        zoomLevelEl.textContent = '100%';
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function () {
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Saving Step...</span>';
+        setTimeout(function () {
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span><span>Configuration Applied</span>';
+          setTimeout(function () {
+            saveBtn.innerHTML = originalText;
+          }, 2000);
+        }, 600);
+      });
+    }
+  })();
+</script></main></div></body></html>

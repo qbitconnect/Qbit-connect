@@ -102,14 +102,24 @@ async def analytics_home(
     flash: str | None = None,
     flash_kind: str = "ok",
 ):
-    data = await AnalyticsService(request.app.state.redis).overview(
-        session, _analytics_request(request, compare_default=True),
-    )
+    service = AnalyticsService(request.app.state.redis)
+    req = _analytics_request(request, compare_default=True)
+    data = await service.overview(session, req)
+    
+    perms = _perms(request)
+    exec_data = None
+    user_roles = set(getattr(user, "role_codes", []))
+    if "executive.view" in perms or bool(user_roles & {"ADMIN", "SUPER_ADMIN", "CEO", "MANAGER"}):
+        try:
+            exec_data = await service.executive(session, req)
+        except Exception:
+            pass
+
     return templates.TemplateResponse(
         request, "analytics/overview.html", _ctx(
-            request, user, data=data, active_page="",
+            request, user, data=data, exec_data=exec_data, active_page="",
             querystring=_querystring(request), flash=flash, flash_kind=flash_kind,
-            perms=_perms(request),
+            perms=perms,
         ),
     )
 
@@ -263,28 +273,166 @@ async def analytics_team(
     request: Request,
     session: SessionDep,
     user: User = Depends(require_ui_permission("analytics.view_team")),
+    team_id: str | None = None,
     flash: str | None = None,
     flash_kind: str = "ok",
 ):
     from sqlalchemy import select as sa_select
 
+    from app.models.analytics import PerformanceTarget
+    from app.models.enterprise import Team as TeamModel
     from app.models.user import User as UserModel
 
     visibility = request.app.state.settings.QBIT_INBOX_VISIBILITY
-    if visibility == "ASSIGNED_ONLY":
+    user_roles = set(getattr(user, "role_codes", []))
+    if "OPERATOR" in user_roles and not (user_roles & {"ADMIN", "SUPER_ADMIN", "CEO", "MANAGER"}):
+        allowed = [user.id]
+    elif visibility == "ASSIGNED_ONLY":
         allowed = [user.id]
     else:
         allowed = list((await session.execute(sa_select(UserModel.id))).scalars().all())
-    data = await AnalyticsService(request.app.state.redis).team(
-        session, _analytics_request(request), allowed_user_ids=allowed,
+
+    parsed_team_id = None
+    if team_id:
+        try:
+            parsed_team_id = uuid.UUID(team_id)
+        except (ValueError, TypeError):
+            pass
+
+    service = AnalyticsService(request.app.state.redis)
+    req = _analytics_request(request)
+
+    data = await service.team(
+        session, req, allowed_user_ids=allowed,
     )
+    emp_perf = await service.employees_performance(
+        session, req, allowed_user_ids=allowed, team_id=parsed_team_id,
+    )
+    team_perf = await service.teams_performance(
+        session, req, team_id=parsed_team_id, allowed_user_ids=allowed,
+    )
+
+    all_teams_res = await session.execute(sa_select(TeamModel).order_by(TeamModel.name))
+    all_teams = all_teams_res.scalars().all()
+
+    all_users_res = await session.execute(sa_select(UserModel).order_by(UserModel.full_name))
+    all_users = all_users_res.scalars().all()
+
+    t_q = sa_select(PerformanceTarget).order_by(PerformanceTarget.created_at.desc())
+    targets_res = await session.execute(t_q)
+    active_targets = targets_res.scalars().all()
+
     return templates.TemplateResponse(
         request, "analytics/team.html", _ctx(
-            request, user, data=data, active_page="team",
-            querystring=_querystring(request), flash=flash, flash_kind=flash_kind,
+            request, user,
+            data=data,
+            emp_perf=emp_perf,
+            team_perf=team_perf,
+            all_teams=all_teams,
+            all_users=all_users,
+            active_targets=active_targets,
+            selected_team_id=team_id,
+            active_page="team",
+            querystring=_querystring(request),
+            flash=flash, flash_kind=flash_kind,
             perms=_perms(request),
         ),
     )
+
+
+@router.get("/analytics/team/{target_user_id}", response_class=HTMLResponse)
+async def analytics_employee_detail(
+    request: Request,
+    target_user_id: uuid.UUID,
+    session: SessionDep,
+    user: User = Depends(require_ui_permission("analytics.view_team")),
+    flash: str | None = None,
+    flash_kind: str = "ok",
+):
+    user_roles = set(getattr(user, "role_codes", []))
+    is_admin = bool(user_roles & {"ADMIN", "SUPER_ADMIN", "CEO", "MANAGER"})
+    if not is_admin and user.id != target_user_id:
+        return _error_redirect("/analytics/team", Exception("Access denied: You can only view your own performance"))
+
+    service = AnalyticsService(request.app.state.redis)
+    req = _analytics_request(request)
+
+    detail = await service.employee_detail(session, target_user_id, req)
+    if detail is None:
+        return _error_redirect("/analytics/team", Exception("Employee not found"))
+
+    return templates.TemplateResponse(
+        request, "analytics/employee_detail.html", _ctx(
+            request, user,
+            detail=detail,
+            active_page="team",
+            querystring=_querystring(request),
+            flash=flash, flash_kind=flash_kind,
+            perms=_perms(request),
+        ),
+    )
+
+
+@router.post("/analytics/targets")
+async def create_target_form(
+    request: Request,
+    session: SessionDep,
+    user: User = Depends(require_ui_permission("targets.manage")),
+):
+    form = await request.form()
+    metric = str(form.get("metric", "")).strip()
+    target_value = float(form.get("target_value", 0))
+    period_type = str(form.get("period_type", "monthly")).strip()
+    start_date_str = str(form.get("start_date", "")).strip()
+    end_date_str = str(form.get("end_date", "")).strip()
+    notes = str(form.get("notes", "")).strip() or None
+    user_id_str = form.get("user_id")
+    team_id_str = form.get("team_id")
+
+    from datetime import date
+    try:
+        s_date = date.fromisoformat(start_date_str)
+        e_date = date.fromisoformat(end_date_str)
+    except (ValueError, TypeError):
+        return _error_redirect("/analytics/team", Exception("Invalid start or end date (expected YYYY-MM-DD)"))
+
+    u_id = uuid.UUID(str(user_id_str)) if user_id_str else None
+    t_id = uuid.UUID(str(team_id_str)) if team_id_str else None
+
+    from app.models.analytics import PerformanceTarget
+    target = PerformanceTarget(
+        organization_id=getattr(user, "organization_id", None),
+        user_id=u_id,
+        team_id=t_id,
+        metric=metric,
+        target_value=target_value,
+        period_type=period_type,
+        start_date=s_date,
+        end_date=e_date,
+        notes=notes,
+        set_by=user.id,
+    )
+    session.add(target)
+    await session.commit()
+    from urllib.parse import quote
+    return RedirectResponse("/analytics/team?flash=" + quote("Performance target set successfully"), status_code=303)
+
+
+@router.post("/analytics/targets/{target_id}/delete")
+async def delete_target_form(
+    target_id: uuid.UUID,
+    session: SessionDep,
+    user: User = Depends(require_ui_permission("targets.manage")),
+):
+    from sqlalchemy import select as sa_select
+    from app.models.analytics import PerformanceTarget
+    res = await session.execute(sa_select(PerformanceTarget).where(PerformanceTarget.id == target_id))
+    target = res.scalar_one_or_none()
+    if target:
+        await session.delete(target)
+        await session.commit()
+    from urllib.parse import quote
+    return RedirectResponse("/analytics/team?flash=" + quote("Performance target removed"), status_code=303)
 
 
 # ------------------------------------------------------------- report pages

@@ -1,57 +1,205 @@
 {% extends "base.html" %}
-{% block title %}Audit Logs — Admin — QBIT Connect{% endblock %}
+{% block title %}Security Audit Logs — Admin — QBIT Growth OS{% endblock %}
 {% block nav_admin_audit %}active{% endblock %}
+
 {% block content %}
-<div class="page-head">
-  <div>
-    <h1>AUDIT LOGS</h1>
-    <p class="muted">Append-only and immutable. Historical records can be searched but never edited or deleted from here.</p>
+<div class="flex flex-col w-full gap-space-lg">
+  <!-- Top Command & Header Bar -->
+  <div class="flex flex-col gap-space-md">
+    <!-- Breadcrumbs / Top Meta Hierarchy -->
+    <div class="flex flex-wrap items-center justify-between gap-space-sm">
+      <div class="flex items-center gap-2">
+        <span class="font-code-xs text-code-xs text-outline uppercase tracking-widest">QBIT SYSTEM // 36</span>
+        <span class="text-outline-variant font-code-xs text-code-xs">/</span>
+        <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider">SECURITY AUDIT LOGS</span>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <!-- Live System Metric Pill -->
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high shadow-inner">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+          </span>
+          <span class="font-code-xs text-code-xs text-on-surface font-medium">{{ total }} Audit Entries</span>
+          <span class="text-outline-variant font-code-xs text-code-xs">|</span>
+          <span class="font-code-xs text-code-xs text-tertiary-fixed">Append-Only Immutability</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title and Actions Strip -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+      <div>
+        <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Security Audit Logs &amp; Forensics</h1>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Cryptographically recorded, immutable audit ledger. Historical events can be filtered and verified but never deleted or modified.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-space-sm flex-wrap">
+        <a href="/admin/security" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px]">security</span>
+          <span>Security Controls</span>
+        </a>
+        <a href="/admin/api-keys" class="h-9 px-3.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[18px]">key</span>
+          <span>API Keys</span>
+        </a>
+      </div>
+    </div>
   </div>
-</div>
 
-<form method="get" action="/admin/audit" class="toolbar">
-  <input type="text" name="action" value="{{ action }}" placeholder="Action contains… (e.g. login)" maxlength="200">
-  <input type="text" name="resource_type" value="{{ resource_type }}" placeholder="Resource type (e.g. lead)" maxlength="60">
-  <input type="text" name="actor" value="{{ actor }}" placeholder="Actor (email or name)" maxlength="320">
-  <select name="success">
-    <option value="">Any outcome</option>
-    <option value="ok" {% if success == 'ok' %}selected{% endif %}>Success</option>
-    <option value="failed" {% if success == 'failed' %}selected{% endif %}>Failures</option>
-  </select>
-  <button class="btn btn-primary" type="submit">Search</button>
-  <a class="btn btn-ghost" href="/admin/audit">Reset</a>
-</form>
+  <!-- Main Container: Sub-tabs, Query Toolbar & Audit Table -->
+  <div class="bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col border border-outline-variant/30">
+    <!-- Screen 36 Navigation Sub-Tabs -->
+    <div class="px-space-md pt-space-sm bg-surface-container-lowest flex items-center justify-between flex-wrap gap-space-sm border-b border-outline-variant/20">
+      <div class="flex items-center gap-1">
+        <span class="px-4 py-2 font-label-md text-label-md text-on-primary-container bg-primary-container rounded-t-lg shadow-[0_0_12px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+          <span>Audit Logs</span>
+          <span class="bg-surface-container-lowest/60 text-on-surface text-[10px] px-1.5 py-0.2 rounded-full font-code-xs">LIVE</span>
+        </span>
+        <a href="/admin/security" class="px-4 py-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors rounded-t-lg">
+          Security Settings
+        </a>
+        <a href="/admin/roles" class="px-4 py-2 text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors rounded-t-lg">
+          Capability Matrix
+        </a>
+      </div>
 
-<div class="card table-card">
-  <div class="table-scroll">
-    <table>
-      <thead><tr><th>Time</th><th>Action</th><th>Resource</th><th>Resource ID</th><th>Actor</th><th>IP</th></tr></thead>
-      <tbody>
-        {% for e in logs %}
-        <tr>
-          <td class="muted small">{{ e.created }}</td>
-          <td class="mono {% if e.failed %}badge-error{% endif %}">{{ e.action }}</td>
-          <td>{{ e.resource_type or '—' }}</td>
-          <td class="mono muted">{{ e.resource_id }}</td>
-          <td class="mono muted small">{{ e.actor | string | truncate(8, true, '…') if e.actor else 'system' }}</td>
-          <td class="mono muted small">{{ e.ip }}</td>
-        </tr>
-        {% else %}
-        <tr><td colspan="6" class="center muted" style="padding:32px">No audit entries match the filters.</td></tr>
+      <!-- Live Stream Status Indicator -->
+      <div class="flex items-center gap-2 pb-2">
+        <div class="flex items-center gap-2 bg-surface-container px-2.5 py-1 rounded-full border border-outline-variant/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+          <span class="font-code-xs text-code-xs text-on-surface-variant">Live Stream: <span class="text-tertiary font-semibold">Active</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Query Control Toolbar -->
+    <form method="get" action="/admin/audit" class="p-space-md bg-surface-container-low flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md border-b border-outline-variant/20">
+      <div class="flex flex-wrap items-center gap-space-sm flex-1">
+        <!-- Action Input -->
+        <div class="relative min-w-[160px]">
+          <input type="text" name="action" value="{{ action }}" placeholder="Filter action (e.g. login)..." maxlength="200" class="w-full bg-surface-container rounded-lg px-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-colors"/>
+        </div>
+
+        <!-- Resource Type Input -->
+        <div class="relative min-w-[140px]">
+          <input type="text" name="resource_type" value="{{ resource_type }}" placeholder="Resource (e.g. user)..." maxlength="60" class="w-full bg-surface-container rounded-lg px-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-colors"/>
+        </div>
+
+        <!-- Actor Input -->
+        <div class="relative min-w-[150px]">
+          <input type="text" name="actor" value="{{ actor }}" placeholder="Actor email or UUID..." maxlength="320" class="w-full bg-surface-container rounded-lg px-3 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-colors"/>
+        </div>
+
+        <!-- Outcome Dropdown -->
+        <div class="relative min-w-[130px]">
+          <select name="success" class="w-full bg-surface-container appearance-none rounded-lg px-3 py-1.5 pr-8 font-body-sm text-body-sm text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-colors cursor-pointer">
+            <option value="">Any Outcome</option>
+            <option value="ok" {% if success == 'ok' %}selected{% endif %}>Success</option>
+            <option value="failed" {% if success == 'failed' %}selected{% endif %}>Failures Only</option>
+          </select>
+          <span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+        </div>
+
+        <!-- Submit & Reset Buttons -->
+        <button class="h-8 px-3.5 rounded-lg bg-primary-container text-on-primary-container font-label-sm text-label-sm shadow-[0_0_12px_rgba(0,102,255,0.35)] hover:bg-inverse-primary transition-all flex items-center gap-1" type="submit">
+          <span class="material-symbols-outlined text-[15px]">filter_alt</span>
+          <span>Filter</span>
+        </button>
+        <a href="/admin/audit" class="h-8 px-3 rounded-lg bg-surface-container text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1 border border-outline-variant/30">
+          <span class="material-symbols-outlined text-[15px]">restart_alt</span>
+          <span>Reset</span>
+        </a>
+      </div>
+    </form>
+
+    <!-- Data Table Container -->
+    <div class="overflow-x-auto w-full">
+      <table class="w-full text-left border-collapse" id="audit-table">
+        <thead>
+          <tr class="bg-surface-container-lowest text-outline font-label-sm text-label-sm uppercase tracking-wider select-none border-b border-outline-variant/30">
+            <th class="py-3 px-space-md font-semibold">Time</th>
+            <th class="py-3 px-space-md font-semibold">Actor Identity</th>
+            <th class="py-3 px-space-md font-semibold">Action Trigger</th>
+            <th class="py-3 px-space-md font-semibold">Target Resource</th>
+            <th class="py-3 px-space-md font-semibold">Source IP</th>
+            <th class="py-3 px-space-md font-semibold text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody class="font-body-sm text-body-sm divide-y divide-outline-variant/15">
+          {% for e in logs %}
+          <tr class="hover:bg-surface-container transition-colors group">
+            <td class="py-3 px-space-md font-code-xs text-code-xs text-on-surface-variant whitespace-nowrap">
+              {{ e.created }}
+            </td>
+            <td class="py-3 px-space-md">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-primary/20 text-primary font-label-sm text-[10px] flex items-center justify-center font-bold">
+                  {{ (e.actor|string)[:2]|upper if e.actor else 'SY' }}
+                </div>
+                <span class="font-medium text-on-surface font-code-xs text-code-xs">
+                  {{ e.actor|string|truncate(12, true, '…') if e.actor else 'system' }}
+                </span>
+              </div>
+            </td>
+            <td class="py-3 px-space-md font-code-xs text-code-xs font-semibold {% if e.failed %}text-error{% else %}text-secondary-fixed-dim{% endif %}">
+              {{ e.action }}
+            </td>
+            <td class="py-3 px-space-md text-on-surface font-code-xs text-code-xs">
+              <span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-outline">{{ e.resource_type or '—' }}</span>
+              {% if e.resource_id != '—' %}
+              <span class="ml-1 text-on-surface-variant font-mono">{{ e.resource_id }}</span>
+              {% endif %}
+            </td>
+            <td class="py-3 px-space-md font-code-xs text-code-xs text-on-surface-variant mono">
+              {{ e.ip }}
+            </td>
+            <td class="py-3 px-space-md text-center">
+              {% if e.failed %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-error bg-error-container/20 font-label-sm text-[11px] font-semibold tracking-wide border border-error/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Failed
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-tertiary bg-tertiary-container/20 font-label-sm text-[11px] font-semibold tracking-wide border border-tertiary/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Success
+              </span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" class="py-12 px-space-md text-center text-outline">
+              No audit entries match the current filter criteria.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination & Summary Footer -->
+    <div class="px-space-md py-3 bg-surface-container-lowest/60 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-body-sm font-body-sm text-outline">
+      <div class="flex items-center gap-2">
+        <span>Showing {{ logs|length }} of {{ total }} entries</span>
+        <span>•</span>
+        <span class="text-tertiary">Immutable Ledger Active</span>
+      </div>
+
+      {% if total > page_size %}
+      <div class="flex items-center gap-1">
+        {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
+          {% if p <= page + 2 and p >= page - 2 %}
+          <a class="px-2.5 py-1 rounded font-code-xs text-code-xs transition-colors {% if p == page %}bg-primary-container text-on-primary-container font-bold{% else %}bg-surface-container text-on-surface hover:bg-surface-container-high{% endif %}"
+             href="/admin/audit?action={{ action }}&resource_type={{ resource_type }}&actor={{ actor }}&success={{ success }}&page={{ p }}">
+            {{ p }}
+          </a>
+          {% endif %}
         {% endfor %}
-      </tbody>
-    </table>
+      </div>
+      {% endif %}
+    </div>
   </div>
 </div>
-
-{% if total > page_size %}
-<div class="pager">
-  {% for p in range(1, ((total + page_size - 1) // page_size) + 1) %}
-    {% if p <= page + 2 and p >= page - 2 %}
-      <a class="pager-item {% if p == page %}active{% endif %}"
-         href="/admin/audit?action={{ action }}&resource_type={{ resource_type }}&actor={{ actor }}&success={{ success }}&page={{ p }}">{{ p }}</a>
-    {% endif %}
-  {% endfor %}
-</div>
-{% endif %}
 {% endblock %}

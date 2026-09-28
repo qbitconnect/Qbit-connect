@@ -25,6 +25,8 @@ class LeadCreate(BaseModel):
     source_id: str | None = Field(default=None, max_length=300)
     source_url: str | None = Field(default=None, max_length=1000)
     status: str | None = Field(default=None, max_length=30)
+    priority: str | None = Field(default=None, pattern=r"^(LOW|MEDIUM|HIGH|URGENT)$")
+    is_verified: bool | None = None
     tags: list[str] | None = None
 
 
@@ -40,10 +42,49 @@ class LeadListQuery(BaseModel):
     page_size: int = 25
 
 
+from datetime import datetime
+
+
 class BulkActionRequest(BaseModel):
-    action: str = Field(..., pattern=r"^(set_status|archive|restore|add_tag|remove_tag|delete|export)$")
+    action: str = Field(..., pattern=r"^(set_status|archive|restore|add_tag|remove_tag|delete|export|assign|set_priority)$")
     lead_ids: list[str] = Field(..., min_length=1)
     params: dict[str, Any] | None = None
+
+
+class StageChangeRequest(BaseModel):
+    stage: str = Field(..., min_length=2, max_length=50)
+    reason: str | None = Field(default=None, max_length=500)
+
+
+class FollowUpCreateRequest(BaseModel):
+    title: str = Field(..., min_length=1, max_length=200)
+    due_at: datetime
+    notes: str | None = Field(default=None, max_length=10000)
+    priority: str = Field(default="MEDIUM", pattern=r"^(LOW|MEDIUM|HIGH|URGENT)$")
+    assigned_user_id: str | None = None
+
+
+class ContactCreateRequest(BaseModel):
+    first_name: str = Field(..., min_length=1, max_length=150)
+    last_name: str | None = Field(default=None, max_length=150)
+    title: str | None = Field(default=None, max_length=150)
+    email: str | None = Field(default=None, max_length=320)
+    phone: str | None = Field(default=None, max_length=40)
+    is_primary: bool = False
+    is_verified: bool = False
+
+
+class InteractionCreateRequest(BaseModel):
+    interaction_type: str = Field(default="NOTE", max_length=50)
+    notes: str = Field(..., min_length=1, max_length=10000)
+    contact_id: str | None = None
+
+
+class LeadAssignmentRequest(BaseModel):
+    assigned_user_id: str | None = None
+    assigned_team_id: str | None = None
+    reason: str | None = Field(default=None, max_length=500)
+    priority: str | None = Field(default=None, pattern=r"^(LOW|MEDIUM|HIGH|URGENT)$")
 
 
 class TagCreate(BaseModel):

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Two-Factor Authentication | QBIT GROWTH OS</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Config -->
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#080E1D',
+              surface: '#0D1527',
+              surfaceLight: '#131D36',
+              border: '#1E293B',
+              blue: '#0066FF',
+              blueHover: '#0052CC',
+              cyan: '#06B6D4',
+              emerald: '#10B981',
+              textMuted: '#94A3B8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          boxShadow: {
+            'glow-blue': '0 0 30px -5px rgba(0, 102, 255, 0.35)',
+            'glow-subtle': '0 0 45px -10px rgba(6, 182, 212, 0.25)',
+            'card': '0 20px 40px -15px rgba(0, 0, 0, 0.65)'
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Atmospheric CSS -->
+<style data-purpose="background-mesh">
+    .cyber-radial-bg {
+      background-color: #080E1D;
+      background-image: 
+        radial-gradient(circle at 50% 18%, rgba(0, 102, 255, 0.16) 0%, transparent 48%),
+        radial-gradient(circle at 82% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 18% 70%, rgba(6, 182, 212, 0.06) 0%, transparent 42%);
+    }
+
+    .subtle-grid {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+  </style>
+<style data-purpose="otp-input-animation">
+    .otp-field:focus {
+      outline: none;
+      border-color: #0066FF;
+      box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.35), 0 0 16px rgba(0, 102, 255, 0.3);
+    }
+
+    @keyframes subtleBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .caret-indicator {
+      animation: subtleBlink 1.1s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+  </style>
+<!-- END: Custom Atmospheric CSS -->
+</head>
+<body class="bg-brand-navy cyber-radial-bg font-sans text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white relative">
+<!-- Grid Texture Overlay -->
+<div class="fixed inset-0 subtle-grid pointer-events-none z-0"></div>
+<!-- BEGIN: MainHeader -->
+<header class="relative z-10 w-full px-6 lg:px-12 py-5 flex items-center justify-between border-b border-slate-800/60 bg-brand-navy/60 backdrop-blur-md">
+<!-- Left: Brand Logo & Workspace Category -->
+<div class="flex items-center space-x-3.5">
+<div class="h-9 w-9 rounded-lg bg-gradient-to-tr from-brand-blue to-cyan-400 p-[1.5px] shadow-glow-blue">
+<div class="h-full w-full bg-brand-surface rounded-[7px] flex items-center justify-center">
+<svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+<polyline points="2 17 12 22 22 17"></polyline>
+<polyline points="2 12 12 17 22 12"></polyline>
+</svg>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold tracking-wider text-white uppercase">QBIT Growth OS</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-blue/20 text-cyan-300 font-mono tracking-tight font-medium border border-brand-blue/30">v2.4-PRD</span>
+</div>
+<p class="text-[11px] text-brand-textMuted tracking-normal">AI Powered Business Intelligence &amp; Marketing Automation</p>
+</div>
+</div>
+<!-- Right: Security Enclave Tag -->
+<div class="flex items-center space-x-3">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+<svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Private Internal Tool</span>
+</div>
+<div class="text-xs text-slate-400 font-mono hidden md:block">Session: <span class="text-slate-200">#AUTH-9924-E</span></div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-8 md:py-12">
+<!-- Card Container -->
+<div class="w-full max-w-[470px]">
+<!-- Stage Tracker / Screen Index Tag -->
+<div class="flex items-center justify-between mb-3 px-1">
+<div class="flex items-center space-x-2 text-xs text-brand-textMuted">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-blue/20 text-brand-blue font-bold font-mono text-[11px] border border-brand-blue/40">02</span>
+<span class="font-medium text-slate-300">Two-Factor Authentication</span>
+</div>
+<span class="text-[11px] text-slate-400 font-mono">Step 2 of 2</span>
+</div>
+<!-- Authentication Card -->
+<section class="bg-brand-surface border border-slate-800 rounded-2xl p-7 md:p-8 shadow-card shadow-brand-navy backdrop-blur-xl relative overflow-hidden" data-purpose="auth-card">
+<!-- Top Radiant Glow Line -->
+<div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-blue to-transparent"></div>
+<!-- 2FA Emblem / Badge -->
+<div class="flex justify-center mb-6">
+<div class="relative">
+<div class="absolute -inset-1.5 bg-gradient-to-r from-brand-blue to-cyan-400 rounded-2xl blur-md opacity-40"></div>
+<div class="relative w-16 h-16 rounded-2xl bg-brand-surfaceLight border border-slate-700/80 flex items-center justify-center shadow-inner">
+<svg class="w-8 h-8 text-brand-blue drop-shadow-[0_0_8px_rgba(0,102,255,0.7)]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="M9 12l2 2 4-4"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Title & Explanatory Instructions -->
+<div class="text-center mb-6">
+<h1 class="text-2xl font-bold tracking-tight text-white mb-2">Verify it's you</h1>
+<p class="text-xs md:text-sm text-slate-400 leading-relaxed max-w-sm mx-auto">
+            We've sent a 6-digit confirmation code to your authorized authenticator app or company inbox:
+          </p>
+<!-- User Chip / Verified Account Pill -->
+<div class="inline-flex items-center gap-2 mt-3.5 px-3 py-1.5 rounded-full bg-brand-surfaceLight border border-slate-700/70 text-xs text-slate-200 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-mono text-cyan-200">sagar@qbit.os</span>
+<span class="text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.2 rounded border border-slate-700">PROD</span>
+</div>
+</div>
+<!-- BEGIN: OTPForm -->
+<form class="space-y-6" data-purpose="otp-verification-form" onsubmit="event.preventDefault();">
+<!-- 6-Digit OTP Field Set -->
+<div>
+<label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 text-center mb-3">
+              Enter 6-Digit Security Token
+            </label>
+<!-- Six Distinct Digit Input Slots -->
+<div class="grid grid-cols-6 gap-2 sm:gap-2.5 max-w-sm mx-auto" data-purpose="otp-input-boxes">
+<!-- Digit 1: Filled -->
+<div class="relative">
+<input aria-label="Digit 1" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight border border-slate-700 rounded-lg text-center text-xl font-bold font-mono text-cyan-300 transition-all focus:border-brand-blue" maxlength="1" type="text" value="8"/>
+</div>
+<!-- Digit 2: Filled -->
+<div class="relative">
+<input aria-label="Digit 2" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight border border-slate-700 rounded-lg text-center text-xl font-bold font-mono text-cyan-300 transition-all focus:border-brand-blue" maxlength="1" type="text" value="4"/>
+</div>
+<!-- Digit 3: Filled -->
+<div class="relative">
+<input aria-label="Digit 3" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight border border-slate-700 rounded-lg text-center text-xl font-bold font-mono text-cyan-300 transition-all focus:border-brand-blue" maxlength="1" type="text" value="2"/>
+</div>
+<!-- Digit 4: Active Focus with blinking cursor cue -->
+<div class="relative">
+<input aria-label="Digit 4" autofocus="" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight/90 border-2 border-brand-blue shadow-[0_0_14px_rgba(0,102,255,0.4)] rounded-lg text-center text-xl font-bold font-mono text-white transition-all caret-brand-blue" maxlength="1" type="text" value=""/>
+<span class="caret-indicator pointer-events-none absolute inset-0 flex items-center justify-center text-brand-blue text-lg font-light">|</span>
+</div>
+<!-- Digit 5: Empty -->
+<div class="relative">
+<input aria-label="Digit 5" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight border border-slate-800 rounded-lg text-center text-xl font-bold font-mono text-white transition-all focus:border-brand-blue" maxlength="1" type="text" value=""/>
+</div>
+<!-- Digit 6: Empty -->
+<div class="relative">
+<input aria-label="Digit 6" class="otp-field w-full h-13 sm:h-14 bg-brand-surfaceLight border border-slate-800 rounded-lg text-center text-xl font-bold font-mono text-white transition-all focus:border-brand-blue" maxlength="1" type="text" value=""/>
+</div>
+</div>
+<!-- Resend Countdown Timer -->
+<div class="text-center mt-3.5">
+<span class="text-xs text-slate-400">
+                Didn't receive the code? 
+                <span class="inline-flex items-center text-slate-300 font-mono font-medium ml-1">
+                  Resend in <span class="text-cyan-400 font-semibold ml-1" id="countdown-timer">28s</span>
+</span>
+</span>
+</div>
+</div>
+<!-- Submit CTA Button -->
+<div>
+<button class="w-full py-3.5 px-4 bg-brand-blue hover:bg-brand-blueHover active:scale-[0.99] text-white font-semibold text-sm rounded-lg transition duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-brand-blue/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue focus:ring-offset-brand-navy" type="submit">
+<span>Verify Code</span>
+<svg class="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Fallback Authentication Method -->
+<div class="text-center">
+<button class="text-xs text-slate-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5 focus:outline-none" type="button">
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+<span>Try hardware key or backup codes</span>
+</button>
+</div>
+</form>
+<!-- END: OTPForm -->
+<!-- Divider -->
+<div class="relative my-6">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-800"></div></div>
+<div class="relative flex justify-center text-[11px] uppercase tracking-wider text-slate-500 font-mono bg-brand-surface px-2">Security Enforcement</div>
+</div>
+<!-- Hardware Key Quick-Detect Option -->
+<div class="rounded-lg bg-slate-900/80 border border-slate-800/90 p-3 flex items-center justify-between" data-purpose="hardware-token-banner">
+<div class="flex items-center space-x-2.5">
+<div class="p-1.5 rounded-md bg-brand-blue/10 text-cyan-400 border border-brand-blue/20">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="7.5" cy="15.5" r="5.5"></circle>
+<path d="m21 2-9.6 9.6"></path>
+<path d="m15.5 7.5 3 3L22 7l-3-3"></path>
+</svg>
+</div>
+<div>
+<p class="text-xs font-medium text-slate-200">YubiKey 5C NFC Detected</p>
+<p class="text-[10px] text-slate-400 font-mono">USB-C HID ready to touch</p>
+</div>
+</div>
+<button class="px-2.5 py-1 text-[11px] font-medium bg-brand-surfaceLight hover:bg-slate-700 text-slate-200 rounded border border-slate-700 transition" type="button">
+            Use Key
+          </button>
+</div>
+<!-- Navigation: Back to Login -->
+<div class="mt-6 text-center">
+<a class="inline-flex items-center text-xs text-slate-400 hover:text-white transition duration-150 group" href="#">
+<svg class="w-3.5 h-3.5 mr-1.5 transform group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+            Back to login
+          </a>
+</div>
+</section>
+<!-- Trust Policy Indicator -->
+<div class="mt-4 px-2 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          Policy: PRD-NORTH-01 (Mandatory)
+        </span>
+<span>Node: US-EAST-VIRGINIA</span>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="relative z-10 w-full py-4 px-6 border-t border-slate-800/60 bg-brand-navy/60 backdrop-blur-md">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+<div class="flex items-center space-x-2">
+<svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+<span>SOC-2 Type II Certified Enclave • End-to-End Encrypted Session</span>
+</div>
+<div class="flex items-center space-x-4 text-[11px] text-slate-400">
+<a class="hover:text-slate-300 transition-colors" href="#">Privacy Shield</a>
+<span>•</span>
+<a class="hover:text-slate-300 transition-colors" href="#">Incident Desk</a>
+<span>•</span>
+<span class="text-slate-400">© 2026 QBIT Technology Inc.</span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: Interactive Simulation Script -->
+<script data-purpose="otp-autofocus-and-timer">
+    document.addEventListener('DOMContentLoaded', () => {
+      // Automatic Countdown simulation
+      let timeLeft = 28;
+      const timerElement = document.getElementById('countdown-timer');
+
+      if (timerElement) {
+        const interval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft >= 0) {
+            timerElement.textContent = `${timeLeft}s`;
+          } else {
+            clearInterval(interval);
+            timerElement.parentElement.innerHTML = '<a href="#" class="text-cyan-400 hover:underline">Resend Now</a>';
+          }
+        }, 1000);
+      }
+
+      // Input auto-advance simulation
+      const inputs = document.querySelectorAll('.otp-field');
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+          if (e.target.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !e.target.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+    });
+  </script>
+<!-- END: Interactive Simulation Script -->
+</body></html>

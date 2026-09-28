@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#c2c6d8","surface-container-highest":"#2f3445","inverse-on-surface":"#2a3040","error-container":"#93000a","on-primary":"#002b75","surface-container-high":"#242a3a","surface-bright":"#333949","surface-container":"#191f2f","inverse-primary":"#0054d6","on-secondary":"#003543","error":"#ffb4ab","on-secondary-fixed-variant":"#004e60","outline-variant":"#424656","primary-container":"#0066ff","surface-container-low":"#151b2b","tertiary":"#4edea3","on-surface":"#dde2f7","on-tertiary-fixed":"#002113","secondary":"#a5e7ff","on-error-container":"#ffdad6","secondary-fixed-dim":"#47d6ff","on-secondary-fixed":"#001f28","surface":"#0d1322","background":"#0d1322","outline":"#8c90a1","on-secondary-container":"#00566a","on-tertiary-container":"#e1ffec","on-error":"#690005","on-tertiary-fixed-variant":"#005236","on-tertiary":"#003824","on-primary-container":"#f8f7ff","primary-fixed":"#dae1ff","surface-tint":"#b3c5ff","on-primary-fixed-variant":"#003fa4","surface-variant":"#2f3445","tertiary-container":"#008259","on-primary-fixed":"#001849","tertiary-fixed":"#6ffbbe","surface-container-lowest":"#080e1d","secondary-container":"#00d2ff","primary-fixed-dim":"#b3c5ff","inverse-surface":"#dde2f7","tertiary-fixed-dim":"#4edea3","on-background":"#dde2f7","surface-dim":"#0d1322","primary":"#b3c5ff","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1rem","margin":"1.5rem","space-2xs":"0.125rem","space-md":"0.75rem","space-2xl":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-xl":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"code-sm":["JetBrains Mono"],"label-md":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"code-xs":["JetBrains Mono"],"body-sm":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"]},"fontSize":{"code-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-sm":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"code-xs":["11px",{"lineHeight":"16px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-14 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/30"><div class="w-7 h-7 rounded-lg bg-surface-container-high border border-secondary-container/40 flex items-center justify-center text-secondary-container shadow-[0_0_12px_rgba(0,210,255,0.2)]"><span class="material-symbols-outlined text-[18px]">deployed_code</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">QBIT</span><span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-wider leading-none mt-1">GROWTH OS</span></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(0,102,255,0.35)]"><div class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Main</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="scraper-marketplace" href="#"><span class="material-symbols-outlined text-[18px]">storefront</span><span class="font-body-md text-body-md">Scraper Marketplace</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-runs" href="#"><span class="material-symbols-outlined text-[18px]">terminal</span><span class="font-body-md text-body-md">My Runs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leads" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span class="font-body-md text-body-md">Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="campaigns" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span class="font-body-md text-body-md">Campaigns</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="automation" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span class="font-body-md text-body-md">Automation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[18px] text-tertiary-fixed">psychology</span><span class="font-body-md text-body-md">AI Assistant</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Marketing</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="email-marketing" href="#"><span class="material-symbols-outlined text-[18px]">mail</span><span class="font-body-md text-body-md">Email</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="whatsapp-campaigns" href="#"><span class="material-symbols-outlined text-[18px]">chat</span><span class="font-body-md text-body-md">WhatsApp</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="social-media" href="#"><span class="material-symbols-outlined text-[18px]">share</span><span class="font-body-md text-body-md">Social Media</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="sms-marketing" href="#"><span class="material-symbols-outlined text-[18px]">sms</span><span class="font-body-md text-body-md">SMS</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="telegram-channels" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Telegram</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="unified-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Unified Inbox</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Management</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="team-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">Team</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-intelligence" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-md text-body-md">Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-md text-body-md">Settings</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant/30"><div class="bg-surface-container-low rounded-lg p-space-sm border border-outline-variant/30 flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Cluster Nodes</span><span class="font-code-xs text-code-xs text-tertiary-fixed">99.98% Healthy</span></div></div><span class="font-code-xs text-code-xs text-outline px-1.5 py-0.5 rounded bg-surface-container-highest">v2.4.0</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 flex items-center justify-between px-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 rounded-lg pl-9 pr-14 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Search scrapers, leads, campaigns..." type="text"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs border border-outline-variant/30">Ctrl+K</div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-full px-3 py-1 cursor-pointer hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.5)]"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Private Workspace</span><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div><div class="h-4 w-px bg-outline-variant/40"></div><button class="relative p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-label-md text-label-md text-on-primary font-bold shadow-[0_0_10px_rgba(179,197,255,0.25)]">S</div><div class="hidden xl:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-medium leading-none">Sagar Singh</span><span class="font-code-xs text-code-xs text-outline leading-none mt-1">sagar@qbit.os</span></div></div></div></header><main class="relative pt-14 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- Top Navigation & Action Context Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 font-code-xs text-code-xs text-outline">
+<a class="hover:text-primary transition-colors" href="#">Campaigns</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">Hotel Leads - Bareilly</a>
+<span>/</span>
+<span class="text-secondary-fixed-dim">Analytics</span>
+</div>
+<div class="flex items-center gap-space-md flex-wrap mt-1">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Hotel Leads - Bareilly (Email)</h1>
+<div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm shadow-[0_0_10px_rgba(78,222,163,0.2)]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Completed</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sent on Sep 25, 2026 • 2,431 recipients</span>
+</div>
+</div>
+<!-- Quick Action Controls -->
+<div class="flex items-center gap-2 flex-wrap">
+<button class="flex items-center gap-1.5 bg-surface-container-low hover:bg-surface-container-high px-3 py-1.5 rounded-lg text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<span>Sep 25, 2026</span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</button>
+<div class="relative group">
+<button class="flex items-center gap-1.5 bg-surface-container-low hover:bg-surface-container-high px-3 py-1.5 rounded-lg text-on-surface font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>Export Report</span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</button>
+</div>
+<button class="p-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors shadow-sm" title="Sync Data">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<button class="p-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors shadow-sm" title="More Actions">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Segmented Sub-Navigation Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+<button class="px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_0_12px_rgba(0,102,255,0.35)] flex items-center gap-1.5">
+<span>Overview</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span>Recipients</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">2,431</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span>Opens</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">848</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span>Clicks</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">312</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span>Replies</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">96</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span>Bounces</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-code-xs text-code-xs">24</span>
+</button>
+</div>
+<!-- Key Performance Indicators (5 Grid Columns) -->
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-space-md">
+<!-- Total Sent -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Sent</span>
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">2,431</span>
+<div class="flex items-center gap-1 mt-1 text-outline font-code-xs text-code-xs">
+<span>Target list 100%</span>
+</div>
+</div>
+</div>
+<!-- Delivered -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-tertiary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Delivered</span>
+<span class="material-symbols-outlined text-[18px]">mark_email_read</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">1,980</span>
+<div class="flex items-center gap-1 mt-1 text-tertiary font-code-xs text-code-xs">
+<span>81.5%</span>
+<span class="text-outline">(+2.4% vs bmrk)</span>
+</div>
+</div>
+</div>
+<!-- Unique Opens -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-primary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Unique Opens</span>
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">848</span>
+<div class="flex items-center gap-1 mt-1 text-primary font-code-xs text-code-xs">
+<span>42.8%</span>
+<span class="text-outline">Open Rate</span>
+</div>
+</div>
+</div>
+<!-- Clicked -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Clicked</span>
+<span class="material-symbols-outlined text-[18px]">ads_click</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">312</span>
+<div class="flex items-center gap-1 mt-1 text-secondary font-code-xs text-code-xs">
+<span>15.7%</span>
+<span class="text-outline">(36.8% CTOR)</span>
+</div>
+</div>
+</div>
+<!-- Replied / Converted -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-tertiary-fixed">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Replied</span>
+<span class="material-symbols-outlined text-[18px]">forum</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">96</span>
+<div class="flex items-center gap-1 mt-1 text-tertiary-fixed font-code-xs text-code-xs">
+<span>12.4%</span>
+<span class="text-outline">(32 booked)</span>
+</div>
+</div>
+</div>
+<!-- Bounced / Unsub -->
+<div class="flex flex-col justify-between p-space-md rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between text-error">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Bounced</span>
+<span class="material-symbols-outlined text-[18px]">report</span>
+</div>
+<div class="mt-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">24</span>
+<div class="flex items-center gap-1 mt-1 text-error font-code-xs text-code-xs">
+<span>1.0%</span>
+<span class="text-outline">Health 99.0%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Analytics Section (Chart + Donut Funnel Breakdown) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Left Main Chart: Timeline Performance -->
+<div class="lg:col-span-8 flex flex-col p-space-lg rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Campaign Performance</h2>
+<p class="font-body-sm text-body-sm text-outline">Hourly velocity of transmissions, opens, link clicks, and direct responses</p>
+</div>
+<!-- Time range filter & legend -->
+<div class="flex items-center gap-2">
+<div class="flex items-center bg-surface-container p-0.5 rounded-lg text-outline font-label-sm text-label-sm">
+<button class="px-2 py-1 rounded bg-primary-container text-on-primary-container font-medium">Hourly</button>
+<button class="px-2 py-1 rounded hover:text-on-surface transition-colors">Day 1</button>
+<button class="px-2 py-1 rounded hover:text-on-surface transition-colors">7 Days</button>
+</div>
+</div>
+</div>
+<!-- Interactive Metric Legend -->
+<div class="flex items-center gap-4 flex-wrap mb-4 font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span>Sent (2,431)</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+<span>Opened (848)</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span>Clicked (312)</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span>Replied (96)</span>
+</div>
+</div>
+<!-- SVG Performance Multi-curve Graph -->
+<div class="relative w-full h-72 mt-2">
+<svg class="w-full h-full overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 760 260">
+<defs>
+<!-- Gradient for Opened line fill -->
+<lineargradient id="glowOpened" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00d2ff" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#00d2ff" stop-opacity="0.0"></stop>
+</lineargradient>
+<!-- Gradient for Sent fill -->
+<lineargradient id="glowSent" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0066ff" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#0066ff" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid Lines -->
+<line stroke="#242a3a" stroke-dasharray="3 3" x1="40" x2="750" y1="20" y2="20"></line>
+<line stroke="#242a3a" stroke-dasharray="3 3" x1="40" x2="750" y1="75" y2="75"></line>
+<line stroke="#242a3a" stroke-dasharray="3 3" x1="40" x2="750" y1="130" y2="130"></line>
+<line stroke="#242a3a" stroke-dasharray="3 3" x1="40" x2="750" y1="185" y2="185"></line>
+<line stroke="#2f3445" x1="40" x2="750" y1="240" y2="240"></line>
+<!-- Y Axis Labels -->
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="24">800</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="79">600</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="134">400</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="189">200</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="244">0</text>
+<!-- Area Fills -->
+<path d="M 40,240 L 40,230 C 140,225 210,180 280,120 C 350,60 420,30 480,25 C 550,20 640,20 740,20 L 740,240 Z" fill="url(#glowSent)"></path>
+<path d="M 40,240 L 40,238 C 140,235 220,200 300,165 C 380,130 450,85 520,70 C 600,55 670,50 740,48 L 740,240 Z" fill="url(#glowOpened)"></path>
+<!-- Curves -->
+<!-- 1. Sent Spline (Dark cobalt) -->
+<path d="M 40,230 C 140,225 210,180 280,120 C 350,60 420,30 480,25 C 550,20 640,20 740,20" fill="none" stroke="#0066ff" stroke-width="2.5"></path>
+<!-- 2. Opened Spline (Cyan) -->
+<path d="M 40,238 C 140,235 220,200 300,165 C 380,130 450,85 520,70 C 600,55 670,50 740,48" fill="none" stroke="#00d2ff" stroke-width="2.5"></path>
+<!-- 3. Clicked Spline (Primary Tint / Ice Blue) -->
+<path d="M 40,240 C 140,239 230,220 320,195 C 410,170 500,140 580,130 C 650,120 700,118 740,115" fill="none" stroke="#b3c5ff" stroke-width="2"></path>
+<!-- 4. Replied Spline (Emerald) -->
+<path d="M 40,240 C 150,240 250,235 340,225 C 430,215 520,195 600,185 C 670,178 710,175 740,172" fill="none" stroke="#4edea3" stroke-width="2"></path>
+<!-- Peak Engagement Marker at 2 PM -->
+<line opacity="0.6" stroke="#00d2ff" stroke-dasharray="2 2" stroke-width="1" x1="480" x2="480" y1="20" y2="240"></line>
+<circle cx="480" cy="78" fill="#00d2ff" r="4.5" stroke="#0d1322" stroke-width="2"></circle>
+<circle cx="480" cy="148" fill="#b3c5ff" r="4" stroke="#0d1322" stroke-width="2"></circle>
+<!-- Tooltip Popover Overlay at peak point -->
+<g transform="translate(490, 45)">
+<rect fill="#191f2f" filter="drop-shadow(0 4px 12px rgba(0,0,0,0.5))" height="48" rx="6" stroke="#2f3445" stroke-width="1" width="130"></rect>
+<text fill="#dde2f7" font-family="Inter" font-size="10" font-weight="600" x="8" y="16">Peak: 2:00 PM</text>
+<text fill="#00d2ff" font-family="JetBrains Mono" font-size="9.5" x="8" y="30">● 482 opens</text>
+<text fill="#b3c5ff" font-family="JetBrains Mono" font-size="9.5" x="8" y="42">● 142 clicks</text>
+</g>
+<!-- X Axis Labels -->
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="40" y="258">12 AM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="156" y="258">4 AM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="272" y="258">8 AM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="388" y="258">12 PM</text>
+<text fill="#00d2ff" font-family="JetBrains Mono" font-size="10" font-weight="bold" x="480" y="258">2 PM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="504" y="258">4 PM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" x="620" y="258">8 PM</text>
+<text fill="#8c90a1" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="736" y="258">11 PM</text>
+</svg>
+</div>
+<!-- Quick Summary strip at base of chart -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 mt-2 border-t border-surface-container-highest">
+<div class="flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">First Response Time</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold mt-0.5">8m 42s</span>
+</div>
+<div class="flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Peak Velocity</span>
+<span class="font-label-md text-label-md text-secondary-fixed-dim font-semibold mt-0.5">384 events / hr</span>
+</div>
+<div class="flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Unsubscribe Rate</span>
+<span class="font-label-md text-label-md text-tertiary-fixed font-semibold mt-0.5">0.16% (4 leads)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-code-xs text-code-xs text-outline">Spam Complaint</span>
+<span class="font-label-md text-label-md text-tertiary font-semibold mt-0.5">0.00% (0)</span>
+</div>
+</div>
+</div>
+<!-- Right Panel: Donut Breakdown & Outcome Funnel -->
+<div class="lg:col-span-4 flex flex-col justify-between p-space-lg rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Recipient Funnel</span>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface mt-0.5">Total: 2,431</h2>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container-high text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">info</span>
+</button>
+</div>
+<!-- Donut SVG Diagram -->
+<div class="relative flex items-center justify-center my-4">
+<svg class="w-44 h-44 -rotate-90 transform" viewbox="0 0 160 160">
+<!-- Background Track -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#191f2f" stroke-width="16"></circle>
+<!-- Delivered Segment (81.5% -> stroke-dasharray: 317, 390) -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#4edea3" stroke-dasharray="317 390" stroke-dashoffset="0" stroke-width="16"></circle>
+<!-- Opened Segment (42.8% -> ~166) -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#0066ff" stroke-dasharray="166 390" stroke-dashoffset="-317" stroke-width="16"></circle>
+<!-- Clicked Segment (15.7% -> ~61) -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#00d2ff" stroke-dasharray="61 390" stroke-dashoffset="-483" stroke-width="16"></circle>
+<!-- Replied Segment (4.8% -> ~18) -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#b3c5ff" stroke-dasharray="18 390" stroke-dashoffset="-544" stroke-width="16"></circle>
+<!-- Bounced Segment (1.0% -> ~4) -->
+<circle cx="80" cy="80" fill="transparent" r="62" stroke="#ffb4ab" stroke-dasharray="6 390" stroke-dashoffset="-562" stroke-width="16"></circle>
+</svg>
+<!-- Center Donut Content -->
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-headline-md text-headline-md font-bold text-on-surface leading-none">81.5%</span>
+<span class="font-code-xs text-code-xs text-outline mt-1">Delivery</span>
+</div>
+</div>
+<!-- Donut Legend & Stat Breakdown -->
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container/60 hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="text-on-surface font-medium">Delivered</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-on-surface font-semibold">1,980</span>
+<span class="text-outline w-12 text-right">81.5%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container/60 hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="text-on-surface font-medium">Opened</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-on-surface font-semibold">848</span>
+<span class="text-outline w-12 text-right">42.8%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container/60 hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+<span class="text-on-surface font-medium">Clicked</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-on-surface font-semibold">312</span>
+<span class="text-outline w-12 text-right">15.7%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container/60 hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-on-surface font-medium">Replied</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-on-surface font-semibold">96</span>
+<span class="text-outline w-12 text-right">12.4%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container/60 hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="text-on-surface font-medium">Bounced</span>
+</div>
+<div class="flex items-center gap-2 font-code-xs text-code-xs">
+<span class="text-on-surface font-semibold">24</span>
+<span class="text-outline w-12 text-right">1.0%</span>
+</div>
+</div>
+</div>
+<!-- Quick Action link -->
+<a class="mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md transition-colors" href="#">
+<span>Inspect Lead Cohorts</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Bottom Detailed Performance Grid (Links + Devices + Geography) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Top Performing Links & CTAs -->
+<div class="lg:col-span-5 flex flex-col p-space-lg rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">link</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Top Clicked Links</h3>
+</div>
+<span class="font-code-xs text-code-xs text-outline">312 Total Clicks</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Link 1 -->
+<div class="flex flex-col gap-1.5 p-2 rounded-lg bg-surface-container/40">
+<div class="flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim truncate max-w-[260px]">https://qbitpro.io/demo-hotel</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">184 clicks (59.0%)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 59%"></div>
+</div>
+</div>
+<!-- Link 2 -->
+<div class="flex flex-col gap-1.5 p-2 rounded-lg bg-surface-container/40">
+<div class="flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim truncate max-w-[260px]">https://cal.com/sagar-qbit/growth-brief</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">89 clicks (28.5%)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 28.5%"></div>
+</div>
+</div>
+<!-- Link 3 -->
+<div class="flex flex-col gap-1.5 p-2 rounded-lg bg-surface-container/40">
+<div class="flex items-center justify-between">
+<span class="font-code-xs text-code-xs text-secondary-fixed-dim truncate max-w-[260px]">https://qbitpro.io/case-studies/hospitality</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">39 clicks (12.5%)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 12.5%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Client & Device Telemetry -->
+<div class="lg:col-span-4 flex flex-col p-space-lg rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">devices</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Device &amp; Client Telemetry</h3>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Device Split -->
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">Device Split</span>
+<div class="flex items-center gap-2 text-on-surface font-label-sm text-label-sm">
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between">
+<span>Mobile</span>
+<span class="font-code-xs text-code-xs font-semibold">58%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 58%"></div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between">
+<span>Desktop</span>
+<span class="font-code-xs text-code-xs font-semibold">38%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim rounded-full" style="width: 38%"></div>
+</div>
+</div>
+<div class="w-16 flex flex-col gap-1">
+<div class="flex justify-between">
+<span>Tab</span>
+<span class="font-code-xs text-code-xs font-semibold">4%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-outline rounded-full" style="width: 4%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Email Client Breakdown -->
+<div class="flex flex-col gap-1.5 pt-2 border-t border-surface-container-highest">
+<span class="font-label-sm text-label-sm text-outline">Mail Client App</span>
+<div class="grid grid-cols-2 gap-2 font-body-sm text-body-sm">
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-container/50">
+<span class="text-on-surface-variant">Gmail / GSuite</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">64%</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-container/50">
+<span class="text-on-surface-variant">MS Outlook 365</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">26%</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-container/50">
+<span class="text-on-surface-variant">Apple Mail</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">8%</span>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded bg-surface-container/50">
+<span class="text-on-surface-variant">Others</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">2%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Geographic Engagement Map -->
+<div class="lg:col-span-3 flex flex-col p-space-lg rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">location_on</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Geo Density</h3>
+</div>
+<span class="font-code-xs text-code-xs text-tertiary">Bareilly, UP</span>
+</div>
+<!-- Static Map Box Container with Location API Hook -->
+<div class="relative w-full h-28 rounded-lg bg-cover bg-center overflow-hidden flex flex-col justify-end p-2 shadow-inner" data-location="Bareilly, Uttar Pradesh, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBttje-oMKvOAbrGSwSPAoCh3sY0jbaHod0mrN3gYMiI8AOM0L1510DGVyXbBlRNdG8rTTNiPuJdUUkXSiKG7sbBhqrtIt0IcZjlMAS5CPAOQQr-NEpKECdhdjIwQrsPnNApTeM4EWRZBr1NTWxqGl8_oTHCV2-isq79FEUEz_BIs3dZSp8Oq7tCypuDjC9lap-2ZjYsljPI_PqiYlRmxE7EM2yOVqm1TAt9zbv25baSi9uyOcDmDsoGQ')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-surface-container-lowest/40 to-transparent"></div>
+<div class="relative z-10 flex items-center justify-between font-code-xs text-code-xs text-on-surface">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span>Cluster 28.3670° N</span>
+</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-secondary-fixed">Top Region</span>
+</div>
+</div>
+<!-- Zone distribution list -->
+<div class="flex flex-col gap-1.5 mt-3 font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Civil Lines / Cantt</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">62% (526 opens)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Station Road Hub</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">24% (203 opens)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Rampur Garden</span>
+<span class="font-code-xs text-code-xs font-semibold text-on-surface">14% (119 opens)</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

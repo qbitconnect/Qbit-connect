@@ -20,6 +20,16 @@ class ActorOut(BaseModel):
     status: str
     status_detail: str | None = None
     dependencies: dict[str, str] = {}
+    required_credentials: list[str] = []
+    rate_limit_per_minute: int | None = None
+    concurrency_limit: int | None = None
+    source_type: str | None = None
+    implementation_status: str = "IMPLEMENTED"
+    access_method: str = "documented_api"
+    terms_verified: bool = True
+    permitted_use: str | None = None
+    retention_policy: str | None = None
+    export_restrictions: list[str] = []
     input_schema: dict
     output_fields: list[str]
 
