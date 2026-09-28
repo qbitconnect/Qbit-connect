@@ -42,7 +42,10 @@ from app.models.scrape import ScrapeSchedule  # noqa: F401 (re-exported for rout
 from app.services.scraping.engine import JobEngine, sanitize_job_config
 from app.services.scraping.scheduling import ScrapeScheduleService
 
-templates = Jinja2Templates(directory="app/templates")
+from pathlib import Path
+
+_TEMPLATES_DIR = Path(__file__).resolve().parent.parent / "templates"
+templates = Jinja2Templates(directory=str(_TEMPLATES_DIR))
 templates.env.globals["str"] = str  # str(x)[:8] slicing in templates
 router = APIRouter(tags=["ui"])
 

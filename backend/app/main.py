@@ -5,6 +5,7 @@ from __future__ import annotations
 import uuid
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -375,8 +376,9 @@ def create_app(settings: Settings | None = None, *, db: DatabaseManager | None =
     async def _ui_redirect_handler(request: Request, exc: UiRedirect):
         return RedirectResponse(url=exc.url, status_code=303)
 
-    app.add_exception_handler(UiRedirect, _ui_redirect_handler)
-    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+    _static_dir = Path(__file__).resolve().parent / "static"
+    if _static_dir.exists():
+        app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
 
     @app.get("/api/v1", include_in_schema=False)
     async def api_root(request: Request):
