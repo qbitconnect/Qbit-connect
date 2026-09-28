@@ -30,32 +30,35 @@ from app.main import create_app
 
 app = create_app()
 
-@app.on_event("startup")
-async def _init_serverless_db():
-    """Ensure database schema and initial administrator exist on cold start."""
-    try:
-        import uuid
-        from sqlalchemy import select
-        from app.core.security import hash_password
-        from app.db.base import Base
-        from app.models.user import User
+def _initialize_serverless():
+    """Ensure database schema, RBAC matrix, and initial administrator exist on cold start."""
+    import asyncio
+    import logging
+    _log = logging.getLogger("qbit.serverless")
 
-        async with app.state.db.engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+    async def _init_coro():
+        try:
+            from app.db.base import Base
+            from app.services.rbac import seed_rbac, seed_admin
+            
+            async with app.state.db.engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
 
-        async with app.state.db.session() as session:
-            admin = await session.scalar(select(User).where(User.email == "admin@qbit.internal"))
-            if not admin:
-                new_admin = User(
-                    id=uuid.uuid4(),
+            async with app.state.db.session() as session:
+                await seed_rbac(session)
+                await seed_admin(
+                    session,
                     email="admin@qbit.internal",
-                    password_hash=hash_password("admin123"),
+                    password="admin123",
                     full_name="System Administrator",
-                    role="ADMIN",
-                    is_active=True,
                 )
-                session.add(new_admin)
-                await session.commit()
+            _log.info("Serverless database and RBAC successfully initialized")
+        except Exception as exc:
+            _log.warning("Serverless DB init error: %s", exc)
+
+    try:
+        asyncio.run(_init_coro())
     except Exception as exc:
-        import logging
-        logging.getLogger("qbit.serverless").warning(f"Serverless DB init warning: {exc}")
+        _log.warning("Failed running asyncio.run for serverless init: %s", exc)
+
+_initialize_serverless()
